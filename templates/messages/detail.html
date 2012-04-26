@@ -1,0 +1,22 @@
+﻿{% extends "messages/base.html" %}
+{% block title %}Message{% endblock %}
+{% block content %}
+<h1>Détail du message</h1>
+
+{% if message %}
+	<h3>{{ message.objet }}</h3>
+	<p>De {{ message.association.nom }}, publié le {{ message.date}}</p>
+	<p>{{ message.contenu|linebreaksbr }}</p>
+
+
+{% else %}
+	<p>Aucun message disponible.</p>
+{% endif %}
+
+{% load comments %}
+<h2>Commentaires</h2>
+{% render_comment_list for message %}
+<h2>Poster un commentaire</h2>
+{% render_comment_form for message %}
+
+{% endblock %}

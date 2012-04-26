@@ -1,0 +1,10 @@
+<div class="comment_start"></div>
+{% for comment in comment_list %}
+   <div class="comment">
+   <p>
+   <img class = "miniature" src= 'https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{comment.user}}.jpg'/> 
+      Par <a href="/people/{{ comment.user }}">{{ comment.user.get_profile.first_name }} {{ comment.user.get_profile.last_name }}</a> - il y a {{ comment.submit_date|timesince }} <br>
+      {{ comment.comment }}
+   </p>
+   </div>
+{% endfor %}

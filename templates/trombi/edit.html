@@ -1,0 +1,31 @@
+{% extends "trombi/base.html" %}
+
+{% block content %}
+
+<form method="post" action="{{ request.path }}">
+{% csrf_token %}
+<table>
+<tr>
+<td><label for="promo">Promotion :</label></td>
+<td><input type="text" value="{{ mineur.get_profile.promo }}" name="promo"></td>
+</tr>
+<tr>
+<td><label for="phone">Téléphone :</label></td>
+<td><input type="text" value="{{ mineur.get_profile.phone }}" name="phone"></td>
+</tr>
+<tr>
+<td><label for="chambre">Chambre :</label></td>
+<td><input type="text" value="{{ mineur.get_profile.chambre }}" name="chambre"></td>
+</tr>
+<tr>
+<td><label for="option">Option :</label></td>
+<td><input type="text" value="{{ mineur.get_profile.option }}" name="option"></td>
+</tr>
+
+<input type="submit" />
+</form>
+<div id="picture">
+<img src="https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{ mineur.username }}.jpg" />
+</div>
+
+{% endblock %}

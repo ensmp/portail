@@ -1,0 +1,16 @@
+﻿{% extends "messages/base.html" %}
+
+{% block onglets %}
+<div id="menu_messages">
+<ul>
+<li id="actif"><span>Nouveaux</span></li>
+<li><a href="/messages/importants/"><span>Importants</span></a></li>
+<li><a href="/messages/tous/"><span>Tous</span></a></li>
+</ul>
+</div>
+{% endblock %}
+{% block content %}
+{% load set_var %}
+{% set afficher_bouton_non_important = 0 %}
+{% include "messages/afficher_messages.html" %}
+{% endblock %}

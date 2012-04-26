@@ -1,0 +1,43 @@
+{% extends "trombi/base.html" %}
+
+{% block content %}
+
+
+<table>
+	<tr>
+	<th>Login</th>
+	<th>Nom</th>
+	<th>Promo</th>
+	<th>Téléphone</th>
+	<th>Chambre</th>
+	</tr>
+    {% for mineur in mineur_list %}
+	<tr>
+	<td class="login"><a href="/people/{{ mineur.username }}/">{{ mineur.username }}</a></td>
+	<td>{{ mineur.get_profile.first_name }} {{ mineur.get_profile.last_name|upper }}</td>
+	<td>{{ mineur.get_profile.promo }}</td>
+	<td>{{ mineur.get_profile.phone }}</td>
+	<td>{{ mineur.get_profile.chambre }}</td>
+	</tr>
+	</a>
+    {% endfor %}
+</table>
+<div id="pictures">
+<img src="" />
+</div>
+
+<script>
+$('tr').hover(function() {
+	var login = $(this).find('.login').find('a').html();
+	if (login) {
+		$('#pictures').css({'opacity': 0});
+		$('#pictures').find('img').css({'display' : 'block'});
+		$('#pictures').find('img').attr({'src' : 'https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/'+login+'.jpg'});
+		$('#pictures').animate({'opacity': 1});
+	}
+},function() {
+	$('#pictures').find('img').css({'display' : 'none'});
+})
+</script>
+
+{% endblock %}

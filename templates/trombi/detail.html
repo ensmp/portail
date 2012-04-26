@@ -1,0 +1,37 @@
+{% extends "trombi/base.html" %}
+
+{% block content %}
+
+{{ mineur.get_profile.first_name }}
+{{ mineur.get_profile.last_name|upper }}
+
+<p>Promotion : {{ mineur.get_profile.promo }}</p>
+
+<p>Téléphone : {{ mineur.get_profile.phone }}</p>
+
+<p>Chambre : {{ mineur.get_profile.chambre }}</p>
+
+<p>Associations : </p>
+<ul>
+	{% for adhesion in assoces %}
+		<li>
+		<a href="/associations/{{adhesion.association.pseudo}}">{{adhesion.association}}</a> {%if adhesion.role != ""%}({{adhesion.role}}){% endif %}
+		</li>
+	{% endfor %}
+</ul>
+
+<p>Option : {{ mineur.get_profile.option }}</p>
+
+<p>Parrain : <a href="/people/{{ mineur.get_profile.parrain }}">{{ mineur.get_profile.parrain.get_profile.first_name }} {{ mineur.get_profile.parrain.get_profile.last_name|upper }}</a></p>
+
+<p>Fillot : <a href="/people/{{ mineur.get_profile.fillot }}">{{ mineur.get_profile.fillot.get_profile.first_name }} {{ mineur.get_profile.fillot.get_profile.last_name|upper }}</a></p>
+
+<div id="picture">
+<img src="https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{ mineur.username }}.jpg" />
+</div>
+
+{% if mineur.username == user.username %}
+<a href="/people/{{ mineur.username }}/edit">Modifier</a>
+{% endif %}
+
+{% endblock %}

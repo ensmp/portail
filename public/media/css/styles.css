@@ -1,0 +1,199 @@
+html, body, #content {
+	font-size: 0.9em;
+	font-family: Verdana,serif;
+	background: #eee;
+}
+h1, h2 {
+	font-family: Georgia;
+}
+
+
+a:link {
+	color: blue;
+	text-decoration:none;
+}
+
+a:visited {
+	color: blue;
+	text-decoration:none;
+}
+
+a:hover {
+	color:red;
+	text-decoration:none;
+}
+#header {
+	margin: 5px;
+	height: 90px;
+	overflow: auto;
+	position: relative;
+	border-bottom: 1px #eee solid;
+}
+#header img {
+	float: left;
+}
+#login {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+}
+#content_onglets {
+	width: 950px;
+	padding: 10px;
+	background: #fff;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	min-height: 240px;
+}
+#global_onglets {
+	position: relative;
+	width: 950px;
+	margin: -50px auto;
+}
+#messages {
+	position: absolute;
+	top: 100px;
+	right: 10px;
+	width: 250px;
+	background: #FFCC99;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 15px;
+	z-index: 15;
+}
+#messages li {
+	list-style: none;
+}
+
+    ul.topnav {  
+
+        /*list-style: none;  */
+		
+		list-style-position: inside;
+        padding: 0 20px;  
+        margin: 0;
+        position: absolute;
+		top:0pt;
+		left:0pt;
+        width: 97%;  
+        /*background: #222;  */
+        font-size: 1.2em;  
+        /*background: url(topnav_bg.png) repeat-x; */
+		z-index:20;	
+    }  
+    ul.topnav li {  
+	display:inline;
+        float: left;  
+        margin: 0;  
+        padding: 0 15px 0 0;  
+        position: relative; /*--Declare X and Y axis base for sub navigation--*/  
+		z-index:30;	
+    }  
+	ul.topnav li.droite {  
+        float: right;  
+        margin: 0;  
+        padding: 0 15px 0 0;  
+        position: relative; /*--Declare X and Y axis base for sub navigation--*/  
+    } 
+    ul.topnav li a{  
+        padding: 10px 5px;  
+        color: #bbbbbb;
+        display: block;  
+        text-decoration: none;  
+        float: left;  
+    }  
+    ul.topnav li a:hover{  
+       /* background: url(topnav_hover.png) repeat-x center top;  */
+		color:#fff;
+    }  
+    ul.topnav li span { /*--Drop down trigger styles--*/  
+        width: 17px;  
+        height: 35px;  
+        float: left;  
+        background: url(subnav_btn.png) no-repeat center top;  
+    }  
+    ul.topnav li span.subhover {background-position: center bottombottom; cursor: pointer;} /*--Hover effect for trigger--*/  
+    ul.topnav li ul.subnav {  
+        list-style: none;  
+        position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/  
+        left: 0; top: 35px;  
+        background: #333;  
+        margin: 0; padding: 0;  
+        display: none;  
+        float: left;  
+        width: 170px;  
+        border: 1px solid #111;  
+		z-index:10;
+    }  
+    ul.topnav li ul.subnav li{  
+        margin: 0; padding: 0;  
+        border-top: 1px solid #252525; /*--Create bevel effect--*/  
+        border-bottom: 1px solid #444; /*--Create bevel effect--*/  
+        clear: both;  
+        width: 170px;  
+		background: #000;
+		z-index:10;	
+
+    }  
+    html ul.topnav li ul.subnav li a {
+        float: left;  
+        width: 145px;  
+        background: #333 url(dropdown_linkbg.gif) no-repeat 10px center;
+        padding-left: 20px;
+		z-index:10;
+    }  
+    html ul.topnav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/  
+        background: #222 url(dropdown_linkbg.gif) no-repeat 10px center;  
+    }  
+	
+	#mon_menu {	
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:35px;
+    background: url(topnav_bg.png) repeat-x; 
+
+
+	/*display:table-cell;
+	vertical-align:middle; */
+	}
+	
+#champ_recherche {
+	position:relative;
+	top:1px;
+	height:34px;
+    background:url(recherche.png) no-repeat;
+    padding:2px 5px 4px 5px;
+}
+#string_recherche {
+	position:relative;
+	top:8px;
+    background-color:transparent;
+    border:none;
+    font-size:13px;
+	size:20px;
+	margin-right:10px;
+}
+
+#bouton_recherche {
+	float:right;
+	display:block;
+	padding-top:6px;
+	font-family: Verdana,serif;
+	font-size: 1.0em;
+	font-style:normal;
+	color: #bbbbbb;
+	background: transparent;
+  	border: 0px;
+  	cursor: pointer;
+  	text-decoration: none;	
+}
+
+#bouton_recherche:hover {
+	color: #fff;	
+}
