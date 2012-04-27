@@ -1,7 +1,7 @@
 from django.db import models
 from trombi.models import UserProfile
 from association.models import Association
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Create your models here.
 class Message(models.Model):
@@ -15,6 +15,13 @@ class Message(models.Model):
   
  def __unicode__(self):
   return self.objet
+
+ @property
+ def est_vieux(self):
+  if datetime.now()-timedelta(days=1) > self.date:
+   return True
+  return False
+
   
 #class Commentaire(models.Model):
 #  message = models.ForeignKey(Message)

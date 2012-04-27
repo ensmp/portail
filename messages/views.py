@@ -12,7 +12,7 @@ from django.template import RequestContext
 @login_required
 def index(request):
 	#list_messages = Message.objects.all()
-	list_messages = Message.objects.exclude(lu__user__username=request.user.username).exclude(important__user__username=request.user.username)
+	list_messages = Message.objects.exclude(lu__user__username=request.user.username).exclude(important__user__username=request.user.username).order_by('-date')
 	return render_to_response('messages/index.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 	
 @login_required
@@ -47,10 +47,10 @@ def classer_non_important(request, message_id, no_cache):
 	
 @login_required
 def tous(request):
-	list_messages = Message.objects.all()
+	list_messages = Message.objects.all().order_by('-date')
 	return render_to_response('messages/tous.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 
 @login_required
 def importants(request):
-	list_messages = Message.objects.filter(important__user__username=request.user.username)
+	list_messages = Message.objects.filter(important__user__username=request.user.username).order_by('-date')
 	return render_to_response('messages/importants.html', {'list_messages': list_messages},context_instance=RequestContext(request))

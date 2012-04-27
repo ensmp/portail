@@ -22,7 +22,11 @@
 {% if not afficher_auteur = 0 %}
 	De <strong>{{ message.association.nom }}</strong>, 
 {% endif %}
-il y a {{ message.date|timesince }}<br>
+{% if message.est_vieux %}
+le {{ message.date|date:"d F Y H:i" }}
+{% else %}
+il y a {{ message.date|timesince }}
+{% endif %}<br>
 {{ comment_count }} commentaires<br>
 <a href="/messages/{{ message.id }}/">{{ message.objet }}</a></p>
 
