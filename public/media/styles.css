@@ -110,13 +110,13 @@ a:hover {
        /* background: url(topnav_hover.png) repeat-x center top;  */
 		color:#fff;
     }  
-    ul.topnav li span.fleche { /*--Drop down trigger styles--*/  
+    ul.topnav li span { /*--Drop down trigger styles--*/  
         width: 17px;  
         height: 35px;  
         float: left;  
         background: url(subnav_btn.png) no-repeat center top;  
     }  
-    ul.topnav li span.fleche.subhover {background-position: center bottombottom; cursor: pointer;} /*--Hover effect for trigger--*/  
+    ul.topnav li span.subhover {background-position: center bottombottom; cursor: pointer;} /*--Hover effect for trigger--*/  
     ul.topnav li ul.subnav {  
         list-style: none;  
         position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/  

@@ -1,0 +1,8 @@
+.given {
+	color: grey;
+}
+dt {
+	margin-top: 5px;
+	padding-top: 5px;
+	border-top: solid 1px #eee;
+}

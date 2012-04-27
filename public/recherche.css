@@ -1,0 +1,12 @@
+img.miniature {
+	float:left;
+	width:50px;
+	height:69px;
+}
+
+#div_eleves ul {
+	list-style: none;
+}
+#div_eleves li {
+	min-height: 69px;
+}

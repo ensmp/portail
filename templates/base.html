@@ -19,13 +19,23 @@
 	<div id="mon_menu">
 	<!-- Le menu -->
 	    <ul class="topnav">  
-        <li><a href="/messages">Messages</a></li>  
+		
+
+		{% load obtenir_nombre_messages %}
+		
+		
+		{% load obtenir_liste_associations %}
+		{% obtenir_associations %}
+		
+		
+		
+        <li><a href="/messages"><span id="compteur_messages">{% compter_messages request%}</span> Messages</a></li>  
         <li>  
             <a href="/associations">Associations</a>  
-            <ul class="subnav">  
-                <li><a href="/associations/bde">BDE</a></li>  
-                <li><a href="/associations/jump">JuMP</a></li>  
-				<li><a href="/associations/vendome">Vendôme</a></li>   
+            <ul class="subnav">
+			{% for association in liste_des_associations %}
+                <li><a href="/associations/{{association.pseudo}}">{{association.nom}}</a></li>  
+            {% endfor %}
             </ul>  
         </li>  
         <li>  
