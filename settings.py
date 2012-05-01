@@ -146,6 +146,7 @@ INSTALLED_APPS = (
 	'recherche',
     'streamine',
     'petitscours',
+	'objettrouve',
     'timetable',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

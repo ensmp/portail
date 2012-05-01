@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<!--<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>-->
 	<script src="/media/jquery-1.7.1.min.js"></script>
 	<script src="/media/script.js"></script>
 	
@@ -20,30 +20,26 @@
 	<!-- Le menu -->
 	    <ul class="topnav">  
 		
-
 		{% load obtenir_nombre_messages %}
-		
-		
-		{% load obtenir_liste_associations %}
-		{% obtenir_associations %}
-		
-		
-		
-        <li><a href="/messages"><span id="compteur_messages">{% compter_messages request%}</span> Messages</a></li>  
+		{% compter_messages request.user.username %}
+        <li><a href="/messages"><span id="compteur_messages">{{ nombre_de_messages }}</span> Message{{ nombre_de_messages|pluralize }}</a></li>  
         <li>  
-            <a href="/associations">Associations</a>  
+            <a href="/associations/">Associations</a>  
             <ul class="subnav">
+			{% load obtenir_liste_associations %}
+			{% obtenir_associations %}
 			{% for association in liste_des_associations %}
-                <li><a href="/associations/{{association.pseudo}}">{{association.nom}}</a></li>  
+                <li><a href="/associations/{{association.pseudo}}/">{{association.nom}}</a></li>  
             {% endfor %}
             </ul>  
         </li>  
         <li>  
             <a href="#">Services</a>  
             <ul class="subnav">  
-                <li><a href="/people">Trombi</a></li>  
-                <li><a href="/petitscours">Petits cours</a></li>
-				<li><a href="/timetable">Emploi du temps</a></li>  
+                <li><a href="/people/">Trombi</a></li>  
+                <li><a href="/petitscours/">Petits cours</a></li>
+				<li><a href="/objetstrouves/">Objets trouvés</a></li>
+				<li><a href="/timetable/">Emploi du temps</a></li>  
             </ul>  
         </li>  
         <li>
@@ -53,13 +49,13 @@
 				<input id="bouton_recherche" type="submit" value="Rechercher" />
 			</form>
 		</li>  
-        <li><a href="#">A propos</a></li>  
+        <li><a href="/admin/">Administration</a></li>  
 		{% if user.is_authenticated %}
 		<li class="droite">  
-            <a href="/people/{{ user.username }}">{{ user.username }}</a>  
+            <a href="/people/{{ user.username }}/">{{ user.username }}</a>  
             <ul class="subnav">  
-                <li><a href="/people/{{ user.username }}">Ma page</a></li>  
-                <li><a href="/accounts/logout">Se déconnecter</a></li>
+                <li><a href="/people/{{ user.username }}/">Ma page</a></li>  
+                <li><a href="/accounts/logout/">Se déconnecter</a></li>
             </ul>  
         </li>  
 		{% else %}
@@ -69,18 +65,6 @@
     </ul>  
 	</div>
 </nav>
-	
-	<div id="header">
-		<!--<img src="/media/logo-mines.png" />
-		<h1>Les élèves des Mines</h1>
-		<p><a href="/">Accueil</a> - <a href="/messages">Actualités</a> - <a href="/messages/tous">Tous</a> - <a href="/messages/importants">Importants</a> - <a href="/people">Trombi</a> - <a href="/petitscours">Petits cours</a></p>
-		<div id="login">{% if user.is_authenticated %}
-		<a href="/people/{{ user.username }}">{{ user.username }}</a> - <a href="/accounts/logout">Logout</a>
-		{% else %}
-		Vous n'êtes pas identifié<br /><a href="/accounts/login?next={{ request.get_path }}">S'identifier</a>
-		{% endif %}</div>-->
-
-	</div>
 	
 	{% if messages %}
 <ul id="messages">
@@ -94,6 +78,7 @@
 	<div id="content_onglets">
 	    {% block content %}{% endblock %}
 	</div>
+	<p id ="pied_de_page">Portail des élèves des Mines de Paris, 2012</p>
     </div>
 </div>
 

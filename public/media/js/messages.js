@@ -1,4 +1,3 @@
-
 	/* ---------------------------- */
 /* XMLHTTPRequest Enable */
 /* ---------------------------- */
@@ -41,16 +40,16 @@ var response = http.responseText;
 }
 }
 	
+
 $(document).ready(function()
 {
     $('a.action_message').click(function(event){
-		
         event.preventDefault();
         var link=$(this).attr("href");
 		divparent = $(event.target).parent().parent().parent();
         
 		document.getElementById("compteur_messages").firstChild.nodeValue--;
-		
+
 		divparent.fadeOut(500, function(){
            //  window.location.href =link;
 		   action(link);

@@ -1,0 +1,52 @@
+{% extends "objettrouve/base.html" %}
+
+{% block content %}
+
+<div>
+<p>
+<a href="/objetstrouves/ajouter/">Ajouter un objet perdu/trouvé</a><br>
+<a href="/objetstrouves/supprimer/">Supprimer un objet perdu/trouvé</a>
+</p>
+</div>
+
+<div id="objets_trouves">
+<table>
+<p></p>
+<caption> {{ liste_objets_trouves|length }} objet{{ liste_objets_trouves|length|pluralize }} trouvé{{ liste_objets_trouves|length|pluralize }} </caption>
+<tr>
+	<th>Description</th>
+	<th>Trouvé par</th>
+	<th>Lieu</th>
+	<th>Date</th>
+</tr>
+{% for objet in liste_objets_trouves %}
+<tr>
+	<td>{{ objet.description }}</td>
+	<td><a href = "/people/{{ objet.eleve.user.username }}/">{{ objet.eleve.first_name }} {{ objet.eleve.last_name|upper }}</a></td>
+	<td>{{ objet.lieu }}</td>
+	<td>{{ objet.date|date:"d F Y" }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+<div id="objets_perdus">
+<table>
+<p></p>
+<caption> {{ liste_objets_perdus|length }} objet{{ liste_objets_perdus|length|pluralize }} perdu{{ liste_objets_perdus|length|pluralize }} </caption>
+<tr>
+	<th>Description</th>
+	<th>Trouvé par</th>
+	<th>Lieu</th>
+	<th>Date</th>
+</tr>
+{% for objet in liste_objets_perdus %}
+<tr>
+	<td>{{ objet.description }}</td>
+	<td><a href = "/people/{{ eleve.user.username }}/">{{ objet.eleve.first_name }} {{ objet.eleve.last_name|upper }}</a></td>
+	<td>{{ objet.lieu }}</td>
+	<td>{{ objet.date|date:"d F Y" }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}

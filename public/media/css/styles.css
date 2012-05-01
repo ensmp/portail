@@ -46,11 +46,17 @@ a:hover {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	min-height: 240px;
+	overflow:hidden;
 }
 #global_onglets {
 	position: relative;
+	top:100px;
 	width: 950px;
 	margin: -50px auto;
+}
+
+#pied_de_page{
+text-align:right;
 }
 #messages {
 	position: absolute;
