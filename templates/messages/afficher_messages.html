@@ -5,7 +5,7 @@
 {% for message in list_messages %}
 {% load comments %}
 {% get_comment_count for message as comment_count %}
-<li> <div> <!--C'est le div caché lors du clic sur un bouton d'action!-->
+<li> <div class="message"> <!--C'est le div caché lors du clic sur un bouton d'action!-->
 <p>
 {% if not afficher_auteur = 0 %}
 	<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{message.association.pseudo}}.png">

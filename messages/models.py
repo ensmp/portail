@@ -9,6 +9,8 @@ class Message(models.Model):
  objet = models.CharField(max_length=300)
  contenu = models.TextField()
  date = models.DateTimeField(default=datetime.now(), blank=True)
+ expediteur = models.ForeignKey(UserProfile)
+ destinataire = models.ForeignKey(Association,related_name='message_destinataire', blank=True, null=True)
  
  lu = models.ManyToManyField(UserProfile,related_name='message_lu', blank=True)
  important = models.ManyToManyField(UserProfile,related_name='message_important', blank=True)

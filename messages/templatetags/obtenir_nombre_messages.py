@@ -1,6 +1,8 @@
 from django.template import Library, Node
 from messages.models import Message
 from django import template
+from django.db.models import Q
+from trombi.models import UserProfile
      
 register = Library()
 
@@ -14,7 +16,7 @@ class NombreMessagesNode(Node):
 		self.login = template.Variable(login)
 			
 	def render(self, context):
-		context['nombre_de_messages'] = Message.objects.exclude(lu__user__username=self.login.resolve(context)).exclude(important__user__username=self.login.resolve(context)).count()
+		context['nombre_de_messages'] = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=UserProfile.objects.get(user__username = self.login.resolve(context)).association_set.all())).exclude(lu__user__username=self.login.resolve(context)).exclude(important__user__username=self.login.resolve(context)).count()
 		return ''
     
 def compter_messages(parser, token):

@@ -21,7 +21,9 @@
 	    <ul class="topnav">  
 		
 		{% load obtenir_nombre_messages %}
-		{% compter_messages request.user.username %}
+		{% if request.user %}
+			{% compter_messages request.user.username %}
+		{% endif %}
         <li><a href="/messages"><span id="compteur_messages">{{ nombre_de_messages }}</span> Message{{ nombre_de_messages|pluralize }}</a></li>  
         <li>  
             <a href="/associations/">Associations</a>  
@@ -80,6 +82,16 @@
 	</div>
 	<p id ="pied_de_page">Portail des élèves des Mines de Paris, 2012</p>
     </div>
+	
+	<div id="barre_droite">
+		{% load obtenir_notes %}
+		{% obtenir_todos request.user.username %}
+		<ul>
+		{% for todo in todo_list %}
+               <li>{{todo.contenu}}</li>  
+        {% endfor %}
+		</ul>
+	</div>
 </div>
 
 </body>
