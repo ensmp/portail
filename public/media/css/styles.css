@@ -203,3 +203,9 @@ text-align:right;
 #bouton_recherche:hover {
 	color: #fff;	
 }
+
+div.message{
+	border:1px #000 solid;
+	padding:10px;
+	margin-bottom:10px;
+	border-radius: 10px;
