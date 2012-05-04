@@ -204,6 +204,14 @@ text-align:right;
 	color: #fff;	
 }
 
+#barre_droite {
+ float:right;
+ padding-right:10px;
+ background-color: #fff;
+ padding:10px;
+ border-radius: 10px;
+}
+
 div.message{
 	border:1px #000 solid;
 	padding:10px;
