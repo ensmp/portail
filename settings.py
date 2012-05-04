@@ -1,8 +1,8 @@
 # Django settings for sitebde project.
+import os
 
-#basepath = '/home/bde-mines/sitebde/'
-#basepath = '/Users/thomas/Dev/sitebde/'
-basepath = 'C:/SiteBDE/Site/'
+basepath = os.path.abspath(os.path.dirname(__file__)) + '/'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG 
 
@@ -63,7 +63,7 @@ USE_L10N = True
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 #STATIC_ROOT = '/Users/thomas/Dev/sitebde/public/media/'
-STATIC_ROOT = 'C:/SiteBDE/Site/public/media/'
+STATIC_ROOT = basepath + 'public/media/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -76,9 +76,9 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    'C:/SiteBDE/Site/public/media/css',
-    'C:/SiteBDE/Site/public/media/js',
-    'C:/SiteBDE/Site/public/media/img',
+    basepath + 'public/media/css',
+    basepath + 'public/media/js',
+    basepath + 'public/media/img',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

@@ -21,7 +21,7 @@
 	    <ul class="topnav">  
 		
 		{% load obtenir_nombre_messages %}
-		{% if request.user %}
+		{% if request.user.is_authenticated %}
 			{% compter_messages request.user.username %}
 		{% endif %}
         <li><a href="/messages"><span id="compteur_messages">{{ nombre_de_messages }}</span> Message{{ nombre_de_messages|pluralize }}</a></li>  
