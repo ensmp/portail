@@ -8,7 +8,8 @@
 <h1>{{association.nom}}<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png"></h1>
 {% for adhesion in membres %}
 {% if request.user = adhesion.eleve.user %}
-<p><a href="/associations/{{association.pseudo}}/ajouter_membre/">Ajouter un membre</a><br>
+<p><a href="/associations/{{association.pseudo}}/poster_message/">Poster un message</a><br>
+<a href="/associations/{{association.pseudo}}/ajouter_membre/">Ajouter un membre</a><br>
 <a href="/associations/{{association.pseudo}}/supprimer_membre/">Supprimer un membre</a></p>
 {% endif %}
 {% endfor %}

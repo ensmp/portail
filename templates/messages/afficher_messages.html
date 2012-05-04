@@ -32,13 +32,13 @@ le {{ message.date|date:"d F Y H:i" }}
 
 <p><br>{{ message.contenu|linebreaksbr }}</p>
 <hr>
-<p>Visible par
+<span class="signature">Visible par
 {% if message.destinataire %}
 {{message.destinataire.nom}}
 {% else %}
 tous
 {% endif %}
-</p>
+</span>
 </div>
 </li>
 {% endfor %}

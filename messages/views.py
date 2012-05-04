@@ -3,12 +3,14 @@ from messages.models import Message
 from trombi.models import UserProfile
 from association.models import Association, Adhesion
 from django.contrib.auth.models import User
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.db.models import Q
+from datetime import datetime
+
 
 
 @login_required
@@ -57,3 +59,18 @@ def tous(request):
 def importants(request):
 	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all())).filter(important__user__username=request.user.username).order_by('-date')
 	return render_to_response('messages/importants.html', {'list_messages': list_messages},context_instance=RequestContext(request))
+	
+
+@login_required
+def nouveau(request, association_pseudo):
+	if request.method == 'POST':
+		if request.POST['dest'] == 'tous':
+			receiver = None
+		else:
+			receiver = Association.objects.get(pseudo = request.POST['dest'])
+		if Adhesion.objects.filter(association=get_object_or_404(Association,pseudo=association_pseudo), eleve=request.user).exists():
+			Message.objects.create(association=Association.objects.get(pseudo=association_pseudo),objet=request.POST['title'],contenu=request.POST['body'],date=datetime.now(),expediteur=request.user.get_profile(), destinataire=receiver)
+		return redirect('/associations/'+association_pseudo)
+	else:
+		liste_assoces = request.user.get_profile().association_set.all()
+		return render_to_response('messages/nouveau.html', {'liste_assoces': liste_assoces},context_instance=RequestContext(request))

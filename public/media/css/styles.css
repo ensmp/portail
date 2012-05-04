@@ -205,7 +205,10 @@ text-align:right;
 }
 
 #barre_droite {
- float:right;
+ position:absolute;
+ top:100px;
+ right:20px;
+ width:150px;
  padding-right:10px;
  background-color: #fff;
  padding:10px;
@@ -214,6 +217,16 @@ text-align:right;
 
 div.message{
 	border:1px #000 solid;
-	padding:10px;
+	padding: 0px 10px 4px 10px;
 	margin-bottom:10px;
 	border-radius: 10px;
+}
+
+div.message hr{
+	border:1px solid #BBB;
+	margin-bottom:4px;
+}
+
+div.message span.signature {
+	line-height:90%;
+}
