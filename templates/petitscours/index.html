@@ -4,11 +4,16 @@
 
 <p>{{ cours_list|length }} petits cours trouvés</p>
 
+<div id="mapbox">
+<p style="text-align: center;"><a id="showmap" href="#">Afficher la carte</a></p>
+<div id="map" style="width: 600px; height: 300px; margin: auto;"></div>
+</div>
+
 <dl>
 {% for cours in cours_list %}
 <dt>{{ cours.title }} ajouté le {{ cours.date_added|date:"d/m/Y"}}</dt>
 <dd><b>Matière: </b>{{ cours.matiere }} <b>Niveau: </b>{{ cours.niveau }}<br />
-<b>Lieu: </b>{{ cours.location }}<br />
+<b>Lieu: </b>{{ cours.address }}<br />
 {{ cours.description }}
 <br />{{ cours.requests.count }} demandes. <a href="/petitscours/request/{{ cours.id }}">Demander ce petit cours</a></dd>
 {% endfor %}

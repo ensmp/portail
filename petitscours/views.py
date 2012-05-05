@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from petitscours.models import PetitCours
 from django.contrib.auth.decorators import login_required, permission_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from datetime import datetime
 from django.template import RequestContext
 from django.core.mail import send_mail
@@ -52,12 +52,16 @@ def add(request):
 	if request.method == 'POST':
 		pc = PetitCours()
 		pc.title=request.POST['title']
-		pc.location=request.POST['location']
+		pc.address=request.POST['address']
+		pc.update_location(float(request.POST['lat']), float(request.POST['lng']))
 		pc.contact=request.POST['contact']
 		pc.matiere = request.POST['matiere']
 		pc.niveau = request.POST['niveau']
 		pc.description=request.POST['description']
 		pc.save()
-		return HttpResponseRedirect('/petitscours/admin')
+		if request.is_ajax():
+			return HttpResponse("OK")
+		else:
+			return redirect('/petitscours/admin')
 	else:
 		return render_to_response('petitscours/add.html',context_instance=RequestContext(request))

@@ -12,7 +12,6 @@ def index(request):
 	mineur_list = User.objects.order_by('username')
 	return render_to_response('trombi/index.html', {'mineur_list': mineur_list},context_instance=RequestContext(request))
 
-@login_required
 def index_json(request):
 	mineur_list = User.objects.order_by('username')
 	response = HttpResponse(mimetype='application/json')
@@ -30,7 +29,6 @@ def detail(request,mineur_login):
 	assoces = Adhesion.objects.filter(eleve__user__username = mineur_login)
 	return render_to_response('trombi/detail.html', {'mineur': mineur, 'assoces': assoces},context_instance=RequestContext(request))
 
-@login_required
 def detail_json(request,mineur_login):
 	mineur = get_object_or_404(User,username=mineur_login)
 	profile = mineur.get_profile()
@@ -50,6 +48,10 @@ def detail_json(request,mineur_login):
 		'assoces': [{'pseudo': a.association.pseudo, 'nom': str(a.association), 'role': a.role} for a in assoces]
 	}))
 	return response
+
+	
+def token(request):
+	return render_to_response('trombi/token.html', {},context_instance=RequestContext(request))
 
 @login_required
 def profile(request):

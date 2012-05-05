@@ -3,20 +3,24 @@
 {% block content %}
 
 <p>Ajouter un petit cours</p>
-<form method="post" action="">
+<form id="addform" method="post" action="">
+{% csrf_token %}
 <p>Titre du petit cours :</p>
 <input type="text" name="title" />
 <p>C'est où :</p>
-<input type="text" name="location" />
+<input type="text" id="address"  name="address" placeholder="Saisissez l'adresse" size="50"/>
+<input type='hidden' name='lat' />
+<input type='hidden' name='lng' />
 <p>Contact :</p>
-<input type="text" name="contact" />
+<input type="text" name="contact" size="30"/>
 <p>Matiere :</p>
 <input type="text" name="matiere" />
 <p>Niveau :</p>
 <input type="text" name="niveau" />
 <p>Description :</p>
 <input type="text" name="description" />
-<br /><input type="submit" />
+<br /><!--<input type="submit" />-->
+<input type='submit' value='Terminer' />
 </form>
 
 {% endblock %}

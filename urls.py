@@ -7,12 +7,13 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'sitebde.views.home', name='home'),
-    #(r'^timetable/', include('sitebde.timetable.urls')),
+    #(r'^timetable/', include('timetable.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     (r'^admin/?', include(admin.site.urls)),
+	(r'^token/?$','trombi.views.token'),
     (r'^messages/?$','messages.views.index'),
     (r'^messages/(?P<message_id>\d+)/$', 'messages.views.detail'),
     (r'^messages/(?P<message_id>\d+)/lire/(?P<no_cache>\S+)/$', 'messages.views.lire'),

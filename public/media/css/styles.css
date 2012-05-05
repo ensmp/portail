@@ -187,8 +187,8 @@ text-align:right;
 }
 
 #bouton_recherche {
-	float:right;
-	display:block;
+	/*float:right;*/
+	/*display:block;*/
 	padding-top:6px;
 	font-family: Verdana,serif;
 	font-size: 1.0em;
