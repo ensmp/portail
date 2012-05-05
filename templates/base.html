@@ -84,6 +84,7 @@
     </div>
 	
 	<div id="barre_droite">
+		<p>Notes</p>
 		{% load obtenir_notes %}
 		{% obtenir_todos request.user.username %}
 		<ul>
@@ -91,7 +92,15 @@
                <li>{{todo.contenu}}</li>  
         {% endfor %}
 		</ul>
-	</div
+		<p>Anniversaires</p>
+		{% load obtenir_anniv %}
+		{% obtenir_liste_annivs %}
+		<ul>
+		{% for eleve in anniv_list %}
+               <li>{{eleve.first_name}} {{eleve.last_name}} (P{{eleve.promo}})</li>  
+        {% endfor %}
+		</ul>
+	</div>
 	
 </div>
 
