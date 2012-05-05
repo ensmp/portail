@@ -6,7 +6,7 @@ from django.template import RequestContext
 from icalendar import Calendar, Event, FixedOffset
 from datetime import datetime
 from dateutil.tz import tzoffset
-import urllib2
+import os, urllib2, json
 import re
 
 months = {
@@ -24,6 +24,8 @@ months = {
 	u'December' : 12
 }
 
+cours = json.load(open(os.path.dirname(__file__) + '/codes.json'))
+
 titlere = re.compile(r'<h1>([^<]*)', re.U)
 eventre = re.compile(r'<tr><td align=["\']right["\']>(?:\w+) (?P<day>\d+) (?P<month>[é\w]+) (?P<year>\d+)</td><td>(?P<starth>\d+):(?P<startm>\d+) - (?P<endh>\d+):(?P<endm>\d+)</td><td><b>(?P<descr>[^<]*)</b></td></tr>', re.U)
 
@@ -39,9 +41,10 @@ def getEvents(code):
 		evt.add('dtend', datetime(int(m.group('year')), months[m.group('month')], int(m.group('day')), int(m.group('endh')),int(m.group('endm')), tzinfo=tzoffset("GMT+2",7200)))
 		yield evt
 
-def getics(request,codes):
+def getics(request):
 	cal = Calendar()
-	for code in codes.split('-'):
+	codes = request.GET.getlist('codes')
+	for code in codes:
 		for evt in getEvents(code):
 			cal.add_component(evt)
 	response = HttpResponse(content_type="text/calendar; charset=utf-8")
@@ -51,4 +54,4 @@ def getics(request,codes):
 
 @login_required
 def index(request):
-	return render_to_response('timetable/timetable.html', context_instance=RequestContext(request))
+	return render_to_response('timetable/timetable.html', {'cours': cours}, context_instance=RequestContext(request))

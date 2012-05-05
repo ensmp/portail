@@ -2,15 +2,23 @@
 
 {% block header %}
 	<title>Emploi du temps</title>
-    <link rel="stylesheet" href="/media/list.css" />
+	<link rel="stylesheet" href="/media/list.css" />
+	<link rel="stylesheet" href="/media/chosen.css" />
+	<script type="text/javascript" src="/media/chosen.jquery.js"></script>
 {% endblock %}
 
 {% block content %}
 <p>Ceci permet d'avoir l'agenda des mines sur son TMP/ordinateur/google calendar. Mais je vous rappelle que seul l'emploi du temps affiché devant les BAL est à jour. D'autre part il n'y a pas les salles.</p>
-	<form id="codesform">
-	<label for="codes">Entrez les codes de vos cours (par exemple C6134 pour "Matériaux pour l'ingénieur")<br /></label>
-	<textarea name="codes" id="codes"></textarea><br />
-	<input type="button" id="poutre" value="Poutre" />
+	<form id="codesform" action="mines.ics" method="GET">
+	<label for="codes">Entrez la liste de vos cours (en effectuant une recherche par titre)<br /></label>
+	<p></p>
+	<div><select data-placeholder="Liste de cours" multiple class="chzn-select chzn-add" name="codes">
+	{% for c in cours %}
+		<option value="{{ c.code }}">{{ c.description }} ({{c.code}})</option>
+	{% endfor %}
+	</select></div>
+	<p></p>
+	<input type="submit" id="poutre" value="Poutre" />
 	</form>
 	<p id="lien">Vous pouvez utiliser le lien suivant: <a id=""></a></p>
 
@@ -18,13 +26,7 @@
 	<iframe width="640" height="480" src="http://www.youtube.com/embed/PKop1m-jLAU" frameborder="0" allowfullscreen></iframe>
 
 	<script type="text/javascript">
-		$('#poutre').click(function() {
-			var reg= /[CS][0-9]+/g ;
-  			var cours=$('#codes').val().match(reg);
-  			var url=document.URL+cours.join('-')+".ics";
-  			$('#lien a').text(url);
-  			$('#lien a').attr({'href':url});
-		});
+		$(".chzn-select").chosen();
 	</script>
 
 {% endblock %}
