@@ -2,6 +2,7 @@
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 from icalendar import Calendar, Event, FixedOffset
 from datetime import datetime
 from dateutil.tz import tzoffset
@@ -50,4 +51,4 @@ def getics(request,codes):
 
 @login_required
 def index(request):
-	return render_to_response('timetable/timetable.html')
+	return render_to_response('timetable/timetable.html', context_instance=RequestContext(request))
