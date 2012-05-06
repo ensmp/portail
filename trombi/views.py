@@ -6,6 +6,8 @@ from trombi.tools import update_profile
 from association.models import Adhesion
 from django.http import Http404, HttpResponse
 from django.utils import simplejson
+from urllib import urlretrieve
+import Image
 
 @login_required
 def index(request):
@@ -52,6 +54,29 @@ def detail_json(request,mineur_login):
 	
 def token(request):
 	return render_to_response('trombi/token.html', {},context_instance=RequestContext(request))
+
+@login_required
+def image(request,mineur_login):
+	try:
+		urlretrieve('https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{}.jpg'.format(mineur_login), 'img.jpg')
+		img = Image.open('img.jpg')
+		resp = HttpResponse(mimetype='image/jpg')
+		img.save(resp, 'JPEG')
+		return resp
+	except:
+		return HttpResponse('err')
+
+@login_required
+def thumbnail(request,mineur_login):
+	try:
+		urlretrieve('https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{}.jpg'.format(mineur_login), 'img.jpg')
+		img = Image.open('img.jpg')
+		img.thumbnail((44,44), Image.ANTIALIAS)
+		resp = HttpResponse(mimetype='image/jpg')
+		img.save(resp, 'JPEG')
+		return resp
+	except:
+		return HttpResponse('err')
 
 @login_required
 def profile(request):
