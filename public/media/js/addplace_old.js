@@ -1,10 +1,11 @@
 $(function() {
+
 	var geocoder = new google.maps.Geocoder();
 
 	var parisBounds = new google.maps.LatLngBounds(
 		new google.maps.LatLng(48.682902,2.052917),
 		new google.maps.LatLng(49.003746,2.646179));
-	var addrInput = document.getElementById('addressinput');
+	var addrInput = document.getElementById('address');
 	// var options = {
 	// 	bounds: parisBounds,
 	// 	types: ['restaurant']
@@ -17,6 +18,7 @@ $(function() {
 	});
 
 	$('#addform').submit(function(e) {
+		alert('submit');
 		e.preventDefault();
 		var noError = true;
 		var address = $('input[name="address"]').val();
@@ -26,10 +28,14 @@ $(function() {
 					$('input[name="address"]').val(results[0].formatted_address);
 					$('input[name="lat"]').val(results[0].geometry.location.lat());
 					$('input[name="lng"]').val(results[0].geometry.location.lng());
+					
 					var data = $('#addform').serialize();
+					alert(data);
 					$.post('', data, function(res) {
+						alert('post');
+
 						if (res == 'OK') {
-							window.location = '/petitscours/admin';
+							window.location = '/petitscours/admin/';
 						}
 						else {
 							alert(res);
@@ -42,4 +48,5 @@ $(function() {
 			}
 		);
 	});
+	
 });

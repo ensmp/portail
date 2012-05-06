@@ -1,22 +1,109 @@
-{% extends "petitscours/base.html" %}
+{% extends "base.html" %}
+
+{% block header %}
+    <link rel="stylesheet" href="/media/petitscours.css" />
+    <link rel="stylesheet" href="/media/list.css" />
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+	<script type="text/javascript" src="/media/addplace.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDfKsxFtJeFnncWjMMzSnfm_o9mpqF9J9Q&sensor=false"></script>
+	<script type="text/javascript" src="/media/petitscours.js"></script>
+	<script type="text/javascript">
+var map;
+var markers = [];
+var infowins = [];
+
+ function initialize() {
+	var posMeuh = new google.maps.LatLng(48.842035,2.341210);
+        var myOptions = {
+          center: posMeuh,
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"),
+            myOptions);
+		
+		var iconeMeuh = new google.maps.MarkerImage('{{ STATIC_URL }}icone_meuh.png');
+		
+		
+		
+		
+		
+		var markerMeuh = new google.maps.Marker({
+    position: posMeuh,
+    map: map,
+    title: "La meuh", 
+	icon: iconeMeuh,
+  })
+  markers.push(markerMeuh);
+  var infowin = new google.maps.InfoWindow({
+    content: '<p><b>La Meuh</b></p>'
+  });
+  infowins.push(infowin);
+  google.maps.event.addListener(markerMeuh, 'click', function() {
+    for (var i=0; i<infowins.length; i++) {
+      infowins[i].close();
+    }
+    infowin.open(map,markerMeuh);
+  });
+		
+		
+		
+		
+		
+		
+		
+		{% for cours in cours_list %}
+			addMarker("{{cours.title}}", "{{cours.description}}",{{cours.latitude|stringformat:"f"}}, {{cours.longitude|stringformat:"f"}}, "{{cours.matiere}}", "{{cours.niveau}}", {{ cours.requests.count }}, {{cours.id}});
+		{% endfor %}
+	}
+
+	
+	
+	
+	
+	function addMarker(title, descr, lat, lng, matiere, niveau,nombre, id) {
+  var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(lat, lng),
+    map: map,
+    title: title, 
+  })
+  markers.push(marker);
+  var infowin = new google.maps.InfoWindow({
+    content: '<p><b>' + title + '</b></p>' +
+	  '<p><b>Matiere</b> : '+matiere+' - <b>Niveau</b> : '+niveau+'<br>'+
+      descr + '<br>'+
+	  nombre+' demandes - <a href="/petitscours/request/'+id+'">Demander ce petit cours</a></p>'
+  });
+  infowins.push(infowin);
+  google.maps.event.addListener(marker, 'click', function() {
+    for (var i=0; i<infowins.length; i++) {
+      infowins[i].close();
+    }
+    infowin.open(map,marker);
+  });
+}
+    </script>
+	
+	<title>Petits Cours</title>
+{% endblock %}
+
 
 {% block content %}
 
-<p>{{ cours_list|length }} petits cours trouvés</p>
+<p>{{ cours_list|length }} petits cours trouvé{{ cours_list|length|pluralize }}</p>
 
-<div id="mapbox">
-<p style="text-align: center;"><a id="showmap" href="#">Afficher la carte</a></p>
-<div id="map" style="width: 600px; height: 300px; margin: auto;"></div>
-</div>
 
+ <div id="map_canvas" style="width:800px; height:600px; margin:auto;"></div>
+
+<!--
 <dl>
 {% for cours in cours_list %}
 <dt>{{ cours.title }} ajouté le {{ cours.date_added|date:"d/m/Y"}}</dt>
 <dd><b>Matière: </b>{{ cours.matiere }} <b>Niveau: </b>{{ cours.niveau }}<br />
-<b>Lieu: </b>{{ cours.address }}<br />
+<b>Lieu: </b>{{ cours.address }} <br />
 {{ cours.description }}
 <br />{{ cours.requests.count }} demandes. <a href="/petitscours/request/{{ cours.id }}">Demander ce petit cours</a></dd>
 {% endfor %}
 </dl>
-
+-->
 {% endblock %}
