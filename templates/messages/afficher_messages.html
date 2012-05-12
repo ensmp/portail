@@ -1,4 +1,5 @@
 ﻿<link rel="stylesheet" href="/media/messages.css" />
+<script type="text/javascript" src="/media/place.js"></script>
 <div id = "div_messages">
 {% if list_messages %}
 <ul>
@@ -11,10 +12,12 @@
 	<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{message.association.pseudo}}.png">
 {% endif %}
 {% if not afficher_bouton_important = 0 %}
-	<a class = "action_message" href="/messages/{{ message.id }}/classer_important/"><img class = "action_message" src="{{ STATIC_URL }}favorite.png"></a>
-{% endif %}
-{% if not afficher_bouton_non_important = 0 %}
-	<a class = "action_message" href="/messages/{{ message.id }}/classer_non_important/"><img class = "action_message" src="{{ STATIC_URL }}unfavorite.png"></a>
+	<!--<a class = "action_message" href="/messages/{{ message.id }}/classer_important/"><img class = "action_message" src="{{ STATIC_URL }}favorite.png"></a>
+	<a class = "action_message" href="/messages/{{ message.id }}/classer_non_important/"><img class = "action_message" src="{{ STATIC_URL }}unfavorite.png"></a>-->
+	<ul id="favourite">
+			<li><img class='favimg favourite' src="{{ STATIC_URL }}favourite.png" /></li>
+			<!--<li><img class='likeimg dislike' src="/img/dislikens.png" /></li>-->
+	</ul>
 {% endif %}
 {% if not afficher_bouton_lu = 0 %}
 	<a class = "action_message" href="/messages/{{ message.id }}/lire/"><img class = "action_message" src="{{ STATIC_URL }}check.png"></a> 

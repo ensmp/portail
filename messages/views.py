@@ -26,28 +26,28 @@ def detail(request, message_id):
 	return render_to_response('messages/detail.html', {'message': m},context_instance=RequestContext(request))
 	
 @login_required
-def lire(request, message_id, no_cache):
+def lire(request, message_id):
 	m = get_object_or_404(Message, pk=message_id)	
 	m.lu.add(request.user.get_profile())
 	m.save()
 	
-	return render_to_response('messages/action.html', {'message': m})
+	return render_to_response('messages/action.html', {'message': m},context_instance=RequestContext(request))
 	
 @login_required
-def classer_important(request, message_id, no_cache):
+def classer_important(request, message_id):
 	m = get_object_or_404(Message, pk=message_id)
 	m.important.add(request.user.get_profile())
 	m.save()
 	
-	return render_to_response('messages/action.html', {'message': m})
+	return render_to_response('messages/action.html', {'message': m},context_instance=RequestContext(request))
 	
-def classer_non_important(request, message_id, no_cache):
+def classer_non_important(request, message_id):
 	m = get_object_or_404(Message, pk=message_id)
 	m.important.remove(request.user.get_profile())
 	m.lu.add(request.user.get_profile())
 	m.save()
 	
-	return render_to_response('messages/action.html', {'message': m})
+	return render_to_response('messages/action.html', {'message': m},context_instance=RequestContext(request))
 	
 @login_required
 def tous(request):

@@ -1,86 +1,151 @@
+function createObject() {
+var request_type;
+var browser = navigator.appName;
+if(browser == "Microsoft Internet Explorer"){
+request_type = new ActiveXObject("Microsoft.XMLHTTP");
+}else{request_type = new XMLHttpRequest();}
+return request_type;
+}
+
+var http = createObject();
+
 $(function() {
-	update_ratings();
-	$('.unfavorite,.favorite').hover(function() {
-		var favorite = $(this).hasClass('favorite') ? 'favorite' : 'unfavorite' ;
+	//update_ratings();
+	$('.unfavourite,.favourite').hover(function() {
+		var favourite = $(this).hasClass('favourite') ? 'favourite' : 'unfavourite' ;
 		if (!$(this).hasClass('clicked'))
-			$(this).attr({'src':'/img/'+favorite+'hover.png'});
+			$(this).attr({'src':'/media/'+favourite+'hover.png'});
 	},function() {
-		var favorite = $(this).hasClass('favorite') ? 'favorite' : 'unfavorite' ;
+		var favourite = $(this).hasClass('favourite') ? 'favourite' : 'unfavourite' ;
 		if (!$(this).hasClass('clicked'))
-			$(this).attr({'src':'/img/'+favorite+'ns.png'});
+			$(this).attr({'src':'/media/'+favourite+'.png'});
 	});
-	$('.favorite,.unfavorite').click(function() {
-		var placename = $('#placename').text();
+	
+	
+	
+	
+	
+	/***  CLICK ***/
+	$('.favourite,.unfavourite').click(function(event) {
+	    event.preventDefault();
 		var kind = $(this).parent().parent().attr('id');
-		var favorite = $(this).hasClass('favorite') ? 'favorite' : 'unfavorite' ;
+		//var favourite = $(this).hasClass('favourite') ? 'favourite' : 'unfavourite' ;
 		var csrf = $('input[name="csrfmiddlewaretoken"]').attr('value');
-		if ($(this).hasClass('clicked'))
-			$.post('/places/'+placename+'/favorite/',{csrfmiddlewaretoken:csrf,'kind':kind,action:'unlike'},function() {
+		if ($(this).hasClass('favourite')) {
+		
+			var lien=$(this).parent().attr("href");				
+			http.open('get', lien+'classer_important/');
+			//http.onreadystatechange = handleAJAXReturn1;
+			http.send(null);
+			/**document.getElementById("compteur_messages").firstChild.nodeValue--;
+			divparent = $(event.target).parent().parent().parent();
+			divparent.fadeOut(500);*/
+			
+		
+		
+		
+		
+			$(this).attr({'src':'/media/unfavourite.png'});
+			$(this).addClass('unfavourite');
+			$(this).removeClass('favourite');
+		}
+		else {
+		
+			var lien=$(this).parent().attr("href");				
+			http.open('get', lien+'classer_non_important/');
+			//http.onreadystatechange = handleAJAXReturn1;
+			http.send(null);
+		
+			$(this).attr({'src':'/media/favourite.png'});
+			$(this).addClass('favourite');
+			$(this).removeClass('unfavourite');
+		}
+		/*if ($(this).hasClass('clicked'))
+			$.post('/places/'+placename+'/favourite/',{csrfmiddlewaretoken:csrf,'kind':kind,action:'unlike'},function() {
 				update_ratings();
 			}).error(function(msg) {
 					if (msg.status==403) window.location = '/facebook/login?next=/places/'+placename+'/';
 			});
 		else
-			$.post('/places/'+placename+'/favorite/',{csrfmiddlewaretoken:csrf,'kind':kind,action:favorite},function() {
-				update_ratings();
+			$.post('/places/'+placename+'/favourite/',{csrfmiddlewaretoken:csrf,'kind':kind,action:favourite},function() {
+				
 			}).error(function(msg) {
 					if (msg.status==403) window.location = '/facebook/login?next=/places/'+placename+'/';
-			});
+			});*/
+		//	update_ratings();
 	});
-
+/*
 	$('#likebar').hover(function() {
 		$('#likecountbox').show();
 	}, function() {
 		$('#likecountbox').hide();
-	});
+	});*/
 });
-
+/*
 function update_ratings() {
-	var criteria = new Array('service','value','ambiance','food','favorite');
+	var criteria = new Array('service','value','ambiance','food','favourite');
 	var placename = $('#placename').text();
-	$.getJSON('/places/'+placename+'/favorite/stats/json',function(data){
+	$.getJSON('/places/'+placename+'/favourite/stats/json',function(data){
 		$.each(criteria, function(key, val){
 			$('#'+val+' .rating').animate({width:3*data[val]});
 		});	
-		$('#likecountbox').html(data['favorite'] + ' favorite'
-			+ (data['favorite'] == 1? '':'s') + ', ' + data['unfavorite']
-			+ ' unfavorite' + (data['unfavorite'] == 1? '':'s'));
-		if (data['favorite'] + data['unfavorite'] > 0) {
-			likepct = 100 * (data['favorite']) / (data['favorite'] + data['unfavorite']);
+		$('#likecountbox').html(data['favourite'] + ' favourite'
+			+ (data['favourite'] == 1? '':'s') + ', ' + data['unfavourite']
+			+ ' unfavourite' + (data['unfavourite'] == 1? '':'s'));
+		if (data['favourite'] + data['unfavourite'] > 0) {
+			likepct = 100 * (data['favourite']) / (data['favourite'] + data['unfavourite']);
 			$('#likesbar').css({'background': '#3C2'}).animate({height:likepct+'%'});
-			$('#unfavoritesbar').css({'background': '#F33'}).animate({height:(100-likepct)+'%'});
+			$('#unfavouritesbar').css({'background': '#F33'}).animate({height:(100-likepct)+'%'});
 		}
 	});
-	$.getJSON('/places/'+placename+'/favorite/state/json',function(data) {
+	$.getJSON('/places/'+placename+'/favourite/state/json',function(data) {
 		$.each(criteria, function(key, val){
 			update_rating_for_place(val,data[val]);
 		});
-		if (data['favorite'] == 'l'|data['favorite'] == 'd') {
-			$('#likedetails .favorite,#likedetails .unfavorite').css({'display':'inline-block'});
+		if (data['favourite'] == 'l'|data['favourite'] == 'd') {
+			$('#likedetails .favourite,#likedetails .unfavourite').css({'display':'inline-block'});
 		} else {
-			$('#likedetails .favorite,#likedetails .unfavorite').css({'display':'none'});
+			$('#likedetails .favourite,#likedetails .unfavourite').css({'display':'none'});
 		}
 	});
 }
-function update_rating_for_place(kind,favorite) {
-	switch (favorite) {
+
+function update_rating_for_place(kind,favourite) {
+	switch (favourite) {
 		case 'l':
-			$('#'+kind+' .favorite').attr({'src':'/img/favorite.png'});
-			$('#'+kind+' .favorite').addClass('clicked');
-			$('#'+kind+' .unfavorite').attr({'src':'/img/defavoriser.png'});
-			$('#'+kind+' .unfavorite').removeClass('clicked');
+			$('#'+kind+' .favourite').attr({'src':'/img/favourite.png'});
+			$('#'+kind+' .favourite').addClass('clicked');
+			$('#'+kind+' .unfavourite').attr({'src':'/img/defavoriser.png'});
+			$('#'+kind+' .unfavourite').removeClass('clicked');
 		break;
 		case 'd':
-			$('#'+kind+' .unfavorite').attr({'src':'/img/unfavorite.png'});
-			$('#'+kind+' .unfavorite').addClass('clicked');
-			$('#'+kind+' .favorite').attr({'src':'/img/favoriser.png'});
-			$('#'+kind+' .favorite').removeClass('clicked');
+			$('#'+kind+' .unfavourite').attr({'src':'/img/unfavourite.png'});
+			$('#'+kind+' .unfavourite').addClass('clicked');
+			$('#'+kind+' .favourite').attr({'src':'/img/favoriser.png'});
+			$('#'+kind+' .favourite').removeClass('clicked');
 		break;
 		case 'n':
-			$('#'+kind+' .unfavorite').attr({'src':'/img/defavoriser.png'});
-			$('#'+kind+' .unfavorite').removeClass('clicked');
-			$('#'+kind+' .favorite').attr({'src':'/img/favoriser.png'});
-			$('#'+kind+' .favorite').removeClass('clicked');
+			$('#'+kind+' .unfavourite').attr({'src':'/img/defavoriser.png'});
+			$('#'+kind+' .unfavourite').removeClass('clicked');
+			$('#'+kind+' .favourite').attr({'src':'/img/favoriser.png'});
+			$('#'+kind+' .favourite').removeClass('clicked');
 		break;
 	};
+}*/
+
+
+function handleAJAXReturn1()
+{
+    alert(http.readyState);
+    if(http.readyState == 4)
+    {
+        if(http.status == 200)
+        {
+      //     alert(http.responseText);
+        }
+        else
+        {
+      //      alert("<strong>N/A</strong>");
+        }
+    }
 }

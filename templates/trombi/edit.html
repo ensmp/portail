@@ -1,4 +1,17 @@
-{% extends "trombi/base.html" %}
+{% extends "base.html" %}
+
+{% block header %}
+    <link rel="stylesheet" href="/media/trombi.css" />
+    <link rel="stylesheet" href="/media/list.css" />
+	<title>Trombi</title>
+	<script src="/media/jquery.js" type="text/javascript"></script>
+	<script src="/media/jquery.maskedinput.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	jQuery(function($){
+   $("#phone").mask("99 99 99 99 99");
+});
+</script>
+{% endblock %}
 
 {% block content %}
 
@@ -11,7 +24,7 @@
 </tr>
 <tr>
 <td><label for="phone">Téléphone :</label></td>
-<td><input type="text" value="{{ mineur.get_profile.phone }}" name="phone"></td>
+<td><input type="text" id="phone" value="{{ mineur.get_profile.phone }}" name="phone"></td>
 </tr>
 <tr>
 <td><label for="chambre">Chambre :</label></td>
