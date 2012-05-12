@@ -6,12 +6,24 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.utils import simplejson
 from django.template import RequestContext
 from django.db.models import Q
 from datetime import datetime
 
 
+def index_json(request):
+	message_list = Message.objects.order_by('-date')
+	response = HttpResponse(mimetype='application/json')
+	response.write(simplejson.dumps([{
+			'association': m.association.nom,
+			'objet': m.objet,
+			'contenu': m.contenu,
+			'date': str(m.date.day)+'/'+str(m.date.month)+'/'+str(m.date.year)+ " " + str(m.date.hour) + ":" + str(m.date.minute), 
+			'expediteur': m.expediteur.user.username
+		} for m in message_list]))
+	return response
 
 @login_required
 def index(request):

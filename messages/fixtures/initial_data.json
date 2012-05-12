@@ -1,0 +1,86 @@
+[
+  {
+    "pk": 4, 
+    "model": "messages.message", 
+    "fields": {
+      "objet": "Nouvelle \u00e9tude", 
+      "important": [], 
+      "lu": [], 
+      "contenu": "Bonsoir \u00e0 tous,\r\n\r\nJuMP vous propose deux nouvelles \u00e9tudes.\r\n\r\nIl s'agit de r\u00e9aliser deux \u00e9tudes de march\u00e9 pour une entreprise de cosm\u00e9tique:\r\n-la premi\u00e8re sur le march\u00e9 actuel de la cigarette \u00e9lectronique\r\n-la seconde sur le march\u00e9 potentiel que repr\u00e9senterait un vaporisateur cutan\u00e9 \u00e0 fins esth\u00e9tiques/th\u00e9rapeutiques (c\u2019est  compl\u00e8tement in\u00e9dit!)\r\n\r\nSpammez-moi si vous \u00eates int\u00e9ress\u00e9s!\r\n\r\nBon weekend et bonne f\u00eate \u00e0 tous,\r\n\r\nCynthia", 
+      "destinataire": null, 
+      "date": "2012-05-04T21:50:24", 
+      "expediteur": 401, 
+      "association": 5
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "messages.message", 
+    "fields": {
+      "objet": "Etude de march\u00e9", 
+      "important": [], 
+      "lu": [], 
+      "contenu": "Bonjour \u00e0 tous,\r\n\r\nJuMP est heureuse de pouvoir vous proposer une nouvelle \u00e9tude de march\u00e9 garantie 100% clean, 0% info.\r\nIl s'agit d'une \u00e9tude sur le th\u00e8me de l'hygi\u00e8ne et du nettoyage. Le client est un grossiste en produits et mat\u00e9riels d'entretien qui souhaite davantage cibler les entreprises de nettoyage, les PME/PMI, les caf\u00e9, h\u00f4tels et restaurants, bref tout ce qui a besoin d'un coup de balai de temps en temps. Si vous vous sentez de donner un coup de pouce \u00e0 M. Propre, spammez-moi !", 
+      "destinataire": null, 
+      "date": "2012-05-13T00:13:31", 
+      "expediteur": 373, 
+      "association": 5
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "messages.message", 
+    "fields": {
+      "objet": "La derni\u00e8re externe", 
+      "important": [], 
+      "lu": [], 
+      "contenu": "R\u00e9serve ton Lundi 21 Mai pour la derni\u00e8re externe de l'ann\u00e9e, j'ai nomm\u00e9 : la Minbabwe ! Tu as toujours \u00e9t\u00e9 inspir\u00e9 par le berceau de l'humanit\u00e9 (tu en as m\u00eame fait ton AE !) ? Alors cette soir\u00e9e est pour toi !\r\n\r\nUn programme de folie t'attends :\r\n\r\n- 20h00 : une surprise t'attends dans ton couloir de la meuh ! Sois pr\u00eat !\r\n- 21h00 : cours en FAO pour participer \u00e0 un cours de Zumba, une danse africaine facile et rythm\u00e9e pour qu'enfin tu saches shaker ton booty en soir\u00e9es ! Tout cela accompagn\u00e9 d'un OB riche en cocktails savoureux !\r\n- Puis deux d\u00e9parts pour la Serena ! C'est au 92 rue de Richelieu dans le 2e. Une bo\u00eete qui vient d'ouvrir aux \u00e9tudiants, alors viens d\u00e9couvrir cette bo\u00eete encore jamais foul\u00e9e par le pied d'un mineur (ou presque...) et danse sur les sons de Minestry Of Sound accompagn\u00e9s d'un Jumbe Live !\r\n\r\n1A : Viens oublier ta p\u00e2le de MMS et de Maths !\r\n2A : Viens \u00e0 ta derni\u00e8re externe avant de tr\u00e8s longs mois loin de la Mine...\r\n3A : Viens.\r\n\r\nLe p\u00f4le IDC (une bise \u00e0 ceux qui trouvent).", 
+      "destinataire": null, 
+      "date": "2012-05-13T00:14:31", 
+      "expediteur": 364, 
+      "association": 1
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "messages.message", 
+    "fields": {
+      "objet": "Passation", 
+      "important": [], 
+      "lu": [], 
+      "contenu": "Bonjour \u00e0 tous,\r\n\r\nIl est temps pour le BDA de laisser place \u00e0 une nouvelle \u00e9quipe.\r\n\r\nJe vous rappelle que le BDA, c'est l'association qui vous propose des places \u00e0 tarif r\u00e9duit pour des concerts, des expositions, des films, des op\u00e9ras, des p\u00e8ces de th\u00e9\u00e2tres, un voyage culturel ... C'est la seule association qui permet de profiter vraiment de l'avantage unique qu'offre une ville comme Paris, \u00e0 savoir, tous le meilleur des sorties culturelles.\r\n\r\nAlors, si vous avez envie de faire partager votre passion en faisant plaisir aux Mineurs, c'est l'occasion r\u00eav\u00e9e !\r\n\r\nSi vous \u00eates int\u00e9ress\u00e9s par un ou plusieurs des p\u00f4les suivants contactez moi :\r\nP\u00f4le cin\u00e9\r\nP\u00f4le Classique\r\nP\u00f4le non classique\r\nP\u00f4le Op\u00e9ra-Ballet\r\nP\u00f4le Expo\r\nP\u00f4le Alternatif\r\nP\u00f4le Jazz\r\nP\u00f4le Th\u00e9\u00e2tre\r\nP\u00f4le Voyage\r\nSalle ins'\r\nRespo geek\r\n\r\nMais le BDA, c'est pas que des p\u00f4les, c'est aussi un Bureau, alors si vous voulez \u00eatre en plus secr\u00e9taire, responsable f\u00e9d\u00e9ration, tr\u00e9sorier ou m\u00eame (vice) pr\u00e9sident, pr\u00e9cisez le \u00e9galement !\r\n\r\nA bient\u00f4t pour le concert de fin d'ann\u00e9e (le 7 mai je le rappelle !)\r\n\r\nJM", 
+      "destinataire": null, 
+      "date": "2012-05-12T00:13:31", 
+      "expediteur": 233, 
+      "association": 2
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "messages.message", 
+    "fields": {
+      "objet": "Wifi \u00e0 l'octo", 
+      "important": [], 
+      "lu": [], 
+      "contenu": "Parce que toi aussi tu trouves que \u00e7a ne spamme pas assez les soirs de BALM.  \r\n\r\nParce que tu aimes bien lire lesdits spams avec ton Terminal Mobile Performant.\r\n\r\nParce que tu veux twitter en direct tes commentaires du d\u00e9bat car t'es beaucoup trop web 2.0 comme mec.\r\n\r\nNom de la borne: Octogone\r\nMot de passe: vamosalaplaya\r\n\r\nFernand  \r\n", 
+      "destinataire": null, 
+      "date": "2012-05-13T00:13:31", 
+      "expediteur": 128, 
+      "association": 8
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "messages.message", 
+    "fields": {
+      "objet": "CDMGE !!! Go go go !!!", 
+      "important": [], 
+      "lu": [], 
+      "contenu": "Salut !\r\n\r\nLe BDS vous propose un autre tournoi sportif pour cette fin d'ann\u00e9e, il s'agit du CDMGE (Challenge Du Monde des Grandes Ecoles) qui se d\u00e9roulera le samedi 2 juin au stade Charlety. C'est un tournoi o\u00f9 les diff\u00e9rentes \u00e9coles s'affrontent dans divers sports afin de faire gagner leur \u00e9cole. Seront pr\u00e9sent un bon nombre d'entreprises (Logica, Nestl\u00e9, GDF Suez, \u2026) et une vedette fran\u00e7aise du 400m haies : St\u00e9phane Diagana.\r\n\r\n\r\nLes sports propos\u00e9s sont :\r\n- Foot masculin (foot \u00e0 5)\r\n- Foot f\u00e9minin (foot \u00e0 5 donc motivez-vous !!!!!) \r\n- Athl\u00e9tisme : 100m (H/F), 400m (H/F au choix), saut en hauteur (H/F au choix), saut en longueur (H/F au choix), relais 4x100m (4H et 2H/2F), 10km (H/F)\r\n- Supporter : viens glander aux c\u00f4t\u00e9s des autres, ou va voir les entreprises qui seront pr\u00e9sentes (envoie aussi un mail si t'es int\u00e9ress\u00e9)\r\nLa fanfare et les pompoms sont aussi convi\u00e9s \u00e0 l'\u00e9v\u00e8nement !\r\n\r\n\r\n\r\nLe but est d'avoir le maximum d'inscrits. En effet, pour pouvoir participer \u00e0 l'\u00e9v\u00e9nement, l'\u00e9cole se doit de regrouper un maximum de monde ! Il est donc important de s'inscrire rapidement !\r\n\r\nLe jour J, chaque comp\u00e9titeur, suivant son classement dans son sport, rapporte des points \u00e0 l'\u00e9cole. Il s'agit donc d'une comp\u00e9tition d'\u00e9quipe.\r\n\r\nEt le prix dans tout \u00e7a ? C'est gratuit !!! Le BDS prend tout en charge (en fait il n'y a rien \u00e0 prendre en charge\u2026c'est gratuit mais bon\u2026\u00e7a faisait genre on a de l'argent !).\r\n\r\nQue tu sois motiv\u00e9 pour le foot, l'athl\u00e9tisme (pas vraiment besoin d'en avoir fait avant\u2026), la fanfare, les pompoms, les supporters, etc\u2026 R\u00e9ponds vite \u00e0 ce mail (CE SOIR SVP) !", 
+      "destinataire": null, 
+      "date": "2012-05-13T00:25:31", 
+      "expediteur": 276, 
+      "association": 3
+    }
+  }
+]
