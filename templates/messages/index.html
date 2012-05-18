@@ -6,7 +6,7 @@
 	<title>Messages</title>
     
     <script src="/media/messages.js"></script>
-	<script type="text/javascript" src="/media/place.js"></script>
+	<script type="text/javascript" src="/media/read.js"></script>
 
 {% endblock %}
 
@@ -33,11 +33,16 @@
 <p>
 	<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{message.association.pseudo}}.png">
 	
-	
 	{% if request.user.get_profile in message.important.all %}
 	<a href="/messages/{{ message.id }}/"><img class='action_message unfavourite' src="{{ STATIC_URL }}unfavourite.png" /></a>
 	{% else %}
-	<a href="/messages/{{ message.id }}/"><img class='action_message favourite' src="{{ STATIC_URL }}favourite.png" /></a>
+	<a href="/messages/{{ message.id }}/"><img class='action_message favourite disparait' src="{{ STATIC_URL }}favourite.png" /></a>
+	{% endif %}
+	
+	{% if request.user.get_profile in message.lu.all %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message unread' src="{{ STATIC_URL }}unread.png" /></a>
+	{% else %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message read disparait' src="{{ STATIC_URL }}read.png" /></a>
 	{% endif %}
 	
 	De <strong>{{ message.association.nom }}</strong>, 
@@ -64,7 +69,7 @@ tous
 {% endfor %}
 </ul>
 {% else %}
-<p>Aucun message disponible.</p>
+<p>Bravo ! Tu as lu tous tes messages !</p>
 {% endif %}
 </div>
 

@@ -6,7 +6,7 @@
 	<title>Messages</title>
     
     <script src="/media/messages.js"></script>
-	<script type="text/javascript" src="/media/place.js"></script>
+	<script type="text/javascript" src="/media/read.js"></script>
 
 {% endblock %}
 
@@ -20,7 +20,6 @@
 </div>
 {% endblock %}
 {% block content %}
-
 
 
 <div id = "div_messages">
@@ -38,6 +37,13 @@
 	<a href="/messages/{{ message.id }}/"><img class='action_message unfavourite' src="{{ STATIC_URL }}unfavourite.png" /></a>
 	{% else %}
 	<a href="/messages/{{ message.id }}/"><img class='action_message favourite' src="{{ STATIC_URL }}favourite.png" /></a>
+	{% endif %}
+	
+	
+	{% if request.user.get_profile in message.lu.all %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message unread' src="{{ STATIC_URL }}unread.png" /></a>
+	{% else %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message read' src="{{ STATIC_URL }}read.png" /></a>
 	{% endif %}
 	
 	De <strong>{{ message.association.nom }}</strong>, 

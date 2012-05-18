@@ -96,14 +96,14 @@ text-align:right;
         float: left;  
         margin: 0;  
         padding: 0 15px 0 0;  
-        position: relative; /*--Declare X and Y axis base for sub navigation--*/  
+        position: relative; 
 		z-index:30;	
     }  
 	ul.topnav li.droite {  
         float: right;  
         margin: 0;  
         padding: 0 15px 0 0;  
-        position: relative; /*--Declare X and Y axis base for sub navigation--*/  
+        position: relative; 
     } 
     ul.topnav li a{  
         padding: 10px 5px;  
@@ -116,16 +116,16 @@ text-align:right;
        /* background: url(topnav_hover.png) repeat-x center top;  */
 		color:#fff;
     }  
-    ul.topnav li span.fleche { /*--Drop down trigger styles--*/  
+    ul.topnav li span.fleche {
         width: 17px;  
         height: 35px;  
         float: left;  
         background: url(subnav_btn.png) no-repeat center top;  
     }  
-    ul.topnav li span.fleche.subhover {background-position: center bottombottom; cursor: pointer;} /*--Hover effect for trigger--*/  
+    ul.topnav li span.fleche.subhover {background-position: center bottombottom; cursor: pointer;} 
     ul.topnav li ul.subnav {  
         list-style: none;  
-        position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/  
+        position: absolute; 
         left: 0; top: 35px;  
         background: #333;  
         margin: 0; padding: 0;  
@@ -137,8 +137,8 @@ text-align:right;
     }  
     ul.topnav li ul.subnav li{  
         margin: 0; padding: 0;  
-        border-top: 1px solid #252525; /*--Create bevel effect--*/  
-        border-bottom: 1px solid #444; /*--Create bevel effect--*/  
+        border-top: 1px solid #252525;   
+        border-bottom: 1px solid #444; 
         clear: both;  
         width: 170px;  
 		background: #000;
@@ -152,7 +152,7 @@ text-align:right;
         padding-left: 20px;
 		z-index:10;
     }  
-    html ul.topnav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/  
+    html ul.topnav li ul.subnav li a:hover { 
         background: #222 url(dropdown_linkbg.gif) no-repeat 10px center;  
     }  
 	
@@ -178,7 +178,8 @@ text-align:right;
 }
 #string_recherche {
 	position:relative;
-	top:8px;
+	top:-3px;
+	left:5px;
     background-color:transparent;
     border:none;
     font-size:13px;
@@ -208,11 +209,53 @@ text-align:right;
  position:absolute;
  top:100px;
  right:20px;
- width:150px;
- padding-right:10px;
+ width:230px;
+}
+
+#barre_gauche {
+ position:absolute;
+ top:100px;
+ left:20px;
+ width:230px;
+}
+
+#evenements {
  background-color: #fff;
- padding:10px;
  border-radius: 10px;
+ padding: 1px 10px 6px 10px;
+}
+
+#evenements ul, li {
+	padding:0;
+
+}
+
+span.tooltip-from-event {
+	background: url(event-gradient-hover.gif) repeat scroll 0% 0% rgb(230, 230, 230);
+	border:1px solid rgb(180, 180, 180);
+	padding:5px 8px;
+	margin:0;
+	height:18px
+}
+
+#todo {
+position:relative;
+height:203px;
+background: url(todo.png) no-repeat;  
+background-position: 0 0;
+padding: 1px 10px 0 20px;
+}
+
+#todo form {
+position:absolute;
+bottom:40px;
+margin:auto;
+}
+
+#birthday {
+ background-color: #fff;
+ border-radius: 10px;
+ padding: 0 10px 0 10px;
 }
 
 div.message{
@@ -230,3 +273,4 @@ div.message hr{
 div.message span.signature {
 	line-height:90%;
 }
+

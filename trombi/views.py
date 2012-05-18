@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.models import User
+from trombi.models import UserProfile
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from trombi.tools import update_profile
@@ -11,7 +12,7 @@ import Image
 
 @login_required
 def index(request):
-	mineur_list = User.objects.order_by('username')
+	mineur_list = UserProfile.objects.order_by('-promo','last_name')
 	return render_to_response('trombi/index.html', {'mineur_list': mineur_list},context_instance=RequestContext(request))
 
 def index_json(request):

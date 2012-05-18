@@ -197,3 +197,12 @@ a:hover {
 #bouton_recherche:hover {
 	color: #fff;	
 }
+
+span.tooltip-from-event {
+	background: url(event-gradient-hover.gif) repeat scroll 0% 0% rgb(230, 230, 230);
+	border:1px solid rgb(180, 180, 180);
+	padding:5px 8px;
+	font-weight:bold;
+	margin:0pt 6px 0pt 0pt;
+	height:18px
+}

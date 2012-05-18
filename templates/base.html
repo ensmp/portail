@@ -5,10 +5,15 @@
 	<!--<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>-->
 	<script src="/media/jquery-1.7.1.min.js"></script>
 	<script src="/media/script.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script type="text/javascript" src="/media/spinners.js"></script>
+	<script type="text/javascript" src="/media/tipped.js"></script>
+
 	
 
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" href="/media/styles.css" />
+	<link rel="stylesheet" type="text/css" href="/media/tipped.css"/>
 	{% block header %}{% endblock %}
 </head>
 
@@ -85,15 +90,27 @@
     </div>
 	
 	<div id="barre_droite">
-		<p>Notes</p>
+	
+		<div id = "todo">
+		<p><strong>Notes</strong></p>
 		{% load obtenir_notes %}
-		{% obtenir_todos request.user.username %}
+		{% if request.user.is_authentificated %}
+			{% obtenir_todos request.user.username %}
+		{% endif %}
 		<ul>
 		{% for todo in todo_list %}
                <li>{{todo.contenu}}</li>  
         {% endfor %}
 		</ul>
-		<p>Anniversaires</p>
+		<form method="post" action="todo/nouveau/">
+		{% csrf_token %}
+		<input type="text" size = "18" name="note">
+		<input type="submit" value="Noter"/></form>		
+		</div>
+		
+		
+		<div id = "birthday">
+		<p><strong>Anniversaires</strong></p>
 		{% load obtenir_anniv %}
 		{% obtenir_liste_annivs %}
 		<ul style="list-style:none; padding:0;">
@@ -102,7 +119,47 @@
                <li><a href = "/people/{{eleve.user.username}}">{{eleve.first_name}} {{eleve.last_name}} (P{{eleve.promo}})</a></li>  
         {% endfor %}
 		</ul>
+		</div>
 	</div>
+	
+	
+	<div id="barre_gauche">
+	
+		<div id = "evenements">
+		<p><strong>Evénements</strong></p>
+		{% load obtenir_evenements %}
+		{% obtenir_events %}
+		{% if events_list %}
+		<ul>
+		{% for event in events_list %}
+		{% ifchanged %}</ul><b>{{ event.date|date:"l" }}</b><ul>{% endifchanged %}
+               <span class='tooltip-from-event' data-tooltip-id="tooltip-event-{{event.id}}">{{event.titre}}</span> 
+			    <div id='tooltip-event-{{event.id}}' style='display:none'>
+					<p>Organisé par <strong>{{event.association}}</strong></p>
+					<p>Le <strong>{{event.date|date:"l d F" }}</strong> à <strong>{{event.date|date:"H:i" }}</strong></p>
+					<p>{{event.description|linebreaksbr}}</p>
+				</div>
+        {% endfor %}
+		</ul>	
+		{% else %}
+		<p>Aucun événement planifié</p>
+		{% endif %}
+		</div>
+		
+
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+    // loop over all elements creating a tooltip based on their data-tooltip-id attribute
+    $('.tooltip-from-event').each(function() {
+      var selector = '#' + $(this).data('tooltip-id');
+      Tipped.create(this, $(selector)[0], {
+	maxWidth: 400,
+    skin: 'cloud',
+    hook: 'rightbottom'
+  });
+    });
+  });
+</script>
 	
 </div>
 

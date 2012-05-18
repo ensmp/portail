@@ -1,4 +1,14 @@
-﻿{% extends "messages/base.html" %}
+﻿{% extends "base.html" %}
+
+
+{% block header %}
+	<link rel="stylesheet" href="/media/messages.css" />
+	<title>Messages</title>
+    
+    <script src="/media/messages.js"></script>
+	<script type="text/javascript" src="/media/read.js"></script>
+
+{% endblock %}
 
 {% block onglets %}
 <div id="menu_messages">
@@ -10,10 +20,49 @@
 </div>
 {% endblock %}
 {% block content %}
-{% load set_var %}
-{% set afficher_bouton_important = 0 %}
-{% set afficher_bouton_non_important = 1 %}
-{% set afficher_bouton_lu = 0 %}
-{% set afficher_auteur = 1 %}
-{% include "messages/afficher_messages.html" %}
+
+
+<div id = "div_messages">
+{% if list_messages %}
+<ul>
+{% for message in list_messages %}
+{% load comments %}
+{% get_comment_count for message as comment_count %}
+<li> <div class="message">
+<p>
+	<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{message.association.pseudo}}.png">
+	
+	{% if request.user.get_profile in message.important.all %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message unfavourite disparait' src="{{ STATIC_URL }}unfavourite.png" /></a>
+	{% else %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message favourite' src="{{ STATIC_URL }}favourite.png" /></a>
+	{% endif %}
+	
+	De <strong>{{ message.association.nom }}</strong>, 
+
+{% if message.est_recent %}
+il y a {{ message.date|timesince }}
+{% else %}
+le {{ message.date|date:"d F Y H:i" }}
+{% endif %}<br>
+{{ comment_count }} commentaires<br>
+<a href="/messages/{{ message.id }}/">{{ message.objet }}</a></p>
+
+<p><br>{{ message.contenu|linebreaksbr }}</p>
+<hr>
+<span class="signature">Visible par
+{% if message.destinataire %}
+{{message.destinataire.nom}}
+{% else %}
+tous
+{% endif %}
+</span>
+</div>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Pour toi rien n'a d'importance ?</p>
+{% endif %}
+</div>
 {% endblock %}

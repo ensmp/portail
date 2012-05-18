@@ -1,7 +1,10 @@
 {% extends "trombi/base.html" %}
 
 {% block content %}
-
+<!--PRECHARGEMENT DES VIGNETTES-->
+{% for mineur in mineur_list %}
+<img src = "https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{mineur.user.username}}.jpg" style="display:none" alt="">
+{% endfor %}
 
 <table>
 	<tr>
@@ -13,11 +16,11 @@
 	</tr>
     {% for mineur in mineur_list %}
 	<tr>
-	<td class="login"><a href="/people/{{ mineur.username }}/">{{ mineur.username }}</a></td>
-	<td>{{ mineur.get_profile.first_name }} {{ mineur.get_profile.last_name|upper }}</td>
-	<td>{{ mineur.get_profile.promo }}</td>
-	<td>{{ mineur.get_profile.phone }}</td>
-	<td>{{ mineur.get_profile.chambre }}</td>
+	<td class="login"><a href="/people/{{ mineur.user.username }}/">{{ mineur.user.username }}</a></td>
+	<td>{{ mineur.first_name }} {{ mineur.last_name|upper }}</td>
+	<td>{{ mineur.promo }}</td>
+	<td>{{ mineur.phone }}</td>
+	<td>{{ mineur.chambre }}</td>
 	</tr>
 	</a>
     {% endfor %}

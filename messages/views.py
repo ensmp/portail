@@ -28,7 +28,7 @@ def index_json(request):
 @login_required
 def index(request):
 	#list_messages = Message.objects.all()
-	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all())).exclude(lu__user__username=request.user.username).exclude(important__user__username=request.user.username).order_by('-date')
+	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all())).exclude(lu__user__username=request.user.username).order_by('-date')
 	return render_to_response('messages/index.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 	
 @login_required
@@ -49,14 +49,21 @@ def lire(request, message_id):
 def classer_important(request, message_id):
 	m = get_object_or_404(Message, pk=message_id)
 	m.important.add(request.user.get_profile())
+	m.lu.add(request.user.get_profile())
 	m.save()
 	
 	return render_to_response('messages/action.html', {'message': m},context_instance=RequestContext(request))
 	
 def classer_non_important(request, message_id):
 	m = get_object_or_404(Message, pk=message_id)
-	m.important.remove(request.user.get_profile())
-	m.lu.add(request.user.get_profile())
+	m.important.remove(request.user.get_profile())	
+	m.save()
+	
+	return render_to_response('messages/action.html', {'message': m},context_instance=RequestContext(request))
+	
+def classer_non_lu(request, message_id):
+	m = get_object_or_404(Message, pk=message_id)
+	m.lu.remove(request.user.get_profile())
 	m.save()
 	
 	return render_to_response('messages/action.html', {'message': m},context_instance=RequestContext(request))
