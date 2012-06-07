@@ -15,13 +15,13 @@
 {% endfor %}
 
 <h2>Membres</h2>
-<ul>
+<div>
 	{% for adhesion in membres %}
-		<li>
+		<div class="portrait">
 		<a href = "/people/{{adhesion.eleve.user.username}}">{{adhesion.eleve.first_name}} {{adhesion.eleve.last_name|upper}}</a> {%if adhesion.role != ""%}({{adhesion.role}}){% endif %}
-		</li>
+		</div>
 	{% endfor %}
-</ul>
+</div>
 <h2>Liste des messages</h2>
 
 {% load set_var %}

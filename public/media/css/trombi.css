@@ -17,19 +17,31 @@ td {
 	margin: 0px;
 	padding: 2px;
 }
+/*
 #pictures, #picture {
-	position: absolute;
+	position: fixed;
 	left: 50%;
-	top: 15px;
-	margin-left: 310px;
+	top: 192px;
+	margin-left: 285px;
 	border: 1px solid #ccc;
 	box-shadow: 0px 0px 4px #aaa;
 }
-#pictures {
-	top: 67px;
-	margin-left: 320px;
-	position: fixed;
-}
+*/
 #pictures img {
 	display: none;
+}
+
+#pictures {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: 285px;
+  /*margin-top: 192px;*/
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 4px #aaa;
+}
+
+#pictures.fixed {
+  position: fixed;
+  top: 0;
 }

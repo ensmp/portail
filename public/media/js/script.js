@@ -24,11 +24,11 @@ $(function() {
 		
 		$("ul.topnav li ").hover(function() { 
       
-            $(this).find("ul.subnav").slideDown('fast').show();
+            $(this).find("ul.subnav")/*.slideDown('fast')*/.show();
       
             $(this).hover(function() {  
             }, function(){  
-                $(this).find("ul.subnav").slideUp('slow');
+                $(this).find("ul.subnav")/*.slideUp('slow')*/.hide();
             });  
       
             

@@ -51,7 +51,7 @@ $(function() {
 			
 			if ($(this).hasClass('disparait')) {
 			document.getElementById("compteur_messages").firstChild.nodeValue--;
-			divparent = $(event.target).parent().parent().parent();
+			divparent = $(event.target).parent().parent().parent().parent().parent().parent().parent();
 			divparent.fadeThenSlideToggle();
 			}
 
@@ -68,7 +68,7 @@ $(function() {
 			http.send(null);
 						
 			if ($(this).hasClass('disparait')) {
-			divparent = $(event.target).parent().parent().parent();
+			divparent = $(event.target).parent().parent().parent().parent().parent().parent().parent();
 			divparent.fadeThenSlideToggle();
 			}
 		
@@ -115,7 +115,8 @@ $(function() {
 			
 			document.getElementById("compteur_messages").firstChild.nodeValue--;
 			if ($(this).hasClass('disparait')) {			
-			divparent = $(event.target).parent().parent().parent();
+			
+			divparent = $(event.target).parent().parent().parent().parent().parent().parent().parent();
 			divparent.fadeThenSlideToggle();
 			}
 

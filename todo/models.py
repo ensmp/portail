@@ -9,3 +9,6 @@ class Todo(models.Model):
 	contenu = models.TextField()
 	date = models.DateTimeField(default=datetime.now(), blank=True)
 	fait = models.BooleanField()
+	
+	def __unicode__(self):
+		return self.contenu

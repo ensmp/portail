@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block header %}
+	<title>Vendome</title>		
+{% endblock %}
+
+{% block content %}
+
+<ul>
+{% for vendome in liste_vendomes %}
+	<li><a href="{{ STATIC_URL }}{{vendome.fichier}}">{{vendome.titre}}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

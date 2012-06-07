@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
-
+import os
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+	(r'^media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media')}),
     (r'^admin/?', include(admin.site.urls)),
 	(r'^token/?$','trombi.views.token'),
     (r'^messages/?$','messages.views.index'),
@@ -29,14 +30,16 @@ urlpatterns = patterns('',
     (r'^associations/(?P<association_pseudo>\w+)/ajouter_membre/$', 'association.views.ajouter_membre'),
     (r'^associations/(?P<association_pseudo>\w+)/supprimer_membre/$', 'association.views.supprimer_membre'),
 	(r'^associations/(?P<association_pseudo>\w+)/poster_message/$', 'messages.views.nouveau'),
+	(r'^associations/vendome/nouveau/?$','vendome.views.index'),
+	(r'^associations/vendome/page/?$','vendome.views.page'),
     (r'^people/?$','trombi.views.index'),
     (r'^people/json$','trombi.views.index_json'),
     (r'^people/(?P<mineur_login>\w+)/?$','trombi.views.detail'),
     (r'^people/(?P<mineur_login>\w+)/json$','trombi.views.detail_json'),
     (r'^people/(?P<mineur_login>\w+)/img$','trombi.views.image'),
     (r'^people/(?P<mineur_login>\w+)/thumb$','trombi.views.thumbnail'),
-    (r'^people/(?P<mineur_login>\w+)/edit/?$','trombi.views.edit'),
-    (r'^objetstrouves/?$','objettrouve.views.index'),
+    (r'^people/(?P<mineur_login>\w+)/edit/?$','trombi.views.edit'),    
+	(r'^objetstrouves/?$','objettrouve.views.index'),
     (r'^objetstrouves/ajouter/?$','objettrouve.views.ajouter'),
     (r'^objetstrouves/supprimer/?$','objettrouve.views.supprimer'),
     (r'^petitscours/?$','petitscours.views.index'),
@@ -46,6 +49,7 @@ urlpatterns = patterns('',
     (r'^petitscours/admin/give/(?P<id>\d+)/(?P<mineur_login>\w+)/?$','petitscours.views.give'),
     (r'^petitscours/request/(?P<request_id>\d+)/?$','petitscours.views.add_request'),
 	(r'^todo/nouveau/?$','todo.views.nouveau'),
+	(r'^todo/xhr_test/?$','todo.views.xhr_test'),
     (r'^recherche/?$','recherche.views.search'),
     (r'^/?$','streamine.views.index'),
     (r'^accounts/profile/$', 'trombi.views.profile'),

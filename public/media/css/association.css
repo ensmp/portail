@@ -10,3 +10,9 @@ h1 {
 ul {
 list-style: none;
 }
+
+div.portrait {
+	width:150px;
+	height:200px;
+	
+}

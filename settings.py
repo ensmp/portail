@@ -79,6 +79,7 @@ STATICFILES_DIRS = (
     basepath + 'public/media/css',
     basepath + 'public/media/js',
     basepath + 'public/media/img',
+	basepath + 'public/media/docs',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -150,6 +151,7 @@ INSTALLED_APPS = (
     'timetable',
 	'todo',
 	'evenement', 
+	'vendome', 
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

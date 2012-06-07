@@ -1,13 +1,15 @@
 #menu_messages {
+	font-family: Arial;
 	overflow:hidden;
-	background-color:dae0d2;
 	background-image:url(fond.png);
 	background-position:bottom;
 	background-repeat:repeat-x;
+	font-size:18px;
+	font-weight:bold;	
 }
 
 #menu_messages ul {
-	float:right;
+	position:relative;
 	margin-top: 16px;
 	margin-right:16px;
 	margin-bottom:0px;;
@@ -24,9 +26,8 @@
 #menu_messages ul li a {
 	float:left;
 	text-decoration:none;
-	letter-spacing:1px;
 	padding-left:10px;
-	background-image:url(coin-gauche.png);
+	background-image:url(coin-gauche_old.png);
 	background-repeat:no-repeat;
 	background-position:0% -250px;
 }
@@ -37,19 +38,18 @@
 	padding-top:4px;
 	padding-bottom:3px;
 	padding-left:0px;
-	background-image:url(coin-droit.png);
+	background-image:url(coin-droit_old.png);
 	background-repeat:no-repeat;
 	background-position:100% -250px;
-	color:#ffffff;
+	color:#808080;
 
 }
 
 #menu_messages ul li#actif {
 	float:left;
 	text-decoration:none;
-	letter-spacing:1px;
 	padding-left:10px;
-	background-image:url(coin-gauche.png);
+	background-image:url(coin-gauche_old.png);
 	background-repeat:no-repeat;
 	background-position:0% 0%;
 }
@@ -60,7 +60,7 @@
 	padding-top:4px;
 	padding-bottom:3px;
 	padding-left:0px;
-	background-image:url(coin-droit.png);
+	background-image:url(coin-droit_old.png);
 	background-repeat:no-repeat;
 	background-position:100% 0%;
 	color:#333333;
@@ -81,22 +81,56 @@
 	background-position:100% -500px;
 }
 
-#div_messages {
+#menu_messages hr {
+	width:95%;
+	margin-left:-5px;
+	color:#808080;
+	background-color: #808080;
+	height: 1px;
+	border: 0;
 }
 
 #div_messages ul {
 	list-style:none;
+	padding:0;
+	margin:0;
 }
 
 #div_messages img.logo_assoce {
-	float:left;
-	width:80px;
-	height:80px; 
-	margin-right:10px;
+	width:32px;
+	height:32px; 
 }
 
 #div_messages img.action_message {
-	float:right;
+}
+
+#div_messages table {
+	font-family:Arial;
+	width:100%;
+	/*text-align:center;*/
+}
+#div_messages table td.objet{		
+	cursor:pointer;
+	font-size:17px;
+	font-weight:bold;
+	color:#000;
+}
+#div_messages table td.objet a{	
+	color:#000;
+}
+#div_messages table td.info{	
+	font-size:12px;
+	font-style:italic;	
+	color:#000;
+}
+#div_messages table span.legende{		
+	color:#727272;
+}
+#div_messages table td.bouton{
+	width:25px;
+}
+#div_messages table td.assoce{
+	width:32px;
 }
 	
 img.miniature {
@@ -107,4 +141,42 @@ img.miniature {
 
 div.comment {
 		min-height:69px;
+}
+
+div.message{
+	position:relative;
+	width:475px;
+	padding: 0;
+	margin:0 26px;
+}
+
+div.message hr{
+	border:1px solid #BBB;
+	margin-bottom:4px;
+}
+
+div.message span.signature {
+	line-height:90%;
+}
+
+div.event {
+margin-top:-15px;
+}
+
+div.top-event {
+	position:relative;
+	margin:0;
+	padding:0;
+	float:left;
+	width:100%;
+	height:30px;
+	margin-bottom:0px;
+	background: url(evenement_top.gif)  repeat-x scroll left top rgb(45, 95, 155);
+	border-bottom : 1px solid rgb(32, 86, 150);
+	font-size:14px;
+	color: #ddd;
+}
+
+div.top-event p{
+	margin:5px
 }
