@@ -4,8 +4,22 @@
 {% endblock %}
 {% block title %}{{association.nom}}{% endblock %}
 
+
+
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
+<ul>
+<li><a href="/associations/{{association.pseudo}}/messages/"><span>Messages</span></a></li>
+<li id="actif"><span>Équipe</span></li>
+<li><a href="/associations/{{association.pseudo}}/evenements/"><span>Évenements</span></a></li>
+</ul>
+<br>
+<hr>
+</div>
+{% endblock %}
 {% block content %}
-<h1>{{association.nom}}<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png"></h1>
 {% for adhesion in membres %}
 {% if request.user = adhesion.eleve.user %}
 <p><a href="/associations/{{association.pseudo}}/ajouter_membre/">Ajouter un membre</a><br>
@@ -13,7 +27,6 @@
 {% endif %}
 {% endfor %}
 
-<h2>Membres</h2>
 <div id="equipe">
 	{% for adhesion in membres %}
 		<div class="portrait">

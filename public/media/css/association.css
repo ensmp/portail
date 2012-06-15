@@ -1,13 +1,14 @@
 img.logo_assoce {
-	float:left;
-	margin-right:10px;
+	display:inline;
 }
 
-h1 {
+#menu_onglets h1 {
 	font-size:48px;
+	text-align:center;
+	margin:0;
 }
 
-ul {
+#menu_onglets ul {
 list-style: none;
 }
 

@@ -1,19 +1,104 @@
 ﻿{% extends "base.html" %}
 {% block header %}
 <link rel="stylesheet" href="/media/association.css" />
+<link rel="stylesheet" href="/media/messages.css" />
+<script type="text/javascript" src="/media/messages.js"></script>    
+<script type="text/javascript" src="/media/read.js"></script>
+
 {% endblock %}
 {% block title %}{{association.nom}}{% endblock %}
 
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
+
+
+<ul>
+<li id="actif"><span>Messages</span></li>
+<li><a href="/associations/{{association.pseudo}}/equipe/"><span>Équipe</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/evenements/"><span>Évenements</span></a></li>
+</ul>
+<br>
+<hr>
+</div>
+{% endblock %}
 {% block content %}
-<h1>{{association.nom}}<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png"></h1>
 {% for adhesion in membres %}
 {% if request.user = adhesion.eleve.user %}
 <p><a href="/associations/{{association.pseudo}}/poster_message/">Poster un message</a></p>
 {% endif %}
 {% endfor %}
 
-<h2>Messages</h2>
-
-<!--<h2>Liste des messages</h2>-->
+<div id = "div_messages">
+{% if list_messages %}
+<ul>
+{% for message in list_messages %}
+{% load comments %}
+{% get_comment_count for message as comment_count %}
+<li> 
+<div class="message">
+	<div class="message_infos">
+	<table>
+	<tr>
+	<td rowspan=2 class="assoce"><a href = "associations/{{message.association.pseudo}}"><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{message.association.pseudo}}.png"></a></td>
+	<td class="objet"><a class="objet" href="javascript:void(0);">{{ message.objet }}</a></td>
+	<!--<td class="info">	
+	</td>-->
+	<!--<td class="info"> {{ comment_count }} commentaires</td>-->
+	<td rowspan=2 class="bouton">
+	{% if request.user.get_profile in message.lu.all %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message unread' src="{{ STATIC_URL }}unread.png" /></a>
+	{% else %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message read' src="{{ STATIC_URL }}read.png" /></a>
+	{% endif %}
+	</td>
+	<td rowspan=2 class="bouton">
+	{% if request.user.get_profile in message.important.all %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message unfavourite' src="{{ STATIC_URL }}unfavourite.png" /></a>
+	{% else %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message favourite' src="{{ STATIC_URL }}favourite.png" /></a>
+	{% endif %}
+	</td>
+	</tr>
+	<tr>
+	<td class="info">
+	<span class="legende">Posté par</span> {{message.association.nom}}
+	{% if message.est_recent %}
+	<span class="legende">il y a</span> {{ message.date|timesince }}
+	{% else %}
+	<span class="legende">le</span> {{ message.date|date:"d F Y" }}  <!-- a H:i -->
+	{% endif %}
+	</td>
+	</tr>
+	</table>
+	</div>
+	
+	<div class="message_contenu">
+		<p>{{ message.contenu|linebreaksbr}}</p>
+		
+		<div style="display:none;">
+		{% load comments %}
+		<h3>Commentaires</h3>
+		{% render_comment_list for message %}
+		<h3>Poster un commentaire</h3>
+		{% render_comment_form for message %}
+		</div>
+		<hr>
+		<span class="signature">Visible par
+		{% if message.destinataire %}
+		{{message.destinataire.nom}}
+		{% else %}
+		tous
+		{% endif %}
+		</span>
+	</div>
+</div>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Bravo ! Tu as lu tous tes messages !</p>
+{% endif %}
+</div>
 
 {% endblock %}
