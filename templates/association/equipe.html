@@ -8,26 +8,21 @@
 <h1>{{association.nom}}<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png"></h1>
 {% for adhesion in membres %}
 {% if request.user = adhesion.eleve.user %}
-<p><a href="/associations/{{association.pseudo}}/poster_message/">Poster un message</a><br>
-<a href="/associations/{{association.pseudo}}/ajouter_membre/">Ajouter un membre</a><br>
+<p><a href="/associations/{{association.pseudo}}/ajouter_membre/">Ajouter un membre</a><br>
 <a href="/associations/{{association.pseudo}}/supprimer_membre/">Supprimer un membre</a></p>
 {% endif %}
 {% endfor %}
 
 <h2>Membres</h2>
-<div>
+<div id="equipe">
 	{% for adhesion in membres %}
 		<div class="portrait">
-		<a href = "/people/{{adhesion.eleve.user.username}}">{{adhesion.eleve.first_name}} {{adhesion.eleve.last_name|upper}}</a> {%if adhesion.role != ""%}({{adhesion.role}}){% endif %}
+		<img src="https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{ adhesion.eleve.user.username }}.jpg" />
+		<a href = "/people/{{adhesion.eleve.user.username}}">{{adhesion.eleve.first_name}} {{adhesion.eleve.last_name|upper}}</a> {%if adhesion.role != ""%}<br>({{adhesion.role}}){% endif %}
 		</div>
 	{% endfor %}
 </div>
-<h2>Liste des messages</h2>
+<br>
+<!--<h2>Liste des messages</h2>-->
 
-{% load set_var %}
-{% set afficher_bouton_important = 1 %}
-{% set afficher_bouton_non_important = 0 %}
-{% set afficher_bouton_lu = 0 %}
-{% set afficher_auteur = 0 %}
-{% include "messages/afficher_messages.html" %}
 {% endblock %}

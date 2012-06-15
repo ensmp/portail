@@ -1,0 +1,19 @@
+﻿{% extends "base.html" %}
+{% block header %}
+<link rel="stylesheet" href="/media/association.css" />
+{% endblock %}
+{% block title %}{{association.nom}}{% endblock %}
+
+{% block content %}
+<h1>{{association.nom}}<img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png"></h1>
+{% for adhesion in membres %}
+{% if request.user = adhesion.eleve.user %}
+<p><a href="/associations/{{association.pseudo}}/poster_message/">Poster un message</a></p>
+{% endif %}
+{% endfor %}
+
+<h2>Messages</h2>
+
+<!--<h2>Liste des messages</h2>-->
+
+{% endblock %}

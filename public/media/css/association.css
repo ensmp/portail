@@ -11,8 +11,18 @@ ul {
 list-style: none;
 }
 
-div.portrait {
-	width:150px;
-	height:200px;
-	
+.portrait {
+	float:left;
+	width:100px;
+	height:230px;
+}
+
+.portrait img {
+	width:100%;
+}
+
+
+#equipe {
+width:536px;
+margin: 0 auto;
 }

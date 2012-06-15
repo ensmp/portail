@@ -1,15 +1,12 @@
-{% extends "jump/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
+<p>{{ liste_etudes|length }} étude{{ liste_etudes|length|pluralize }} trouvée{{ liste_etudes|length|pluralize }}</p>
 
-<p>{{ liste_etudes|length }} objet{{ liste_etudes|length|pluralize }} trouvé{{ liste_etudes|length|pluralize }} </p>
-
-{% for objet in liste_objets_trouves %}
-	<p>{{ objet.title }}</p>
-	<p></p>
-	<p>{{ objet.lieu }}</p>
-	<p>{{ objet.date|date:"d F Y" }}</p>
+{% for etude in liste_etudes %}
+	<p>{{ etude.titre }}</p>
+	<p>{{ etude.description }}</p>
+	<p>{{ etude.date|date:"d F Y" }}</p>
 {% endfor %}
-</div>
 
 {% endblock %}

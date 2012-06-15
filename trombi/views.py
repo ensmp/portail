@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.models import User
-from trombi.models import UserProfile
+from trombi.models import UserProfile, Question, Reponse
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from trombi.tools import update_profile
@@ -30,7 +30,9 @@ def index_json(request):
 def detail(request,mineur_login):
 	mineur = get_object_or_404(User,username=mineur_login)
 	assoces = Adhesion.objects.filter(eleve__user__username = mineur_login)
-	return render_to_response('trombi/detail.html', {'mineur': mineur, 'assoces': assoces},context_instance=RequestContext(request))
+	liste_questions = Question.objects.all()
+	liste_reponses = Reponse.objects.filter(eleve__user__username = mineur_login)
+	return render_to_response('trombi/detail.html', {'mineur': mineur, 'assoces': assoces, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
 
 def detail_json(request,mineur_login):
 	mineur = get_object_or_404(User,username=mineur_login)
@@ -90,4 +92,7 @@ def edit(request,mineur_login):
 		return redirect('/accounts/profile')
 	else:
 		mineur = get_object_or_404(User,username=mineur_login)
-		return render_to_response('trombi/edit.html', {'mineur': mineur},context_instance=RequestContext(request))
+		assoces = Adhesion.objects.filter(eleve__user__username = mineur_login)
+		liste_questions = Question.objects.all()
+		liste_reponses = Reponse.objects.filter(eleve__user__username = mineur_login)
+		return render_to_response('trombi/edit.html', {'mineur': mineur, 'assoces': assoces, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))

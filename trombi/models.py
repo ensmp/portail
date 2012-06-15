@@ -30,3 +30,17 @@ def create_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
+
+
+class Question(models.Model):
+    enonce = models.CharField(max_length=512)
+    def __unicode__(self):
+        return self.enonce
+
+class Reponse(models.Model):
+    eleve = models.ForeignKey(UserProfile, related_name='+')
+    question = models.ForeignKey(Question, related_name='+')
+    contenu = models.CharField(max_length=512)
+	
+    def __unicode__(self):
+        return self.contenu

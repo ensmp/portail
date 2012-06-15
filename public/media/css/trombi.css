@@ -17,16 +17,15 @@ td {
 	margin: 0px;
 	padding: 2px;
 }
-/*
-#pictures, #picture {
-	position: fixed;
-	left: 50%;
-	top: 192px;
-	margin-left: 285px;
-	border: 1px solid #ccc;
-	box-shadow: 0px 0px 4px #aaa;
+#picture { /* dans les pages détail */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: 75px;
+  /*margin-top: 192px;*/
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 4px #aaa;
 }
-*/
 #pictures img {
 	display: none;
 }
@@ -44,4 +43,8 @@ td {
 #pictures.fixed {
   position: fixed;
   top: 0;
+}
+
+table.edit {
+	width:100%;
 }

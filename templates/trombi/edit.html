@@ -17,7 +17,7 @@
 
 <form method="post" action="{{ request.path }}">
 {% csrf_token %}
-<table>
+<table class = "edit">
 <tr>
 <td><label for="promo">Promotion :</label></td>
 <td><input type="text" value="{{ mineur.get_profile.promo }}" name="promo"></td>
@@ -34,7 +34,16 @@
 <td><label for="option">Option :</label></td>
 <td><input type="text" value="{{ mineur.get_profile.option }}" name="option"></td>
 </tr>
-
+</table>
+<hr>
+<table class = "edit">
+<tr>
+{% for question in liste_questions %}
+	<td><label for="question_{{question.id}}">{{question.enonce}} : </label></td>
+	<td><input type="text" value="{% for reponse in liste_reponses %}{% if question = reponse.question %}{{reponse.contenu}}{% endif %}{% endfor %}" name="question_{{question.id}}"></td>
+{% endfor %}
+</tr>
+</table>
 <input type="submit" />
 </form>
 <div id="picture">

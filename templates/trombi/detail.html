@@ -28,6 +28,17 @@
 
 <p>Fillot : <a href="/people/{{ mineur.get_profile.fillot }}">{{ mineur.get_profile.fillot.get_profile.first_name }} {{ mineur.get_profile.fillot.get_profile.last_name|upper }}</a></p>
 
+<hr>
+
+{% for question in liste_questions %}
+	<p>{{question.enonce}} : 
+	{% for reponse in liste_reponses %}
+		{% if question = reponse.question %}
+			{{reponse.contenu}}
+		{% endif %}
+	{% endfor %}
+	</p>
+{% endfor %}
 <div id="picture">
 <img src="https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{ mineur.username }}.jpg" />
 </div>
