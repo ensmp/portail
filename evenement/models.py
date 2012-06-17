@@ -11,10 +11,21 @@ class Evenement(models.Model):
 	date = models.DateTimeField(default=datetime.now(), blank=True)
 	lieu = models.CharField(max_length=300)
 	participants = models.ManyToManyField(UserProfile,related_name='evenement_participant', blank=True)
+	is_billetterie = models.BooleanField()
 	
 	def __unicode__(self):
 		return self.titre
-		
+
+
+class Reservation(models.Model):
+	eleve = models.ForeignKey(UserProfile)
+	acceptee = models.BooleanField()
+	
+	def __unicode__(self):
+		return self.titre
+	
+
+	
 class Billetterie(models.Model):
 	evenement = models.ForeignKey(Evenement)
 	prix = models.IntegerField()	
@@ -24,11 +35,4 @@ class Billetterie(models.Model):
 	
 	def __unicode__(self):
 		return self.evenement.titre
-	
-class Reservation(models.Model):
-	eleve = models.ForeignKey(UserProfile)
-	acceptee = models.BooleanField()
-	
-	def __unicode__(self):
-		return self.titre
 	

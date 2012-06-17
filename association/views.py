@@ -1,6 +1,7 @@
 from association.models import Association, Adhesion, AdhesionAjoutForm, AdhesionSuppressionForm
 from trombi.models import UserProfile
 from messages.models import Message
+from evenement.models import Evenement
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -27,7 +28,14 @@ def messages(request, association_pseudo):
 	list_messages = Message.objects.filter(association__pseudo=association_pseudo).filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all())).order_by('-date')
 
 	return render_to_response('association/messages.html', {'association' : association, 'list_messages': list_messages},context_instance=RequestContext(request))
+#view evenement ajoutee	
+@login_required
+def evenements(request, association_pseudo):
+	association = get_object_or_404(Association,pseudo=association_pseudo)
+	list_evenements = Evenement.objects.filter(association__pseudo=association_pseudo).order_by('-date')
 
+	return render_to_response('association/evenements.html', {'association' : association, 'list_evenements': list_evenements},context_instance=RequestContext(request))
+	#
 @login_required	
 def ajouter_membre(request, association_pseudo):
 	assoce = get_object_or_404(Association,pseudo=association_pseudo)

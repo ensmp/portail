@@ -1,0 +1,104 @@
+﻿{% extends "base.html" %}
+{% block header %}
+<link rel="stylesheet" href="/media/association.css" />
+<link rel="stylesheet" href="/media/evenements.css" />
+<script type="text/javascript" src="/media/messages.js"></script>    
+<script type="text/javascript" src="/media/read.js"></script>
+
+{% endblock %}
+{% block title %}{{association.nom}}{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
+
+
+<ul>
+<li ><a href="/associations/{{association.pseudo}}/messages/"><span>Messages</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/equipe/"><span>Équipe</span></li>
+<li id="actif"><span>Évenements</span></a></li>
+</ul>
+<br>
+<hr>
+</div>
+{% endblock %}
+{% block content %}
+{% for adhesion in membres %}
+{% if request.user = adhesion.eleve.user %}
+<p><a href="/associations/{{association.pseudo}}/poster_message/">Poster un message</a></p>
+{% endif %}
+{% endfor %}
+
+<div id = "div_evenements">
+{% if list_evenements %}
+<ul>
+{% for evenement in list_evenements %}
+{% load comments %}
+{% get_comment_count for evenement as comment_count %}
+<li> 
+<div class="evenement">
+	<div class="evenement_infos">
+	<table>
+	<tr>
+	<td rowspan=2 class="assoce"><a href = "associations/{{evenement.association.pseudo}}"><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{evenement.association.pseudo}}.png"></a></td>
+	<td class="objet"><a class="objet" href="javascript:void(0);">{{ evenement.titre }}</a></td>
+	<!--<td class="info">	
+	</td>-->
+	<!--<td class="info"> {{ comment_count }} commentaires</td>-->
+	<td rowspan=2 class="bouton">
+	{% if request.user.get_profile in evenement.lu.all %}
+	<a href="/evenements/{{ evenement.id }}/"><img class='action_message unread' src="{{ STATIC_URL }}unread.png" /></a>
+	{% else %}
+	<a href="/evenements/{{ evenement.id }}/"><img class='action_message read' src="{{ STATIC_URL }}read.png" /></a>
+	{% endif %}
+	</td>
+	<td rowspan=2 class="bouton">
+	{% if request.user.get_profile in message.important.all %}
+	<a href="/evenements/{{ evenement.id }}/"><img class='action_message unfavourite' src="{{ STATIC_URL }}unfavourite.png" /></a>
+	{% else %}
+	<a href="/evenements/{{ evenement.id }}/"><img class='action_message favourite' src="{{ STATIC_URL }}favourite.png" /></a>
+	{% endif %}
+	</td>
+	</tr>
+	<tr>
+	<td class="info">
+	<span class="legende">Posté par</span> {{evenement.association.nom}}
+	{% if evenement.est_recent %}
+	<span class="legende">il y a</span> {{ evenement.date|timesince }}
+	{% else %}
+	<span class="legende">le</span> {{ evenement.date|date:"d F Y" }}  <!-- a H:i -->
+	{% endif %}
+	</td>
+	</tr>
+	</table>
+	</div>
+	
+	<div class="message_contenu">
+		<p>{{ evenement.description|linebreaksbr}}</p>
+		
+		<div style="display:none;">
+		{% load comments %}
+		<h3>Commentaires</h3>
+		{% render_comment_list for evenement %}
+		<h3>Poster un commentaire</h3>
+		{% render_comment_form for evenement %}
+		</div>
+		<hr>
+		<span class="signature">Visible par
+		{% if evenement.destinataire %}
+		{{evenement.destinataire.nom}}
+		{% else %}
+		tous
+		{% endif %}
+		</span>
+	</div>
+</div>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Désolé, il n'y a pas d'évenements prévus pour l'instant...</p>
+{% endif %}
+</div>
+
+{% endblock %}
