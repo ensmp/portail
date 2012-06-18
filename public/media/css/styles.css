@@ -345,7 +345,24 @@ margin:auto;
 }
 
 #birthday {
- background-color: #fff;
- border-radius: 10px;
  padding: 0 10px 0 10px;
+}
+
+.module_top {
+	width:221px;
+	height:44px;
+	background: url(module_top.png) no-repeat;
+}
+
+.module_top p {
+	padding-top:12px;
+	font-size:13px;
+	font-weight:bold;
+	text-align:center;
+}
+.module_middle {
+	margin:0;
+	padding:0;
+	width:221px;
+	background: url(module_middle.png) repeat-y;
 }

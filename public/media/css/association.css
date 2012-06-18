@@ -1,10 +1,19 @@
 img.logo_assoce {
-	display:inline;
+	position: relative; 
+	width:80px;
+	height:80px;
+	top:10px;
+	margin-right:15px;
+}
+@font-face {
+	font-family: menu_font;
+	src: url('menu_font.ttf');
 }
 
 #menu_onglets h1 {
-	font-size:48px;
+	font-size:69px;
 	text-align:center;
+	font-family:menu_font, Arial;
 	margin:0;
 }
 
