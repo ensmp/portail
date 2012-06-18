@@ -24,6 +24,10 @@
 	font-size:17px;
 	font-weight:bold;
 	color:#000;
+	max-width: 150px;
+	overflow:auto;
+	word-wrap:break-word;
+	
 }
 #div_evenements table td.objet a{	
 	color:#000;

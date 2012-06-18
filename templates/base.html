@@ -181,7 +181,7 @@
 		<ul>
 		{% for event in events_list %}
 		{% ifchanged %}</ul><b>{{ event.date|date:"l" }}</b><ul>{% endifchanged %}
-               <li><span class='tooltip-from-event' data-tooltip-id="tooltip-event-{{event.id}}">{{event.titre}}</span></li>
+               <li><div class='tooltip-from-event' data-tooltip-id="tooltip-event-{{event.id}}">{{event.titre}}</div></li>
 			    <div id='tooltip-event-{{event.id}}' class="event" style='display:none'>
 					<div class="top-event">
 					<p>Organisé par <strong>{{event.association}}</strong> le <strong>{{event.date|date:"l d F" }}</strong> à <strong>{{event.date|date:"H:i" }}</strong></p>

@@ -322,12 +322,14 @@ margin: 0 auto;
 	margin-top:15px;
 }
 
-span.tooltip-from-event {
+div.tooltip-from-event {
 	background: url(event-gradient-hover.gif) repeat scroll 0% 0% rgb(230, 230, 230);
 	border:1px solid rgb(180, 180, 180);
 	padding:5px 8px;
 	margin:0;
-	height:18px
+	max-width: 150px;
+	overflow:auto;
+	word-wrap:break-word;
 }
 
 #todo {
