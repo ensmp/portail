@@ -43,8 +43,14 @@
 	<tr>
 	<td rowspan=2 class="assoce"><a href = "associations/{{evenement.association.pseudo}}"><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{evenement.association.pseudo}}.png"></a></td>
 	<td class="objet"><a class="objet" href="javascript:void(0);">{{ evenement.titre }}</a></td>
-	<!--<td class="info">	
-	</td>-->
+	<td class="info"> Quand : Le {{evenement.date|date:"d F Y"}} </br> Où : {{evenement.lieu}} </td>
+	<td>
+	{% if evenement.is_billetterie%}
+	<a class = "biletterie" href = "url resa"> Réserver </a>
+	{% else %}
+	Pas de billetterie
+	{% endif%}
+	</td>
 	<!--<td class="info"> {{ comment_count }} commentaires</td>-->
 	<td rowspan=2 class="bouton">
 	{% if request.user.get_profile in evenement.lu.all %}
@@ -65,9 +71,9 @@
 	<td class="info">
 	<span class="legende">Posté par</span> {{evenement.association.nom}}
 	{% if evenement.est_recent %}
-	<span class="legende">il y a</span> {{ evenement.date|timesince }}
+	<span class="legende">il y a</span> {{ evenement.date_post|timesince }}
 	{% else %}
-	<span class="legende">le</span> {{ evenement.date|date:"d F Y" }}  <!-- a H:i -->
+	<span class="legende">le</span> {{ evenement.date_post|date:"d F Y" }}  <!-- a H:i -->
 	{% endif %}
 	</td>
 	</tr>

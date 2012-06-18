@@ -9,6 +9,7 @@ class Evenement(models.Model):
 	titre = models.CharField(max_length=300)
 	description =  models.TextField()
 	date = models.DateTimeField(default=datetime.now(), blank=True)
+	date_post = models.DateTimeField(default=datetime.now(), blank=True)
 	lieu = models.CharField(max_length=300)
 	participants = models.ManyToManyField(UserProfile,related_name='evenement_participant', blank=True)
 	is_billetterie = models.BooleanField()
@@ -30,7 +31,7 @@ class Billetterie(models.Model):
 	evenement = models.ForeignKey(Evenement)
 	prix = models.IntegerField()	
 	reservations = models.ManyToManyField(Reservation,related_name='+', blank=True)
-	date_fin_reservation = models.DateTimeField()
+	date_fin_reservation = models.DateTimeField(default=datetime.now(), blank=True)
 	nombre_places_total = models.IntegerField()
 	
 	def __unicode__(self):
