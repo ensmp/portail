@@ -40,7 +40,7 @@
 	</p>
 {% endfor %}
 <div id="picture">
-<img src="https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{ mineur.username }}.jpg" />
+<img src="{{ STATIC_URL }}{{ mineur.username }}.jpg" />
 </div>
 
 {% if mineur.username == user.username %}

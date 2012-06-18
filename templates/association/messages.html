@@ -17,6 +17,9 @@
 <li id="actif"><span>Messages</span></li>
 <li><a href="/associations/{{association.pseudo}}/equipe/"><span>Équipe</span></a></li>
 <li><a href="/associations/{{association.pseudo}}/evenements/"><span>Évenements</span></a></li>
+{% if association.page %}
+<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><span>{{association.page.titre}}</span></a></li>
+{% endif %}
 </ul>
 <br>
 <hr>

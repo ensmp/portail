@@ -11,7 +11,7 @@
 {% block content %}
 <!--PRECHARGEMENT DES VIGNETTES-->
 {% for mineur in mineur_list %}
-<img src = "https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{mineur.user.username}}.jpg" style="display:none" alt="">
+<img src = "{{ STATIC_URL }}{{mineur.user.username}}.jpg" style="display:none" alt="">
 {% endfor %}
 
 <table>
@@ -43,7 +43,7 @@ $('tr').hover(function() {
 	if (login) {
 		$('#pictures').css({'opacity': 0});
 		$('#pictures').find('img').css({'display' : 'block'});
-		$('#pictures').find('img').attr({'src' : 'https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/'+login+'.jpg'});
+		$('#pictures').find('img').attr({'src' : '{{ STATIC_URL }}'+login+'.jpg'});
 		$('#pictures').animate({'opacity': 1});
 	}
 },function() {

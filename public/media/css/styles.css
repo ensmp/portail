@@ -345,13 +345,17 @@ margin:auto;
 }
 
 #birthday {
- padding: 0 10px 0 10px;
+ position:absolute;
+overflow:hidden; 
 }
 
-.module_top {
+div.module_top {
+	position:relative;
+	top:0;
 	width:221px;
 	height:44px;
 	background: url(module_top.png) no-repeat;
+	margin:0;
 }
 
 .module_top p {
@@ -360,9 +364,36 @@ margin:auto;
 	font-weight:bold;
 	text-align:center;
 }
-.module_middle {
+div.module_middle {
+	position:relative;
+	top:0;
 	margin:0;
 	padding:0;
 	width:221px;
 	background: url(module_middle.png) repeat-y;
+	overflow:hidden; /* corrige les bugs d'espacement */
+
 }
+
+.module_middle  p.date{
+	font-size:12px;
+	color:#828282;
+	font-weight:bold;
+	margin-left:13px;
+	margin-bottom:0;
+}
+
+.module_middle  a {
+	font-size:11px;
+	color:#000;
+	margin-left:26px;
+}
+div.module_bottom {
+	position:relative;
+	top:0;
+	margin:0;
+	width:221px;
+	height:44px;
+	background: url(module_bottom.png) no-repeat;
+}
+

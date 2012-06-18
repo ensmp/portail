@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 
+{% block header %}
+<link rel="stylesheet" href="/media/association.css" />
+{% endblock %}
+{% block title %}JuMP{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_jump.png">JuMP</h1>
+
+<ul>
+<li><a href="/associations/jump/messages/"><span>Messages</span></a></li>
+<li><a href="/associations/jump/equipe/"><span>Équipe</span></a></li>
+<li><a href="/associations/jump/evenements/"><span>Évenements</span></a></li>
+<li id="actif"><span>Études</span></li>
+</ul>
+<br>
+<hr>
+</div>
+{% endblock %}
 {% block content %}
 <p>{{ liste_etudes|length }} étude{{ liste_etudes|length|pluralize }} trouvée{{ liste_etudes|length|pluralize }}</p>
 

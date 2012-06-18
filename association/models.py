@@ -3,11 +3,19 @@ from trombi.models import UserProfile
 from django import forms
 
 
-# Create your models here.
+class Page(models.Model):
+	titre = models.CharField(max_length=200)
+	lien = models.CharField(max_length=200)
+	
+	def __unicode__(self):
+		return self.titre
+
 class Association(models.Model):
  nom = models.CharField(max_length=200)
  pseudo = models.CharField(max_length=20)
  membres = models.ManyToManyField(UserProfile, through='Adhesion')
+ page = models.ForeignKey(Page, blank=True, null=True)
+
  
  def __unicode__(self):
   return self.nom
@@ -36,3 +44,4 @@ class AdhesionSuppressionForm(forms.Form):
 	def __init__(self, association, *args, **kwargs):
 		super(AdhesionSuppressionForm, self).__init__(*args, **kwargs)
 		self.fields['eleve'].queryset = association.membres.all()
+		

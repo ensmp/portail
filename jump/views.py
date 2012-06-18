@@ -5,6 +5,6 @@ from django.template import RequestContext
 
 
 # Create your views here.
-def index(request):
+def etudes(request):
 	liste_etudes = Etude.objects.all().order_by('date')
 	return render_to_response('jump/etudes.html',{'liste_etudes': liste_etudes},context_instance=RequestContext(request))

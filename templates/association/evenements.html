@@ -14,9 +14,12 @@
 
 
 <ul>
-<li ><a href="/associations/{{association.pseudo}}/messages/"><span>Messages</span></a></li>
-<li><a href="/associations/{{association.pseudo}}/equipe/"><span>Équipe</span></li>
-<li id="actif"><span>Évenements</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/messages/"><span>Messages</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/equipe/"><span>Équipe</span></a></li>
+<li id="actif"><span>Évenements</span></li>
+{% if association.page %}
+<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><span>{{association.page.titre}}</span></a></li>
+{% endif %}
 </ul>
 <br>
 <hr>
@@ -33,8 +36,6 @@
 {% if list_evenements %}
 <ul>
 {% for evenement in list_evenements %}
-{% load comments %}
-{% get_comment_count for evenement as comment_count %}
 <li> 
 <div class="evenement">
 	<div class="evenement_infos">
@@ -75,14 +76,6 @@
 	
 	<div class="message_contenu">
 		<p>{{ evenement.description|linebreaksbr}}</p>
-		
-		<div style="display:none;">
-		{% load comments %}
-		<h3>Commentaires</h3>
-		{% render_comment_list for evenement %}
-		<h3>Poster un commentaire</h3>
-		{% render_comment_form for evenement %}
-		</div>
 		<hr>
 		<span class="signature">Visible par
 		{% if evenement.destinataire %}
