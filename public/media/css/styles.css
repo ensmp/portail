@@ -69,12 +69,11 @@ a:hover {
 }
 #string_recherche {
 	position:relative;
-	top:-3px;
+	top:-9px;
 	left:5px;
     background-color:transparent;
     border:none;
     font-size:13px;
-	size:20px;
 	margin-right:10px;
 }
 
@@ -97,6 +96,13 @@ a:hover {
 #bouton_recherche:hover {
 	color: #848484;	
 }
+
+#bouton_recherche img{
+	height:21px;
+	position:relative;
+	top:-3px;
+}
+
 
 ul.topnav {  
 	list-style-position: inside;

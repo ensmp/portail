@@ -24,14 +24,30 @@ class Adhesion(models.Model):
 	eleve = models.ForeignKey(UserProfile)
 	association = models.ForeignKey(Association)
 	role = models.CharField(max_length=64, blank=True)
+	ordre = models.IntegerField(default = 100)
 	
 	def __unicode__(self):
 		return self.eleve.user.username + ' -> ' + self.association.nom
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+#FORMULAIRES
 class AdhesionAjoutForm(forms.Form):
 
 	eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())
 	role = forms.CharField(max_length=100, required=False)
+	#ordre = forms.ChoiceField(widget = forms.Select(), 
+    #                 choices = ([('1','1'), ('2','2'),('3','3'), ]), initial='3', required = True,)
 	
 	def __init__(self, association, *args, **kwargs):
 		super(AdhesionAjoutForm, self).__init__(*args, **kwargs)

@@ -18,7 +18,7 @@ def index(request):
 @login_required
 def equipe(request, association_pseudo):
 	association = get_object_or_404(Association,pseudo=association_pseudo)
-	membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('eleve__user__username')
+	membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('ordre', 'eleve__last_name')
 	return render_to_response('association/equipe.html', {'association' : association, 'membres': membres},context_instance=RequestContext(request))
 
 @login_required
@@ -42,8 +42,9 @@ def ajouter_membre(request, association_pseudo):
 		if form.is_valid(): # All validation rules pass
 			utilisateur = form.cleaned_data['eleve']
 			fonction = form.cleaned_data['role']
+			ordre = form.cleaned_data['ordre']
 			if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():
-				Adhesion.objects.create(eleve=utilisateur, association=assoce, role=fonction)
+				Adhesion.objects.create(eleve=utilisateur, association=assoce, role=fonction, ordre=ordre)
 			return HttpResponseRedirect('/associations/'+assoce.pseudo) # Redirect after POST
 	else:
 		form = AdhesionAjoutForm(assoce) # An unbound form
@@ -54,16 +55,27 @@ def ajouter_membre(request, association_pseudo):
 @login_required	
 def supprimer_membre(request, association_pseudo):
 	assoce = get_object_or_404(Association,pseudo=association_pseudo)
-	if request.method == 'POST': # If the form has been submitted...
-		form = AdhesionSuppressionForm(assoce, request.POST) # A form bound to the POST data
-		if form.is_valid(): # All validation rules pass
+	if request.method == 'POST': 
+		form = AdhesionSuppressionForm(assoce, request.POST) 
+		if form.is_valid(): 
 			utilisateur = form.cleaned_data['eleve']
-			if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():
+			if Adhesion.objects.filter(association=assoce, eleve=request.user).exists(): #Si l'eleve est membre de l'assoce
 				Adhesion.objects.filter(eleve=utilisateur, association=assoce).delete()
-			return HttpResponseRedirect('/associations/'+assoce.pseudo) # Redirect after POST
+			return HttpResponseRedirect('/associations/'+assoce.pseudo)
 	else:
-		form = AdhesionSuppressionForm(assoce) # An unbound form
+		form = AdhesionSuppressionForm(assoce)
 
 	return render_to_response('association/admin.html', {'form': form,},context_instance=RequestContext(request))
 	
-	
+@login_required	
+def changer_ordre(request, association_pseudo):
+	assoce = get_object_or_404(Association,pseudo=association_pseudo)
+	membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('ordre', 'eleve__last_name')
+	nombre_membres = Adhesion.objects.filter(association__pseudo = association_pseudo).count()
+	if request.method == 'POST': # If the form has been submitted...
+		
+		request.POST['phone']
+		if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():
+			Adhesion.objects.create(eleve=utilisateur, association=assoce, role=fonction, ordre=ordre)
+		return HttpResponseRedirect('/associations/'+assoce.pseudo) # Redirect after POST
+	return render_to_response('association/ordre.html', {'association':assoce, 'membres': membres, 'indices_membres': range(nombre_membres)},context_instance=RequestContext(request))

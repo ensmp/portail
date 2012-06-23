@@ -10,7 +10,7 @@ class EventNode(Node):
 		Node.__init__(self)
 			
 	def render(self, context):
-		context['events_list'] = Evenement.objects.all().order_by('date')
+		context['events_list'] = Evenement.objects.all().order_by('date_debut')
 		return ''
     
 def obtenir_events(parser, token):

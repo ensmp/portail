@@ -78,6 +78,9 @@
 				{% compter_messages request.user.username %}
 			{% endif %}
 			<li><a href="/messages"><span id="compteur_messages">{{ nombre_de_messages }}</span> Message{{ nombre_de_messages|pluralize }}</a></li>  
+			<li>
+				<a href="/calendrier/">Calendrier</a>  
+			</li>
 			<li>  
 				<a href="/associations/">Associations</a>  
 				<ul class="subnav">
@@ -100,8 +103,10 @@
 			<li>
 			<div id="champ_recherche">
 				<form action="/recherche/" method="get">
-					<input id="string_recherche" type="text" size="24" name = "q"/>
-					<input id="bouton_recherche" type="submit" value="Rechercher" />
+					<input id="string_recherche" type="text" size="18" name = "q"/>
+					<button id="bouton_recherche" type="submit" title="Rechercher">
+					<img src = "{{ STATIC_URL }}loupe.png" alt="Rechercher">
+					</button>
 				</form>
 			</div>
 			</li>  
@@ -166,7 +171,7 @@
 		{% obtenir_liste_annivs %}
 		<ul style="list-style:none; padding:0;">
 		{% for eleve in anniv_list %}
-		 {% ifchanged %}<p class="date">{{ eleve.birthday|date:"l" }}</p>{% endifchanged %}
+		 {% ifchanged %}<p class="date">{{ eleve.birthday|date:"d F" }}</p>{% endifchanged %}
                <li><a href = "/people/{{eleve.user.username}}">{{eleve.first_name}} {{eleve.last_name}} (P{{eleve.promo}})</a></li>  
         {% endfor %}
 		</ul>
@@ -190,7 +195,7 @@
                <li><div class='tooltip-from-event' data-tooltip-id="tooltip-event-{{event.id}}">{{event.titre}}</div></li>
 			    <div id='tooltip-event-{{event.id}}' class="event" style='display:none'>
 					<div class="top-event">
-					<p>Organisé par <strong>{{event.association}}</strong> le <strong>{{event.date|date:"l d F" }}</strong> à <strong>{{event.date|date:"H:i" }}</strong></p>
+					<p>Organisé par <strong>{{event.association}}</strong> le <strong>{{event.date_debut|date:"l d F" }}</strong> à <strong>{{event.date_debut|date:"H:i" }}</strong></p>
 					</div>
 					<p>{{event.description|linebreaksbr}}</p>
 				</div>

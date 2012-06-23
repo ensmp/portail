@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <link rel="stylesheet" href="/media/list.css" />	
+{% endblock %}
+
+{% block content %}
+
+<form method="post" action="{{ request.path }}">
+{% csrf_token %}
+<table class = "edit">
+{% for adhesion in membres %}
+<tr>
+<td>{{ adhesion.eleve.user.username }}</td>
+<td>
+<select>
+ {% for i in indices_membres %}
+  <option>{{i}}</option>
+ {% endfor %}
+</select>
+</td>
+</tr>
+{% endfor %}
+
+</table>
+<input type="submit" />
+</form>
+
+{% endblock %}

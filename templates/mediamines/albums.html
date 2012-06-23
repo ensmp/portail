@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="/media/association.css" />
+{% endblock %}
+{% block title %}MediaMines{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_mediamines.png">MediaMines</h1>
+
+<ul>
+<li><a href="/associations/mediamines/messages/"><span>Messages</span></a></li>
+<li><a href="/associations/mediamines/equipe/"><span>Équipe</span></a></li>
+<li><a href="/associations/mediamines/evenements/"><span>Évenements</span></a></li>
+<li id="actif"><span>Albums</span></li>
+</ul>
+<br>
+<hr>
+</div>
+{% endblock %}
+{% block content %}
+
+{% for album in liste_albums %}
+	<p><a href="/associations/mediamines/albums/{{ album.id }}">{{ album.titre }}</a></p>
+{% endfor %}
+
+{% endblock %}
