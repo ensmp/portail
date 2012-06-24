@@ -6,6 +6,12 @@
 
 {% block content %}
 
+<p>Choisissez l'ordre d'apparition des membres de l'équipe.</p>
+<ul>
+<li>Les membres seront triés par indices décroissants.</li>
+<li>Les membres ayant le même indice seront triés par ordre alphabétique</li>
+</ul>
+
 <form method="post" action="{{ request.path }}">
 {% csrf_token %}
 <table class = "edit">
@@ -13,9 +19,10 @@
 <tr>
 <td>{{ adhesion.eleve.user.username }}</td>
 <td>
-<select>
+<input type = "hidden" name="login-{{ forloop.counter }}" value ="{{ adhesion.eleve.user.username }}" >
+<select name="position-{{ forloop.counter }}">
  {% for i in indices_membres %}
-  <option>{{i}}</option>
+  <option {% if adhesion.ordre = i %}selected="selected"{% endif %}>{{i}}</option>
  {% endfor %}
 </select>
 </td>

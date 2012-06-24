@@ -24,7 +24,7 @@ class Adhesion(models.Model):
 	eleve = models.ForeignKey(UserProfile)
 	association = models.ForeignKey(Association)
 	role = models.CharField(max_length=64, blank=True)
-	ordre = models.IntegerField(default = 100)
+	ordre = models.IntegerField(default = 0)
 	
 	def __unicode__(self):
 		return self.eleve.user.username + ' -> ' + self.association.nom

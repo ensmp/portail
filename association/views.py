@@ -18,7 +18,7 @@ def index(request):
 @login_required
 def equipe(request, association_pseudo):
 	association = get_object_or_404(Association,pseudo=association_pseudo)
-	membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('ordre', 'eleve__last_name')
+	membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
 	return render_to_response('association/equipe.html', {'association' : association, 'membres': membres},context_instance=RequestContext(request))
 
 @login_required
@@ -42,10 +42,9 @@ def ajouter_membre(request, association_pseudo):
 		if form.is_valid(): # All validation rules pass
 			utilisateur = form.cleaned_data['eleve']
 			fonction = form.cleaned_data['role']
-			ordre = form.cleaned_data['ordre']
-			if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():
-				Adhesion.objects.create(eleve=utilisateur, association=assoce, role=fonction, ordre=ordre)
-			return HttpResponseRedirect('/associations/'+assoce.pseudo) # Redirect after POST
+			if Adhesion.objects.filter(association=assoce, eleve=request.user).exists(): #Si l'eleve est membre de l'assoce
+				Adhesion.objects.create(eleve=utilisateur, association=assoce, role=fonction)
+			return HttpResponseRedirect('/associations/'+assoce.pseudo+'/equipe/') # Redirect after POST
 	else:
 		form = AdhesionAjoutForm(assoce) # An unbound form
 
@@ -70,12 +69,13 @@ def supprimer_membre(request, association_pseudo):
 @login_required	
 def changer_ordre(request, association_pseudo):
 	assoce = get_object_or_404(Association,pseudo=association_pseudo)
-	membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('ordre', 'eleve__last_name')
+	membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
 	nombre_membres = Adhesion.objects.filter(association__pseudo = association_pseudo).count()
 	if request.method == 'POST': # If the form has been submitted...
-		
-		request.POST['phone']
-		if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():
-			Adhesion.objects.create(eleve=utilisateur, association=assoce, role=fonction, ordre=ordre)
-		return HttpResponseRedirect('/associations/'+assoce.pseudo) # Redirect after POST
+		if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():#Si l'eleve est membre de l'assoce
+			for i in range(1,nombre_membres+1):#Boucle sur les eleves
+				adhesion = get_object_or_404(Adhesion,eleve__user__username=request.POST['login-'+str(i)], association = assoce)#On recupert l'eleve par son login
+				adhesion.ordre = request.POST['position-'+str(i)]#On change sa position
+				adhesion.save()
+		return HttpResponseRedirect('/associations/'+assoce.pseudo+'/equipe/') # Redirect after POST
 	return render_to_response('association/ordre.html', {'association':assoce, 'membres': membres, 'indices_membres': range(nombre_membres)},context_instance=RequestContext(request))
