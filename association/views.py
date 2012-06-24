@@ -30,9 +30,9 @@ def messages(request, association_pseudo):
 @login_required
 def evenements(request, association_pseudo):
 	association = get_object_or_404(Association,pseudo=association_pseudo)
-	list_evenements = Evenement.objects.filter(association__pseudo=association_pseudo).order_by('-date')
+	liste_evenements = Evenement.objects.filter(association__pseudo=association_pseudo).order_by('-date_debut')
 
-	return render_to_response('association/evenements.html', {'association' : association, 'list_evenements': list_evenements},context_instance=RequestContext(request))
+	return render_to_response('association/evenements.html', {'association' : association, 'liste_evenements': liste_evenements},context_instance=RequestContext(request))
 	#
 @login_required	
 def ajouter_membre(request, association_pseudo):
