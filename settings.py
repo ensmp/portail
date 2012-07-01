@@ -154,8 +154,7 @@ INSTALLED_APPS = (
 	'evenement', 
 	'vendome', 
 	'jump', 
-	'mediamines', 
-	#Photologue pour les photos
+	#Photologue pour les photos Mediamine
 	'photologue',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
