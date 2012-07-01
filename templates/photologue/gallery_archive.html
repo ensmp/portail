@@ -19,24 +19,20 @@
 
 {% block content %}
 
-<h1>Les derniers albums</h1>
-
 {% if latest %}
+<div class="photo-gallery">
+	<ul class="gallery">
     {% for gallery in latest %}
-    <div class="photo-gallery">
         {% for photo in gallery.sample|slice:":1" %}
-        <div class="gallery-photo">
-            <a href="{{ gallery.get_absolute_url }}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a> <!--photo.get_absolute_url-->
-        </div>
-        {% endfor %}
-		<h2><a href="{{ gallery.get_absolute_url }}">{{ gallery.title }}</a></h2>
-
-    </div>
+		<li><a href="{{ gallery.get_absolute_url }}"><em>{{ gallery.title }}</em><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}" /></a></li>
+        {% endfor %}   
     {% endfor %}
+	</ul>
+	</div>
 {% else %}
     <p>Aucun album trouvé.</p>
 {% endif %}
-
+<p><br style="page-break-before: always;" clear="all" /></p>
 <p><a href="{% url pl-gallery-list 1 %}">Voir tous les albums.</a></p>
 
 {% endblock %}

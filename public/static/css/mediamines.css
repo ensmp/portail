@@ -1,3 +1,47 @@
 .photo-gallery {
+	position:relative;
 	text-align:center;
+	margin: 0 auto;
+	width:430px;
+}
+
+.gallery {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.gallery li {
+	padding: 10px;
+	margin: 0;
+	float: left;
+	position: relative;
+	width: 180px;
+	height: 130px;
+}
+.gallery li:hover img {
+	border-color: #000;
+}
+.gallery img {
+	background: #fff;
+	border: solid 1px #888;
+	padding: 5px;
+}
+.gallery em {
+	background: #fff url(grey-gradient.gif) repeat-y;
+	color: #000;
+	font-style: normal;
+	padding: 2px 10px;
+	display: block;
+	position: absolute;
+	top: 110px;
+	left: 9px;
+	border: 1px solid #999;
+	border-left-color: #888;
+}
+.gallery a {
+	text-decoration: none;
+}
+.gallery a:hover em {
+	background: #ffdb01 url(orange-gradient.gif) repeat-y;
+	border-color: #c25b08;
 }

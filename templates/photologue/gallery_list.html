@@ -19,25 +19,23 @@
 
 {% block content %}
 
-<h1>Tous les albums</h1>
-
 {% if object_list %}
+<div class="photo-gallery">
+	<ul class="gallery">
     {% for gallery in object_list %}
-    <div class="photo-gallery">
-        
         {% for photo in gallery.sample|slice:":1" %}
-        <div class="gallery-photo">
-            <a href="{{ gallery.get_absolute_url }}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
-        </div>
-        {% endfor %}
-		<h2><a href="{{ gallery.get_absolute_url }}">{{ gallery.title }}</a></h2>
-    </div>
+		<li><a href="{{ gallery.get_absolute_url }}"><em>{{ gallery.title }}</em><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}" /></a></li>
+        {% endfor %}   
     {% endfor %}
+	</ul>
+	</div>
 {% else %}
-    <p>No galleries were found.</p>
+    <p>Aucun album trouvé</p>
 {% endif %}
 
+
 {% if is_paginated %}
+<p><br style="page-break-before: always;" clear="all" /></p> 
 <p>{{ hits }} albums.</p>
 <div id="page_controls">
     <p>{% if has_previous %}<a href="{% url pl-gallery-list previous %}">Précédent</a> | {% endif %} page {{ page }} sur {{ pages }} {% if has_next %}| <a href="{% url pl-gallery-list next %}">Suivant</a>{% endif %}</p>
