@@ -1,0 +1,47 @@
+{% extends "photologue/root.html" %}
+
+{% block title %}All Galleries{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_mediamines.png">MediaMines</h1>
+
+<ul>
+<li><a href="/associations/mediamines/messages/"><span>Messages</span></a></li>
+<li><a href="/associations/mediamines/equipe/"><span>Équipe</span></a></li>
+<li><a href="/associations/mediamines/evenements/"><span>Évenements</span></a></li>
+<li id="actif"><span>Albums</span></li>
+</ul>
+<br>
+<hr>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<h1>Tous les albums</h1>
+
+{% if object_list %}
+    {% for gallery in object_list %}
+    <div class="photo-gallery">
+        
+        {% for photo in gallery.sample|slice:":1" %}
+        <div class="gallery-photo">
+            <a href="{{ gallery.get_absolute_url }}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
+        </div>
+        {% endfor %}
+		<h2><a href="{{ gallery.get_absolute_url }}">{{ gallery.title }}</a></h2>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No galleries were found.</p>
+{% endif %}
+
+{% if is_paginated %}
+<p>{{ hits }} albums.</p>
+<div id="page_controls">
+    <p>{% if has_previous %}<a href="{% url pl-gallery-list previous %}">Précédent</a> | {% endif %} page {{ page }} sur {{ pages }} {% if has_next %}| <a href="{% url pl-gallery-list next %}">Suivant</a>{% endif %}</p>
+</div>
+{% endif %}
+
+{% endblock %}

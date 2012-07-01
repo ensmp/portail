@@ -23,7 +23,8 @@
 
 <h1>{{album.titre}}</h1>
 {% for file in file_list %}
-	<img src="{{ STATIC_URL }}img/mediamines/{{album.dossier}}/{{ file }}" alt = "{{ file }}">
+	<!--<img src="{{ STATIC_URL }}{{ file }}" alt = "{{ file }}">-->
 {% endfor %}
+<a href="{{ STATIC_URL }}img/favourite.png">test</a>
 
 {% endblock %}

@@ -1,5 +1,29 @@
 [
     {
+        "pk": 2, 
+        "model": "association.page", 
+        "fields": {
+            "titre": "Albums", 
+            "lien": "gallery"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "association.page", 
+        "fields": {
+            "titre": "\u00c9tudes", 
+            "lien": "etudes"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "association.page", 
+        "fields": {
+            "titre": "Archives", 
+            "lien": "archives"
+        }
+    }, 
+    {
         "pk": 1, 
         "model": "association.association", 
         "fields": {
@@ -32,7 +56,7 @@
         "fields": {
             "nom": "MediaMines", 
             "pseudo": "mediamines", 
-            "page": null
+            "page": 2
         }
     }, 
     {
@@ -41,7 +65,7 @@
         "fields": {
             "nom": "JuMP", 
             "pseudo": "jump", 
-            "page": null
+            "page": 3
         }
     }, 
     {
@@ -59,7 +83,7 @@
         "fields": {
             "nom": "Vend\u00f4me", 
             "pseudo": "vendome", 
-            "page": null
+            "page": 4
         }
     }, 
     {
@@ -386,6 +410,26 @@
             "role": "VP Interne", 
             "association": 1, 
             "eleve": 402
+        }
+    }, 
+    {
+        "pk": 30, 
+        "model": "association.adhesion", 
+        "fields": {
+            "ordre": 1, 
+            "role": "Hyper-Prez", 
+            "association": 6, 
+            "eleve": 397
+        }
+    }, 
+    {
+        "pk": 31, 
+        "model": "association.adhesion", 
+        "fields": {
+            "ordre": 0, 
+            "role": "VP Geek", 
+            "association": 4, 
+            "eleve": 397
         }
     }
 ]

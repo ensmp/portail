@@ -1,0 +1,387 @@
+html, body, #content {
+	font-size: 0.9em;
+	font-family: Verdana,serif;
+	margin:0;
+	height:100%;
+}
+h1, h2 {
+	font-family: Georgia;
+}
+
+
+a:link {
+	color: blue;
+	text-decoration:none;
+}
+
+a:visited {
+	color: blue;
+	text-decoration:none;
+}
+
+a:hover {
+	color:red;
+	text-decoration:none;
+}
+#header {
+	margin:0;
+	height: 40px;
+}
+
+#menu-fond {
+	position:absolute;
+	top:0;
+	width:100%;	
+	height:40px;
+    background: url(menu_bg.png) repeat-x; 
+}
+
+#mon_menu {	
+	position:relative;
+	width:980px;
+	margin:0 auto;	
+	}
+	
+#champ_recherche {
+	position:relative;
+	top:1px;
+	height:34px;
+    background:url(recherche.png) no-repeat;
+    padding:2px 5px 4px 5px;
+}
+#string_recherche {
+	position:relative;
+	top:-9px;
+	left:5px;
+    background-color:transparent;
+    border:none;
+    font-size:13px;
+	margin-right:10px;
+}
+
+#bouton_recherche {
+	/*float:right;*/
+	/*display:block;*/
+	padding-top:6px;
+	font-family: Verdana,serif;
+	font-style:normal;
+	color: #000;
+	font-size:15px;
+	font-weight:bold;
+	font-family: Arial, Helvetica,sans-serif;
+	background: transparent;
+  	border: 0px;
+  	cursor: pointer;
+  	text-decoration: none;	
+}
+
+#bouton_recherche:hover {
+	color: #848484;	
+}
+
+#bouton_recherche img{
+	height:21px;
+	position:relative;
+	top:-3px;
+}
+
+
+ul.topnav {  
+	list-style-position: inside;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top:0pt;
+	left:0pt;
+	width: 100%;  
+	font-size: 1.2em;  
+	z-index:20;	
+}  
+ul.topnav li {  
+display:inline;
+	float: left;  
+	margin: 0;  
+	padding: 0 15px 0 0;  
+	position: relative; 
+	z-index:30;	
+}  
+ul.topnav li.droite {  
+	float: right;  
+	margin: 0;  
+	padding: 0 15px 0 0;  
+	position: relative; 
+} 
+ul.topnav li a{  
+	padding: 10px 5px;  
+	color: #000;
+	display: block;  
+	text-decoration: none;
+	font-size:15px;
+	font-weight:bold;
+	font-family: Arial, Helvetica,sans-serif;
+	float: left;  
+}  
+ul.topnav li a:hover{  
+	color:#848484;
+}  
+ul.topnav li span.fleche {
+	width: 17px;  
+	height: 35px;  
+	float: left;  
+	background: url(subnav_btn.png) no-repeat center top;  
+}  
+ul.topnav li span.fleche.subhover {background-position: center bottombottom; cursor: pointer;} 
+ul.topnav li ul.subnav {  
+	list-style: none;  
+	position: absolute; 
+	left: 0; top: 38px;  
+	background: #333;  
+	margin: 0; padding: 0;  
+	display: none;  
+	float: left;  
+	width: 170px;  
+	border: 1px solid #111;  
+	z-index:10;
+}  
+ul.topnav li ul.subnav li{  
+	margin: 0; padding: 0;  
+	border-top: 1px solid #eeeeee;   
+	border-bottom: 1px solid #eaeaea; 
+	clear: both;  
+	width: 170px;  
+	background: #000;
+	z-index:10;	
+
+}  
+ul.topnav li ul.subnav li a {
+	float: left;  
+	width: 145px;  
+	background: #e7e7e7 url(dropdown_linkbg.png) no-repeat 10px center;
+	padding-left: 20px;
+	z-index:10;
+}  
+ul.topnav li ul.subnav li a:hover { 
+	background: #dadada url(dropdown_linkbg.png) no-repeat 10px center;  
+}  
+
+#wrap {
+position:relative;
+top:0;
+	width: 100%;
+margin: 0 auto;
+}
+
+
+
+#global_onglets {
+
+	width: 100%;
+	height:92%;
+	
+}
+
+#global_onglets.pleine_page {
+	left:0;
+	width: 100%;
+}
+
+#menu_onglets {
+	font-family: Arial;
+	overflow:hidden;
+	background-image:url(fond.png);
+	background-position:bottom;
+	background-repeat:repeat-x;
+	font-size:18px;
+	font-weight:bold;	
+}
+
+#menu_onglets ul {
+	position:relative;
+	margin-top: 16px;
+	margin-right:16px;
+	margin-bottom:0px;;
+	margin-left:0px;
+	padding:0px;
+	list-style:none;
+}
+
+#menu_onglets ul li {
+	float:left;
+	margin-left:3px;
+}
+
+#menu_onglets ul li a {
+	float:left;
+	text-decoration:none;
+	padding-left:10px;
+}
+
+#menu_onglets ul li a span {
+	float:left;
+	padding-right:10px;
+	padding-top:4px;
+	padding-bottom:3px;
+	padding-left:0px;
+	color:#808080;
+}
+
+#menu_onglets ul li a:hover span {
+	color:#666;
+}
+
+#menu_onglets ul li#actif {
+	float:left;
+	text-decoration:none;
+	padding-left:10px;
+}
+
+#menu_onglets ul li#actif span {
+	float:left;
+	padding-right:10px;
+	padding-top:4px;
+	padding-bottom:3px;
+	padding-left:0px;
+	color:#333333;
+
+}
+
+#menu_onglets hr {
+	width:95%;
+	margin-left:-5px;
+	color:#808080;
+	background-color: #808080;
+	height: 1px;
+	border: 0;
+}
+
+
+#content_onglets {
+	width: 100%;
+	padding: 0;
+	min-height: 240px;
+	overflow:hidden;
+}
+
+#messages {
+	position: absolute;
+	top: 100px;
+	right: 10px;
+	width: 250px;
+	background: #FFCC99;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 15px;
+	z-index: 15;
+}
+#messages li {
+	list-style: none;
+}
+	
+	
+#barre_droite {
+ position:absolute;
+ top:42px;
+ right:0;
+ width:222px;
+}
+
+#barre_gauche {
+ position:absolute;
+ top:42px;
+ left:0;
+ width:222px;
+}
+
+#evenements {
+ background-color: #fff;
+ border-radius: 10px;
+ padding: 1px 10px 6px 10px;
+}
+
+#evenements ul {
+	padding:0;
+	list-style:none;
+}
+#evenements li {
+	margin-top:15px;
+}
+
+div.tooltip-from-event {
+	background: url(event-gradient-hover.gif) repeat scroll 0% 0% rgb(230, 230, 230);
+	border:1px solid rgb(180, 180, 180);
+	padding:5px 8px;
+	margin:0;
+	max-width: 150px;
+	overflow:auto;
+	word-wrap:break-word;
+}
+
+#todo {
+position:relative;
+height:222px;
+background: url(todo.png) no-repeat;  
+background-position: 0 0;
+padding: 1px 10px 0 20px;
+}
+
+#todo form {
+position:absolute;
+bottom:40px;
+margin:auto;
+}
+
+#birthday {
+ position:absolute;
+overflow:hidden; 
+}
+
+div.module_top {
+	position:relative;
+	top:0;
+	width:221px;
+	height:44px;
+	background: url(module_top.png) no-repeat;
+	margin:0;
+}
+
+.module_top p {
+	padding-top:12px;
+	font-size:13px;
+	font-weight:bold;
+	text-align:center;
+}
+div.module_middle {
+	position:relative;
+	top:0;
+	margin:0;
+	padding:0;
+	width:221px;
+	background: url(module_middle.png) repeat-y;
+	overflow:hidden; /* corrige les bugs d'espacement */
+
+}
+
+.module_middle  p.date{
+	font-size:12px;
+	color:#828282;
+	font-weight:bold;
+	margin-left:13px;
+	margin-bottom:0;
+}
+
+.module_middle  a {
+	font-size:11px;
+	color:#000;
+	margin-left:26px;
+}
+div.module_bottom {
+	position:relative;
+	top:0;
+	margin:0;
+	width:221px;
+	height:44px;
+	background: url(module_bottom.png) no-repeat;
+}
+

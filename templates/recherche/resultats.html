@@ -1,6 +1,6 @@
 ﻿{% extends "base.html" %}
 {% block header %}
-    <link rel="stylesheet" href="/media/recherche.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}recherche.css" />
 	<title>Recherche</title>
 {% endblock %}
 
@@ -32,9 +32,9 @@ Promo : {{user.promo}}
 {% load comments %}
 {% get_comment_count for message as comment_count %}
 <li> <div id="div_message_{{ message.id }}">
-<p><img class="logo_assoce" src = "media/logo_{{message.association.pseudo}}.png">
-<a id="message_important_{{ message.id }}" href="/messages/{{ message.id }}/classer_important/"><img class = "action_message" src="media/check.png"></a>
-<a id="message_lire_{{ message.id }}" href="/messages/{{ message.id }}/lire/"><img class = "action_message" src="media/later.png"></a> 
+<p><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{message.association.pseudo}}.png">
+<a id="message_important_{{ message.id }}" href="/messages/{{ message.id }}/classer_important/"><img class = "action_message" src="{{ STATIC_URL }}check.png"></a>
+<a id="message_lire_{{ message.id }}" href="/messages/{{ message.id }}/lire/"><img class = "action_message" src="{{ STATIC_URL }}later.png"></a> 
 De <strong>{{ message.association.nom }}</strong>, il y a {{ message.date|timesince }}<br>
 {{ comment_count }} commentaires<br>
 <a href="/messages/{{ message.id }}/">{{ message.objet }}</a></p>

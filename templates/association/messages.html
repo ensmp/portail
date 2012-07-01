@@ -1,9 +1,10 @@
 ﻿{% extends "base.html" %}
 {% block header %}
-<link rel="stylesheet" href="/media/association.css" />
-<link rel="stylesheet" href="/media/messages.css" />
-<script type="text/javascript" src="/media/messages.js"></script>    
-<script type="text/javascript" src="/media/read.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}messages.css" />
+
+<script type="text/javascript" src="{{ STATIC_URL }}messages.js"></script>    
+<script type="text/javascript" src="{{ STATIC_URL }}read.js"></script>
 
 {% endblock %}
 {% block title %}{{association.nom}}{% endblock %}

@@ -96,3 +96,4 @@ def edit(request,mineur_login):
 		liste_questions = Question.objects.all()
 		liste_reponses = Reponse.objects.filter(eleve__user__username = mineur_login)
 		return render_to_response('trombi/edit.html', {'mineur': mineur, 'assoces': assoces, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
+		

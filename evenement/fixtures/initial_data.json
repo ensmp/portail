@@ -1,0 +1,28 @@
+[
+    {
+        "pk": 1, 
+        "model": "evenement.evenement", 
+        "fields": {
+            "billetterie": null, 
+            "description": "Venez nombreux", 
+            "participants": [], 
+            "date_fin": "2012-06-26T23:00:00", 
+            "lieu": "FAO", 
+            "is_billetterie": true, 
+            "titre": "BALM", 
+            "date_debut": "2012-06-26T22:00:00", 
+            "association": 1
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "evenement.billetterie", 
+        "fields": {
+            "prix": 10, 
+            "nombre_places_total": 150, 
+            "evenement": 1, 
+            "date_fin_reservation": "2012-06-30T00:00:00", 
+            "reservations": []
+        }
+    }
+]

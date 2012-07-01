@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 import os
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.conf import settings
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -12,8 +13,9 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-	(r'^media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media')}),
+	(r'^static/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.abspath(os.path.dirname(__file__)), 'static')}),
+	    
+		
     (r'^admin/?', include(admin.site.urls)),
 	(r'^token/?$','trombi.views.token'),
     (r'^messages/?$','messages.views.index'),
@@ -37,11 +39,10 @@ urlpatterns = patterns('',
     (r'^associations/(?P<association_pseudo>\w+)/ajouter_membre/$', 'association.views.ajouter_membre'),
     (r'^associations/(?P<association_pseudo>\w+)/supprimer_membre/$', 'association.views.supprimer_membre'),
 	(r'^associations/(?P<association_pseudo>\w+)/poster_message/$', 'messages.views.nouveau'),
+	(r'^associations/mediamines/', include('photologue.urls')),
 	(r'^associations/jump/etudes/$', 'jump.views.etudes'),
-	(r'^associations/mediamines/albums/$', 'mediamines.views.albums'),
-	(r'^associations/mediamines/albums/(?P<album_id>\d+)/$', 'mediamines.views.detail'),
 	(r'^associations/vendome/nouveau/?$','vendome.views.index'),
-	(r'^associations/vendome/page/?$','vendome.views.page'),
+	(r'^associations/vendome/archives/?$','vendome.views.page'),
     (r'^people/?$','trombi.views.index'),
     (r'^people/json$','trombi.views.index_json'),
     (r'^people/(?P<mineur_login>\w+)/?$','trombi.views.detail'),
@@ -71,3 +72,5 @@ urlpatterns = patterns('',
     # (r'^accounts/password/reset/?$', 'django.contrib.auth.views.password_reset'),
 
 )
+
+urlpatterns += patterns('',url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),)

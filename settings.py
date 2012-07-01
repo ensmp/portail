@@ -48,10 +48,10 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-#MEDIA_ROOT = ''
+MEDIA_ROOT = basepath + 'public/media/'
 
 #MEDIA_ROOT = '/home/bde-mines/sitebde/public/media/'
-#MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -63,24 +63,24 @@ USE_L10N = True
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 #STATIC_ROOT = '/Users/thomas/Dev/sitebde/public/media/'
-STATIC_ROOT = basepath + 'public/media/'
+STATIC_ROOT = basepath + 'public/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/media/'
+STATIC_URL = '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/media/admin/'
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    basepath + 'public/media/css',
-    basepath + 'public/media/js',
-    basepath + 'public/media/img',
-	basepath + 'public/media/img/trombi',
-	basepath + 'public/media/docs',
+    basepath + 'public/static/css',
+    basepath + 'public/static/js',
+    basepath + 'public/static/img',
+	basepath + 'public/static/img/trombi',
+	basepath + 'public/static/docs',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -155,6 +155,8 @@ INSTALLED_APPS = (
 	'vendome', 
 	'jump', 
 	'mediamines', 
+	#Photologue pour les photos
+	'photologue',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
