@@ -28,7 +28,7 @@ def index_json(request):
 @login_required
 def index(request):
 	#list_messages = Message.objects.all()
-	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all())).exclude(lu__user__username=request.user.username).order_by('-date')
+	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).exclude(lu__user__username=request.user.username).order_by('-date')
 	return render_to_response('messages/index.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 	
 @login_required
@@ -71,12 +71,12 @@ def classer_non_lu(request, message_id):
 @login_required
 def tous(request):
 
-	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all())).order_by('-date')
+	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).order_by('-date')
 	return render_to_response('messages/tous.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 
 @login_required
 def importants(request):
-	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all())).filter(important__user__username=request.user.username).order_by('-date')
+	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).filter(important__user__username=request.user.username).order_by('-date')
 	return render_to_response('messages/importants.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 	
 
@@ -91,5 +91,6 @@ def nouveau(request, association_pseudo):
 			Message.objects.create(association=Association.objects.get(pseudo=association_pseudo),objet=request.POST['title'],contenu=request.POST['body'],date=datetime.now(),expediteur=request.user.get_profile(), destinataire=receiver)
 		return redirect('/associations/'+association_pseudo)
 	else:
-		liste_assoces = request.user.get_profile().association_set.all()
+		#liste_assoces = request.user.get_profile().association_set.all()
+		liste_assoces = Association.objects.all()
 		return render_to_response('messages/nouveau.html', {'liste_assoces': liste_assoces},context_instance=RequestContext(request))

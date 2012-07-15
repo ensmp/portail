@@ -36,17 +36,20 @@
 </table>
 <hr>
 <table class = "edit">
-<tr>
 {% for question in liste_questions %}
+<tr>
+
 	<td><label for="question_{{question.id}}">{{question.enonce}} : </label></td>
 	<td><input type="text" value="{% for reponse in liste_reponses %}{% if question = reponse.question %}{{reponse.contenu}}{% endif %}{% endfor %}" name="question_{{question.id}}"></td>
-{% endfor %}
 </tr>
+{% endfor %}
 </table>
 <input type="submit" />
 </form>
+<!--
 <div id="picture">
 <img src="{{ STATIC_URL }}{{ mineur.username }}.jpg" />
 </div>
+-->
 
 {% endblock %}

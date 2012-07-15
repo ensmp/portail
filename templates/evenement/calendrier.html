@@ -2,26 +2,25 @@
 
 {% block header %}
 
-	<!--<link rel='stylesheet' type='text/css' href='/media/reset_calendrier.css' />
-    
-	<link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css' />
+<!--<link rel='stylesheet' type='text/css' href='/media/reset_calendrier.css' />
+<link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css' />
 -->	
 
     <link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}jquery-ui-1.8rc3.custom.css' />
 
 
-	<link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}jquery.weekcalendar.css' />
-	<link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}calendrier.css' />
+<link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}jquery.weekcalendar.css' />
+<link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}calendrier.css' />
 
 
-	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
-	   <!--
-    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js'></script>
-    -->
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+<!--
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js'></script>
+-->
     
     <script type='text/javascript' src='{{ STATIC_URL }}jquery-ui-1.8rc3.custom.min.js'></script>
-	<script type='text/javascript' src='{{ STATIC_URL }}jquery.weekcalendar.js'></script>
-	<!--<script type='text/javascript' src='/media/calendrier.js'></script>-->
+<script type='text/javascript' src='{{ STATIC_URL }}jquery.weekcalendar.js'></script>
+<!--<script type='text/javascript' src='/media/calendrier.js'></script>-->
 <script type='text/javascript'>	
 
 
@@ -177,8 +176,8 @@ $(document).ready(function() {
       var month = new Date().getMonth();
       var day = new Date().getDate();
       return {
-         events : [		
-			{% for evenement in liste_evenements %}
+         events : [	
+{% for evenement in liste_evenements %}
             {
                "id":{{ evenement.id }},
                "start": new Date({{ evenement.date_debut|date:"Y"}}, {{ evenement.date_debut|date:"n"}}-1, {{ evenement.date_debut|date:"j"}}, {{ evenement.date_debut|date:"G"}}, {{ evenement.date_debut|date:"i"}}),
@@ -186,16 +185,16 @@ $(document).ready(function() {
                "title":"{{ evenement.titre }}",
                readOnly : true
             }{% if forloop.last %}{% else %},{% endif %}
-			{% endfor %}
+{% endfor %}
          ]
       };
    }
 
 
    /*
-    * Sets up the start and end time fields in the calendar event
-    * form for editing based on the calendar event being edited
-    */
+* Sets up the start and end time fields in the calendar event
+* form for editing based on the calendar event being edited
+*/
    function setupStartAndEndTimeFields($startTimeField, $endTimeField, calEvent, timeslotTimes) {
 
       for (var i = 0; i < timeslotTimes.length; i++) {
@@ -277,28 +276,28 @@ $(document).ready(function() {
 {% endblock %}
 {% block content %}
 
-	<div id='calendar'></div>
-	<div id="event_edit_container">
-		<form>
-			<input type="hidden" />
-			<ul>
-				<li>
-					<span>Date : </span><span class="date_holder"></span> 
-				</li>
-				<li>
-					<label for="start">Début : </label><select name="start"><option value="">Heure de début</option></select>
-				</li>
-				<li>
-					<label for="end">Fin : </label><select name="end"><option value="">Heure de fin</option></select>
-				</li>
-				<li>
-					<label for="title">Titre : </label><input type="text" name="title" />
-				</li>
-				<li>
-					<label for="body">Description : </label><textarea name="body"></textarea>
-				</li>
-			</ul>
-		</form>
-	</div>
-	
+<div id='calendar'></div>
+<div id="event_edit_container">
+<form>
+<input type="hidden" />
+<ul>
+<li>
+<span>Date : </span><span class="date_holder"></span>
+</li>
+<li>
+<label for="start">Début : </label><select name="start"><option value="">Heure de début</option></select>
+</li>
+<li>
+<label for="end">Fin : </label><select name="end"><option value="">Heure de fin</option></select>
+</li>
+<li>
+<label for="title">Titre : </label><input type="text" name="title" />
+</li>
+<li>
+<label for="body">Description : </label><textarea name="body"></textarea>
+</li>
+</ul>
+</form>
+</div>
+
 {% endblock %}

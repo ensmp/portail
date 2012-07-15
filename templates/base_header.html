@@ -3,144 +3,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<title>Le portail des élèves</title>
     <link rel="stylesheet" href="{{ STATIC_URL }}styles.css" />
-	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}tipped.css"/>
-	
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}script.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}spinners.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}tipped.js"></script>
-	
-	<script type="text/javascript">
-	(function($) {
-		// Example of a custom skin
-		// always do this after you've included tipped.js
-		$.extend(Tipped.Skins, {
-		  'custom_simple' : {
-			border: { size: 3, color: '#959fa9' },
-			background: {
-			  color: [
-				{ position: 0, color: '#fefefe' },
-				{ position: 1, color: '#f7f7f7' }
-			  ]
-			},
-			closeButtonSkin: 'light',
-			radius: {
-			  position: 'border',
-			  size: 0,
-			  color: '#afafaf'
-			},
-			shadow: { opacity: .15 },
-			stem: {
-			  height: 7,
-			  width: 13
-			}
-		  }
-		});
-	})(jQuery);
-	</script>    
-
-	<script type="text/javascript">
-	//ENVOI D'UNE NOUVELLE NOTE
-	$(function() {
-		$("#todoform").submit(function(){
-			note = $(this).find("input[name=note]").val();
-			csrfmiddlewaretoken = $(this).find("input[name=csrfmiddlewaretoken]").val();	
-			$.post("/todo/nouveau", {note:note, csrfmiddlewaretoken:csrfmiddlewaretoken},
-				function(data) {
-					//alert(data);
-					$("#liste_notes").append('<li>'+note+'</li>');
-				}
-			);
-			return false;
-		});
-	});
-	</script>
-
-	
-    
 	{% block header %}{% endblock %}
 </head>
 
-<body onload="initialize()">
+<body>
 <div id = "header">
 	<div id = "banniere-fond">
 		<div id = "banniere-holder"><div id = "banniere"></div></div>
 	</div>
-	<div id = "menu-fond">
-		<div id="mon_menu">
-		<!-- Le menu -->
-			<ul class="topnav">  
-			
-			{% load obtenir_nombre_messages %}
-			{% if request.user.is_authenticated %}
-				{% compter_messages request.user.username %}
-			{% endif %}
-			<li><a href="/messages"><span id="compteur_messages">{{ nombre_de_messages }}</span> Message{{ nombre_de_messages|pluralize }}</a></li>  
-			<li>
-				<a href="/calendrier/">Calendrier</a>  
-			</li>
-			<li>  
-				<a href="/associations/">Associations</a>  
-				<ul class="subnav">
-				{% load obtenir_liste_associations %}
-				{% obtenir_associations %}
-				{% for association in liste_des_associations %}
-					<li><a href="/associations/{{association.pseudo}}/">{{association.nom}}</a></li>  
-				{% endfor %}
-				</ul>  
-			</li>  
-			<li>  
-				<a href="#">Services</a>  
-				<ul class="subnav">  
-					<li><a href="/people/">Trombi</a></li>  
-					<li><a href="/petitscours/">Petits cours</a></li>
-					<li><a href="/objetstrouves/">Objets trouvés</a></li>
-					<li><a href="/timetable/">Emploi du temps</a></li>  
-				</ul>  
-			</li>  
-			<li>
-			<div id="champ_recherche">
-				<form action="/recherche/" method="get">
-					<input id="string_recherche" type="text" size="18" name = "q"/>
-					<button id="bouton_recherche" type="submit" title="Rechercher">
-					<img src = "{{ STATIC_URL }}loupe.png" alt="Rechercher">
-					</button>
-				</form>
-			</div>
-			</li>  
-			<li><a href="/admin/">Administration</a></li>  
-			{% if user.is_authenticated %}
-			<li class="droite">  
-				<a href="/people/{{ user.username }}/">{{ user.username }}</a>  
-				<ul class="subnav">  
-					<li><a href="/people/{{ user.username }}/">Ma page</a></li>  
-					<li><a href="/accounts/logout/">Se déconnecter</a></li>
-				</ul>  
-			</li>  
-			{% else %}
-			<li class="droite"><a href="/accounts/login?next={{ request.get_path }}">S'identifier</a></li>  
-			{% endif %}
-
-		</ul>  
-		</div>
-	</div>
+		{% include "menu.html" %}
 </div>
 <div id="wrap">	
 	{% if messages %}
-<ul id="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+	<ul id="messages">
+		{% for message in messages %}
+		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	
 	<div id="global_onglets" class="pleine_page">
-     {% block onglets %}{% endblock %}
-	<div id="content_onglets">
-	    {% block content %}{% endblock %}
-	</div>
-    </div>	
+		{% block onglets %}{% endblock %}
+		<div id="content_onglets">
+			{% block content %}{% endblock %}
+		</div>
+    </div>
 </div>
-
 </body>
 </html>

@@ -1,8 +1,13 @@
-{% extends "base.html" %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Identification au Portail des élèves</title>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}login.css" media="screen" />
 
+</head>
+<body>
 {% load url from future %}
-
-{% block content %}
 
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
@@ -10,22 +15,21 @@
 
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
+	<h1>Identification au Portail des élèves</h1>
+	<p>
+		{{ form.username.label_tag }}
+		{{ form.username }}
+	</p>
+	<p>
+		{{ form.password.label_tag }}
+		{{ form.password }}
+	</p>
+	<p><a href="/accounts/password_reset/">J'ai oublié mon mot de passe</a></p>
+	<p>
+		<input type="submit" value="login" />
+		<input type="hidden" name="next" value="{{ next }}" />
+	</p>
 </form>
-
-<hr />
-<p>Tu n'as pas de mot de passe / tu l'as perdu ? <a href="http://localhost:8000/accounts/password_reset/">C'est ici que ça se passe</a>.
-
-{% endblock %}
+<p id="credits">Accès au <strong>Portail des élèves</strong> de l'École des  <strong>Mines de Paris</strong>.<br />
+En cas de problèmes d'identification, contacter le <a href="mailto:11leuren@ensmp.fr">VP Geek</a></p>
+</body>

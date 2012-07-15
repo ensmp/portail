@@ -115,6 +115,7 @@
        * Refresh the events for the currently displayed week.
        */
       refresh : function() {
+	  alert('refresh');
          this._loadCalEvents(this.element.data("startDate")); //reload with existing week
       },
 
@@ -546,7 +547,7 @@
          var date, weekStartDate, endDate, $weekDayColumns;
          var self = this;
 
-
+		//alert('_loadCalEvents');
 
          var options = this.options;
          date = dateWithinWeek || options.date;
@@ -564,7 +565,7 @@
          self._updateDayColumnHeader($weekDayColumns);
 
          //load events by chosen means
-         if (typeof options.data == 'string') {
+         if (typeof options.data == 'string') {			
             if (options.loading) options.loading(true);
             var jsonOptions = {};
             jsonOptions[options.startParam || 'start'] = Math.round(weekStartDate.getTime() / 1000);
@@ -575,6 +576,7 @@
             });
          }
          else if ($.isFunction(options.data)) {
+			//On entre ici, c'est une fonction
             options.data(weekStartDate, weekEndDate,
                   function(data) {
                      self._renderEvents(data, $weekDayColumns);
@@ -858,6 +860,7 @@
             self._refreshEventDetails(calEvent, $calEvent);
             self._positionEvent($weekDay, $calEvent);
             self._adjustOverlappingEvents($weekDay);
+			alert('update ' + calEvent.id);
          }
       },
 

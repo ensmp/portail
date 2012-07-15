@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from todo.models import Todo
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
@@ -27,3 +27,7 @@ def xhr_test(request):
     else:
         message = "No XHR"
     return HttpResponse(message)
+	
+def supprimer(request, id_note):
+	Todo.objects.filter(pk= id_note, eleve__user__username = request.user.username).delete()		
+	return render_to_response('messages/action.html', {},context_instance=RequestContext(request))

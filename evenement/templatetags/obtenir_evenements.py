@@ -2,6 +2,8 @@ from django.template import Library, Node
 from evenement.models import Evenement
 from django import template
 from django.db.models import Q
+import datetime
+
      
 register = Library()
 
@@ -10,7 +12,17 @@ class EventNode(Node):
 		Node.__init__(self)
 			
 	def render(self, context):
-		context['events_list'] = Evenement.objects.all().order_by('date_debut')
+		start = datetime.date.today()
+		max_days = 7
+		days = [ start + datetime.timedelta(days=i) for i in xrange(0, max_days) ]
+
+		events = []
+		for d in days:
+			for p in Evenement.objects.filter(date_debut__month=d.month, date_debut__day=d.day):
+				events.append(p)
+
+		context['events_list'] = events
+		#context['events_list'] = Evenement.objects.filter(date_fin__gte = datetime.now()).order_by('date_debut')
 		return ''
     
 def obtenir_events(parser, token):

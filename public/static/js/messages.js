@@ -1,17 +1,5 @@
 $(document).ready(function(){
 
-/* initialisation */   
-function initialisation(){
-	$(".message_contenu").hide(); 	
-}
-
-/* Navigation */
-/*
-	$("td.objet").hover(function(){ 
-		$("td.objet").css('cursor', 'pointer');
-	});
-*/
-	
 	$("td.objet").click(function(){	
 		if ($(this).parent().parent().parent().parent().next().is(':visible')){			
 			$(this).parent().parent().parent().parent().next().slideUp(500); 						
@@ -21,8 +9,7 @@ function initialisation(){
 		}
 	});
 	
-	
 /*lancement du site*/
-	initialisation(); //onload	
+	$(".message_contenu").hide();  //onload	
 
 });

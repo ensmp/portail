@@ -3,6 +3,18 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from datetime import date, timedelta
 
+class Question(models.Model):
+    enonce = models.CharField(max_length=512)
+    def __unicode__(self):
+        return self.enonce
+
+class Reponse(models.Model):
+    question = models.ForeignKey(Question, related_name='+')
+    contenu = models.CharField(max_length=512)
+	
+    def __unicode__(self):
+        return self.contenu
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
@@ -21,6 +33,8 @@ class UserProfile(models.Model):
     parrain = models.ForeignKey(User,related_name='+', blank=True, null=True)
     fillot = models.ForeignKey(User,related_name='+', blank=True, null=True)
 
+    reponses = models.ManyToManyField(Reponse)
+	
     def __unicode__(self):
         return self.user.username
 
@@ -31,16 +45,3 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 post_save.connect(create_user_profile, sender=User)
 
-
-class Question(models.Model):
-    enonce = models.CharField(max_length=512)
-    def __unicode__(self):
-        return self.enonce
-
-class Reponse(models.Model):
-    eleve = models.ForeignKey(UserProfile, related_name='+')
-    question = models.ForeignKey(Question, related_name='+')
-    contenu = models.CharField(max_length=512)
-	
-    def __unicode__(self):
-        return self.contenu

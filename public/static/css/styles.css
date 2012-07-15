@@ -196,7 +196,7 @@ margin: 0 auto;
 	top:0;
 	left:222px;
 	width: 536px;
-	
+	padding-left:20px;
 }
 
 #global_onglets.pleine_page {
@@ -211,7 +211,8 @@ margin: 0 auto;
 	background-position:bottom;
 	background-repeat:repeat-x;
 	font-size:18px;
-	font-weight:bold;	
+	font-weight:bold;
+	
 }
 
 #menu_onglets ul {
@@ -314,18 +315,12 @@ margin: 0 auto;
  width:222px;
 }
 
-#evenements {
- background-color: #fff;
- border-radius: 10px;
- padding: 1px 10px 6px 10px;
-}
 
 #evenements ul {
-	padding:0;
+	padding:0 10px;
 	list-style:none;
 }
 #evenements li {
-	margin-top:15px;
 }
 
 div.tooltip-from-event {
@@ -339,17 +334,23 @@ div.tooltip-from-event {
 }
 
 #todo {
-position:relative;
-height:222px;
-background: url(todo.png) no-repeat;  
-background-position: 0 0;
-padding: 1px 10px 0 20px;
+	position:relative;
+	height:222px;
+	background: url(todo.png) no-repeat;  
+	background-position: 0 0;
+	padding: 1px 10px 0 20px;
+}
+#todo p {
+	margin: 8px 0;
+}
+
+#todo ul {
+	margin:5px;
+	padding: 0 10px;
 }
 
 #todo form {
-position:absolute;
-bottom:40px;
-margin:auto;
+position:relative;
 }
 
 #birthday {

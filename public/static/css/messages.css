@@ -57,16 +57,24 @@ div.message{
 	position:relative;
 	width:475px;
 	padding: 0;
-	margin:0 26px;
 }
 
 div.message hr{
-	border:1px solid #BBB;
+	border:0 none;
+	height:1px;
+	color:#808080;
+	background-color:#808080;
 	margin-bottom:4px;
 }
 
-div.message span.signature {
+div.message p.pied-message {
 	line-height:90%;
+	margin:0 0 5px 0;
+	padding:0;
+}
+div.message p.signature {
+	text-align:right;
+	margin-top:-20px;
 }
 
 div.event {
