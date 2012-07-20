@@ -10,7 +10,7 @@
 <dd{% if not cours.visible %} class="given"{% endif %}>matiere : {{ cours.matiere }}, niveau {{ cours.niveau }}<br />{{ cours.description }} à {{ cours.address }}<br />{{ cours.requests.count }} demandes<br />
 <ul>
 {% for request in cours.requests.all %}
-<li>{{ request.login }} <a href="/petitscours/admin/give/{{ cours.id }}/{{ request.login }}">attribuer</a></li>
+<li>{{ request }} <a href="/petitscours/admin/give/{{ cours.id }}/{{ request }}">attribuer</a></li>
 {% endfor %}
 </ul>
 </dd>
@@ -25,7 +25,7 @@
 <dd{% if not cours.visible %} class="given"{% endif %}>matiere : {{ cours.matiere }}, niveau {{ cours.niveau }}<br />{{ cours.description }} à {{ cours.location }}<br />{{ cours.requests.count }} demandes<br />
 <ul>
 {% for request in cours.requests.all %}
-<li>{{ request.login }} <a href="/petitscours/admin/give/{{ cours.id }}/{{ request.login }}">attribuer</a></li>
+<li>{{ request }} <a href="/petitscours/admin/give/{{ cours.id }}/{{ request }}">attribuer</a></li>
 {% endfor %}
 </ul>
 </dd>

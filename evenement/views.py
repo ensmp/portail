@@ -5,13 +5,30 @@ from association.models import Association, Adhesion, AdhesionAjoutForm, Adhesio
 from trombi.models import UserProfile
 from messages.models import Message
 from evenement.models import Evenement, Billetterie
+from django.http import Http404, HttpResponse
+from datetime import date, datetime, timedelta
+import json
+
 
 @login_required
 def index(request):
 	liste_evenements = Evenement.objects.all().order_by('date_debut')
 	return render_to_response('evenement/calendrier.html', {'liste_evenements':liste_evenements},context_instance=RequestContext(request))
-	
 
+@login_required	
+def index_json(request):
+	dthandler = lambda obj: obj.isoformat() if isinstance(obj, datetime) else None
+	evenement_list = Evenement.objects.all()
+	response = HttpResponse(mimetype='application/json')
+	response.write(json.dumps([{
+			'id': e.id,
+			'auteur': e.association.nom,
+			'start': e.date_debut,
+			'end': e.date_fin,
+			'title': e.titre
+		} for e in evenement_list], default=dthandler))
+	return response
+	
 @login_required
 def confirmer_billetterie(request, association_pseudo, evenement_id):
 	association = get_object_or_404(Association,pseudo=association_pseudo)

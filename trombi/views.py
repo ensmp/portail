@@ -88,24 +88,27 @@ def profile(request):
 @login_required
 def edit(request,mineur_login):
 	if request.method == 'POST':
-		update_profile(request,mineur_login,phone=request.POST['phone'],promo=request.POST['promo'],chambre=request.POST['chambre'],option=request.POST['option'])
+		update_profile(request,mineur_login,phone=request.POST['phone'],promo=request.POST['promo'],chambre=request.POST['chambre'],option=request.POST['option'], co=request.POST['co'], parrain=request.POST['parrain'], fillot=request.POST['fillot'])
 		# le profil a ete cree/ mis a jour, on update les questions
 		profile = request.user.get_profile()
 		for question in Question.objects.all():
-			try:
-				reponse_user = profile.reponses.get(question__id=question.id)
-			except Reponse.DoesNotExist:
-				reponse_user = Reponse.objects.create(question=question, contenu=request.POST['question_'+str(question.id)])
-				profile.reponses.add(reponse_user)
-				reponse_user.save()
-				profile.save()
-			reponse_user.contenu = request.POST['question_'+str(question.id)]
-			reponse_user.save()
+			if request.POST['question_'+str(question.id)] != "":
+				try:
+					reponse_user = profile.reponses.get(question__id=question.id)
+					reponse_user.contenu = request.POST['question_'+str(question.id)]
+					reponse_user.save()
+				except Reponse.DoesNotExist:				
+					reponse_user = Reponse.objects.create(question=question, contenu=request.POST['question_'+str(question.id)])
+					profile.reponses.add(reponse_user)
+					reponse_user.save()		
+		profile.save()
 		return redirect('/accounts/profile')
 	else:
 		mineur = get_object_or_404(UserProfile,user__username=mineur_login)
-		assoces = Adhesion.objects.filter(eleve__user__username = mineur_login)
+		autres_eleves = UserProfile.objects.exclude(id = request.user.get_profile().id)
+		promo_superieure = UserProfile.objects.filter(promo = request.user.get_profile().promo-1)
+		promo_inferieure = UserProfile.objects.filter(promo = request.user.get_profile().promo+1)
 		liste_questions = Question.objects.all()
 		liste_reponses = mineur.reponses.all()
-		return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'assoces': assoces, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
+		return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'promo_inferieure': promo_inferieure, 'promo_superieure': promo_superieure, 'autres_eleves': autres_eleves, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
 		

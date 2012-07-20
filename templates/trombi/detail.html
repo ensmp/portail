@@ -24,6 +24,8 @@
 
 <p>Option : {{ mineur.get_profile.option }}</p>
 
+<p>Co : <a href="/people/{{ mineur.get_profile.co }}">{{ mineur.get_profile.co.get_profile.first_name }} {{ mineur.get_profile.co.get_profile.last_name|upper }}</a></p>
+
 <p>Parrain : <a href="/people/{{ mineur.get_profile.parrain }}">{{ mineur.get_profile.parrain.get_profile.first_name }} {{ mineur.get_profile.parrain.get_profile.last_name|upper }}</a></p>
 
 <p>Fillot : <a href="/people/{{ mineur.get_profile.fillot }}">{{ mineur.get_profile.fillot.get_profile.first_name }} {{ mineur.get_profile.fillot.get_profile.last_name|upper }}</a></p>
@@ -39,12 +41,19 @@
 	{% endfor %}
 	</p>
 {% endfor %}
+
+{% load avatar_tags %}
+
 <div id="picture">
-<img src="{{ STATIC_URL }}{{ mineur.username }}.jpg" />
+<!--<img src="{{ STATIC_URL }}{{ mineur.username }}.jpg" />-->
+<img src = {% avatar_url mineur %}>
 </div>
 
 {% if mineur.username == user.username %}
-<a href="/people/{{ mineur.username }}/edit">Modifier</a>
+<p><a href="/people/{{ mineur.username }}/edit">Modifier</a><br/>
+<a href="{% url avatar_change %}">Ajouter une photo</a><br/>
+<a href="{% url avatar_delete %}">Supprimer une photo</a></p>
+
 {% endif %}
 
 {% endblock %}

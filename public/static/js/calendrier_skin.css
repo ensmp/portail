@@ -1,0 +1,15 @@
+.wc-toolbar{font-size:12px;padding:2px 5px;margin:0}
+.wc-toolbar h1{font-size:14px;font-weight:bold;}
+.wc-toolbar .ui-buttonset{font-size:0.8em;}
+.wc-toolbar .wc-title{text-align:left;}
+.wc-header{font-size:11px;}
+.wc-grid-timeslot-header, 
+.wc-header .wc-time-column-header{width:45px;}
+.wc-time-header-cell{font-size:11px;}
+.wc-business-hours .wc-time-header-cell{font-weight:bold;}
+.wc-am-pm,
+.wc-business-hours .wc-am-pm {font-size:1em;}
+.wc-header .wc-today  {font-weight: bold;}
+
+
+

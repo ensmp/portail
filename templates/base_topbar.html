@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<title>Le portail des élèves</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}styles_topbar.css" />
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.7.1.min.js"></script>
+	{% block header %}{% endblock %}
+</head>
+
+<body>
+<div id = "header">
+		{% include "menu.html" %}
+</div>
+<div id="wrap">	
+	{% if messages %}
+	<ul id="messages">
+		{% for message in messages %}
+		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	
+	<div id="global_onglets">
+		{% block onglets %}{% endblock %}
+		<div id="content_onglets">
+			{% block content %}{% endblock %}
+		</div>
+    </div>
+</div>
+</body>
+</html>

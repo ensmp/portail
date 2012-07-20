@@ -1,0 +1,27 @@
+<div id = "evenements">
+	<div class="module_top">
+		<p>Evénements</p>
+	</div>
+	<div class="module_middle">	
+		{% load obtenir_evenements %}
+		{% obtenir_events %}
+		{% if events_list %}
+		<ul style="display:none">
+		{% for event in events_list %}
+		{% ifchanged %}</ul><p><b>{{ event.date_debut|date:"l" }}</b></p><ul>{% endifchanged %}
+			   <li>{{event.titre}}</li>
+				<div class="event" style='display:none'>
+					<div>
+					<p>Organisé par <strong>{{event.association}}</strong> le <strong>{{event.date_debut|date:"l d F" }}</strong> à <strong>{{event.date_debut|date:"H:i" }}</strong></p>
+					</div>
+					<p>{{event.description|linebreaksbr}}</p>
+				</div>
+		{% endfor %}
+		</ul>	
+		{% else %}
+		<p>Aucun événement planifié</p>
+		{% endif %}
+	</div>
+	<div class="module_bottom">
+	</div>
+</div>	

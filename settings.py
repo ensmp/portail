@@ -154,6 +154,8 @@ INSTALLED_APPS = (
 	'evenement', 
 	'vendome', 
 	'jump', 
+	#Avatar, pour les avatars de trombi
+	'avatar',
 	#Photologue pour les photos Mediamine
 	'photologue',
     # Uncomment the next line to enable the admin:

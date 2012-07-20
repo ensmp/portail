@@ -2,9 +2,9 @@
 
 {% block header %}
 	<title>Emploi du temps</title>
-	<link rel="stylesheet" href="/media/list.css" />
-	<link rel="stylesheet" href="/media/chosen.css" />
-	<script type="text/javascript" src="/media/chosen.jquery.js"></script>
+	<link rel="stylesheet" href="{{ STATIC_URL }}list.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}chosen.css" />
+	<script type="text/javascript" src="{{ STATIC_URL }}chosen.jquery.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -31,7 +31,7 @@
 	<p></p>
 	<div><select data-placeholder="Liste de cours" multiple class="chzn-select chzn-add" name="codes">
 	{% for c in cours %}
-		<option value="{{ c.code }}">{{ c.description }} ({{c.code}})</option>
+		<option value="{{ c.code }}">{{ c.description }}</option>
 	{% endfor %}
 	</select></div>
 	<p></p>

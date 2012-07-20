@@ -3,16 +3,6 @@ body {
 	font-size: 83.33%;
 }
 
-h1 {
-	padding: 0.5em;
-	font-size: 1.6em;
-} 
-
-h2 {
-	margin: 0.5em 0;
-	font-size: 1.4em;	
-}
-
 p {
 	margin: 0.5em;	
 }
@@ -21,26 +11,19 @@ p {
 	font-size: 1em;	
 }
 
-#event_edit_container, #about {
+#event_edit_container {
 	display: none;
 }
 
-#about_button_container {
-	position: absolute;
-	top: 1em;
-	right: 1em;	
-	padding: 0.5em 2em;
-	background: #ddf;
-	border: 1px solid #bbd;
-	width: 10em;
-	text-align: center;
+#event_edit_container ul {
+	list-style:none;
 }
 
 .wc-header td {
-	background: url(calendar-bg.png) repeat-x;
+/*	background: url(calendar-bg.png) repeat-x;*/
 }
 
-label {
+#event_edit_container label {
 	display: block;
 	margin-top: 1em;
 	margin-bottom: 0.5em;
@@ -75,8 +58,4 @@ ul.formatted li {
 
 ol.formatted li {
 	list-style-type: decimal;
-}
-
-li {
-    list-style: none;
 }

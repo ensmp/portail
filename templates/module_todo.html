@@ -1,0 +1,20 @@
+{% if request.user.is_authenticated %}
+<script type="text/javascript" src="{{ STATIC_URL }}module_todo.js"></script>
+<div id = "todo">
+	<p><strong>Notes</strong></p>
+	{% load obtenir_notes %}	
+	{% obtenir_todos request.user.username %}	
+	<ul id= "liste_notes">
+	{% for todo in todo_list|slice:":8" %}
+		   <li><a href = "/todo/{{ todo.id }}/supprimer/">{{ todo.contenu }}</a></li>
+	{% endfor %}
+	</ul>	
+	<form method="post" action="#" id="todoform" {% if todo_list|length > 7 %}style="display:none;"{% endif %}>
+	{% csrf_token %}
+	<ul>
+	<li><input type="text" size = "13" name="note" placeholder="Nouvelle note"/>			
+	</ul>
+	</form>	
+</div>
+{% endif %}
+	

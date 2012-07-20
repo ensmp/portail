@@ -33,7 +33,7 @@ class UserProfile(models.Model):
     parrain = models.ForeignKey(User,related_name='+', blank=True, null=True)
     fillot = models.ForeignKey(User,related_name='+', blank=True, null=True)
 
-    reponses = models.ManyToManyField(Reponse)
+    reponses = models.ManyToManyField(Reponse, blank=True)
 	
     def __unicode__(self):
         return self.user.username

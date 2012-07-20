@@ -195,8 +195,8 @@ margin: 0 auto;
 	position: absolute;
 	top:0;
 	left:222px;
-	width: 536px;
-	padding-left:20px;
+	width: 516px;
+	padding-left:10px;
 }
 
 #global_onglets.pleine_page {
@@ -285,7 +285,7 @@ margin: 0 auto;
 
 #messages {
 	position: absolute;
-	top: 100px;
+	top: 10px;
 	right: 10px;
 	width: 250px;
 	background: #FFCC99;
@@ -352,6 +352,16 @@ div.tooltip-from-event {
 #todo form {
 position:relative;
 }
+
+#todo form input {
+ background-color:#FFF3F3;
+ padding:3px;
+ border:1px solid #F5C5C5;
+ border-radius:5px;
+ width:150px;
+ box-shadow:1px 1px 2px #C0C0C0 inset;
+ }
+ 
 
 #birthday {
  position:absolute;

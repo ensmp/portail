@@ -44,7 +44,8 @@ def give(request,id,mineur_login):
 	pc.date_given = datetime.now()
 	pc.visible = False
 	pc.save()
-	send_mail('Attribution petit cours', 'Salut ! Tu viens de remporter le petit cours '+pc.title+'.\nPour le contacter: '+pc.contact+'.\nNiveau: '+pc.niveau+'\nMatiere: '+pc.matiere+'\nLieu: '+pc.location+'\nAutre: '+pc.description, '10findli@ensmp.fr',[mineur_login+'@ensmp.fr'])
+	#send_mail('Attribution petit cours', 'Salut ! Tu viens de remporter le petit cours '+pc.title+'.\nPour le contacter: '+pc.contact+'.\nNiveau: '+pc.niveau+'\nMatiere: '+pc.matiere+'\nLieu: '+pc.address+'\nAutre: '+pc.description, '11sibue@ensmp.fr',[mineur_login+'@ensmp.fr'])
+	
 	return HttpResponseRedirect('/petitscours/admin')
 
 @login_required

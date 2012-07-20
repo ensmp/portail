@@ -33,6 +33,39 @@
 <td><label for="option">Option :</label></td>
 <td><input type="text" value="{{ mineur.get_profile.option }}" name="option"></td>
 </tr>
+<tr>
+<td><label for="co">Co :</label></td>
+<td>
+<select name = "co">
+<option>--------------</option>
+{% for eleve in autres_eleves %}
+<option {% if mineur.get_profile.co.id = eleve.id %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve }}</option>
+{% endfor %}
+</select>
+</td>
+</tr>
+<tr>
+<td><label for="parrain">Parrain :</label></td>
+<td>
+<select name = "parrain">
+<option>--------------</option>
+{% for eleve in promo_superieure %}
+<option {% if mineur.get_profile.parrain.id = eleve.id %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve }}</option>
+{% endfor %}
+</select>
+</td>
+</tr>
+<tr>
+<td><label for="fillot">Fillot :</label></td>
+<td>
+<select name = "fillot">
+<option>--------------</option>
+{% for eleve in promo_inferieure %}
+<option {% if mineur.get_profile.fillot.id = eleve.id %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve }}</option>
+{% endfor %}
+</select>
+</td>
+</tr>
 </table>
 <hr>
 <table class = "edit">

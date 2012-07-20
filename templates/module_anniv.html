@@ -1,0 +1,17 @@
+<div id = "birthday">
+	<div class="module_top">
+		<p>Les prochains anniversaires</p>
+	</div>
+	<div class="module_middle">		
+		{% load obtenir_anniv %}
+		{% obtenir_liste_annivs %}
+		<ul style="list-style:none; padding:0;">
+		{% for eleve in anniv_list %}
+			{% ifchanged %}<p class="date">{{ eleve.birthday|date:"d F" }}</p>{% endifchanged %}
+			<li><a href = "/people/{{eleve.user.username}}">{{eleve.first_name}} {{eleve.last_name}} (P{{eleve.promo}})</a></li>  
+		{% endfor %}
+		</ul>
+	</div>
+	<div class="module_bottom">
+	</div>
+</div>
