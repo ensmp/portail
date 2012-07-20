@@ -9,6 +9,7 @@ $(document).ready(function() {
 	  dateFormat: 'd M Y',
       timeslotsPerHour : 2,
 	  timeslotHeight: 25,
+	  use24Hour: true,
       allowCalEventOverlap : true,
       overlapEventsSeparate: true,
       firstDayOfWeek : 1,
@@ -36,7 +37,8 @@ $(document).ready(function() {
          return $(window).height() - 1;
       },
       eventRender : function(calEvent, $event) {
-         if (calEvent.end.getTime() < new Date().getTime()) {
+         //if (calEvent.end.getTime() < new Date().getTime()) { //OLD : grise les evenements passés
+		 if (calEvent.readOnly) {
             $event.css("backgroundColor", "#aaa");
             $event.find(".wc-time").css({
                "backgroundColor" : "#999",
@@ -103,7 +105,14 @@ $(document).ready(function() {
 
       },
       eventDrop : function(calEvent, $event) {
-        
+        //On récupère la CRSF			  			 
+		  csrfmiddlewaretoken =$("#tokenform").find("input[name=csrfmiddlewaretoken]").val();
+		  //On met a jour l'evenement
+		  $.post("/calendrier/update/", {csrfmiddlewaretoken:csrfmiddlewaretoken, jour:calEvent.start.getDate(), mois:calEvent.start.getMonth(), annee:calEvent.start.getFullYear(), heures_debut:calEvent.start.getHours(), minutes_debut:calEvent.start.getMinutes(), heures_fin:calEvent.end.getHours(), minutes_fin:calEvent.end.getMinutes(), title:calEvent.title, body:calEvent.body, id:calEvent.id},
+			  function(data) {
+				  //alert(data);
+			  }
+		  );
       },
       eventResize : function(calEvent, $event) {
 		  //On récupère la CRSF			  			 

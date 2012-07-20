@@ -34,7 +34,7 @@
         timeFormat: null,
         dateFormat: 'd M Y',
         alwaysDisplayTimeMinutes: true,
-        use24Hour: false,
+        use24Hour: true,
         daysToShow: 7,
         minBodyHeight: 100,
         firstDayOfWeek: function(calendar) {

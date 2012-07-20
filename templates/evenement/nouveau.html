@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}evenements.css" />
+<link type="text/css" href="{{ STATIC_URL }}jquery-ui-1.8.11.custom.css" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}jquery-ui-timepicker-addon.css" rel="stylesheet" />
+<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui-1.8.21.custom.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui-timepicker-fr.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('#datepicker').datepicker({
+			inline: true, 
+			dateFormat: "dd/mm/yy", 
+			minDate: new Date(), 
+			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"], 
+			monthNamesShort: ["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Aoû","Sep","Oct","Nov","Déc"],
+			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+			dayNamesShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+			prevText: "Précédent",
+			nextText: "Suivant",
+			
+		});
+		
+		$('#timedebutpicker').timepicker({
+			hourGrid: 4,
+			minuteGrid: 10
+		});
+		
+		$('#timefinpicker').timepicker({
+			hourGrid: 4,
+			minuteGrid: 10
+		});
+	});
+</script>
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
+<ul>
+<li><a href="/associations/{{association.pseudo}}/messages/"><span>Messages</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/equipe/"><span>Équipe</span></a></li>
+<li id="actif"><span>Évenements</span></li>
+{% if association.page %}
+<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><span>{{association.page.titre}}</span></a></li>
+{% endif %}
+</ul>
+<br>
+<hr>
+</div>
+{% endblock %}
+
+{% block content %}
+<h3>Nouvel événement</h3>
+<form id="addform" method="post" action="">
+{% csrf_token %}
+<p>
+<label for="titre">C'est quoi ? - </label>
+<input type="text" name="titre" placeholder="Saisissez le titre"/>
+</p>
+<p>
+<label for="lieu">C'est où ? - </label>
+<input type='text' name='lieu' placeholder="Saisissez le lieu" />
+</p>
+<p>
+<label for="date">C'est quel jour ? - </label>
+<input id="datepicker" type="text" name = "date" placeholder="Saisissez la date">
+</p>
+<p>
+<label for="debut">Ca commence quand ? - </label>
+<input id="timedebutpicker" type="text" name = "debut" placeholder="L'heure de début">
+</p>
+<p>
+<label for="fin">Ca se termine quand ? - </label>
+<input id="timefinpicker" type="text" name = "fin" placeholder="L'heure de fin">
+</p>
+<p>Pourquoi je dois venir ?</p>
+<p><textarea name="description" style="width:414px;height:64px;" placeholder="Ecrivez une description de l'événement"></textarea></p>
+<input type='submit' value='Terminer' />
+</form>
+{% endblock %}

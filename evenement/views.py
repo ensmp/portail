@@ -5,7 +5,7 @@ from association.models import Association, Adhesion, AdhesionAjoutForm, Adhesio
 from trombi.models import UserProfile
 from messages.models import Message
 from evenement.models import Evenement, Billetterie
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from datetime import date, datetime, timedelta
 from django.db.models import Q
 
@@ -62,6 +62,20 @@ def update_calendrier(request):
 		evenement.save()
 	return HttpResponse('Ok (update)')	
 
+@login_required
+def nouveau(request, association_pseudo):
+	association = get_object_or_404(Association,pseudo=association_pseudo)
+	if request.POST:
+		debut = datetime(int(str(request.POST['date'])[6:10]), int(str(request.POST['date'])[3:5]), int(str(request.POST['date'])[0:2]), int(str(request.POST['debut'])[0:2]), int(str(request.POST['debut'])[3:5]))
+		fin = datetime(int(str(request.POST['date'])[6:10]), int(str(request.POST['date'])[3:5]), int(str(request.POST['date'])[0:2]), int(str(request.POST['fin'])[0:2]), int(str(request.POST['fin'])[3:5]))
+		if Adhesion.objects.filter(association=association, eleve=request.user).exists():
+			Evenement.objects.create(association = association, createur = request.user.get_profile(), titre = request.POST['titre'], description = request.POST['description'], lieu =request.POST['lieu'], date_debut = debut, date_fin=fin, is_billetterie = False, is_personnel = False)
+		return HttpResponseRedirect('/associations/'+association_pseudo+'/evenements/')
+	else:
+		return render_to_response('evenement/nouveau.html', {'association' : association},context_instance=RequestContext(request))
+	
+	
+	
 @login_required
 def confirmer_billetterie(request, association_pseudo, evenement_id):
 	association = get_object_or_404(Association,pseudo=association_pseudo)
