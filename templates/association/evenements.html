@@ -2,6 +2,7 @@
 {% block header %}
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}evenements.css" />
+<link type="text/css" href="{{ STATIC_URL }}jquery-ui-1.8.11.custom.css" rel="stylesheet" />
 <script type="text/javascript" src="{{ STATIC_URL }}messages.js"></script>    
 <script type="text/javascript" src="{{ STATIC_URL }}read.js"></script>
 
@@ -14,11 +15,11 @@
 
 
 <ul>
-<li><a href="/associations/{{association.pseudo}}/messages/"><span>Messages</span></a></li>
-<li><a href="/associations/{{association.pseudo}}/equipe/"><span>Équipe</span></a></li>
-<li id="actif"><span>Évenements</span></li>
+<li><a href="/associations/{{association.pseudo}}/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li id="actif"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></li>
 {% if association.page %}
-<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><span>{{association.page.titre}}</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><img src="{{ STATIC_URL}}page_{{association.page.lien}}.png"><span>{{association.page.titre}}</span></a></li>
 {% endif %}
 </ul>
 <br>

@@ -10,14 +10,16 @@
 {% block onglets %}
 <div id="menu_onglets">
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
+
 <ul>
-<li><a href="/associations/{{association.pseudo}}/messages/"><span>Messages</span></a></li>
-<li id="actif"><span>Équipe</span></li>
-<li><a href="/associations/{{association.pseudo}}/evenements/"><span>Évenements</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li id="actif"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></li>
+<li><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
 {% if association.page %}
-<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><span>{{association.page.titre}}</span></a></li>
+<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><img src="{{ STATIC_URL}}page_{{association.page.lien}}.png"><span>{{association.page.titre}}</span></a></li>
 {% endif %}
 </ul>
+
 <br>
 <hr>
 </div>

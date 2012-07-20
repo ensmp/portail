@@ -57,6 +57,8 @@ a:hover {
     border:none;
     font-size:13px;
 	margin-right:10px;
+	width:94px;
+	height:15px;
 }
 
 #bouton_recherche {
@@ -87,7 +89,7 @@ a:hover {
 
 
 ul.topnav {  
-	list-style-position: inside;
+	list-style: none;
 	padding: 0;
 	margin: 0;
 	position: absolute;
@@ -98,10 +100,10 @@ ul.topnav {
 	z-index:20;	
 }  
 ul.topnav li {  
-display:inline;
+	/*display:inline;*/
 	float: left;  
 	margin: 0;  
-	padding: 0 15px 0 0;  
+	padding: 0;
 	position: relative; 
 	z-index:30;	
 }  
@@ -124,6 +126,20 @@ ul.topnav li a{
 ul.topnav li a:hover{  
 	color:#848484;
 }  
+
+ul.topnav li a span{  
+	float: right;  
+}  
+ul.topnav li a span#compteur_messages{  
+	float: left;  
+	padding-right:5px;
+} 
+
+ul.topnav li a img{  
+	margin-top:-6px;
+	margin-right:4px;
+}  
+
 ul.topnav li span.fleche {
 	width: 17px;  
 	height: 35px;  

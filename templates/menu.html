@@ -4,12 +4,12 @@
 		<!-- Le menu -->
 			<ul class="topnav">  				
 			{% load obtenir_nombre_messages %}{% if request.user.is_authenticated %}{% compter_messages request.user.username %}{% endif %}
-			<li><a href="/messages"><span id="compteur_messages">{{ nombre_de_messages }}</span> Message{{ nombre_de_messages|pluralize }}</a></li>  
+			<li><a href="/messages"><img src="{{ STATIC_URL}}mail.png"><span><span id="compteur_messages">{{ nombre_de_messages }}</span>Message{{ nombre_de_messages|pluralize }}</span></a></li>  
 			<li>
-				<a href="/calendrier/">Calendrier</a>  
+				<a href="/calendrier/"><img src="{{ STATIC_URL}}date.png"><span>Calendrier</span></a>  
 			</li>
 			<li>  
-				<a href="/associations/">Associations</a>  
+				<a href="/associations/"><img src="{{ STATIC_URL}}association.png"><span>Associations</span></a>  
 				<ul class="subnav">
 				{% load obtenir_liste_associations %}
 				{% obtenir_associations %}
@@ -20,7 +20,7 @@
 				</ul>  
 			</li>  
 			<li>  
-				<a href="#">Services</a>  
+				<a href="#"><img src="{{ STATIC_URL}}gear.png"><span>Services</span></a>  
 				<ul class="subnav">  
 					<li><a href="/people/">Trombi</a></li>  
 					<li><a href="/petitscours/">Petits cours</a></li>
@@ -31,17 +31,17 @@
 			<li>
 			<div id="champ_recherche">
 				<form action="/recherche/" method="get">
-					<input id="string_recherche" type="text" size="18" name = "q"/>
+					<input id="string_recherche" type="text" size="13" name = "q"/>
 					<button id="bouton_recherche" type="submit" title="Rechercher">
 					<img src = "{{ STATIC_URL }}loupe.png" alt="Rechercher">
 					</button>
 				</form>
 			</div>
 			</li>  
-			{% if request.user.is_staff %}<li><a href="/admin/">Administration</a></li>  {% endif %}
+			{% if request.user.is_staff %}<li><a href="/admin/"><img src="{{ STATIC_URL}}Suit.png"><span>Administration</span></a></li>  {% endif %}
 			{% if user.is_authenticated %}
 			<li class="droite">  
-				<a href="/people/{{ user.username }}/">{{ user.username }}</a>  
+				<a href="/people/{{ user.username }}/"><img src="{{ STATIC_URL}}user_guy.png"><span>{{ user.username }}</span></a>  
 				<ul class="subnav">  
 					<li><a href="/people/{{ user.username }}/">Ma page</a></li>  
 					<li><a href="/accounts/logout/">Se déconnecter</a></li>
