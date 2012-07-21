@@ -22,13 +22,44 @@ def index_json(request):
 	response = HttpResponse(mimetype='application/json')
 	response.write(json.dumps([{
 			'id': e.id,
-			'auteur': e.association.nom,
+			'auteur': e.auteur(),
 			'start': e.date_debut,
 			'end': e.date_fin,
-			'title': e.titre
+			'title': e.titre, 	
+			'body': e.description, 
+			'readOnly':not(e.peut_modifier(request.user))
 		} for e in evenement_list], default=dthandler))
 	return response
+
+@login_required
+def nouveau_calendrier(request):
+	debut = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_debut']), int(request.POST['minutes_debut']))
+	fin = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_fin']), int(request.POST['minutes_fin']))
 	
+	Evenement.objects.create(association = None, createur = request.user.get_profile(), titre = request.POST['title'], description = request.POST['body'], date_debut = debut, date_fin=fin, is_billetterie = False)
+	
+	return HttpResponse('Ok (ajout)')
+
+@login_required	
+def supprimer_calendrier(request):	
+	evenement = Evenement.objects.get(pk=request.POST['id'])
+	if evenement.peut_modifier(request.user):
+		evenement.delete()
+	return HttpResponse('Ok (suppression)')
+
+@login_required	
+def update_calendrier(request):	
+	evenement = Evenement.objects.get(pk=request.POST['id'])
+	if evenement.peut_modifier(request.user):
+		debut = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_debut']), int(request.POST['minutes_debut']))
+		fin = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_fin']), int(request.POST['minutes_fin']))
+		evenement.titre = request.POST['title']
+		evenement.description = request.POST['body']
+		evenement.date_debut = debut
+		evenement.date_fin=fin
+		evenement.save()
+	return HttpResponse('Ok (update)')	
+
 @login_required
 def confirmer_billetterie(request, association_pseudo, evenement_id):
 	association = get_object_or_404(Association,pseudo=association_pseudo)

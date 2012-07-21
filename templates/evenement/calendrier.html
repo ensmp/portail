@@ -1,4 +1,4 @@
-{% extends "base_header.html" %}
+{% extends "base_topbar.html" %}
 
 {% block header %}
     <link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}jquery-ui-1.8.11.custom.css' />
@@ -14,6 +14,7 @@
 
 {% endblock %}
 {% block content %}	
+	<form id="tokenform">{% csrf_token %}</form>
 	<div id='calendar'></div>
 	<div id="event_edit_container">
 		<form>

@@ -12,7 +12,7 @@ $(document).ready(function() {
       allowCalEventOverlap : true,
       overlapEventsSeparate: true,
       firstDayOfWeek : 1,
-      businessHours :{start: 8, end: 18, limitDisplay: true },
+      businessHours :{start: 8, end: 21, limitDisplay: true },
       daysToShow : 7,
       switchDisplay: {'1 jour': 1, '3 prochains jours': 3, 'une semaine': 7},
 	  timeSeparator: ' à ',
@@ -75,6 +75,16 @@ $(document).ready(function() {
                   calEvent.end = new Date(endField.val());
                   calEvent.title = titleField.val();
                   calEvent.body = bodyField.val();
+				  
+				  //On récupère la CRSF			  			 
+				  csrfmiddlewaretoken =$("#tokenform").find("input[name=csrfmiddlewaretoken]").val();
+				  //On ajoute l'evenement
+				  $.post("/calendrier/nouveau/", {csrfmiddlewaretoken:csrfmiddlewaretoken, jour:calEvent.start.getDate(), mois:calEvent.start.getMonth(), annee:calEvent.start.getFullYear(), heures_debut:calEvent.start.getHours(), minutes_debut:calEvent.start.getMinutes(), heures_fin:calEvent.end.getHours(), minutes_fin:calEvent.end.getMinutes(), title:calEvent.title, body:calEvent.body},
+					  function(data) {
+						  //alert(data);
+					  }
+				  );						  
+				  
 
                   $calendar.weekCalendar("removeUnsavedEvents");
                   $calendar.weekCalendar("updateEvent", calEvent);
@@ -96,12 +106,20 @@ $(document).ready(function() {
         
       },
       eventResize : function(calEvent, $event) {
+		  //On récupère la CRSF			  			 
+		  csrfmiddlewaretoken =$("#tokenform").find("input[name=csrfmiddlewaretoken]").val();
+		  //On met a jour l'evenement
+		  $.post("/calendrier/update/", {csrfmiddlewaretoken:csrfmiddlewaretoken, jour:calEvent.start.getDate(), mois:calEvent.start.getMonth(), annee:calEvent.start.getFullYear(), heures_debut:calEvent.start.getHours(), minutes_debut:calEvent.start.getMinutes(), heures_fin:calEvent.end.getHours(), minutes_fin:calEvent.end.getMinutes(), title:calEvent.title, body:calEvent.body, id:calEvent.id},
+			  function(data) {
+				  //alert(data);
+			  }
+		  );
       },
       eventClick : function(calEvent, $event) {
-
-         if (calEvent.readOnly) {
+		
+         /*if (calEvent.readOnly) {
             return;
-         }
+         }*/
 
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
@@ -110,7 +128,26 @@ $(document).ready(function() {
          var titleField = $dialogContent.find("input[name='title']").val(calEvent.title);
          var bodyField = $dialogContent.find("textarea[name='body']");
          bodyField.val(calEvent.body);
-
+		
+		/** Fenetre de clic sur un evenement associatif*/
+		if (calEvent.readOnly) {
+		$dialogContent.dialog({
+            modal: true,
+            title: "Voir - " + calEvent.title,
+            close: function() {
+               $dialogContent.dialog("destroy");
+               $dialogContent.hide();
+               $('#calendar').weekCalendar("removeUnsavedEvents");
+            },
+            buttons: {
+               Annuler : function() {
+                  $dialogContent.dialog("close");
+               }
+            }
+         }).show();
+		}
+		/** Fenetre de clic sur un evenement personnel*/
+		else {
          $dialogContent.dialog({
             modal: true,
             title: "Edit - " + calEvent.title,
@@ -126,11 +163,31 @@ $(document).ready(function() {
                   calEvent.end = new Date(endField.val());
                   calEvent.title = titleField.val();
                   calEvent.body = bodyField.val();
-
+				  
+				  //On récupère la CRSF			  			 
+				  csrfmiddlewaretoken =$("#tokenform").find("input[name=csrfmiddlewaretoken]").val();
+				  //On met a jour l'evenement
+				  $.post("/calendrier/update/", {csrfmiddlewaretoken:csrfmiddlewaretoken, jour:calEvent.start.getDate(), mois:calEvent.start.getMonth(), annee:calEvent.start.getFullYear(), heures_debut:calEvent.start.getHours(), minutes_debut:calEvent.start.getMinutes(), heures_fin:calEvent.end.getHours(), minutes_fin:calEvent.end.getMinutes(), title:calEvent.title, body:calEvent.body, id:calEvent.id},
+					  function(data) {
+						  //alert(data);
+					  }
+				  );
+					
+					
                   $calendar.weekCalendar("updateEvent", calEvent);
                   $dialogContent.dialog("close");
                },
                "Supprimer" : function() {
+			   
+			     //On récupère la CRSF			  			 
+				  csrfmiddlewaretoken =$("#tokenform").find("input[name=csrfmiddlewaretoken]").val();
+				  //On supprime l'evenement
+				  $.post("/calendrier/supprimer/", {csrfmiddlewaretoken:csrfmiddlewaretoken, id:calEvent.id},
+					  function(data) {
+						  //alert(data);
+					  }
+				  );
+				
                   $calendar.weekCalendar("removeEvent", calEvent.id);
                   $dialogContent.dialog("close");
                },
@@ -139,6 +196,7 @@ $(document).ready(function() {
                }
             }
          }).show();
+		 }
 
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
          var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
