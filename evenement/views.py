@@ -7,6 +7,8 @@ from messages.models import Message
 from evenement.models import Evenement, Billetterie
 from django.http import Http404, HttpResponse
 from datetime import date, datetime, timedelta
+from django.db.models import Q
+
 import json
 
 
@@ -18,7 +20,7 @@ def index(request):
 @login_required	
 def index_json(request):
 	dthandler = lambda obj: obj.isoformat() if isinstance(obj, datetime) else None
-	evenement_list = Evenement.objects.all()
+	evenement_list = Evenement.objects.exclude(Q(is_personnel=True) & ~Q(createur__user__username=request.user.username))
 	response = HttpResponse(mimetype='application/json')
 	response.write(json.dumps([{
 			'id': e.id,
@@ -36,7 +38,7 @@ def nouveau_calendrier(request):
 	debut = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_debut']), int(request.POST['minutes_debut']))
 	fin = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_fin']), int(request.POST['minutes_fin']))
 	
-	Evenement.objects.create(association = None, createur = request.user.get_profile(), titre = request.POST['title'], description = request.POST['body'], date_debut = debut, date_fin=fin, is_billetterie = False)
+	Evenement.objects.create(association = None, createur = request.user.get_profile(), titre = request.POST['title'], description = request.POST['body'], date_debut = debut, date_fin=fin, is_billetterie = False, is_personnel = True)
 	
 	return HttpResponse('Ok (ajout)')
 

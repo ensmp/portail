@@ -8,8 +8,9 @@ import datetime
 register = Library()
 
 class EventNode(Node):
-	def __init__(self):
+	def __init__(self, login):
 		Node.__init__(self)
+		self.login = template.Variable(login)
 			
 	def render(self, context):
 		start = datetime.date.today()
@@ -18,7 +19,7 @@ class EventNode(Node):
 
 		events = []
 		for d in days:
-			for p in Evenement.objects.filter(date_debut__month=d.month, date_debut__day=d.day):
+			for p in Evenement.objects.filter(date_debut__month=d.month, date_debut__day=d.day).exclude(Q(is_personnel=True) & ~Q(createur__user__username=self.login.resolve(context))):
 				events.append(p)
 
 		context['events_list'] = events
@@ -26,5 +27,5 @@ class EventNode(Node):
 		return ''
     
 def obtenir_events(parser, token):
-	return EventNode()
+	return EventNode(token.contents.split()[1])
 obtenir_events = register.tag(obtenir_events)

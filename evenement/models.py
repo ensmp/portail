@@ -5,8 +5,9 @@ from datetime import date, datetime, timedelta
 
 # Create your models here.
 class Evenement(models.Model):
-	association = models.ForeignKey(Association, blank=True, null=True)
+	is_personnel = models.BooleanField()
 	createur = models.ForeignKey(UserProfile, blank=True, null=True)
+	association = models.ForeignKey(Association, blank=True, null=True)
 	titre = models.CharField(max_length=300)
 	description =  models.TextField()
 	date_debut = models.DateTimeField(default=datetime.now(), blank=True)
@@ -21,7 +22,7 @@ class Evenement(models.Model):
 		return self.titre
 	
 	def auteur(self):
-		if self.association is None:
+		if self.is_personnel:
 			return self.createur.user.username
 		else:
 			return self.association.nom

@@ -1,10 +1,10 @@
 <div id = "evenements">
 	<div class="module_top">
-		<p>Evénements</p>
+		<p>Evénements à venir</p>
 	</div>
 	<div class="module_middle">	
 		{% load obtenir_evenements %}
-		{% obtenir_events %}
+		{% obtenir_events request.user.username%}
 		{% if events_list %}
 		<ul style="display:none">
 		{% for event in events_list %}
