@@ -25,6 +25,7 @@ class UserProfile(models.Model):
     promo = models.IntegerField(null=True)
     option = models.CharField(max_length=128, blank=True)
     a_la_meuh = models.BooleanField(default=True)
+    est_une_fille = models.BooleanField()
 
     chambre = models.CharField(max_length=128, blank=True)
     adresse_ailleurs = models.CharField(max_length=512, blank=True)    

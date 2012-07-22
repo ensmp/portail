@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}sondages.css" />
+{% endblock %}
+
+{% block content %}
+<h3>Valider un sondage</h3>
+{% if request.user.is_staff %}
+<table>
+	{% for sondage in liste_sondages %}
+	<tr><td>{{ sondage.question }}</td></tr>
+	<tr>
+		<td><ul><li>{{ sondage.reponse1 }}</li></ul></td>
+		<td><form method="post" action="/sondages/valider/"><input border=0 src="{{ STATIC_URL }}valider.png" type=image value=submit title="Valider"><input type = "hidden" name="id" value="{{ sondage.id }}">{% csrf_token %}</form></td>
+	</tr>
+	<tr>
+		<td><ul><li>{{ sondage.reponse2 }}</li></ul></td>
+		<td><form method="post" action="/sondages/supprimer/"><input border=0 src="{{ STATIC_URL }}supprimer.png" type=image value=submit title="Supprimer"><input type = "hidden" name="id" value="{{ sondage.id }}">{% csrf_token %}</form></td>
+	</tr>
+	{% empty %}
+	<p>Aucun sondage en attente de validation</p>
+	{% endfor %}
+</table>
+{% else %}
+<p>Vous n'avez pas l'autorisation de valider des sondages</p>
+{% endif %}
+{% endblock %}

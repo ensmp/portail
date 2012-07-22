@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}sondages.css" />
+{% endblock %}
+
+{% block content %}
+<h3>Proposer un sondage</h3>
+<form id="addform" method="post" action="">
+{% csrf_token %}
+<p>
+<label for="question">Question - </label>
+<input type="text" name="question" placeholder="To be or not to be ?"/>
+</p>
+<p>
+<label for="reponse1">Réponse 1 - </label>
+<input type='text' name='reponse1' placeholder="To be" />
+</p>
+<p>
+<label for="reponse2">Réponse 2 - </label>
+<input type="text" name = "reponse2" placeholder="Not to be">
+</p>
+<input type='submit' value='Proposer' />
+</form>
+{% if request.user.is_staff %}
+<a href = "/sondages/valider/">Valider les sondages en attente</a>
+{% endif %}
+{% endblock %}

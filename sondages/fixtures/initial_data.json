@@ -1,0 +1,251 @@
+[
+    {
+        "pk": 1, 
+        "model": "sondages.sondage", 
+        "fields": {
+            "reponse2": "Jaune", 
+            "reponse1": "Rouge", 
+            "deja_paru": true, 
+            "question": "Rouge ou jaune ?", 
+            "date_parution": "2012-06-18", 
+            "autorise": true
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "sondages.sondage", 
+        "fields": {
+            "reponse2": "Non", 
+            "reponse1": "Oui", 
+            "deja_paru": true, 
+            "question": "Romain est-il un peigne ?", 
+            "date_parution": "2012-07-21", 
+            "autorise": true
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "sondages.sondage", 
+        "fields": {
+            "reponse2": "Not to be", 
+            "reponse1": "To be", 
+            "deja_paru": true, 
+            "question": "To be or not to be ?", 
+            "date_parution": "2012-07-20", 
+            "autorise": true
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "sondages.sondage", 
+        "fields": {
+            "reponse2": "BO", 
+            "reponse1": "OB", 
+            "deja_paru": true, 
+            "question": "OB ou BO ?", 
+            "date_parution": "2012-07-19", 
+            "autorise": true
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "sondages.sondage", 
+        "fields": {
+            "reponse2": "Machines", 
+            "reponse1": "Mareva", 
+            "deja_paru": true, 
+            "question": "Mareva ou Machines ?", 
+            "date_parution": null, 
+            "autorise": true
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "sondages.sondage", 
+        "fields": {
+            "reponse2": "Pougne", 
+            "reponse1": "Plage", 
+            "deja_paru": true, 
+            "question": "Cet \u00e9t\u00e9, c'est plut\u00f4t ... ?", 
+            "date_parution": "2012-07-10", 
+            "autorise": true
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "sondages.sondage", 
+        "fields": {
+            "reponse2": "Pas int\u00e9ress\u00e9", 
+            "reponse1": "Ah ouaaais", 
+            "deja_paru": false, 
+            "question": "Un club dessin aux Mines, vous en pensez quoi ?", 
+            "date_parution": "2012-07-22", 
+            "autorise": true
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "sondages.sondage", 
+        "fields": {
+            "reponse2": "Gladys", 
+            "reponse1": "Elizabeth", 
+            "deja_paru": false, 
+            "question": "Qui est la plus sexy ?", 
+            "date_parution": null, 
+            "autorise": true
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 397, 
+            "sondage": 1
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 407, 
+            "sondage": 1
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 1, 
+            "eleve": 363, 
+            "sondage": 1
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 406, 
+            "sondage": 1
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 256, 
+            "sondage": 1
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 354, 
+            "sondage": 1
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 397, 
+            "sondage": 5
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 397, 
+            "sondage": 4
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 406, 
+            "sondage": 4
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 1, 
+            "eleve": 407, 
+            "sondage": 4
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 1, 
+            "eleve": 363, 
+            "sondage": 4
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 433, 
+            "sondage": 4
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 1, 
+            "eleve": 397, 
+            "sondage": 3
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 407, 
+            "sondage": 3
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 2, 
+            "eleve": 401, 
+            "sondage": 3
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 1, 
+            "eleve": 397, 
+            "sondage": 2
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "sondages.vote", 
+        "fields": {
+            "choix": 1, 
+            "eleve": 397, 
+            "sondage": 9
+        }
+    }
+]

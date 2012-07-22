@@ -5,7 +5,9 @@
         "fields": {
             "billetterie": null, 
             "description": "Venez nombreux", 
+            "createur": 410, 
             "participants": [], 
+            "is_personnel": false, 
             "date_fin": "2012-06-26T23:00:00", 
             "lieu": "FAO", 
             "is_billetterie": true, 

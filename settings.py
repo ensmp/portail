@@ -151,6 +151,7 @@ INSTALLED_APPS = (
 	'objettrouve',
     'timetable',
 	'todo',
+	'sondages',
 	'evenement', 
 	'vendome', 
 	'jump', 

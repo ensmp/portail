@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}styles.css" />
 	<link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico">
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.7.2.min.js"></script>
+	
+	<!--Modules-->
+	<script type="text/javascript" src="{{ STATIC_URL }}module_sondages.js"></script>
+	
 	{% block header %}{% endblock %}
 </head>
 
@@ -39,6 +43,7 @@
 	
 	<div id="barre_gauche">	
 		{% include "module_evenement.html" %}
+		{% include "module_sondages.html" %}
 	</div>
 </div>
 </body>

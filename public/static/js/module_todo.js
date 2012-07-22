@@ -15,6 +15,6 @@
 	
 	$(function() {
 		$("#todoform a").clicked(function(){
-			return false;
+			alert("click");
 		});
 	});

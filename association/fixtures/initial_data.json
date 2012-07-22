@@ -286,7 +286,7 @@
         "pk": 17, 
         "model": "association.adhesion", 
         "fields": {
-            "ordre": 100, 
+            "ordre": 1, 
             "role": "Pr\u00e9sident", 
             "association": 6, 
             "eleve": 406
@@ -416,8 +416,8 @@
         "pk": 30, 
         "model": "association.adhesion", 
         "fields": {
-            "ordre": 1, 
-            "role": "Hyper-Prez", 
+            "ordre": 0, 
+            "role": "Respo Com", 
             "association": 6, 
             "eleve": 397
         }
