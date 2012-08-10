@@ -30,7 +30,7 @@
 {% block content %}
 {% for adhesion in membres %}
 {% if request.user = adhesion.eleve.user %}
-<p><a href="/associations/{{association.pseudo}}/poster_message/"><img src="{{ STATIC_URL }}nouveau_message.png" title="Poster un message">Poster un message</a></p>
+<p class="actions"><a href="/associations/{{association.pseudo}}/messages/poster_message/"><img src="{{ STATIC_URL }}nouveau_message.png" title="Poster un message"></a></p>
 {% endif %}
 {% endfor %}
 

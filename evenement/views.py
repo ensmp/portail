@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -13,14 +14,15 @@ import json
 
 
 @login_required
+#Le calendrier. Les évenements sont chargés depuis la vue index_json.
 def index(request):
-	liste_evenements = Evenement.objects.all().order_by('date_debut')
-	return render_to_response('evenement/calendrier.html', {'liste_evenements':liste_evenements},context_instance=RequestContext(request))
+	return render_to_response('evenement/calendrier.html', {},context_instance=RequestContext(request))
 
 @login_required	
+#La serialisation des évenements au format JSON. Pour l'affichage dans le calendrier, et sur les applis.
 def index_json(request):
-	dthandler = lambda obj: obj.isoformat() if isinstance(obj, datetime) else None
-	evenement_list = Evenement.objects.exclude(Q(is_personnel=True) & ~Q(createur__user__username=request.user.username))
+	dthandler = lambda obj: obj.isoformat() if isinstance(obj, datetime) else None #pour le formatage des dates
+	evenement_list = Evenement.objects.exclude(Q(is_personnel=True) & ~Q(createur__user__username=request.user.username)) #On ne lit pas les evenements personnels d'autrui.
 	response = HttpResponse(mimetype='application/json')
 	response.write(json.dumps([{
 			'id': e.id,
@@ -29,12 +31,13 @@ def index_json(request):
 			'end': e.date_fin,
 			'title': e.titre, 	
 			'body': e.description, 
-			'readOnly':not(e.peut_modifier(request.user))
+			'readOnly':not(e.peut_modifier(request.user)) #Lecture seule si on n'est pas autorisé à le modifier
 		} for e in evenement_list], default=dthandler))
 	return response
 
 @login_required
-def nouveau_calendrier(request):
+#Création d'un nouvel évenement, depuis le calendrier.
+def nouveau_calendrier(request): 
 	debut = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_debut']), int(request.POST['minutes_debut']))
 	fin = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_fin']), int(request.POST['minutes_fin']))
 	
@@ -43,13 +46,15 @@ def nouveau_calendrier(request):
 	return HttpResponse('Ok (ajout)')
 
 @login_required	
-def supprimer_calendrier(request):	
+#Suppression d'un évenement, depuis le calendrier.
+def supprimer_calendrier(request):
 	evenement = Evenement.objects.get(pk=request.POST['id'])
 	if evenement.peut_modifier(request.user):
 		evenement.delete()
 	return HttpResponse('Ok (suppression)')
 
 @login_required	
+#Mise à jour d'un évenement, depuis le calendrier.
 def update_calendrier(request):	
 	evenement = Evenement.objects.get(pk=request.POST['id'])
 	if evenement.peut_modifier(request.user):
@@ -63,6 +68,7 @@ def update_calendrier(request):
 	return HttpResponse('Ok (update)')	
 
 @login_required
+#Création d'un nouvel évenement, depuis la page "évenements" d'une association
 def nouveau(request, association_pseudo):
 	association = get_object_or_404(Association,pseudo=association_pseudo)
 	if request.POST:
@@ -74,8 +80,7 @@ def nouveau(request, association_pseudo):
 	else:
 		return render_to_response('evenement/nouveau.html', {'association' : association},context_instance=RequestContext(request))
 	
-	
-	
+
 @login_required
 def confirmer_billetterie(request, association_pseudo, evenement_id):
 	association = get_object_or_404(Association,pseudo=association_pseudo)
@@ -91,7 +96,7 @@ def consulter_billetterie(request, association_pseudo, evenement_id):
 	liste_billetterie = Evenement.objects.filter(participants__user__username=request.user.username).order_by('-date_debut')
 	return render_to_response('evenement/billetterie.html', {'association' : association, 'evenement' : evenement, 'liste_billetterie' : liste_billetterie},context_instance=RequestContext(request))
 	
-
+@login_required
 def billetterie_globale (request):
 	liste_billetterie = Evenement.objects.filter(participants__user__username=request.user.username).order_by('-date_debut')
 	return render_to_response('evenement/billetterie.html', {'liste_billetterie' : liste_billetterie},context_instance=RequestContext(request))

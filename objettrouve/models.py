@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from trombi.models import UserProfile
 from datetime import datetime
 from django import forms
 
-# Create your models here.
+# Un objet trouvé, ou un objet perdu
 class ObjetTrouve(models.Model):
- eleve = models.ForeignKey(UserProfile)
- trouve = models.BooleanField()
+ eleve = models.ForeignKey(UserProfile) #l'élève qui a perdu ou trouvé l'objet
+ trouve = models.BooleanField() #l'objet est trouvé si VRAI, et est perdu si FAUX
  description = models.CharField(max_length=300)
  lieu = models.CharField(max_length=200)
  date = models.DateTimeField(default=datetime.now, blank=True)
@@ -14,16 +15,18 @@ class ObjetTrouve(models.Model):
  def __unicode__(self):
   return self.description
   
-class ObjetAjoutForm(forms.Form):
+#Formulaire d'ajout d'objet trouvé/perdu
+class ObjetAjoutForm(forms.Form): 
 	description = forms.CharField(max_length=300, required=True)
 	trouve = forms.TypedChoiceField(label='Type', coerce=lambda x: bool(int(x)),
                    choices=((0, 'Perdu'), (1, 'Trouve')),
-                   widget=forms.RadioSelect)
+                   widget=forms.RadioSelect) #Un choix perdu/trouvé sous forme de Radio Buttons
 
 
 	date = forms.DateField(initial=datetime.now)
 	lieu = forms.CharField(max_length=200, required=True)
-	
+
+#Formulaire de suppression d'un objet trouvé/perdu
 class ObjetSuppressionForm(forms.Form):
 
 	objettrouve = forms.ModelChoiceField(label='Objet ',queryset=ObjetTrouve.objects.all())

@@ -29,7 +29,7 @@
 {% block content %}
 {% for adhesion in membres %}
 {% if request.user = adhesion.eleve.user %}
-<p><a href="/associations/{{association.pseudo}}/evenements/nouveau/">Nouvel événement</a></p>
+<p class="actions"><a href="/associations/{{association.pseudo}}/evenements/nouveau/"><img src="{{ STATIC_URL }}evenement_nouveau.png" title="Nouvel événement"</a></p>
 {% endif %}
 {% endfor %}
 

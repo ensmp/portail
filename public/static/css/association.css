@@ -37,3 +37,7 @@ height:10px;
 width:536px;
 margin: 0 auto;
 }
+
+p.actions {
+	text-align:right;
+}

@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from trombi.models import UserProfile, Question, Reponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
 from trombi.tools import update_profile
 from association.models import Adhesion
@@ -15,14 +16,15 @@ def index(request):
 	mineur_list = UserProfile.objects.order_by('-promo','last_name')
 	return render_to_response('trombi/index.html', {'mineur_list': mineur_list},context_instance=RequestContext(request))
 
+@login_required
 def index_json(request):
-	mineur_list = User.objects.order_by('username')
+	mineur_list = UserProfile.objects.order_by('-promo','last_name')
 	response = HttpResponse(mimetype='application/json')
 	response.write(simplejson.dumps([{
-			'username': m.username,
-			'first_name': m.get_profile().first_name,
-			'last_name': m.get_profile().last_name,
-			'promo': m.get_profile().promo
+			'username': m.user.username,
+			'first_name': m.first_name,
+			'last_name': m.last_name,
+			'promo': m.promo
 		} for m in mineur_list]))
 	return response
 
@@ -40,6 +42,7 @@ def detail_json(request,mineur_login):
 	assoces = Adhesion.objects.filter(eleve__user__username = mineur_login)
 	response = HttpResponse(mimetype='application/json')
 	response.write(simplejson.dumps({
+		'username': mineur.username,
 		'first_name': profile.first_name,
 		'last_name': profile.last_name,
 		'email': mineur.email,
@@ -54,7 +57,7 @@ def detail_json(request,mineur_login):
 	}))
 	return response
 
-	
+@csrf_exempt	
 def token(request):
 	return render_to_response('trombi/token.html', {},context_instance=RequestContext(request))
 

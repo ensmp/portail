@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_minesmarket.png">MinesMarket</h1>
+<ul>
+<li><a href="/associations/minesmarket/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li><a href="/associations/minesmarket/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li><a href="/associations/minesmarket/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
+<li id="actif"><img src="{{ STATIC_URL}}page_catalogue.png"><span>Catalogue</span></li>
+</ul>
+<br>
+<hr>
+</div>
+{% endblock %}
+
+{% block content %}
+<p><a href="/associations/minesmarket/commande/">Voir ma commande en cours</a></p>
+{% if user.is_staff %}
+<p><a href="/associations/minesmarket/fermer_commandes/">Fermer toutes les commandes</a><br>
+<a href="/associations/minesmarket/dernieres_commandes/">Voir les dernières commandes</a></p>
+{% endif %}
+{% for produit in liste_produits %}
+	<hr>
+	<form method="post" action="/associations/minesmarket/acheter/">
+	{% csrf_token %}
+	<img src="{{ MEDIA_URL }}{{ produit.image }}" width=128>
+	<p>Nom : {{ produit.nom }}</p>
+	<p>Prix d'achat : {{ produit.prix_achat }}€</p>
+	<p>Prix de vente : {{ produit.prix_vente }}€</p>
+	<p>Description : {{ produit.description }}</p>
+	<p>Quantité : <input type="text" name="quantite" size=1/></p>
+	<input type="hidden" name="id" value="{{ produit.id }}"/>
+	<input type="submit" value="Ajouter au panier"/>
+	</form>
+{% endfor %}
+<hr>
+
+{% endblock %}

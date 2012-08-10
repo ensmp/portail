@@ -1,0 +1,110 @@
+[
+    {
+        "pk": 1, 
+        "model": "minesmarket.produit", 
+        "fields": {
+            "prix_vente": "4.00", 
+            "nom": "Entrec\u00f4te Charal", 
+            "categorie": "Boissons", 
+            "description": "Tendre & savoureuse", 
+            "reference": "PL654", 
+            "image": "", 
+            "prix_achat": "4.99", 
+            "pack": 5
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "minesmarket.produit", 
+        "fields": {
+            "prix_vente": "3.00", 
+            "nom": "Poivon rouge", 
+            "categorie": "Conserves", 
+            "description": "Produit Bio", 
+            "reference": "TD489", 
+            "image": "", 
+            "prix_achat": "3.59", 
+            "pack": 1
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "minesmarket.produit", 
+        "fields": {
+            "prix_vente": "1.60", 
+            "nom": "Echalote", 
+            "categorie": "Conserves", 
+            "description": "Cuisinez facile !", 
+            "reference": "LK364", 
+            "image": "", 
+            "prix_achat": "1.60", 
+            "pack": 5
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "minesmarket.commande", 
+        "fields": {
+            "date_fermeture": "2012-08-10", 
+            "livree": false, 
+            "fermee": true, 
+            "eleve": 397
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "minesmarket.commande", 
+        "fields": {
+            "date_fermeture": "2012-08-09", 
+            "livree": false, 
+            "fermee": true, 
+            "eleve": 397
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "minesmarket.commande", 
+        "fields": {
+            "date_fermeture": "2012-08-10", 
+            "livree": false, 
+            "fermee": true, 
+            "eleve": 356
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "minesmarket.achat", 
+        "fields": {
+            "produit": 3, 
+            "quantite": 3, 
+            "commande": 4
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "minesmarket.achat", 
+        "fields": {
+            "produit": 1, 
+            "quantite": 1, 
+            "commande": 4
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "minesmarket.achat", 
+        "fields": {
+            "produit": 3, 
+            "quantite": 2, 
+            "commande": 5
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "minesmarket.achat", 
+        "fields": {
+            "produit": 2, 
+            "quantite": 12, 
+            "commande": 6
+        }
+    }
+]

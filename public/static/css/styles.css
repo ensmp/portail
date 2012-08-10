@@ -199,12 +199,11 @@ ul.topnav li ul.subnav li a:hover {
 }  
 
 #wrap {
-position:relative;
-top:0;
-width: 980px;
-margin: 0 auto;
+	position:relative;
+	top:0;
+	width: 980px;
+	margin: 0 auto;
 }
-
 
 
 #global_onglets {
@@ -226,7 +225,7 @@ margin: 0 auto;
 	background-image:url(fond.png);
 	background-position:bottom;
 	background-repeat:repeat-x;
-	font-size:18px;
+	font-size:17px;
 	font-weight:bold;
 	
 }
@@ -483,4 +482,18 @@ table#tableau_sondages {
 	margin-right:7px;
 	width:16px;
 	height:16px;
+}
+
+.module table{
+	text-align:center;
+	width:100%;
+}
+
+.module table td{
+	width:33%;
+}
+
+.module table caption {
+	font-size:19px;
+	margin-top:10px;
 }

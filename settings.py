@@ -153,8 +153,9 @@ INSTALLED_APPS = (
 	'todo',
 	'sondages',
 	'evenement', 
+	'minesmarket',
 	'vendome', 
-	'jump', 
+	'jump', 	
 	#Avatar, pour les avatars de trombi
 	'avatar',
 	#Photologue pour les photos Mediamine

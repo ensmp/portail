@@ -28,13 +28,14 @@
 	</div>
 		{% include "menu.html" %}
 </div>
-<div id="wrap">			
+<div id="wrap">
 	<div id="global_onglets">
 		{% block onglets %}{% endblock %}
 		<div id="content_onglets">
 			{% block content %}{% endblock %}
 		</div>
     </div>
+	
 	
 	<div id="barre_droite">	
 		{% include "module_todo.html" %}

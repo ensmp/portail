@@ -27,9 +27,9 @@
 {% block content %}
 {% for adhesion in membres %}
 {% if request.user = adhesion.eleve.user %}
-<p><a href="/associations/{{association.pseudo}}/equipe/ajouter_membre/">Ajouter un membre</a><br>
-<a href="/associations/{{association.pseudo}}/equipe/supprimer_membre/">Supprimer un membre</a><br>
-<a href="/associations/{{association.pseudo}}/equipe/changer_ordre/">Changer l'ordre</a></p>
+<p class="actions"><a href="/associations/{{association.pseudo}}/equipe/ajouter_membre/"><img src="{{ STATIC_URL }}user_add.png" title="Ajouter un membre"></a>
+<a href="/associations/{{association.pseudo}}/equipe/supprimer_membre/"><img src="{{ STATIC_URL }}user_delete.png" title="Supprimer un membre"></a>
+<a href="/associations/{{association.pseudo}}/equipe/changer_ordre/"><img src="{{ STATIC_URL }}user_ordre.png" title="Changer l'ordre"></a></p>
 {% endif %}
 {% endfor %}
 
