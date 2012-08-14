@@ -36,9 +36,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "BDE", 
+            "ordre": 0, 
             "pseudo": "bde", 
             "page": null, 
-            "groupe_permissions": null
+            "groupe_permissions": 15
         }
     }, 
     {
@@ -46,9 +47,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "BDA", 
+            "ordre": 0, 
             "pseudo": "bda", 
             "page": null, 
-            "groupe_permissions": null
+            "groupe_permissions": 16
         }
     }, 
     {
@@ -56,9 +58,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "BDS", 
+            "ordre": 0, 
             "pseudo": "bds", 
             "page": null, 
-            "groupe_permissions": null
+            "groupe_permissions": 17
         }
     }, 
     {
@@ -66,9 +69,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "MediaMines", 
+            "ordre": 1, 
             "pseudo": "mediamines", 
             "page": 2, 
-            "groupe_permissions": null
+            "groupe_permissions": 4
         }
     }, 
     {
@@ -76,9 +80,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "JuMP", 
+            "ordre": 3, 
             "pseudo": "jump", 
             "page": 3, 
-            "groupe_permissions": null
+            "groupe_permissions": 7
         }
     }, 
     {
@@ -86,9 +91,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "Forum Trium", 
+            "ordre": 3, 
             "pseudo": "trium", 
             "page": null, 
-            "groupe_permissions": null
+            "groupe_permissions": 6
         }
     }, 
     {
@@ -96,9 +102,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "Vend\u00f4me", 
+            "ordre": 1, 
             "pseudo": "vendome", 
             "page": 4, 
-            "groupe_permissions": null
+            "groupe_permissions": 5
         }
     }, 
     {
@@ -106,9 +113,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "Rezal", 
+            "ordre": 5, 
             "pseudo": "rezal", 
             "page": null, 
-            "groupe_permissions": null
+            "groupe_permissions": 12
         }
     }, 
     {
@@ -116,9 +124,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "Bi\u00e9ro", 
+            "ordre": 4, 
             "pseudo": "biero", 
             "page": null, 
-            "groupe_permissions": null
+            "groupe_permissions": 8
         }
     }, 
     {
@@ -126,9 +135,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "Mineshake", 
+            "ordre": 4, 
             "pseudo": "mineshake", 
             "page": null, 
-            "groupe_permissions": null
+            "groupe_permissions": 9
         }
     }, 
     {
@@ -136,9 +146,10 @@
         "model": "association.association", 
         "fields": {
             "nom": "Cahier Vert", 
+            "ordre": 5, 
             "pseudo": "cahiervert", 
             "page": null, 
-            "groupe_permissions": null
+            "groupe_permissions": 10
         }
     }, 
     {
@@ -146,9 +157,32 @@
         "model": "association.association", 
         "fields": {
             "nom": "MinesMarket", 
+            "ordre": 3, 
             "pseudo": "minesmarket", 
             "page": 5, 
             "groupe_permissions": 3
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "association.association", 
+        "fields": {
+            "nom": "WEI", 
+            "ordre": 2, 
+            "pseudo": "wei", 
+            "page": null, 
+            "groupe_permissions": 18
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "association.association", 
+        "fields": {
+            "nom": "ASTi", 
+            "ordre": 2, 
+            "pseudo": "asti", 
+            "page": null, 
+            "groupe_permissions": 19
         }
     }, 
     {
@@ -509,6 +543,16 @@
             "role": "", 
             "association": 12, 
             "eleve": 417
+        }
+    }, 
+    {
+        "pk": 38, 
+        "model": "association.adhesion", 
+        "fields": {
+            "ordre": 0, 
+            "role": "Respo Atrium", 
+            "association": 6, 
+            "eleve": 347
         }
     }
 ]

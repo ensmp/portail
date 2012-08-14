@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.models import Group, User
 
 
-#Les pages personalisées des associations. On ne précise que le titre de la page et son url. La page en elle même est à implémenter dans une application propre.
+#Les pages personalisées des associations. On ne précise que le titre de la page et son url. La page en elle même est à implémenter dans une application ad-hoc.
 class Page(models.Model):
 	titre = models.CharField(max_length=200)
 	lien = models.CharField(max_length=200)
@@ -20,6 +20,7 @@ class Association(models.Model):
 	groupe_permissions = models.OneToOneField(Group, blank=True, null=True)
 	membres = models.ManyToManyField(UserProfile, through='Adhesion')
 	page = models.ForeignKey(Page, blank=True, null=True)
+	ordre = models.IntegerField(default=0)
  
 	def __unicode__(self):
 		return self.nom

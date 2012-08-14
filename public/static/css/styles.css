@@ -106,18 +106,17 @@ a:hover {
 }
 
 
-ul.topnav {  
+ul#topnav {  
 	list-style: none;
 	padding: 0;
 	margin: 0;
 	position: absolute;
 	top:0pt;
 	left:0pt;
-	width: 100%;  
 	font-size: 1.2em;  
 	z-index:20;	
 }  
-ul.topnav li {  
+ul#topnav li {  
 	/*display:inline;*/
 	float: left;  
 	margin: 0;  
@@ -125,15 +124,15 @@ ul.topnav li {
 	position: relative; 
 	z-index:30;	
 }  
-ul.topnav li.droite {  
+ul#topnav li.droite {  
 	float: right;  
 	margin: 0;  
 	padding: 0 15px 0 0;  
 	position: relative; 
 } 
-ul.topnav li a{  
+ul#topnav li a{  
 	padding: 10px 5px;  
-	color: #000;
+	color: #353535;
 	display: block;  
 	text-decoration: none;
 	font-size:15px;
@@ -141,60 +140,58 @@ ul.topnav li a{
 	font-family: Arial, Helvetica,sans-serif;
 	float: left;  
 }  
-ul.topnav li a:hover{  
-	color:#848484;
+ul#topnav li a:hover{  
+	color:#787878;
 }  
 
-ul.topnav li a span{  
+ul#topnav li a span{  
 	float: right;  
 }  
-ul.topnav li a span#compteur_messages{  
+ul#topnav li a span#compteur_messages{  
 	float: left;  
 	padding-right:5px;
 } 
 
-ul.topnav li a img{  
+ul#topnav li a img{  
 	margin-top:-6px;
 	margin-right:4px;
 }  
 
-ul.topnav li span.fleche {
-	width: 17px;  
-	height: 35px;  
-	float: left;  
-	background: url(subnav_btn.png) no-repeat center top;  
-}  
-ul.topnav li span.fleche.subhover {background-position: center bottombottom; cursor: pointer;} 
-ul.topnav li ul.subnav {  
+ul#topnav li ul.subnav {  
 	list-style: none;  
 	position: absolute; 
 	left: 0; top: 38px;  
-	background: #333;  
+	background: url(nav_dropdown_li.png) repeat-y scroll 0 0 transparent; 
 	margin: 0; padding: 0;  
-	display: none;  
+	display: none;
 	float: left;  
-	width: 170px;  
-	border: 1px solid #111;  
+	width: 142px;  
 	z-index:10;
+	
 }  
-ul.topnav li ul.subnav li{  
-	margin: 0; padding: 0;  
-	border-top: 1px solid #eeeeee;   
-	border-bottom: 1px solid #eaeaea; 
-	clear: both;  
-	width: 170px;  
-	background: #000;
-	z-index:10;	
 
-}  
-ul.topnav li ul.subnav li a {
+ul#topnav li:hover ul.subnav, ul#topnav li.over ul.subnav {
+	display: block;
+}
+
+ul#topnav li ul.subnav li{  
+	background: url(nav_dropdown_sep.gif) repeat-x scroll 0 bottom transparent;
+	width: 136px;
+	margin: 0 3px;
+	padding: 0;
+	clear: both;
+	z-index:10;	
+} 
+ul#topnav li ul.subnav li a {
 	float: left;  
-	width: 145px;  
-	background: #e7e7e7 url(dropdown_linkbg.png) no-repeat 10px center;
-	padding-left: 20px;
+	width: 121px;
+	font-size:12px;
+	line-height:8px;
+	color:#454545;
+	padding-left: 10px;
 	z-index:10;
 }  
-ul.topnav li ul.subnav li a:hover { 
+ul#topnav li ul.subnav li a:hover { 
 	background: #dadada url(dropdown_linkbg.png) no-repeat 10px center;  
 }  
 

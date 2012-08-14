@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.http import HttpResponseRedirect, HttpResponse
 from datetime import datetime
-
+from django.db.models import Max
 
 @login_required
 def catalogue(request):		
@@ -47,18 +47,18 @@ def fermer_commandes(request):
 	return redirect('minesmarket.views.catalogue')
 
 @login_required
-def dernieres_commandes(request):
-	from django.db.models import Max
+def dernieres_commandes(request):	
 	liste_commandes = Commande.objects.filter(date_fermeture = Commande.objects.aggregate(Max('date_fermeture'))['date_fermeture__max'])
 	return liste_commandes
 	
 def dernieres_commandes_csv(request):
 	from django.template import loader, Context
-	liste_commandes = dernieres_commandes(request)	
+	liste_commandes = dernieres_commandes(request)
+	date_fermeture = Commande.objects.aggregate(Max('date_fermeture'))['date_fermeture__max']
 	response = HttpResponse(mimetype='text/csv; charset=utf-8')
 	response['Content-Disposition'] = 'attachment; filename=dernieres_commandes.csv'
 
 	t = loader.get_template('minesmarket/dernieres_commandes.txt')
-	c = Context({'liste_commandes': liste_commandes})
+	c = Context({'liste_commandes': liste_commandes, 'date_fermeture': date_fermeture})
 	response.write(t.render(c))
 	return response

@@ -11,6 +11,7 @@ from django.utils import simplejson
 from django.template import RequestContext
 from django.db.models import Q
 from datetime import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 #La liste des nouveaux messages
@@ -80,7 +81,17 @@ def classer_non_lu(request, message_id):
 @login_required
 #La liste des messages, y compris les messages lus (à paginer)
 def tous(request):
-	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).order_by('-date')
+	all_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).order_by('-date')
+	
+	paginator = Paginator(all_messages, 25)
+	page = request.GET.get('page')
+	try:
+		list_messages = paginator.page(page)
+	except PageNotAnInteger:        
+		list_messages = paginator.page(1)
+	except EmptyPage:        
+		list_messages = paginator.page(paginator.num_pages)
+	
 	return render_to_response('messages/tous.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 
 @login_required

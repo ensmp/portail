@@ -25,7 +25,7 @@
 
 <ul>
 {% for vendome in liste_vendomes %}
-	<li><a href="{{ STATIC_URL }}{{vendome.fichier}}">{{vendome.titre}}</a></li>
+	<li><a href="{{ MEDIA_URL }}{{vendome.fichier}}">{{vendome.titre}}</a> ({{ vendome.date|date:"d F Y" }})</li>
 {% endfor %}
 </ul>
 

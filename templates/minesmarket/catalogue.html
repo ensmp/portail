@@ -21,7 +21,8 @@
 {% block content %}
 <p><a href="/associations/minesmarket/commande/">Voir ma commande en cours</a></p>
 {% if user.is_staff %}
-<p><a href="/associations/minesmarket/fermer_commandes/">Fermer toutes les commandes</a><br>
+<p><strong>Administration</strong><br/>
+<a href="/associations/minesmarket/fermer_commandes/">Fermer toutes les commandes</a><br/>
 <a href="/associations/minesmarket/dernieres_commandes/">Voir les dernières commandes</a></p>
 {% endif %}
 {% for produit in liste_produits %}

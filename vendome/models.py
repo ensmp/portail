@@ -3,7 +3,7 @@ from django import forms
 
 class Vendome(models.Model):
     titre = models.CharField(max_length=50)
-    fichier = models.CharField(max_length=50)
+    fichier = models.FileField(upload_to='vendome')
     date = models.DateField()
 	
     def __unicode__(self):

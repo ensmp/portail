@@ -1,3 +1,4 @@
-﻿élève;produit;quantite;prix
+﻿{{ date_fermeture|date:"d F Y" }};;;
+élève;produit;quantite;prix
 {% for commande in liste_commandes %}{% for achat in commande.achat_set.all %}{{ commande.eleve.user.username }};{{ achat.produit.nom|addslashes }};{{ achat.quantite }};{{ achat.produit.prix_vente }}
 {% endfor %}{% endfor %}

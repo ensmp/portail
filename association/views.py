@@ -13,7 +13,7 @@ from django.db.models import Q
 @login_required
 # La liste de toutes les associations
 def index(request):
-	assoces = Association.objects.all();
+	assoces = Association.objects.order_by('ordre');
 	return render_to_response('association/index.html', {'assoces' : assoces},context_instance=RequestContext(request))
 
 @login_required

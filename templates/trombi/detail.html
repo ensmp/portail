@@ -2,18 +2,17 @@
 
 {% block content %}
 
-{{ mineur.get_profile.first_name }}
-{{ mineur.get_profile.last_name|upper }}
+<h1>{{ mineur.get_profile.first_name }} {{ mineur.get_profile.last_name|upper }}</h1>
 
-<p>Promotion : {{ mineur.get_profile.promo }}</p>
+<p><strong>Promotion</strong> : {{ mineur.get_profile.promo }}</p>
 
-<p>Date de naissance : {{ mineur.get_profile.birthday }}</p>
+<p><strong>Date de naissance</strong> : {{ mineur.get_profile.birthday }}</p>
 
-<p>Téléphone : {{ mineur.get_profile.phone }}</p>
+<p><strong>Téléphone</strong> : {{ mineur.get_profile.phone }}</p>
 
-<p>Chambre : {{ mineur.get_profile.chambre }}</p>
+<p><strong>Chambre</strong> : {{ mineur.get_profile.chambre }}</p>
 
-<p>Associations : </p>
+<p><strong>Associations</strong> : </p>
 <ul>
 	{% for adhesion in assoces %}
 		<li>
@@ -22,18 +21,18 @@
 	{% endfor %}
 </ul>
 
-<p>Option : {{ mineur.get_profile.option }}</p>
+<p><strong>Option</strong> : {{ mineur.get_profile.option }}</p>
 
-<p>Co : <a href="/people/{{ mineur.get_profile.co }}">{{ mineur.get_profile.co.get_profile.first_name }} {{ mineur.get_profile.co.get_profile.last_name|upper }}</a></p>
+<p><strong>Co</strong> : <a href="/people/{{ mineur.get_profile.co }}">{{ mineur.get_profile.co.get_profile.first_name }} {{ mineur.get_profile.co.get_profile.last_name|upper }}</a></p>
 
-<p>Parrain : <a href="/people/{{ mineur.get_profile.parrain }}">{{ mineur.get_profile.parrain.get_profile.first_name }} {{ mineur.get_profile.parrain.get_profile.last_name|upper }}</a></p>
+<p><strong>Parrain</strong> : <a href="/people/{{ mineur.get_profile.parrain }}">{{ mineur.get_profile.parrain.get_profile.first_name }} {{ mineur.get_profile.parrain.get_profile.last_name|upper }}</a></p>
 
-<p>Fillot : <a href="/people/{{ mineur.get_profile.fillot }}">{{ mineur.get_profile.fillot.get_profile.first_name }} {{ mineur.get_profile.fillot.get_profile.last_name|upper }}</a></p>
+<p><strong>Fillot</strong> : <a href="/people/{{ mineur.get_profile.fillot }}">{{ mineur.get_profile.fillot.get_profile.first_name }} {{ mineur.get_profile.fillot.get_profile.last_name|upper }}</a></p>
 
 <hr>
 
 {% for question in liste_questions %}
-	<p>{{question.enonce}} : 
+	<p><strong>{{question.enonce}}</strong> : 
 	{% for reponse in liste_reponses %}
 		{% if question = reponse.question %}
 			{{reponse.contenu}}

@@ -5,7 +5,7 @@ register = Library()
      
 class AssociationsNode(Node):
     def render(self, context):
-        context['liste_des_associations'] = Association.objects.all()
+        context['liste_des_associations'] = Association.objects.order_by('ordre');
         return ''
     
 def obtenir_associations(parser, token):
