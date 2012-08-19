@@ -22,7 +22,7 @@
 </p>
 <input type='submit' value='Proposer' />
 </form>
-{% if request.user.is_staff %}
+{% if perms.sondages %}
 <a href = "/sondages/valider/">Valider les sondages en attente</a>
 {% endif %}
 {% endblock %}

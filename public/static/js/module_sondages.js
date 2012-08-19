@@ -23,7 +23,7 @@ $(document).ready(function() {
 	if (mois < 10) {
 		mois = '0' + mois;
 	}
-	$("#sondage_date").text(jour + '/' + mois + '/' + aujourdhui.getFullYear());
+	$("#sondage_date").prepend(jour + '/' + mois + '/' + aujourdhui.getFullYear() + ' ');
 	$("#barre_reponse_1").progressBar({steps : 0});
 	$("#barre_reponse_2").progressBar({steps : 0});
 });
@@ -32,7 +32,7 @@ $(function() {
 	$("#sondage_precedent").click(function(){
 		jours_depuis++;
 		$.getJSON('/sondages/'+jours_depuis+'/json/', function(data){
-			$("#sondage_date").text(data.date_parution);
+			$("#sondage_date").text(data.date_parution + ' ('+(data.nombre_reponse_1+data.nombre_reponse_2) + ' vote' + ((data.nombre_reponse_1+data.nombre_reponse_2>1)?'s)':')'));
 			$("#sondage_question").text(data.question);
 			$("#texte_reponse_1").text(data.reponse1);
 			$("#texte_reponse_2").text(data.reponse2);			
@@ -49,7 +49,7 @@ $(function() {
 	$("#sondage_suivant").click(function(){
 		jours_depuis--;
 		$.getJSON('/sondages/'+jours_depuis+'/json/', function(data){
-			$("#sondage_date").text(data.date_parution);
+			$("#sondage_date").text(data.date_parution + ' ('+(data.nombre_reponse_1+data.nombre_reponse_2) + ' vote' + ((data.nombre_reponse_1+data.nombre_reponse_2>1)?'s)':')'));
 			$("#sondage_question").text(data.question);
 			$("#texte_reponse_1").text(data.reponse1);
 			$("#texte_reponse_2").text(data.reponse2);

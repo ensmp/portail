@@ -160,7 +160,7 @@ ul#topnav li a img{
 ul#topnav li ul.subnav {  
 	list-style: none;  
 	position: absolute; 
-	left: 0; top: 38px;  
+	left: 0; top: 39px;  
 	background: url(nav_dropdown_li.png) repeat-y scroll 0 0 transparent; 
 	margin: 0; padding: 0;  
 	display: none;
@@ -433,16 +433,10 @@ div.module_bottom {
 	background: url(module_bottom.png) no-repeat;
 }
 
-#vote1form input {
-	float:left; 
+.voteform  {
+	text-align:center;
 	margin-top:8px;
-	margin-left:10px;
-}
-
-#vote2form input {
-	float:right; 
-	margin-top:8px;
-	margin-right:10px;
+	
 }
 
 #sondage_question {

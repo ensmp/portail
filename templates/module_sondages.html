@@ -21,17 +21,17 @@
 					<tr><td id = "texte_reponse_1">{{ sondage.reponse1 }}</td></tr><tr><td><span class="progressBar" id="barre_reponse_1">{% widthratio nombre_votes_1 nombre_votes 100 %}%</span></td></tr>
 					<tr><td id = "texte_reponse_2">{{ sondage.reponse2 }}</td></tr><tr><td><span class="progressBar" id="barre_reponse_2">{% widthratio nombre_votes_2 nombre_votes 100 %}%</span></td></tr>
 				</table>
-				<p id="sondage_date"></p>
+				<p id="sondage_date">({{ nombre_votes }} vote{{ nombre_votes|pluralize }})</p>
 			{% else %}
 				<p id="sondage_question">{{ sondage.question }}</p>
 				
-				<form method="post" action="/sondages/voter/" id="vote1form">
+				<form method="post" action="/sondages/voter/" class="voteform">
 				{% csrf_token %}
 				<input type="hidden" name="choix" value="1">
 				<input type="hidden" name="next" value="{{ request.path }}" />
 				<input type="submit" id = "input_reponse_1" value="{{ sondage.reponse1 }}">
 				</form>	
-				<form method="post" action="/sondages/voter/" id="vote2form">
+				<form method="post" action="/sondages/voter/" class="voteform">
 				{% csrf_token %}
 				<input type="hidden" name="choix" value="2">
 				<input type="hidden" name="next" value="{{ request.path }}" />

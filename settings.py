@@ -159,7 +159,7 @@ INSTALLED_APPS = (
 	#Avatar, pour les avatars de trombi
 	'avatar',
 	#Photologue pour les photos Mediamine
-	'photologue',
+	'mediamines',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

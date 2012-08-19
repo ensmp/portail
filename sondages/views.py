@@ -5,7 +5,7 @@ from sondages.models import Sondage, Vote
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 import json
@@ -40,7 +40,8 @@ def proposer(request):
 	else:
 		return render_to_response('sondages/proposer.html',{},context_instance=RequestContext(request))
 
-@staff_member_required
+
+@permission_required('sondages.add_sondage')
 def valider(request):
 	if request.POST:
 		sondage = get_object_or_404(Sondage, pk=request.POST['id'])
@@ -52,7 +53,7 @@ def valider(request):
 		liste_sondages = Sondage.objects.filter(autorise = False)
 		return render_to_response('sondages/valider.html',{'liste_sondages':liste_sondages},context_instance=RequestContext(request))
 
-@staff_member_required
+@permission_required('sondages.delete_sondage')
 def supprimer(request):
 	if request.POST:
 		sondage = get_object_or_404(Sondage, pk=request.POST['id'])

@@ -1,6 +1,6 @@
 <div id = "menu-fond">
 		<div id="mon_menu">
-		<!-- Le menu -->
+		<img src="{{ STATIC_URL }}nav_dropdown_li.png" style="display:none;"/><!-- prechargement image menu deroulant -->
 			<ul id="topnav">  				
 			{% load obtenir_nombre_messages %}{% if request.user.is_authenticated %}{% compter_messages request.user.username %}{% endif %}
 			<li><a href="/messages"><img src="{{ STATIC_URL}}mail.png"><span><span id="compteur_messages">{{ nombre_de_messages }}</span>Message{{ nombre_de_messages|pluralize }}</span></a></li>  

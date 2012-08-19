@@ -142,7 +142,7 @@ ul#topnav li a img{
 ul#topnav li ul.subnav {  
 	list-style: none;  
 	position: absolute; 
-	left: 0; top: 38px;  
+	left: 0; top: 39px;  
 	background: url(nav_dropdown_li.png) repeat-y scroll 0 0 transparent; 
 	margin: 0; padding: 0;  
 	display: none;

@@ -1,0 +1,50 @@
+[
+    {
+        "pk": 1, 
+        "model": "mediamines.photosize", 
+        "fields": {
+            "name": "admin_thumbnail", 
+            "watermark": null, 
+            "increment_count": false, 
+            "effect": null, 
+            "crop": true, 
+            "height": 130, 
+            "width": 180, 
+            "upscale": false, 
+            "pre_cache": false, 
+            "quality": 70
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "mediamines.photosize", 
+        "fields": {
+            "name": "thumbnail", 
+            "watermark": null, 
+            "increment_count": false, 
+            "effect": null, 
+            "crop": true, 
+            "height": 130, 
+            "width": 180, 
+            "upscale": false, 
+            "pre_cache": false, 
+            "quality": 70
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "mediamines.photosize", 
+        "fields": {
+            "name": "display", 
+            "watermark": null, 
+            "increment_count": false, 
+            "effect": null, 
+            "crop": false, 
+            "height": 600, 
+            "width": 800, 
+            "upscale": false, 
+            "pre_cache": false, 
+            "quality": 70
+        }
+    }
+]
