@@ -80,7 +80,7 @@ STATICFILES_DIRS = (
     basepath + 'public/static/js',
     basepath + 'public/static/img',
 	basepath + 'public/static/img/trombi',
-	basepath + 'public/static/docs',
+	basepath + 'public/static/img/admin',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

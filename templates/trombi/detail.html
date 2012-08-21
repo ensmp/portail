@@ -39,6 +39,8 @@
 		{% endif %}
 	{% endfor %}
 	</p>
+{% empty %}
+	<p>Questionnaire non disponible</p>
 {% endfor %}
 
 {% load avatar_tags %}
@@ -48,6 +50,12 @@
 <img src = {% avatar_url mineur %}>
 </div>
 
+<hr>
+<p><strong>Photos <a href='/associations/mediamines/'>MediaMines</a></strong> :</p>
+{% for photo in mineur.get_profile.photo_set.all %}
+	<a href="{{ photo.image.url }}"><img src="{{ photo.get_display_url }}" alt="{{ photo.title }}" width=120/></a>
+{% endfor %}
+<hr>
 {% if mineur.username == user.username %}
 <p><a href="/people/{{ mineur.username }}/edit">Modifier</a><br/>
 <a href="{% url avatar_change %}">Ajouter une photo</a><br/>

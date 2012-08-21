@@ -14,6 +14,7 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
+from trombi.models import UserProfile
 
 # Required PIL classes may or may not be available from the root namespace
 # depending on the installation method used.
@@ -57,7 +58,7 @@ SAMPLE_IMAGE_PATH = getattr(settings, 'SAMPLE_IMAGE_PATH', os.path.join(os.path.
 ImageFile.MAXBLOCK = getattr(settings, 'PHOTOLOGUE_MAXBLOCK', 256 * 2 ** 10)
 
 # Photologue image path relative to media root
-PHOTOLOGUE_DIR = getattr(settings, 'PHOTOLOGUE_DIR', 'photologue')
+PHOTOLOGUE_DIR = getattr(settings, 'PHOTOLOGUE_DIR', 'mediamines')
 
 # Look for user function to define file paths
 PHOTOLOGUE_PATH = getattr(settings, 'PHOTOLOGUE_PATH', None)
@@ -480,6 +481,7 @@ class Photo(ImageModel):
     date_added = models.DateTimeField(_('date added'), default=datetime.now, editable=False)
     is_public = models.BooleanField(_('is public'), default=True, help_text=_('Public photographs will be displayed in the default views.'))
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
+    eleves = models.ManyToManyField(UserProfile) #Identifier des eleves sur une photo
 
     class Meta:
         ordering = ['-date_added']

@@ -7,12 +7,21 @@
 		
 		<link rel="stylesheet" href="{{ STATIC_URL }}supersized.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{{ STATIC_URL }}supersized.shutter.css" type="text/css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.multiselect.css" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.multiselect.filter.css" />
+		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />
+
 		
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}jquery.easing.min.js"></script>
 		
 		<script type="text/javascript" src="{{ STATIC_URL }}supersized.3.2.7.min.js"></script>
-		<script type="text/javascript" src="{{ STATIC_URL }}supersized.shutter.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}supersized.shutter.identification.js"></script>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>		
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.filter.js"></script>
+
 		
 		<script type="text/javascript">
 			
@@ -29,7 +38,7 @@
 					slide_links				:	'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
 					slides 					:  	[			// Slideshow Images
 														{% for photo in object.public %}
-															{image : '{{ photo.get_display_url }}', title : '{{ photo.title }}', thumb : '{{ photo.get_thumbnail_url }}', url : '{{ photo.get_absolute_url }}'}
+															{image : '{{ photo.get_display_url }}', title : '{{ photo.title }}', thumb : '{{ photo.get_thumbnail_url }}', url : '{{ photo.get_absolute_url }}', slug:'{{ photo.title_slug }}'}
 															{% if forloop.last %}{% else %}, {% endif %}
 														{% endfor %}													
 												]
@@ -38,25 +47,26 @@
 		    });
 		    
 		</script>
-		
-	
-	
-	<style type="text/css">
-		ul#demo-block{ margin:0 15px 15px 15px; }
-			ul#demo-block li{ margin:0 0 10px 0; padding:10px; display:inline; float:left; clear:both; color:#aaa; background:url('{{ STATIC_URL }}bg-black.png'); font:11px Helvetica, Arial, sans-serif; }
-			ul#demo-block li a{ color:#eee; font-weight:bold; }
-	</style>
-
 	{% endblock %}
 	{% block content %}
 
-	<!--Demo styles (you can delete this block)-->
 	
 	<ul id="demo-block">
 		<li>Retour aux <a href="{% url pl-gallery-list 1 %}">albums</a></li>
+		<li>
+			<form>
+			{% csrf_token %}
+				<p>
+					<select id="identification" multiple="multiple" style="width:220px">
+					{% for eleve in liste_eleves %}
+					<option value="{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name }}</option>
+					{% endfor %}					
+					</select>
+				</p>
+			</form>
+		</li>
 	</ul>
 	
-	<!--End of styles-->
 
 	<!--Thumbnail Navigation-->
 	<div id="prevthumb"></div>
@@ -99,4 +109,39 @@
 		</div>
 	</div>
 
+	
+<script type="text/javascript">
+$("select").multiselect({
+		minWidth: '150',
+		selectedList: 4,
+		selectedText: '# élèves sélectionnés',
+		noneSelectedText: 'Identifier des élèves',
+		checkAllText: 'Tous',
+		uncheckAllText: 'Aucun',
+		open: function(event, ui){
+			if (!vars.is_paused) api.playToggle();
+		},
+		close: function(event, ui){
+			if (!vars.is_paused) api.playToggle();
+		},
+		click: function(event, ui){
+			var crsf = $("input[name=csrfmiddlewaretoken]").val();
+			var slideTitle = api.getField('slug');
+			if (ui.checked) {
+				$.post("/associations/mediamines/photo/" + slideTitle + "/identifier/", { csrfmiddlewaretoken: crsf, username:ui.value });
+			}
+			else {
+				$.post("/associations/mediamines/photo/" + slideTitle + "/desidentifier/", { csrfmiddlewaretoken: crsf, username:ui.value });
+			}			
+		},
+		uncheckAll: function(event, ui){
+			var crsf = $("input[name=csrfmiddlewaretoken]").val();
+			var slideTitle = api.getField('slug');
+			$.post("/associations/mediamines/photo/" + slideTitle + "/desidentifier/", { csrfmiddlewaretoken: crsf });
+		}
+	}).multiselectfilter({
+		label: "",
+		placeholder: "Entrez un nom"
+	});
+</script>
 {% endblock %}

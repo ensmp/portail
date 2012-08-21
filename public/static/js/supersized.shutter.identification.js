@@ -270,7 +270,19 @@
 				
 				
 			}
-		    
+			
+		/* Initialiser l'identification */
+		/*$('#identification').multiselect("uncheckAll");*/ /* ---------------------------------------------------------------------------------------------------------*/
+		var slideTitle = api.getField('slug');
+		$('#identification option:selected').removeAttr('selected');
+		$.getJSON("/associations/mediamines/photo/" + slideTitle + "/identifications/", function(data) {
+			  $.each(data, function(key, val) {			    
+				$('#identification option[value='+val.username+']').attr("selected", 'selected');
+			  });
+			  $('#identification').multiselect("refresh");
+		});
+		
+		
 	 	},
 	 	
 	 	

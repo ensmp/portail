@@ -41,7 +41,7 @@ a:hover {
 	width:1400px;
 	height:150px;
 	position:absolute;
-	left:-300px;
+	left:0;
 	background: url(header.png) no-repeat;
 
 }

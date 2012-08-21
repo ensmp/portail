@@ -21,6 +21,9 @@ class Evenement(models.Model):
 	def __unicode__(self):
 		return self.titre
 	
+	def date_debut_jour(self):
+		return None
+	
 	def auteur(self):
 		if self.is_personnel:
 			return self.createur.user.username

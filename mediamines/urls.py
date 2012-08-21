@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
 from models import *
+from trombi.models import UserProfile
 
 # Number of random images from the gallery to display.
 SAMPLE_SIZE = ":%s" % getattr(settings, 'GALLERY_SAMPLE_SIZE', 6)
@@ -13,10 +14,10 @@ urlpatterns = patterns('django.views.generic.date_based',
     url(r'^gallery/(?P<year>\d{4})/(?P<month>[a-z]{3})/$', 'archive_month', gallery_args, name='pl-gallery-archive-month'),
     url(r'^gallery/(?P<year>\d{4})/$', 'archive_year', gallery_args, name='pl-gallery-archive-year'),
     url(r'^gallery/?$', 'archive_index', gallery_args, name='pl-gallery-archive'),
-	url(r'^/?$', 'archive_index', gallery_args, name='pl-gallery-archive'), #################################################### LIGNE AJOUTEE POUR PAGE ACCUEIL MEDIAMINES ###############
+	url(r'^$', 'archive_index', gallery_args, name='pl-gallery-archive'), #################################################### LIGNE AJOUTEE POUR PAGE ACCUEIL MEDIAMINES ###############
 )
 urlpatterns += patterns('django.views.generic.list_detail',
-    url(r'^gallery/(?P<slug>[\-\d\w]+)/$', 'object_detail', {'slug_field': 'title_slug', 'queryset': Gallery.objects.filter(is_public=True), 'extra_context':{'sample_size':SAMPLE_SIZE}}, name='pl-gallery'),
+    url(r'^gallery/(?P<slug>[\-\d\w]+)/$', 'object_detail', {'slug_field': 'title_slug', 'queryset': Gallery.objects.filter(is_public=True), 'extra_context':{'sample_size':SAMPLE_SIZE, 'liste_eleves':UserProfile.objects.order_by('-promo','last_name')}}, name='pl-gallery'), ########################### liste des eleves pour les identifications
     url(r'^gallery/page/(?P<page>[0-9]+)/$', 'object_list', {'queryset': Gallery.objects.filter(is_public=True), 'allow_empty': True, 'paginate_by': 6, 'extra_context':{'sample_size':SAMPLE_SIZE}}, name='pl-gallery-list'),
 )
 
@@ -30,8 +31,13 @@ urlpatterns += patterns('django.views.generic.date_based',
     url(r'^photo/$', 'archive_index', photo_args, name='pl-photo-archive'),
 )
 urlpatterns += patterns('django.views.generic.list_detail',
-    url(r'^photo/(?P<slug>[\-\d\w]+)/$', 'object_detail', {'slug_field': 'title_slug', 'queryset': Photo.objects.filter(is_public=True)}, name='pl-photo'),
+    url(r'^photo/(?P<slug>[\-\d\w]+)/$', 'object_detail', {'slug_field': 'title_slug', 'queryset': Photo.objects.filter(is_public=True)}, name='pl-photo'),	
     url(r'^photo/page/(?P<page>[0-9]+)/$', 'object_list', {'queryset': Photo.objects.filter(is_public=True), 'allow_empty': True, 'paginate_by': 20}, name='pl-photo-list'),
+)
+urlpatterns += patterns('',
+	url(r'^photo/(?P<slug>[\-\d\w]+)/identifier/$','mediamines.views.identifier'),
+	url(r'^photo/(?P<slug>[\-\d\w]+)/desidentifier/$','mediamines.views.desidentifier'),
+	url(r'^photo/(?P<slug>[\-\d\w]+)/identifications/$','mediamines.views.identifications')
 )
 
 

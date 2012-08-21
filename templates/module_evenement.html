@@ -6,18 +6,18 @@
 		{% load obtenir_evenements %}
 		{% obtenir_events request.user.username%}
 		{% if events_list %}
-		<ul style="display:none">
-		{% for event in events_list %}
-		{% ifchanged %}</ul><p><b>{{ event.date_debut|date:"l" }}</b></p><ul>{% endifchanged %}
-			   <li>{{event.titre}}</li>
-				<div class="event" style='display:none'>
-					<div>
-					<p>Organisé par <strong>{{event.association}}</strong> le <strong>{{event.date_debut|date:"l d F" }}</strong> à <strong>{{event.date_debut|date:"H:i" }}</strong></p>
-					</div>
-					<p>{{event.description|linebreaksbr}}</p>
-				</div>
+		{% regroup events_list by date_debut.date as date_list %}
+		<ul>
+		{% for date in date_list %}
+			<li>{{ date.grouper|date:"l"|title }}
+			<ul>
+				{% for item in date.list %}
+				  <li>{{ item.titre }}</li>
+				{% endfor %}
+			</ul>
+			</li>
 		{% endfor %}
-		</ul>	
+		</ul>
 		{% else %}
 		<p>Aucun événement planifié</p>
 		{% endif %}
