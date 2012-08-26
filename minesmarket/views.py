@@ -1,7 +1,7 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
 from minesmarket.models import Produit, Commande, Achat
-# -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
@@ -42,10 +42,18 @@ def acheter(request):
 	return redirect('minesmarket.views.commande')
 
 @login_required
+def commander(request):
+	commande = Commande.objects.get(eleve__user__username=request.user.username, fermee=False) #On recupere la commande dont l'eleve est l'utilisateur qui request la page, qui doit être encore ouverte
+	commande.fermee = True #On la ferme
+	commande.date_fermeture = datetime.today() #On enregistre la date de fermeture
+	commande.save() #On enregistre
+	return redirect('minesmarket.views.catalogue')
+
+@login_required
 def fermer_commandes(request):
 	Commande.objects.filter(fermee = False).update(fermee = True, date_fermeture = datetime.today())
 	return redirect('minesmarket.views.catalogue')
-
+	
 @login_required
 def dernieres_commandes(request):	
 	liste_commandes = Commande.objects.filter(date_fermeture = Commande.objects.aggregate(Max('date_fermeture'))['date_fermeture__max'])

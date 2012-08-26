@@ -16,9 +16,10 @@ class Page(models.Model):
 #Une association, comme ensemble de membres
 class Association(models.Model):
 	nom = models.CharField(max_length=200)
-	pseudo = models.CharField(max_length=20)
+	pseudo = models.SlugField()
 	groupe_permissions = models.OneToOneField(Group, blank=True, null=True)
 	membres = models.ManyToManyField(UserProfile, through='Adhesion')
+	suivi_par= models.ManyToManyField(User, related_name='associations_suivies')
 	page = models.ForeignKey(Page, blank=True, null=True)
 	ordre = models.IntegerField(default=0)
  

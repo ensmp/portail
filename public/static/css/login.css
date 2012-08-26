@@ -107,7 +107,7 @@ a{
 	color:#333;
 	text-decoration:underline;
 }
-form{
+div.boite {
 	background:#f7f7f7;
 	background:-moz-linear-gradient(90deg, #ccc, #fff); /* Firefox */
 	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); /* Webkit */
@@ -197,7 +197,7 @@ a.submit{
 	font-family:Arial,sans-serif;
 	font-size:12px;
 	font-weight:bold;
-	margin-left:120px;
+	/*margin-left:120px;*/	
 	padding:5px 10px;
 	text-decoration:none;
 	text-shadow:0 1px 1px #333;
@@ -225,5 +225,9 @@ a.submit:focus{
 #credits{
 	font-size:11px;
 	margin-top:20px;
+	text-align:center;
+}
+
+p.center {
 	text-align:center;
 }

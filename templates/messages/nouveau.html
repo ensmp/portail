@@ -1,26 +1,15 @@
 {% extends "base.html" %}
 
+{% block header %}
+{{ form.media }}
+{% endblock %}
+
 {% block content %}
 
 <form method="post" action="{{ request.path }}">
 {% csrf_token %}
 <table>
-<tr>
-<td><label for="dest">Destinataire :</label></td>
-<td><select name="dest">
-<option value="tous">Tout le monde</option>
-{% for assoce in liste_assoces %}
-<option value="{{assoce.pseudo}}">{{assoce.nom}}</option>
-{% endfor %}
-</select></td>
-<tr>
-<td><label for="title">Titre :</label></td>
-<td><input type="text" name="title"></td>
-</tr>
-<tr>
-<td><label for="body">Corps :</label></td>
-<td><textarea rows="6" cols="50" name="body"></textarea></td>
-</tr>
+{{form}}
 </table>
 <input type="submit" />
 </form>

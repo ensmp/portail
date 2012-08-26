@@ -18,6 +18,12 @@ def search(request):
 		user_query = get_query(query_string, ['first_name', 'last_name', 'phone', 'user__username'])
 		found_messages = Message.objects.filter(message_query).order_by('-date')
 		found_users = UserProfile.objects.filter(user_query).order_by('user__username')
+		
+		found_messages = found_messages.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all()))
+		
+		if query_string.lower() == 'dieu':
+			found_users = UserProfile.objects.filter(user__username = '11leuren')
+			
 	return render_to_response('recherche/resultats.html', { 'query_string': query_string, 'list_messages': found_messages, 'list_users': found_users }, context_instance=RequestContext(request))
 
 

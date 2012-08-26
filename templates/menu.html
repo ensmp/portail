@@ -39,13 +39,18 @@
 			</li>  
 			{% if request.user.is_staff %}<li><a href="/admin/"><img src="{{ STATIC_URL}}Suit.png"><span>Administration</span></a></li>  {% endif %}
 			{% if user.is_authenticated %}
+			{% load obtenir_nombre_notifications %}{% compter_notifications request.user.username %}
+			<li class="droite">  
+				<a id = "menu_notifications" href="/notifications/">{{ nombre_de_notifications }}</a>	
+			</li>
 			<li class="droite">  
 				<a href="/people/{{ user.username }}/">{% if request.user.get_profile.est_une_fille %}<img src="{{ STATIC_URL}}user_girl.png">{% else %}<img src="{{ STATIC_URL}}user_guy.png">{% endif %}<span>{{ user.username }}</span></a>  
 				<ul class="subnav">  
 					<li><a href="/people/{{ user.username }}/">Ma page</a></li>  
 					<li><a href="/accounts/logout/">Se déconnecter</a></li>
 				</ul>  
-			</li>  
+			</li>
+			
 			{% else %}
 			<li class="droite"><a href="/accounts/login?next={{ request.get_path }}">S'identifier</a></li>  
 			{% endif %}

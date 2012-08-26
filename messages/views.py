@@ -1,6 +1,7 @@
-#-*- coding: utf-8 -*-
+Ôªø# -*- coding: utf-8 -*-
 from messages.models import Message
 from trombi.models import UserProfile
+from messages.models import MessageForm
 from association.models import Association, Adhesion
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, get_object_or_404, redirect
@@ -12,16 +13,17 @@ from django.template import RequestContext
 from django.db.models import Q
 from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from messages.utils import sanitizeHtml
 
 @login_required
 #La liste des nouveaux messages
 def index(request):
-	#On sÈlectionne les messages publics, et les messages dont l'utilisateur fait partie de l'assoce expeditrice, ou de l'assoce destinataires.
+	#On s√©lectionne les messages publics, et les messages dont l'utilisateur fait partie de l'assoce expeditrice, ou de l'assoce destinataires.
 	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).exclude(lu__user__username=request.user.username).order_by('-date')
 	return render_to_response('messages/index.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 
 @login_required
-#La liste des nouveaux messages, sÈrialisÈe aux format JSON (pour les applis)
+#La liste des nouveaux messages, s√©rialis√©e aux format JSON (pour les applis)
 def index_json(request):
 	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).exclude(lu__user__username=request.user.username).order_by('-date')
 	response = HttpResponse(mimetype='application/json')
@@ -36,7 +38,7 @@ def index_json(request):
 	return response
 	
 @login_required
-#L'affichage des dÈtails d'un message (de ses commentaires)
+#L'affichage des d√©tails d'un message (de ses commentaires)
 def detail(request, message_id):
 	m = get_object_or_404(Message, pk=message_id)
 	return render_to_response('messages/detail.html', {'message': m},context_instance=RequestContext(request))
@@ -79,7 +81,7 @@ def classer_non_lu(request, message_id):
 	return render_to_response('messages/action.html', {'message': m},context_instance=RequestContext(request))
 	
 @login_required
-#La liste des messages, y compris les messages lus (‡ paginer)
+#La liste des messages, y compris les messages lus (√† paginer)
 def tous(request):
 	all_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).order_by('-date')
 	
@@ -95,23 +97,25 @@ def tous(request):
 	return render_to_response('messages/tous.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 
 @login_required
-#La liste des messages classÈs importants
+#La liste des messages class√©s importants
 def importants(request):
 	list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).filter(important__user__username=request.user.username).order_by('-date')
 	return render_to_response('messages/importants.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 	
 
 @login_required
-#La crÈation d'un nouveau message par une association
+#La cr√©ation d'un nouveau message par une association
 def nouveau(request, association_pseudo):
 	if request.method == 'POST':
-		if request.POST['dest'] == 'tous':
+		if request.POST['destinataire'] == '':
 			receiver = None
 		else:
-			receiver = Association.objects.get(pseudo = request.POST['dest'])
+			receiver = Association.objects.get(id = request.POST['destinataire'])
 		if Adhesion.objects.filter(association=get_object_or_404(Association,pseudo=association_pseudo), eleve=request.user).exists(): #Si l'utilisateur est membre de l'assoce
-			Message.objects.create(association=Association.objects.get(pseudo=association_pseudo),objet=request.POST['title'],contenu=request.POST['body'],date=datetime.now(),expediteur=request.user.get_profile(), destinataire=receiver)
+			#On cree le message SANS OUBLIER de passer par le SANITIZER, pour escaper le js et les tags html non autoris√©s
+			Message.objects.create(association=Association.objects.get(pseudo=association_pseudo),objet=sanitizeHtml(request.POST['objet']),contenu=sanitizeHtml(request.POST['contenu']),date=datetime.now(),expediteur=request.user.get_profile(), destinataire=receiver)
 		return redirect('/associations/'+association_pseudo)
 	else:
 		liste_assoces = Association.objects.all()
-		return render_to_response('messages/nouveau.html', {'liste_assoces': liste_assoces},context_instance=RequestContext(request))
+		form = MessageForm()
+		return render_to_response('messages/nouveau.html', {'liste_assoces': liste_assoces, 'form':form},context_instance=RequestContext(request))

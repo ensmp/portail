@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from mediamines.models import Photo
+from mediamines.models import Photo, Gallery
 from trombi.models import UserProfile
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
@@ -15,8 +15,8 @@ def identifier(request, slug):
 	response = HttpResponse()		
 	if request.POST:
 		photo = get_object_or_404(Photo, title_slug = slug)
-		eleve = get_object_or_404(UserProfile, user__username = request.POST['username'])
-		photo.eleves.add(eleve)
+		eleve = get_object_or_404(UserProfile, user__username = request.POST['username'])		
+		photo.identifier(eleve)
 		response.write('post ' + slug)
 	return response
 
@@ -28,7 +28,7 @@ def desidentifier(request, slug):
 		photo = get_object_or_404(Photo, title_slug = slug)
 		if request.POST.get('username'):
 			eleve = get_object_or_404(UserProfile, user__username = request.POST['username'])
-			photo.eleves.remove(eleve)
+			photo.desidentifier(eleve)
 		else:
 			photo.eleves.clear()
 		response.write('post ' + slug)
@@ -42,4 +42,11 @@ def identifications(request, slug):
 	response.write(json.dumps([{
 		'username': e.user.username			
 	} for e in photo.eleves.all()]))
+	return response
+	
+def albums_json(request):
+	response = HttpResponse()		
+	from django.core import serializers
+	data = serializers.serialize("json", Gallery.objects.all(), indent=4, fields=('title','photos'), use_natural_keys=True)
+	response.write(data.replace('\\/','/'))
 	return response

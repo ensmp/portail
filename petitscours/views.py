@@ -85,7 +85,7 @@ def add(request):
 		pc.matiere = request.POST['matiere']
 		pc.niveau = request.POST['niveau']
 		pc.description=request.POST['description']
-		pc.save()
+		pc.save()		
 		if request.is_ajax():
 			return HttpResponse("OK")
 		else:

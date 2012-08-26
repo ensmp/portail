@@ -32,8 +32,10 @@ def voter(request):
 def proposer(request):
 	if request.POST:
 		if request.POST['question'] and request.POST['reponse1'] and request.POST['reponse2']:
-			Sondage.objects.create(question = request.POST['question'], reponse1 = request.POST['reponse1'], reponse2 = request.POST['reponse2'])
-			messages.add_message(request, messages.INFO, "Votre sondage a bien été enregistré, il est maintenant en attente de validation.")
+			sondage = Sondage(auteur = request.user.get_profile(), question = request.POST['question'], reponse1 = request.POST['reponse1'], reponse2 = request.POST['reponse2'])
+			sondage.save()
+			sondage.envoyer_notification()
+			messages.add_message(request, messages.INFO, "Votre sondage a bien été enregistré, il est maintenant en attente de validation.")			
 		else:
 			messages.add_message(request, messages.ERROR, "Vous devez spécifier une question et deux réponses.")
 		return HttpResponseRedirect('/sondages/proposer/')
@@ -56,7 +58,7 @@ def valider(request):
 @permission_required('sondages.delete_sondage')
 def supprimer(request):
 	if request.POST:
-		sondage = get_object_or_404(Sondage, pk=request.POST['id'])
+		sondage = get_object_or_404(Sondage, pk=request.POST['id'])		
 		sondage.delete()
 		messages.add_message(request, messages.INFO, "Sondage supprimé")
 	return HttpResponseRedirect('/sondages/valider/')

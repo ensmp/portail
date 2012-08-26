@@ -8,11 +8,7 @@
 </head>
 <body>
 {% load url from future %}
-
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
+<div class="boite">
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
 	<h1>Identification au Portail des élèves</h1>
@@ -25,11 +21,21 @@
 		{{ form.password }}
 	</p>
 	<p><a href="/accounts/password_reset/">J'ai oublié mon mot de passe</a></p>
-	<p>
-		<input type="submit" value="login" />
-		<input type="hidden" name="next" value="{{ next }}" />
+	{% if form.errors %}
+	<p>Identifiant ou mot de passe incorrect, veuillez réessayer.</p>
+	{% endif %}
+	<p class="center">
+		<input type="submit" value="Se connecter" />
+		<input type="hidden" name="next" value="{{ next }}" />		
 	</p>
 </form>
+</div>
 <p id="credits">Accès au <strong>Portail des élèves</strong> de l'École des  <strong>Mines de Paris</strong>.<br />
 En cas de problèmes d'identification, contacter le <a href="mailto:11leuren@ensmp.fr">VP Geek</a></p>
+
+<div class="boite">
+	<h1>Espace visiteurs</h1>
+	<table>
+	</table>
+</div>
 </body>

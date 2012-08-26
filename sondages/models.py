@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from trombi.models import UserProfile
+from django.db.models import Q
+from django.contrib.auth.models import Permission, User
+from notification.models import Notification
 
 class Sondage(models.Model):
+    auteur = models.ForeignKey(UserProfile)
     question = models.CharField(max_length=512)
     reponse1 = models.CharField(max_length=50)
     reponse2 = models.CharField(max_length=50)
@@ -20,6 +25,17 @@ class Sondage(models.Model):
     
     def __unicode__(self):
         return self.question
+        
+    def envoyer_notification(self):
+        try: 
+            perm = Permission.objects.get(codename='add_sondage')  #On envoie seulement à ceux qui peuvent créer des sondages
+            users = User.objects.filter(Q(is_superuser=True) | Q(groups__permissions=perm) | Q(user_permissions=perm) ).distinct()            
+            notification = Notification(content_object=self, message='Un nouveau sondage a été proposé')
+            notification.save()
+            notification.envoyer_multiple(users)
+        except Permission.DoesNotExist:
+            pass
+
         
 class Vote(models.Model):
     sondage = models.ForeignKey(Sondage)

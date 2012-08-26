@@ -35,6 +35,7 @@ TIME_ZONE = 'Europe/Paris'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'fr-fr'
+DEFAULT_CHARSET = 'utf-8'
 
 SITE_ID = 1
 
@@ -142,6 +143,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'django.contrib.comments',
+	'notification',
     'trombi',
 	'association',
 	'messages',
@@ -160,6 +162,8 @@ INSTALLED_APPS = (
 	'avatar',
 	#Photologue pour les photos Mediamine
 	'mediamines',
+	#TinyMCE pour les messages
+	'tinymce',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -194,3 +198,19 @@ EMAIL_PORT = 25
 
 AUTH_PROFILE_MODULE = 'trombi.UserProfile'
 
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = False
+TINYMCE_DEFAULT_CONFIG={
+  'theme': "advanced", 
+  'remove_linebreaks': False, 
+  'convert_urls': False, 
+  'width':'100%',
+  'height':'300px',
+  'paste_auto_cleanup_on_paste' : True,
+  'theme_advanced_buttons1' : "formatselect,separator,bold,italic,hr,separator,link,unlink,separator,bullist,numlist,separator,undo,redo,",
+  'theme_advanced_buttons2' : "",
+  'theme_advanced_buttons3' : ""  ,
+  'theme_advanced_blockformats' : "p,h1,h2,h3,blockquote",
+  'theme_advanced_toolbar_location' : "top",
+  'content_css' : "/media/css/tiny_editor.css" 
+}

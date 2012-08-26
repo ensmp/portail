@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import random
 import shutil
@@ -14,7 +15,10 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 from trombi.models import UserProfile
+from notification.models import Notification
+from association.models import Association
 
 # Required PIL classes may or may not be available from the root namespace
 # depending on the installation method used.
@@ -170,6 +174,22 @@ class Gallery(models.Model):
 
     def public(self):
         return self.photos.filter(is_public=True)
+        
+    def envoyer_notification(self):
+        try: 
+            mediamines = Association.objects.get(pseudo='mediamines') #On envoie seulement à ceux qui suivent MediaMines
+            notification = Notification(content_object=self, message='MediaMines a publié un nouvel album photo')
+            notification.save()
+            notification.envoyer_multiple(mediamines.suivi_par.all())
+        except Association.DoesNotExist:
+            pass
+        
+    def save(self, *args, **kwargs):
+        creation = self.pk is None #Creation de l'objet            
+        super(Gallery, self).save(*args, **kwargs)
+        if creation:
+            self.envoyer_notification()
+            
 
 
 class GalleryUpload(models.Model):
@@ -482,7 +502,7 @@ class Photo(ImageModel):
     is_public = models.BooleanField(_('is public'), default=True, help_text=_('Public photographs will be displayed in the default views.'))
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
     eleves = models.ManyToManyField(UserProfile) #Identifier des eleves sur une photo
-
+    
     class Meta:
         ordering = ['-date_added']
         get_latest_by = 'date_added'
@@ -521,6 +541,33 @@ class Photo(ImageModel):
         except Photo.DoesNotExist:
             return None
 
+    def natural_key(self):
+        return self.get_display_url()
+        
+    def envoyer_notification(self, eleve):
+        if eleve.user.associations_suivies.filter(pseudo='mediamines'):
+			try: #Des gens ont peut etre deja été identifiés sur cette photo, il faut retrouver la notification
+				notification = Notification.objects.get(content_type = ContentType.objects.get_for_model(self), object_id = self.id)
+				notification.envoyer(eleve.user)
+			except Notification.DoesNotExist: #En fait non, cette notification n'existe pas. On la crée.
+				notification = Notification(content_object=self, message='Vous avez été identifié sur une photo de MediaMines')
+				notification.save()
+				notification.envoyer(eleve.user)
+            
+    def supprimer_notification(self, eleve):
+        try:
+            notification = Notification.objects.get(content_type = ContentType.objects.get_for_model(self), object_id = self.id)
+            notification.supprimer_destinataire(eleve.user)
+        except Notification.DoesNotExist:
+            pass
+        
+    def identifier(self, eleve):
+        self.eleves.add(eleve)
+        self.envoyer_notification(eleve)
+    
+    def desidentifier(self, eleve):
+        self.eleves.remove(eleve)
+        self.supprimer_notification(eleve)
 
 class BaseEffect(models.Model):
     name = models.CharField(_('name'), max_length=30, unique=True)

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>Choisissez les associations que vous voulez suivre.</p>
+
+<form method="post" action="{{ request.path }}">
+{% csrf_token %}
+<p>
+{% for association in associations %}
+<input type="checkbox" id="{{ association.pseudo }}" name="{{ association.pseudo }}" value="observed" {% if request.user in association.suivi_par.all %}checked="checked"{% endif %} />
+<label for="{{ association.pseudo }}">{{ association.nom }}</label><br/>
+{% endfor %}
+</p>
+<input type="submit" />
+</form>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Nouvelles notifications</h3>
+<ul>
+{% for envoi in envoi_nonlu_list %}
+	<li><a href="{{ envoi.notification.get_abolute_url }}">{{ envoi.notification.message }}</a></li> 
+{% endfor %}
+</ul>
+
+<h3>Archives</h3>
+{% regroup envoi_lu_list by notification.date|date:"l" as envoi_lu_list_bydate %}
+{% for envoi_bydate in envoi_lu_list_bydate %}
+    <p>{{ envoi_bydate.grouper|title }}</p>
+    <ul>
+        {% for envoi in envoi_bydate.list %}
+        <li>
+			<a href="{{ envoi.notification.get_abolute_url }}">{{ envoi.notification.message }}</a>
+			{% if envoi.notification.est_recent %}<br><span style="color:#999;">(il y a {{ envoi.notification.date|timesince }})</span> {% endif %}
+		</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+
+<p><a href = "/notifications/preferences/">Changer mes préférences</a></p>
+
+
+{% endblock %}

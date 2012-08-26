@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import signals
+from notification.models import Notification, Envoi
+from association.models import Association
+
 
 #Une proposition de petit cours
 class PetitCours(models.Model):
@@ -27,3 +31,21 @@ class PetitCours(models.Model):
 	def update_location(self, lat, lon):
 		self.latitude = lat
 		self.longitude = lon
+	
+	def envoyer_notification(self):
+		try: 
+			bde = Association.objects.get(pseudo='bde') #On envoie seulement à ceux qui suivent le BDE
+			notification = Notification(content_object=self, message='Un nouveau petit cours est disponible')
+			notification.save()
+			notification.envoyer_multiple(bde.suivi_par.all())
+		except Association.DoesNotExist:
+			pass
+		
+		
+	def save(self, *args, **kwargs):
+		creation = self.pk is None #Creation de l'objet			
+		super(PetitCours, self).save(*args, **kwargs)
+		if creation:			
+			self.envoyer_notification()
+			
+
