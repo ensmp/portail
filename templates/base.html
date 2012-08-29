@@ -8,12 +8,18 @@
 	<meta name="keywords" content="portail, élèves, eleves, ecole, mines, paris, paristech, ensmp, mines-paris"/>
 	<meta name="date" content="2012-09-11"/>
 	<title>Le portail des élèves</title>
-    <link rel="stylesheet" href="{{ STATIC_URL }}styles.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}styles.css" />	
 	<link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico"/>
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.7.2.min.js"></script>
 	
+	
 	<!--Modules-->
+	<link rel="stylesheet" href="{{ STATIC_URL }}module_mediamines.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}module_evenements.css" />
+	<script type="text/javascript" src="{{ STATIC_URL }}module_mediamines.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}module_sondages.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.qtip-1.0.0-rc3.min.js"></script>
+	
 	
 	
 	{% block header %}{% endblock %}
@@ -45,7 +51,7 @@
 	
 	
 	<div id="barre_droite">	
-		{% include "module_todo.html" %}
+		{% include "module_mediamines.html" %}
 		{% include "module_anniv.html" %}
 	</div>
 	

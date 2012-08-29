@@ -1,0 +1,39 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	font-family: Corbel, Arial, Helvetica;
+}
+
+
+#body{width:560px;
+display:inline;
+
+}
+
+#main{
+width:560px;
+}
+.produit{
+	width:48%;
+	display:inline-block;
+	text-align:center;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border-color: gray;
+	border-top-color: blue;
+	border-style: dotted;
+	border-top-style: solid;
+	border-top-width: 5px;
+	border-bottom-width: 2px;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	margin:2px;
+}
+
+h3{font-family: Corbel, Arial, Helvetica;
+	front-size:10px;
+	color:black;
+	font-variant: small-caps ;
+}
+img{align:center;
+}

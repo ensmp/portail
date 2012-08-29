@@ -2,6 +2,19 @@
 
 {% block header %}
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}produit.css" />
+
+
+<script>
+function add(nom) {
+var obj=document.getElementById(nom);
+obj.value++;
+}
+function substract( nom ) {
+var obj=document.getElementById(nom);
+if (obj.value > 0) obj.value--;
+}
+</script> 
 {% endblock %}
 
 {% block onglets %}
@@ -19,26 +32,43 @@
 {% endblock %}
 
 {% block content %}
-<p><a href="/associations/minesmarket/commande/">Voir ma commande en cours</a></p>
-{% if user.is_staff %}
+<a href="/associations/minesmarket/commande/"><img src="{{ STATIC_URL}}market_panier1.jpg" style="alignt:right"></a>
+{% if perms.minesmarket %}
 <p><strong>Administration</strong><br/>
 <a href="/associations/minesmarket/fermer_commandes/">Fermer toutes les commandes</a><br/>
 <a href="/associations/minesmarket/dernieres_commandes/">Voir les dernières commandes</a></p>
 {% endif %}
 {% for produit in liste_produits %}
-	<hr>
+	
+	<div class="produit">
+	
 	<form method="post" action="/associations/minesmarket/acheter/">
 	{% csrf_token %}
+	<h3>{{ produit.nom }}</h1>
+	<hr style="width:100%; color:blue;" size="2" /> 
 	<img src="{{ MEDIA_URL }}{{ produit.image }}" width=128>
-	<p>Nom : {{ produit.nom }}</p>
-	<p>Prix d'achat : {{ produit.prix_achat }}€</p>
-	<p>Prix de vente : {{ produit.prix_vente }}€</p>
+	<p>Catégorie : {{ produit.categorie }}</p>
 	<p>Description : {{ produit.description }}</p>
-	<p>Quantité : <input type="text" name="quantite" size=1/></p>
+	<p>Quantité : {{ produit.quantite}}</p>
+	<p>Prix : {{ produit.prix_vente }}€</p>
+	
+	{% if perms.minesmarket %}
+		<p>Prix d'achat : {{ produit.prix_achat }}€</p>
+		<p>Produits par pack: {{ produit.pack }}</p>
+	{% endif %}
+
+
+	<img src="{{ STATIC_URL}}market_moins.png" alt="exemple onclick" style="cursor:pointer;" onclick="substract('quantite_{{ produit.id }}')" />
+	<input type="text" value="0" id="quantite_{{ produit.id }}" name = "quantite" size="1" maxlength="4" style="font-size: 20px; height:75px; vertical-align:text-bottom" onkeypress="return isNumberKey(event);">
+	<img src="{{ STATIC_URL}}market_plus.png" alt="exemple onclick"  style="cursor:pointer;" onclick="add('quantite_{{ produit.id }}')" />
+	
 	<input type="hidden" name="id" value="{{ produit.id }}"/>
-	<input type="submit" value="Ajouter au panier"/>
+	<input border=0 src="{{ STATIC_URL}}market_submit.jpg" type=image Value=submit align="right" > 
 	</form>
+                        
+                    </div>
+
+
 {% endfor %}
 <hr>
-
 {% endblock %}

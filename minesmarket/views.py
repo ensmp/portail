@@ -22,7 +22,10 @@ def commande(request):
 		liste_achats = Achat.objects.filter(commande__id = commande.id)
 	except Commande.DoesNotExist:
 		liste_achats = None	
-	return render_to_response('minesmarket/commande.html', {'liste_achats': liste_achats},context_instance=RequestContext(request))
+	total = 0
+	for achat in liste_achats:
+		total = total + achat.produit.prix_vente*achat.quantite		
+	return render_to_response('minesmarket/commande.html', {'liste_achats': liste_achats, 'total':total},context_instance=RequestContext(request))
 
 @login_required
 def acheter(request):

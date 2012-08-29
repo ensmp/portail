@@ -19,11 +19,14 @@
 {% endblock %}
 
 {% block content %}
-<a href="/associations/minesmarket/catalogue/">Voir le catalogue</a>
+<a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}market_catalogue1.jpg" style="alignt:center"></a>
 <ul>
 {% for achat in liste_achats %}
-	<li>{{ achat.produit.nom }} ({{ achat.quantite }})</li>
+	<li>{{ achat.produit.nom }} ({{ achat.quantite }})<br/>
+	Prix unitaire: <strong>{{ achat.produit.prix_vente }}€</strong></li>
 {% endfor %}
 </ul>
+
+<h2><span style="color:#ff8c00;"><u><strong>Total à payer :</strong></u> <strong>{{ total }}€;</strong></span></h2>
 
 {% endblock %}

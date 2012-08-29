@@ -1,6 +1,7 @@
 html, body, #content {
 	font-size: 0.9em;
 	font-family: Verdana,serif;
+	/*font-family: "Helvetica Neue",Arial,Helvetica,Geneva,sans-serif;*/
 	margin:0;
 }
 h1, h2 {
@@ -114,7 +115,7 @@ ul#topnav {
 	top:0pt;
 	left:0pt;
 	font-size: 1.2em;  
-	z-index:20;	
+	z-index:100;	
 }  
 ul#topnav li {  
 	/*display:inline;*/
@@ -122,7 +123,7 @@ ul#topnav li {
 	margin: 0;  
 	padding: 0;
 	position: relative; 
-	z-index:30;	
+	z-index:100;	
 }  
 ul#topnav li.droite {  
 	float: right;  
@@ -166,7 +167,7 @@ ul#topnav li ul.subnav {
 	display: none;
 	float: left;  
 	width: 142px;  
-	z-index:10;
+	z-index:100;
 	
 }  
 
@@ -235,9 +236,6 @@ ul#topnav li a#menu_notifications {
 #menu_onglets {
 	font-family: Arial;
 	overflow:hidden;
-	background-image:url(fond.png);
-	background-position:bottom;
-	background-repeat:repeat-x;
 	font-size:17px;
 	font-weight:bold;
 	

@@ -1,23 +1,22 @@
-{% extends "mediamines/root.html" %}
+{% extends "base_header.html" %}
+
 
 {% load photologue_tags %}
 
-{% block title %}{{ object.title }}{% endblock %}
-
 {% block content %}
-
-<h1>{{ object.title }}</h1>
-<div class="gallery-photo">
-    <a href="{{ object.image.url }}"><img src="{{ object.get_display_url }}" alt="{{ object.title }}"/></a>
+<div style="text-align:center">
+<p><a href="{{ object.image.url }}"><img src="{{ object.get_display_url }}" alt="{{ object.title }}"/></a></p>
     {% if object.caption %}<p>{{ object.caption }}</p>{% endif %}
-</div>
+	{% if object.eleves %}
+		<p>Avec 
+		{% for eleve in object.eleves.all %}
+			<a href="/people/{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name }}</a>{% if not forloop.last %}, {% endif %}
+		{% endfor %}</p>
+	{% endif %}
+
 {% if object.public_galleries %}
-<h2>This photo is found in the following galleries:</h2>
-<ol>
-{% for gallery in object.public_galleries %}
-    <li>{%previous_in_gallery object gallery%} <a href="{{ gallery.get_absolute_url }}">{{ gallery.title }}</a> {%next_in_gallery object gallery%}</li>
-{% endfor %}
-</ol>
+<h3>Cette photo fait partie de l'album <a href="{{ object.public_galleries.0.get_absolute_url }}">{{ object.public_galleries.0.title }}</a></h3>
+</div>
 {% endif %}
 
 {% endblock %}

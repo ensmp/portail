@@ -25,7 +25,12 @@ height:10px;
 .portrait {
 	float:left;
 	width:100px;
-	height:230px;
+	height:230px;	
+}
+
+.portrait p {
+	margin:0;
+	text-align:center;
 }
 
 .portrait img {

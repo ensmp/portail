@@ -177,6 +177,20 @@ ul#topnav li ul.subnav li a:hover {
 	background: #dadada url(dropdown_linkbg.png) no-repeat 10px center;  
 }  
 
+ul#topnav li a#menu_notifications {
+	float:right;
+	width:25px;
+	padding:0;
+	display:lock; 
+	height: 39px; 
+	line-height: 39px;
+	background: url(notification.png) no-repeat 0px center;
+	vertical-align:middle;
+	text-align:center;
+	color:#fff;
+	font-size:0.8em;
+}
+
 #wrap {
 position:relative;
 top:0;
@@ -201,9 +215,6 @@ margin: 0 auto;
 #menu_onglets {
 	font-family: Arial;
 	overflow:hidden;
-	background-image:url(fond.png);
-	background-position:bottom;
-	background-repeat:repeat-x;
 	font-size:18px;
 	font-weight:bold;	
 }

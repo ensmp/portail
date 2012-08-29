@@ -1,0 +1,32 @@
+{% load photologue_tags %}
+<div id = "module_mediamines">
+	<div id="slider">
+		<ul>
+		{% for i in 12345|make_list %}
+		<li><img src="{% module_photo_url i %}" width="200" height="200"/></li>
+		{% endfor %}
+		</ul>
+		
+	</div>
+	<ul id="pagination" class="pagination">
+		<li onclick="slideshow.pos(0)"></li>
+		<li onclick="slideshow.pos(1)"></li>
+		<li onclick="slideshow.pos(2)"></li>
+		<li onclick="slideshow.pos(3)"></li>
+		<li onclick="slideshow.pos(4)"></li>
+	</ul>
+</div>
+
+<script type="text/javascript">
+var slideshow=new TINY.slider.slide('slideshow',{
+	id:'slider',
+	auto:false,
+	resume:false,
+	vertical:false,
+	navid:'pagination',
+	activeclass:'current',
+	position:0,
+	rewind:false,
+	elastic:false
+});
+</script>

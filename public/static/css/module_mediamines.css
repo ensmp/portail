@@ -1,0 +1,8 @@
+#module_mediamines {position:relative;top:0;margin:5px;padding:5px;width:200px;height:200px; border:1px solid #000}
+.sliderbutton {float:left; width:25px; height:235px; cursor:pointer}
+#slider {padding:0; margin:0; float:left; position:relative; overflow:auto; width:200px; height:200px}
+#slider ul {padding:0; margin:0; position:absolute; list-style:none; top:0; left:0}
+#slider li {padding:0; margin:0; float:left; width:200px; height:200px}
+.pagination {padding:0; margin:0; position:absolute; bottom:0px; right:10px; list-style:none; height:25px}
+.pagination li {padding:0; margin:0; float:left; cursor:pointer; height:8px; width:8px; background:#ccc; margin:0 4px 0 0; border:1px solid #fff}
+.pagination li:hover, li.current {background:#fff}

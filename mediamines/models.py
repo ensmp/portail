@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import os
 import random
 import shutil
@@ -49,7 +49,7 @@ except ImportError:
             super(TagField, self).__init__(**default_kwargs)
         def get_internal_type(self):
             return 'CharField'
-    tagfield_help_text = _('Django-tagging was not found, tags will be treated as plain text.')
+    tagfield_help_text = _('Django-tagging introuvable, les tags seront textuels.')
 
 from utils import EXIF
 from utils.reflection import add_reflection
@@ -99,16 +99,17 @@ CROP_ANCHOR_CHOICES = (
 )
 
 IMAGE_TRANSPOSE_CHOICES = (
-    ('FLIP_LEFT_RIGHT', _('Flip left to right')),
-    ('FLIP_TOP_BOTTOM', _('Flip top to bottom')),
-    ('ROTATE_90', _('Rotate 90 degrees counter-clockwise')),
-    ('ROTATE_270', _('Rotate 90 degrees clockwise')),
-    ('ROTATE_180', _('Rotate 180 degrees')),
+    ('FLIP_LEFT_RIGHT', _('Inverser horizontalement')),
+    ('FLIP_TOP_BOTTOM', _('Inverser verticalement')),
+    ('ROTATE_90', _('Rotation 90 degres en sens trigo')),
+    ('ROTATE_270', _('Rotation 90 degres en sens contretrigo')),
+    ('ROTATE_180', _('Rotattion 180 degres')),
 )
 
 WATERMARK_STYLE_CHOICES = (
     ('tile', _('Tile')),
     ('scale', _('Scale')),
+	('bd', _('En bas a droite')),	
 )
 
 # Prepare a list of image filters
@@ -122,13 +123,13 @@ IMAGE_FILTERS_HELP_TEXT = _('Chain multiple filters using the following pattern 
 
 
 class Gallery(models.Model):
-    date_added = models.DateTimeField(_('date published'), default=datetime.now)
-    title = models.CharField(_('title'), max_length=100, unique=True)
-    title_slug = models.SlugField(_('title slug'), unique=True,
-                                  help_text=_('A "slug" is a unique URL-friendly title for an object.'))
+    date_added = models.DateTimeField(_('date de publication'), default=datetime.now)
+    title = models.CharField(_('titre'), max_length=100, unique=True)
+    title_slug = models.SlugField(_('slug titre'), unique=True,
+                                  help_text=_('Un slug est un titre adapte aux URL.'))
     description = models.TextField(_('description'), blank=True)
     is_public = models.BooleanField(_('is public'), default=True,
-                                    help_text=_('Public galleries will be displayed in the default views.'))
+                                    help_text=_('Les albums prives ne sont pas affiches'))
     photos = models.ManyToManyField('Photo', related_name='galleries', verbose_name=_('photos'),
                                     null=True, blank=True)
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
@@ -136,8 +137,8 @@ class Gallery(models.Model):
     class Meta:
         ordering = ['-date_added']
         get_latest_by = 'date_added'
-        verbose_name = _('gallery')
-        verbose_name_plural = _('galleries')
+        verbose_name = _('album')
+        verbose_name_plural = _('albums')
 
     def __unicode__(self):
         return self.title
@@ -193,18 +194,18 @@ class Gallery(models.Model):
 
 
 class GalleryUpload(models.Model):
-    zip_file = models.FileField(_('images file (.zip)'), upload_to=PHOTOLOGUE_DIR+"/temp",
-                                help_text=_('Select a .zip file of images to upload into a new Gallery.'))
-    gallery = models.ForeignKey(Gallery, null=True, blank=True, help_text=_('Select a gallery to add these images to. leave this empty to create a new gallery from the supplied title.'))
-    title = models.CharField(_('title'), max_length=75, help_text=_('All photos in the gallery will be given a title made up of the gallery title + a sequential number.'))
-    caption = models.TextField(_('caption'), blank=True, help_text=_('Caption will be added to all photos.'))
-    description = models.TextField(_('description'), blank=True, help_text=_('A description of this Gallery.'))
-    is_public = models.BooleanField(_('is public'), default=True, help_text=_('Uncheck this to make the uploaded gallery and included photographs private.'))
+    zip_file = models.FileField(_('fichier images (.zip)'), upload_to=PHOTOLOGUE_DIR+"/temp",
+                                help_text=_('Choisir un fichier .zip a uploader dans un nouvel album.'))
+    gallery = models.ForeignKey(Gallery, null=True, blank=True, help_text=_('Choisir un album auquel ajouter les images. Laisser vide pour creer un album avec le titre ci-dessous'))
+    title = models.CharField(_('titre'), max_length=75, help_text=_('Les photos de cet album auront un titre du type ce titre + un numero sequentiel.'))
+    caption = models.TextField(_('legende'), blank=True, help_text=_('Cette legende sera ajoutee a toutes les photos'))
+    description = models.TextField(_('description'), blank=True, help_text=_('Une description de l\'album'))
+    is_public = models.BooleanField(_('is public'), default=True, help_text=_('Decocher pour rendre prive'))
     tags = models.CharField(max_length=255, blank=True, help_text=tagfield_help_text, verbose_name=_('tags'))
 
     class Meta:
-        verbose_name = _('gallery upload')
-        verbose_name_plural = _('gallery uploads')
+        verbose_name = _('album upload')
+        verbose_name_plural = _('album uploads')
 
     def save(self, *args, **kwargs):
         super(GalleryUpload, self).save(*args, **kwargs)
@@ -218,7 +219,7 @@ class GalleryUpload(models.Model):
             zip = zipfile.ZipFile(self.zip_file.path)
             bad_file = zip.testzip()
             if bad_file:
-                raise Exception('"%s" in the .zip archive is corrupt.' % bad_file)
+                raise Exception('"%s" dans le .zip est corrompu' % bad_file)
             count = 1
             if self.gallery:
                 gallery = self.gallery
@@ -248,7 +249,7 @@ class GalleryUpload(models.Model):
                         # if a "bad" file is found we just skip it.
                         continue
                     while 1:
-                        title = ' '.join([self.title, str(count)])
+                        title = ' '.join([self.title, str(count).zfill(2)])
                         slug = slugify(title)
                         try:
                             p = Photo.objects.get(title_slug=slug)
@@ -494,17 +495,17 @@ class ImageModel(models.Model):
 
 
 class Photo(ImageModel):
-    title = models.CharField(_('title'), max_length=100, unique=True)
+    title = models.CharField(_('titre'), max_length=100, unique=True)
     title_slug = models.SlugField(_('slug'), unique=True,
-                                  help_text=('A "slug" is a unique URL-friendly title for an object.'))
-    caption = models.TextField(_('caption'), blank=True)
-    date_added = models.DateTimeField(_('date added'), default=datetime.now, editable=False)
-    is_public = models.BooleanField(_('is public'), default=True, help_text=_('Public photographs will be displayed in the default views.'))
+                                  help_text=('Un slug est un titre adapte aux URL.'))
+    caption = models.TextField(_('legende'), blank=True)
+    date_added = models.DateTimeField(_('date d\'ajout'), default=datetime.now, editable=False)
+    is_public = models.BooleanField(_('is public'), default=True, help_text=_('affichee dans les albums'))
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
     eleves = models.ManyToManyField(UserProfile) #Identifier des eleves sur une photo
     
     class Meta:
-        ordering = ['-date_added']
+        ordering = ['title_slug']
         get_latest_by = 'date_added'
         verbose_name = _("photo")
         verbose_name_plural = _("photos")

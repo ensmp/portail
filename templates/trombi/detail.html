@@ -53,7 +53,7 @@
 <hr>
 <p><strong>Photos <a href='/associations/mediamines/'>MediaMines</a></strong> :</p>
 {% for photo in mineur.get_profile.photo_set.all %}
-	<a href="{{ photo.image.url }}"><img src="{{ photo.get_display_url }}" alt="{{ photo.title }}" width=120/></a>
+	<a href="{{ photo.get_absolute_url }}"><img src="{{ photo.get_display_url }}" alt="{{ photo.title }}" width=120/></a>
 {% endfor %}
 <hr>
 {% if mineur.username == user.username %}
