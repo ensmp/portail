@@ -7,7 +7,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG 
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+     ('Edouard Leurent', '11leuren@ensmp.fr'),
 )
 
 MANAGERS = ADMINS
@@ -194,7 +194,8 @@ LOGGING = {
 }
 
 EMAIL_HOST = "smtp.alwaysdata.com"
-EMAIL_PORT = 25
+EMAIL_PORT = 25 
+DEFAULT_FROM_EMAIL = "edouard.leurent@mines-paristech.fr"
 
 AUTH_PROFILE_MODULE = 'trombi.UserProfile'
 

@@ -2,6 +2,7 @@
 
 {% block header %}
 	<link rel="stylesheet" href="{{ STATIC_URL }}messages.css" />
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.autosize.js"></script>  
     <script type="text/javascript" src="{{ STATIC_URL }}messages.js"></script>    
 	<script type="text/javascript" src="{{ STATIC_URL }}read.js"></script>
 {% endblock %}
@@ -67,13 +68,6 @@
 	<div class="message_contenu">
 		<p>{{ message.contenu|removetags:"script"|safe}}</p>
 		
-		<div style="display:none;">
-		{% load comments %}
-		<h3>Commentaires</h3>
-		{% render_comment_list for message %}
-		<h3>Poster un commentaire</h3>
-		{% render_comment_form for message %}
-		</div>
 		<hr>
 		<p class="pied-message">Visible par
 		{% if message.destinataire %}
@@ -83,6 +77,15 @@
 		{% endif %}
 		</p>
 		<p class="signature">Posté par <a href="/people/{{message.expediteur.user.username}}">{{message.expediteur.first_name}} {{message.expediteur.last_name}}</a></p>
+		
+		<div class="comments">
+		{% load comments %}
+		{% render_comment_list for message %}
+		</div>
+		<div class="comment_form">
+		{% render_comment_form for message %}
+		</div>
+		
 	</div>
 </div>
 </li>

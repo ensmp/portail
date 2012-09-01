@@ -1,10 +1,13 @@
-<div class="comment_start"></div>
 {% for comment in comment_list %}
    <div class="comment">
-   <p>
-   <img class = "miniature" src= 'https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{{comment.user}}.jpg'/> 
-      Par <a href="/people/{{ comment.user }}">{{ comment.user.get_profile.first_name }} {{ comment.user.get_profile.last_name }}</a> - il y a {{ comment.submit_date|timesince }} <br>
-      {{ comment.comment }}
+   <img class = "miniature" src= '{{ STATIC_URL }}{{ comment.user.username }}.jpg'/>
+   
+   <input type="hidden" name = "comment_id" value = "{{ comment.id }}"> {% csrf_token %}
+   {% if request.user = comment.user %}<a class = "comment_delete" href="/comments/delete/"><img src="{{ STATIC_URL }}comment_delete.png"/></a>{% endif %}
+  
+   <p>   
+      <strong><a href="/people/{{ comment.user }}">{{ comment.user.get_profile.first_name }} {{ comment.user.get_profile.last_name }}</a></strong> {{ comment.comment }}<br>
+	  <span class="comment_date">il y a {{ comment.submit_date|timesince }}</span>     
    </p>
    </div>
 {% endfor %}

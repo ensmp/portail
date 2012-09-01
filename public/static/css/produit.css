@@ -1,18 +1,10 @@
 * {
 	margin: 0px;
 	padding: 0px;
-	font-family: Corbel, Arial, Helvetica;
 }
 
 
-#body{width:560px;
-display:inline;
 
-}
-
-#main{
-width:560px;
-}
 .produit{
 	width:48%;
 	display:inline-block;

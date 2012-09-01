@@ -22,7 +22,7 @@ $(function() {
 	//update_ratings();
 	
 	/**FAVOURITE**/
-	$('.unfavourite,.favourite').hover(function() {
+	$('.unfavourite,.favourite').hover(function() {		
 		var favourite = $(this).hasClass('favourite') ? 'favourite' : 'unfavourite' ;
 		if (!$(this).hasClass('clicked'))
 			$(this).attr({'src':'/static/'+favourite+'hover.png'});

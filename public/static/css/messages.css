@@ -44,13 +44,42 @@
 	
 img.miniature {
 	float:left;
-	width:50px;
-	height:69px;
+	height:42px;
+	margin-right:5px;
 }
 
 div.comment {
-		min-height:69px;
+	padding:5px;
+	margin-left:42px;
+	background-color:#fafafa;
+	min-height: 42px;
+	border: solid 1px #eef;
+
 }
+
+.comment a {
+	color:#3B5998;
+	font-family:'lucida grande',tahoma,verdana,arial,sans-serif;
+}
+
+.comment p {
+	margin:0;
+}
+
+.comment textarea {
+	resize: none;
+}
+
+.comment_date {
+	color:gray;
+	font-family:'lucida grande',tahoma,verdana,arial,sans-serif;
+}
+
+a.comment_delete img {
+	display:block;
+	float:right;
+}
+
 
 div.message{
 	position:relative;

@@ -109,7 +109,7 @@ IMAGE_TRANSPOSE_CHOICES = (
 WATERMARK_STYLE_CHOICES = (
     ('tile', _('Tile')),
     ('scale', _('Scale')),
-	('bd', _('En bas a droite')),	
+    ('bd', _('En bas a droite')),    
 )
 
 # Prepare a list of image filters
@@ -230,6 +230,10 @@ class GalleryUpload(models.Model):
                                                  is_public=self.is_public,
                                                  tags=self.tags)
             from cStringIO import StringIO
+            if len(zip.namelist()) < 100:
+                nombre_zeros = 2
+            else:
+                nombre_zeros = 3
             for filename in zip.namelist():
                 if filename.startswith('__'): # do not process meta files
                     continue
@@ -249,7 +253,7 @@ class GalleryUpload(models.Model):
                         # if a "bad" file is found we just skip it.
                         continue
                     while 1:
-                        title = ' '.join([self.title, str(count).zfill(2)])
+                        title = ' '.join([self.title, str(count).zfill(nombre_zeros)])
                         slug = slugify(title)
                         try:
                             p = Photo.objects.get(title_slug=slug)
@@ -547,13 +551,13 @@ class Photo(ImageModel):
         
     def envoyer_notification(self, eleve):
         if eleve.user.associations_suivies.filter(pseudo='mediamines'):
-			try: #Des gens ont peut etre deja été identifiés sur cette photo, il faut retrouver la notification
-				notification = Notification.objects.get(content_type = ContentType.objects.get_for_model(self), object_id = self.id)
-				notification.envoyer(eleve.user)
-			except Notification.DoesNotExist: #En fait non, cette notification n'existe pas. On la crée.
-				notification = Notification(content_object=self, message='Vous avez été identifié sur une photo de MediaMines')
-				notification.save()
-				notification.envoyer(eleve.user)
+            try: #Des gens ont peut etre deja été identifiés sur cette photo, il faut retrouver la notification
+                notification = Notification.objects.get(content_type = ContentType.objects.get_for_model(self), object_id = self.id)
+                notification.envoyer(eleve.user)
+            except Notification.DoesNotExist: #En fait non, cette notification n'existe pas. On la crée.
+                notification = Notification(content_object=self, message='Vous avez été identifié sur une photo de MediaMines')
+                notification.save()
+                notification.envoyer(eleve.user)
             
     def supprimer_notification(self, eleve):
         try:
