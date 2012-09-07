@@ -15,7 +15,7 @@
 <ul>
 {% for user in list_users %}
 <li>
-<img class = "miniature" src= '{{ STATIC_URL }}{{user}}.jpg'/> 
+<img class = "trombi" src= '{{ STATIC_URL }}{{user}}.jpg'/> 
 <a href="/people/{{ user }}">{{ user.first_name }} {{ user.last_name }}</a>
 <br>
 Promo : {{user.promo}}

@@ -4,6 +4,8 @@
 
 <h2>{{ mineur.get_profile.first_name }} {{ mineur.get_profile.last_name|upper }}</h2>
 
+<p><strong>Mail</strong> : <a href="mailto:{{ mineur.email }}">{{ mineur.email }}</a></p>
+
 <p><strong>Promotion</strong> : {{ mineur.get_profile.promo }}</p>
 
 <p><strong>Date de naissance</strong> : {{ mineur.get_profile.birthday }}</p>
@@ -32,7 +34,7 @@
 <hr>
 
 {% for question in liste_questions %}
-	<p><strong>{{question.enonce}}</strong> : 
+	<p><strong>{{question.enonce}}</strong>  
 	{% for reponse in liste_reponses %}
 		{% if question = reponse.question %}
 			{{reponse.contenu}}

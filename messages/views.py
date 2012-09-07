@@ -178,6 +178,9 @@ def post_comment(request, next=None, using=None):
 
     # Save the comment and signal that it was saved
     comment.save()
+    message = get_object_or_404(Message, pk = object_pk)
+    message.envoyer_commentaire_notification(comment.pk, request.user.username)
+    
     signals.comment_was_posted.send(
         sender  = comment.__class__,
         comment = comment,

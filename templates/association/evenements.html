@@ -3,8 +3,6 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}evenements.css" />
 <link type="text/css" href="{{ STATIC_URL }}jquery-ui-1.8.11.custom.css" rel="stylesheet" />
-<script type="text/javascript" src="{{ STATIC_URL }}messages.js"></script>    
-<script type="text/javascript" src="{{ STATIC_URL }}read.js"></script>
 
 {% endblock %}
 {% block title %}{{association.nom}}{% endblock %}
@@ -40,57 +38,25 @@
 <li> 
 <div class="evenement">
 	<div class="evenement_infos">
-	<table>
-	<tr>
-	<td rowspan=2 class="assoce"><a href = "/associations/{{evenement.association.pseudo}}"><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{evenement.association.pseudo}}.png"></a></td>
-	<td class="objet"><a class="objet" href="javascript:void(0);">{{ evenement.titre }}</a></td>
-	<td class="info"> Quand : Le {{evenement.date_debut|date:"d F Y"}} </br> Où : {{evenement.lieu}} </td>
-	<td>
+	
+	<h3>{{ evenement.titre }}</h3>
+	<p><strong>Quand</strong> : Le {{ evenement.date_debut|date:"d F Y" }}<br/>
+	<strong>Où</strong> : {{ evenement.lieu }}<br/>
+	
 	{% if evenement.is_billetterie%}
 	<a class = "biletterie" href = "/associations/{{evenement.association.pseudo}}/evenements/{{evenement.id}}"> Réserver </a>
 	{% else %}
 	Pas de billetterie
 	{% endif%}
-	</td>
-	<!--<td class="info"> {{ comment_count }} commentaires</td>-->
-	<td rowspan=2 class="bouton">
-	{% if request.user.get_profile in evenement.lu.all %}
-	<a href="/evenements/{{ evenement.id }}/"><img class='action_message unread' src="{{ STATIC_URL }}unread.png" /></a>
-	{% else %}
-	<a href="/evenements/{{ evenement.id }}/"><img class='action_message read' src="{{ STATIC_URL }}read.png" /></a>
-	{% endif %}
-	</td>
-	<td rowspan=2 class="bouton">
-	{% if request.user.get_profile in message.important.all %}
-	<a href="/evenements/{{ evenement.id }}/"><img class='action_message unfavourite' src="{{ STATIC_URL }}unfavourite.png" /></a>
-	{% else %}
-	<a href="/evenements/{{ evenement.id }}/"><img class='action_message favourite' src="{{ STATIC_URL }}favourite.png" /></a>
-	{% endif %}
-	</td>
-	</tr>
-	<tr>
-	<td class="info">
-	<span class="legende">Posté par</span> {{evenement.association.nom}}
-	{% if evenement.est_recent %}
-	<span class="legende">il y a</span> {{ evenement.date_post|timesince }}
-	{% else %}
-	<span class="legende">le</span> {{ evenement.date_post|date:"d F Y" }}  <!-- a H:i -->
-	{% endif %}
-	</td>
-	</tr>
-	</table>
+	<br/>
+	
+	
+
 	</div>
 	
-	<div class="message_contenu">
+	<div class="evenement_contenu">
 		<p>{{ evenement.description|linebreaksbr}}</p>
 		<hr>
-		<span class="signature">Visible par
-		{% if evenement.destinataire %}
-		{{evenement.destinataire.nom}}
-		{% else %}
-		tous
-		{% endif %}
-		</span>
 	</div>
 </div>
 </li>

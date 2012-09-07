@@ -12,7 +12,7 @@ class Question(models.Model):
 class Reponse(models.Model):
     question = models.ForeignKey(Question, related_name='+')
     contenu = models.CharField(max_length=512)
-	
+    
     def __unicode__(self):
         return self.contenu
 
@@ -29,16 +29,25 @@ class UserProfile(models.Model):
     est_une_fille = models.BooleanField()
 
     chambre = models.CharField(max_length=128, blank=True)
-    adresse_ailleurs = models.CharField(max_length=512, blank=True)    
+    adresse_ailleurs = models.CharField(max_length=512, blank=True) 
     sports = models.CharField(max_length=512, blank=True)
     co = models.ForeignKey(User,related_name='+', blank=True, null=True)
     parrain = models.ForeignKey(User,related_name='+', blank=True, null=True)
     fillot = models.ForeignKey(User,related_name='+', blank=True, null=True)
 
     reponses = models.ManyToManyField(Reponse, blank=True)    
-	
+    
+    class Meta:
+        ordering = ['-promo','last_name']
+    
     def __unicode__(self):
         return self.user.username
+        
+    def en_premiere_annee(self):
+        from django.db.models import Max
+        premiere_annee = UserProfile.objects.all().aggregate(Max('promo'))['promo__max']
+        return (premiere_annee == self.promo)
+    
   
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

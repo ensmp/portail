@@ -11,6 +11,7 @@
 		<p>Avec 
 		{% for eleve in object.eleves.all %}
 			<a href="/people/{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name }}</a>{% if not forloop.last %}, {% endif %}
+		{% empty %} personne
 		{% endfor %}</p>
 	{% endif %}
 

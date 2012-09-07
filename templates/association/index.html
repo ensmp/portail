@@ -1,12 +1,19 @@
 ﻿{% extends "base.html" %}
-{% block title %}Associations{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
 
 {% block content %}
 <h1>Liste des associations</h1>
-<ul>
+<ul class="liste_assoce">
 	{% for association in assoces %}
 		<li>
-		<a href = "/associations/{{association.pseudo}}">{{association.nom}}</a>
+		<p>
+		<a href = "/associations/{{ association.pseudo }}"><img src="{{ STATIC_URL }}logo_{{ association.pseudo }}.png"/>
+		<br/>
+		{{ association.nom }}</a>
+		</p>
 		</li>
 	{% endfor %}
 </ul>

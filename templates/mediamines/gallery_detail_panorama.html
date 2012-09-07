@@ -30,6 +30,7 @@
 				$.supersized({
 				
 					// Functionality
+					autoplay				:   {{ autoplay }},
 					slide_interval          :   3000,		// Length between transitions
 					transition              :   6, 			// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
 					transition_speed		:	700,		// Speed of transition
@@ -41,18 +42,21 @@
 															{image : '{{ photo.get_display_url }}', title : '{{ photo.title }}', thumb : '{{ photo.get_thumbnail_url }}', url : '{{ photo.get_absolute_url }}', slug:'{{ photo.title_slug }}'}
 															{% if forloop.last %}{% else %}, {% endif %}
 														{% endfor %}													
-												]
+												],
+					start_slide				:	{{ first_slide }}
 					
 				});
 		    });
 		    
 		</script>
+
 	{% endblock %}
 	{% block content %}
 
 	
 	<ul id="demo-block">
-		<li>Retour aux <a href="{% url pl-gallery-list 1 %}">albums</a></li>
+		<li>Voir en <a href="{% url pl-gallery-mosaic album.title_slug %}">mosaïque</a></li>
+		<li>Tous les <a href="{% url pl-gallery-list 1 %}">albums</a></li>
 		<li>
 			<form>
 			{% csrf_token %}

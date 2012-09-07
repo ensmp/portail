@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect
 @login_required
 def liste(request):
 	envoi_list = Envoi.objects.filter(user__username = request.user.username).order_by('-notification__date')
+	envoi_list = envoi_list.exclude(notification__content_type__model = "Message") #On n'affiche pas les notifications de nouveaux messages
 	envoi_nonlu_list = list(envoi_list.filter(lu = False))
 	envoi_lu_list = list(envoi_list.filter(lu = True))
 	mark_all_seen(request.user)

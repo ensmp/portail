@@ -8,6 +8,9 @@ from django.forms import ModelForm
 from tinymce.widgets import TinyMCE
 from notification.models import Notification
 from django.db.models import Q
+from django.contrib.comments.models import Comment
+
+
 
 
 
@@ -30,9 +33,21 @@ class Message(models.Model):
 	def est_recent(self):
 		return (self.date.date() == date.today())
 	
-	def envoyer_notification(self):
+	def envoyer_message_notification(self):
 		message = self.association.nom + ' a publie un nouveau message'
 		notification = Notification(content_object=self, message=message)
+		notification.save()
+		if self.destinataire is None:
+			notification.envoyer_multiple(self.association.suivi_par.all())
+		else:
+			recipients = self.association.suivi_par.all().filter(Q(userprofile__in = self.destinataire.membres.all) | Q(userprofile__in = self.association.membres.all))
+			notification.envoyer_multiple(recipients)
+	
+	def envoyer_commentaire_notification(self, comment_pk, username):
+		eleve = UserProfile.objects.get(user__username = username)
+		message = eleve.first_name + ' ' + eleve.last_name + ' a commente un message de ' + self.association.nom
+		commentaire = Comment.objects.get(pk = comment_pk)
+		notification = Notification(content_object=commentaire, message=message)
 		notification.save()
 		if self.destinataire is None:
 			notification.envoyer_multiple(self.association.suivi_par.all())
@@ -44,7 +59,7 @@ class Message(models.Model):
 		creation = self.pk is None #Creation de l'objet			
 		super(Message, self).save(*args, **kwargs)
 		if creation:			
-			self.envoyer_notification()
+			self.envoyer_message_notification()
 
 	
 class MessageForm(ModelForm):

@@ -128,8 +128,8 @@ class Gallery(models.Model):
     title_slug = models.SlugField(_('slug titre'), unique=True,
                                   help_text=_('Un slug est un titre adapte aux URL.'))
     description = models.TextField(_('description'), blank=True)
-    is_public = models.BooleanField(_('is public'), default=True,
-                                    help_text=_('Les albums prives ne sont pas affiches'))
+    is_public = models.BooleanField(_('is public'), default=True, help_text=_('Les albums prives ne sont pas affiches'))
+    is_hidden_1A = models.BooleanField(_('is hidden aux 1A'), default=True, help_text=_('Album non visible par les 1A (spoil sur les catas/campagne/etc)'))
     photos = models.ManyToManyField('Photo', related_name='galleries', verbose_name=_('photos'),
                                     null=True, blank=True)
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
@@ -147,7 +147,7 @@ class Gallery(models.Model):
         return self.__unicode__()
 
     def get_absolute_url(self):
-        return reverse('pl-gallery', args=[self.title_slug])
+        return reverse('pl-gallery-mosaic', args=[self.title_slug])
 
     def latest(self, limit=0, public=True):
         if limit == 0:
@@ -526,7 +526,13 @@ class Photo(ImageModel):
         super(Photo, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('pl-photo', args=[self.title_slug])
+        #return reverse('pl-photo', args=[self.title_slug])
+        gallery = self.public_galleries()[0]
+        slide = 1
+        for index, photo in enumerate(gallery.photos.all()):
+            if self.pk == photo.pk:
+                slide = index + 1
+        return reverse('pl-gallery', args=[gallery.title_slug]) + '?slide=' + str(slide) + '&autoplay=0'
 
     def public_galleries(self):
         """Return the public galleries to which this photo belongs."""

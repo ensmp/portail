@@ -19,7 +19,7 @@ class Association(models.Model):
 	pseudo = models.SlugField()
 	groupe_permissions = models.OneToOneField(Group, blank=True, null=True)
 	membres = models.ManyToManyField(UserProfile, through='Adhesion')
-	suivi_par= models.ManyToManyField(User, related_name='associations_suivies')
+	suivi_par= models.ManyToManyField(User, related_name='associations_suivies', blank=True, null=True)
 	page = models.ForeignKey(Page, blank=True, null=True)
 	ordre = models.IntegerField(default=0)
  

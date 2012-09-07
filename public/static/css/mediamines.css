@@ -45,3 +45,27 @@
 	background: #ffdb01 url(orange-gradient.gif) repeat-y;
 	border-color: #c25b08;
 }
+
+
+.list-gallery-photo {
+	position:relative;
+	text-align:center;
+	margin: 0 auto;
+	width:100%;
+}
+
+.gallery-photo {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.gallery-photo li {
+	/*padding: 10px;*/
+	padding:0;
+	margin: 0;
+	float: left;
+	position: relative;
+	/*width: 180px;*/
+	width:170px;
+	height: 130px;
+}
