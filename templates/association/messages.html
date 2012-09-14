@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}messages.css" />
 
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.autosize.js"></script>  
 <script type="text/javascript" src="{{ STATIC_URL }}messages.js"></script>    
 <script type="text/javascript" src="{{ STATIC_URL }}read.js"></script>
 
@@ -19,7 +20,7 @@
 <li><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
 <li><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
 {% if association.page %}
-<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><img src="{{ STATIC_URL}}page_{{association.page.lien}}.png"><span>{{association.page.titre}}</span></a></li>
+<li><a href="{% if not association.page.is_externe %}/associations/{{association.pseudo}}/{% endif %}{{ association.page.lien }}"><img src="{{ STATIC_URL}}page_{% if not association.page.is_externe %}{{association.page.lien}}{% else %}site{% endif %}.png"><span>{{association.page.titre}}</span></a></li>
 {% endif %}
 </ul>
 
@@ -81,13 +82,6 @@
 	<div class="message_contenu">
 		<p>{{ message.contenu|removetags:"script"|safe}}</p>
 		
-		<div style="display:none;">
-		{% load comments %}
-		<h3>Commentaires</h3>
-		{% render_comment_list for message %}
-		<h3>Poster un commentaire</h3>
-		{% render_comment_form for message %}
-		</div>
 		<hr>
 		<p class="pied-message">Visible par
 		{% if message.destinataire %}
@@ -97,6 +91,15 @@
 		{% endif %}
 		</p>
 		<p class="signature">Posté par <a href="/people/{{message.expediteur.user.username}}">{{message.expediteur.first_name}} {{message.expediteur.last_name}}</a></p>
+		
+		<div class="comments">
+		{% load comments %}
+		{% render_comment_list for message %}
+		</div>
+		<div class="comment_form">
+		{% render_comment_form for message %}
+		</div>
+		
 	</div>
 </div>
 </li>

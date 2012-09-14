@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.exceptions import ObjectDoesNotExist 
 from datetime import date, datetime, timedelta
+from django.utils.encoding import smart_unicode, smart_str
 
 
 class Notification(models.Model):
@@ -19,7 +20,8 @@ class Notification(models.Model):
 	def __unicode__(self):
 		str_objet=''
 		if self.content_object:
-			str_objet = str(self.content_object)
+			str_objet = smart_unicode(self.content_object)
+
 		else:
 			str_objet = '--Introuvable--'
 		return str(self.content_type.model_class().__name__) + ' : ' + str_objet
@@ -29,22 +31,24 @@ class Notification(models.Model):
 		return (self.date.date() == date.today())
 
 		
-	def get_abolute_url(self):
+	def get_absolute_url(self):
 		if not self.content_object:
 			self.content_object = self.content_type.get_object_for_this_type(pk=self.object_id)
 
 		if self.content_type.model_class().__name__ == 'Message':
-			return '/associations/' + self.content_object.association.pseudo + '/messages/'
+			return self.content_object.get_absolute_url()
 		elif self.content_type.model_class().__name__ == 'Evenement':
-			return '/associations/' + self.content_object.association.pseudo + '/evenements/'
+			return self.content_object.get_absolute_url()
 		elif self.content_type.model_class().__name__ == 'PetitCours':
-			return '/petitscours/'
+			return self.content_object.get_absolute_url()
 		elif self.content_type.model_class().__name__ == 'Gallery':
-			return '/associations/mediamines/gallery/' + self.content_object.title_slug + '/'
+			return self.content_object.get_absolute_url()
 		elif self.content_type.model_class().__name__ == 'Photo':
 			return self.content_object.get_absolute_url()
 		elif self.content_type.model_class().__name__ == 'Sondage':
 			return '/sondages/valider/'
+		elif self.content_type.model_class().__name__ == 'Comment':
+			return self.content_object.content_object.get_absolute_url()
 		else:
 			return '#'
 			

@@ -91,7 +91,7 @@ def profile(request):
 @login_required
 def edit(request,mineur_login):
 	if request.method == 'POST':
-		update_profile(request,mineur_login,phone=request.POST['phone'],promo=request.POST['promo'],chambre=request.POST['chambre'],option=request.POST['option'], co=request.POST['co'], parrain=request.POST['parrain'], fillot=request.POST['fillot'])
+		update_profile(request,mineur_login,phone=request.POST['phone'],chambre=request.POST['chambre'],option=request.POST['option'], co=request.POST['co'], parrain=request.POST['parrain'], fillot=request.POST['fillot'])
 		# le profil a ete cree/ mis a jour, on update les questions
 		profile = request.user.get_profile()
 		for question in Question.objects.all():
@@ -115,3 +115,5 @@ def edit(request,mineur_login):
 		liste_reponses = mineur.reponses.all()
 		return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'promo_inferieure': promo_inferieure, 'promo_superieure': promo_superieure, 'autres_eleves': autres_eleves, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
 		
+def all(request):
+	return render_to_response('trombi/all.html', {'p12': UserProfile.objects.all()},context_instance=RequestContext(request))

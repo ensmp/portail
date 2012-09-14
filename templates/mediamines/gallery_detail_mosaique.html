@@ -18,9 +18,9 @@
 {% block content %}
 
 <h1>{{ album.title }}</h1>
-<h2>Publié le {{ album.date_added|date:"l j F Y" }}</h2>
+<h2>Le {{ album.date_added|date:"l j F Y" }}</h2>
 {% if album.description %}<p>{{ album.description }}</p>{% endif %}
-<p>Voir le <a href="panorama">panorama</a></p>
+<h3 style="text-align:center;">Voir le <a href="panorama">panorama</a></h3>
 <div class="list-gallery-photo">
 	<ul class = "gallery-photo">
     {% for photo in album.photos.all %}

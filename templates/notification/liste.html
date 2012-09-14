@@ -5,7 +5,7 @@
 <h3>Nouvelles notifications</h3>
 <ul>
 {% for envoi in envoi_nonlu_list %}
-	<li><a href="{{ envoi.notification.get_abolute_url }}">{{ envoi.notification.message }}</a></li> 
+	<li><a href="{{ envoi.notification.get_absolute_url }}">{{ envoi.notification.message }}</a></li> 
 {% endfor %}
 </ul>
 
@@ -16,7 +16,7 @@
     <ul>
         {% for envoi in envoi_bydate.list %}
         <li>
-			<a href="{{ envoi.notification.get_abolute_url }}">{{ envoi.notification.message }}</a>
+			<a href="{{ envoi.notification.get_absolute_url }}">{{ envoi.notification.message }}</a>
 			{% if envoi.notification.est_recent %}<br><span style="color:#999;">(il y a {{ envoi.notification.date|timesince }})</span> {% endif %}
 		</li>
         {% endfor %}

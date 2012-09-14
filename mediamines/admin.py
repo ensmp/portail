@@ -5,7 +5,7 @@ from django.contrib import admin
 from models import *
 
 class GalleryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'date_added', 'photo_count', 'is_public')
+    list_display = ('title', 'date_added', 'photo_count', 'is_hidden_1A')
     list_filter = ['date_added', 'is_public']
     date_hierarchy = 'date_added'
     prepopulated_fields = {'title_slug': ('title',)}
@@ -15,7 +15,7 @@ class PhotoAdmin(admin.ModelAdmin):
     list_display = ('title', 'date_taken', 'date_added', 'is_public', 'tags', 'view_count', 'admin_thumbnail')
     list_filter = ['date_added', 'is_public']
     search_fields = ['title', 'caption']
-    list_per_page = 10
+    list_per_page = 100
     prepopulated_fields = {'title_slug': ('title',)}
 
 class PhotoEffectAdmin(admin.ModelAdmin):

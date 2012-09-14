@@ -17,7 +17,7 @@
 <li><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
 <li id="actif"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></li>
 {% if association.page %}
-<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><img src="{{ STATIC_URL}}page_{{association.page.lien}}.png"><span>{{association.page.titre}}</span></a></li>
+<li><a href="{% if not association.page.is_externe %}/associations/{{association.pseudo}}/{% endif %}{{ association.page.lien }}"><img src="{{ STATIC_URL}}page_{% if not association.page.is_externe %}{{association.page.lien}}{% else %}site{% endif %}.png"><span>{{association.page.titre}}</span></a></li>
 {% endif %}
 </ul>
 <br>
@@ -40,18 +40,13 @@
 	<div class="evenement_infos">
 	
 	<h3>{{ evenement.titre }}</h3>
-	<p><strong>Quand</strong> : Le {{ evenement.date_debut|date:"d F Y" }}<br/>
-	<strong>Où</strong> : {{ evenement.lieu }}<br/>
+	<p><strong>Quand</strong> : Le {{ evenement.date_debut|date:"d F Y" }}, de {{ evenement.date_debut|date:"h:i" }} à {{ evenement.date_fin|date:"h:i" }}<br/>
+	<strong>Où</strong> : {{ evenement.lieu }}
 	
 	{% if evenement.is_billetterie%}
-	<a class = "biletterie" href = "/associations/{{evenement.association.pseudo}}/evenements/{{evenement.id}}"> Réserver </a>
-	{% else %}
-	Pas de billetterie
-	{% endif%}
 	<br/>
-	
-	
-
+	<a class = "biletterie" href = "/associations/{{evenement.association.pseudo}}/evenements/{{evenement.id}}"> Réserver </a>
+	{% endif%}	
 	</div>
 	
 	<div class="evenement_contenu">

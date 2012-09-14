@@ -1,0 +1,8 @@
+#liste_morceaux {
+	list-style: none;
+}
+
+#liste_morceaux span {
+	font-style:italic;
+	color:#999;
+}

@@ -80,8 +80,8 @@ STATICFILES_DIRS = (
     basepath + 'public/static/css',
     basepath + 'public/static/js',
     basepath + 'public/static/img',
-	basepath + 'public/static/img/trombi',
-	basepath + 'public/static/img/admin',
+    basepath + 'public/static/img/trombi',
+    basepath + 'public/static/img/admin',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -119,7 +119,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-	
+    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
@@ -142,28 +142,29 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'django.contrib.comments',
-	'notification',
+    'django.contrib.comments',
+    'notification',
     'trombi',
-	'association',
-	'messages',
-	'recherche',
+    'association',
+    'messages',
+    'recherche',
     'streamine',
     'petitscours',
-	'objettrouve',
+    'objettrouve',
     'timetable',
-	'todo',
-	'sondages',
-	'evenement', 
-	'minesmarket',
-	'vendome', 
-	'jump', 	
-	#Avatar, pour les avatars de trombi
-	'avatar',
-	#Photologue pour les photos Mediamine
-	'mediamines',
-	#TinyMCE pour les messages
-	'tinymce',
+    'todo',
+    'sondages',
+    'evenement', 
+    'minesmarket',
+    'minestryofsound',
+    'vendome', 
+    'jump',     
+    #Avatar, pour les avatars de trombi
+    'avatar',
+    #Photologue pour les photos Mediamine
+    'mediamines',
+    #TinyMCE pour les messages
+    'tinymce',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

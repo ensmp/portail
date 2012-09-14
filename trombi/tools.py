@@ -5,13 +5,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 @login_required
-def update_profile(request,mineur,phone,promo,chambre,option,co,parrain,fillot):
+def update_profile(request,mineur,phone,chambre,option,co,parrain,fillot):
 	# TODO gérer si un user modifie le profil d'un autre (peut être dans views.py)
 	if request.user.get_profile():
 		profile = request.user.get_profile()
 	else:
 		profile = UserProfile.objects.create(user=request.user)
-	profile.promo = promo
 	profile.phone = phone
 	profile.chambre = chambre
 	profile.option = option

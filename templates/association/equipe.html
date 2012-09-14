@@ -16,7 +16,7 @@
 <li id="actif"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></li>
 <li><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
 {% if association.page %}
-<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><img src="{{ STATIC_URL}}page_{{association.page.lien}}.png"><span>{{association.page.titre}}</span></a></li>
+<li><a href="{% if not association.page.is_externe %}/associations/{{association.pseudo}}/{% endif %}{{ association.page.lien }}"><img src="{{ STATIC_URL}}page_{% if not association.page.is_externe %}{{association.page.lien}}{% else %}site{% endif %}.png"><span>{{association.page.titre}}</span></a></li>
 {% endif %}
 </ul>
 

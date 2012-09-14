@@ -6,6 +6,9 @@ class Vendome(models.Model):
     fichier = models.FileField(upload_to='vendome')
     date = models.DateField()
 	
+    class Meta:
+        ordering = ['-date']
+	
     def __unicode__(self):
         return self.titre	
 

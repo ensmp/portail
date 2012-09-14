@@ -19,7 +19,7 @@ class EventNode(Node):
 
 		events = []
 		for d in days:
-			for p in Evenement.objects.filter(date_debut__month=d.month, date_debut__day=d.day).exclude(Q(is_personnel=True) & ~Q(createur__user__username=self.login.resolve(context))):
+			for p in Evenement.objects.filter(date_debut__month=d.month, date_debut__day=d.day).exclude(Q(is_personnel=True) & ~Q(createur__user__username=self.login.resolve(context))).order_by('date_debut'):
 				events.append(p)
 
 		context['events_list'] = events

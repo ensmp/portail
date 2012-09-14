@@ -41,6 +41,9 @@ def nouveau_calendrier(request):
 	debut = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_debut']), int(request.POST['minutes_debut']))
 	fin = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_fin']), int(request.POST['minutes_fin']))
 	
+	if fin < debut: #si l'heure de fin est avant l'heure de debut, c'est que ca termine le lendemain
+		fin = fin + timedelta(days=1)
+
 	Evenement.objects.create(association = None, createur = request.user.get_profile(), titre = request.POST['title'], description = request.POST['body'], date_debut = debut, date_fin=fin, is_billetterie = False, is_personnel = True)
 	
 	return HttpResponse('Ok (ajout)')
@@ -74,6 +77,10 @@ def nouveau(request, association_pseudo):
 	if request.POST:
 		debut = datetime(int(str(request.POST['date'])[6:10]), int(str(request.POST['date'])[3:5]), int(str(request.POST['date'])[0:2]), int(str(request.POST['debut'])[0:2]), int(str(request.POST['debut'])[3:5]))
 		fin = datetime(int(str(request.POST['date'])[6:10]), int(str(request.POST['date'])[3:5]), int(str(request.POST['date'])[0:2]), int(str(request.POST['fin'])[0:2]), int(str(request.POST['fin'])[3:5]))
+		
+		if fin < debut: #si l'heure de fin est avant l'heure de debut, c'est que ca termine le lendemain
+			fin = fin + timedelta(days=1)
+		
 		if Adhesion.objects.filter(association=association, eleve=request.user).exists():
 			Evenement.objects.create(association = association, createur = request.user.get_profile(), titre = request.POST['titre'], description = request.POST['description'], lieu =request.POST['lieu'], date_debut = debut, date_fin=fin, is_billetterie = False, is_personnel = False)
 		return HttpResponseRedirect('/associations/'+association_pseudo+'/evenements/')

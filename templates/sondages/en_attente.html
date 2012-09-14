@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}sondages.css" />
+{% endblock %}
+
+{% block content %}
+<h3>Sondage validés en attente</h3>
+{% if request.user.is_staff %}
+<table>
+	{% for sondage in liste_sondages %}
+	<tr><td>{{ sondage.question }}</td><td>proposé par <a href="/people/{{ sondage.auteur.user.username }}/">{{ sondage.auteur.first_name }} {{ sondage.auteur.last_name }}</td></tr>
+	<tr>
+		<td><ul><li>{{ sondage.reponse1 }}</li></ul></td>
+	</tr>
+	<tr>
+		<td><ul><li>{{ sondage.reponse2 }}</li></ul></td>
+	</tr>
+	{% empty %}
+	<p>Aucun sondage validés</p>
+	{% endfor %}
+</table>
+{% else %}
+<p>Vous n'avez pas l'autorisation de valider des sondages</p>
+{% endif %}
+{% endblock %}

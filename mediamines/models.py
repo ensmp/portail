@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import os
 import random
 import shutil
@@ -11,7 +11,7 @@ from django.db import models
 from django.db.models.signals import post_init
 from django.conf import settings
 from django.core.files.base import ContentFile
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse 
 from django.template.defaultfilters import slugify
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
@@ -129,7 +129,7 @@ class Gallery(models.Model):
                                   help_text=_('Un slug est un titre adapte aux URL.'))
     description = models.TextField(_('description'), blank=True)
     is_public = models.BooleanField(_('is public'), default=True, help_text=_('Les albums prives ne sont pas affiches'))
-    is_hidden_1A = models.BooleanField(_('is hidden aux 1A'), default=True, help_text=_('Album non visible par les 1A (spoil sur les catas/campagne/etc)'))
+    is_hidden_1A = models.BooleanField(_('is hidden aux 1A'), default=False, help_text=_('Album non visible par les 1A (spoil sur les catas/campagne/etc)'))
     photos = models.ManyToManyField('Photo', related_name='galleries', verbose_name=_('photos'),
                                     null=True, blank=True)
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
@@ -181,7 +181,17 @@ class Gallery(models.Model):
             mediamines = Association.objects.get(pseudo='mediamines') #On envoie seulement à ceux qui suivent MediaMines
             notification = Notification(content_object=self, message='MediaMines a publié un nouvel album photo')
             notification.save()
-            notification.envoyer_multiple(mediamines.suivi_par.all())
+            suivi = mediamines.suivi_par.all()            
+            if self.is_hidden_1A: #Album cache aux 1A
+                destinataires = []
+                for user in suivi:
+                    if not user.get_profile().en_premiere_annee():
+                        destinataires.append(user)
+                notification.envoyer_multiple(destinataires)
+            else:
+                notification.envoyer_multiple(suivi)
+            
+            
         except Association.DoesNotExist:
             pass
         
@@ -201,6 +211,7 @@ class GalleryUpload(models.Model):
     caption = models.TextField(_('legende'), blank=True, help_text=_('Cette legende sera ajoutee a toutes les photos'))
     description = models.TextField(_('description'), blank=True, help_text=_('Une description de l\'album'))
     is_public = models.BooleanField(_('is public'), default=True, help_text=_('Decocher pour rendre prive'))
+    is_hidden_1A = models.BooleanField(_('is hidden aux 1A'), default=False, help_text=_('Album non visible par les 1A (spoil sur les catas/campagne/etc)'))
     tags = models.CharField(max_length=255, blank=True, help_text=tagfield_help_text, verbose_name=_('tags'))
 
     class Meta:
@@ -228,6 +239,7 @@ class GalleryUpload(models.Model):
                                                  title_slug=slugify(self.title),
                                                  description=self.description,
                                                  is_public=self.is_public,
+                                                 is_hidden_1A=self.is_hidden_1A,
                                                  tags=self.tags)
             from cStringIO import StringIO
             if len(zip.namelist()) < 100:
@@ -783,3 +795,11 @@ def add_methods(sender, instance, signal, *args, **kwargs):
 
 # connect the add_accessor_methods function to the post_init signal
 post_init.connect(add_methods)
+
+
+# class Video(models.Model):
+    # titre = models.CharField(max_length=50)
+    # association = models.ForeignKey(Association)
+    # url = titre = models.CharField(max_length=200)
+    # date = models.DateTimeField()
+    

@@ -12,7 +12,7 @@ class NombreNotificationsNode(Node):
 		self.login = template.Variable(login)
 			
 	def render(self, context):
-		context['nombre_de_notifications'] = Envoi.objects.filter(user__username = self.login.resolve(context), lu=False).exclude(notification__content_type__model = "Message").count()
+		context['nombre_de_notifications'] = Envoi.objects.filter(user__username = self.login.resolve(context), lu=False).count()
 		return ''
     
 def compter_notifications(parser, token):

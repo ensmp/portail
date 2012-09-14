@@ -1,5 +1,5 @@
 from django import template
-from mediamines.models import Photo
+from mediamines.models import Photo, Gallery
 register = template.Library()
 
 @register.simple_tag
@@ -17,9 +17,16 @@ def previous_in_gallery(photo, gallery):
     return ""
 
 @register.simple_tag
-def module_photo_url(index):
-	if int(index)-1 < Photo.objects.all().count():
-		photo = Photo.objects.order_by('-date_added')[int(index)-1]
-		return photo.get_module_url()
-	else:
-		return 'aa'
+def module_photo_url(user, index):
+    if int(index)-1 < Photo.objects.all().count():        
+        if user.get_profile().en_premiere_annee():    
+            album = Gallery.objects.all().exclude(is_hidden_1A = True)[0]    
+        else:
+            album = Gallery.objects.all()[0]
+        if album.photos.all().count() > int(index)-1:
+            photo = album.photos.all()[int(index)-1]
+            return photo.get_module_url()
+        else:
+            return 'pas assez d\' images'
+    else:
+        return ''

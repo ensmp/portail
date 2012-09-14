@@ -7,9 +7,12 @@ from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect, HttpResponse
 import json
 from datetime import date, datetime, timedelta
+from django.contrib.auth.decorators import login_required, permission_required
 
   
 
+@login_required
+@permission_required('vendome.add_vendome')
 def nouveau(request):
     if request.method == 'POST':
         a=request.POST
@@ -22,12 +25,14 @@ def nouveau(request):
         form = UploadFileForm()
     return render_to_response('vendome/nouveau.html', {'form': form}, context_instance=RequestContext(request))
 
+@login_required
 def archives(request):
-    liste_vendomes = Vendome.objects.all().order_by('-date')
+    liste_vendomes = Vendome.objects.all()
     return render_to_response('vendome/archives.html', {'liste_vendomes': liste_vendomes},context_instance=RequestContext(request))
 
+@login_required
 def archives_json(request):
-    liste_vendomes = Vendome.objects.all().order_by('-date')
+    liste_vendomes = Vendome.objects.all()
     response = HttpResponse(mimetype='application/json')
     response.write(json.dumps([{
             'titre': v.titre,

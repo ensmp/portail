@@ -3,7 +3,9 @@
 	<div id="slider">
 		<ul>
 		{% for i in 12345|make_list %}
-		<li><img src="{% module_photo_url i %}" width="200" height="200"/></li>
+		{% if user.is_authenticated %}
+		<li><img src="{% module_photo_url request.user i %}" width="200" height="200"/></li>
+		{% endif %}
 		{% endfor %}
 		</ul>
 		

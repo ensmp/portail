@@ -25,6 +25,9 @@ class Message(models.Model):
  
 	lu = models.ManyToManyField(UserProfile,related_name='message_lu', blank=True) #Les élèves qui ont lu le message
 	important = models.ManyToManyField(UserProfile,related_name='message_important', blank=True) #Les élèves qui ont classé le message comme important
+	
+	def get_absolute_url(self):
+		return '/associations/' + self.association.pseudo + '/messages/'
   
 	def __unicode__(self):
 		return self.objet

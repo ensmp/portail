@@ -23,6 +23,8 @@
 <input type='submit' value='Proposer' />
 </form>
 {% if perms.sondages %}
-<a href = "/sondages/valider/">Valider les sondages en attente</a>
+<p>
+<a href = "/sondages/valider/">Valider les sondages en attente</a><br/>
+<a href = "/sondages/en-attente/">Voir les sondages validés</a></p>
 {% endif %}
 {% endblock %}

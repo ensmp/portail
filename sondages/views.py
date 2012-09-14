@@ -42,7 +42,6 @@ def proposer(request):
 	else:
 		return render_to_response('sondages/proposer.html',{},context_instance=RequestContext(request))
 
-
 @permission_required('sondages.add_sondage')
 def valider(request):
 	if request.POST:
@@ -54,6 +53,11 @@ def valider(request):
 	else:
 		liste_sondages = Sondage.objects.filter(autorise = False)
 		return render_to_response('sondages/valider.html',{'liste_sondages':liste_sondages},context_instance=RequestContext(request))
+		
+@permission_required('sondages.add_sondage')        
+def en_attente(request):
+    liste_sondages = Sondage.objects.filter(autorise = True, deja_paru = False)
+    return render_to_response('sondages/en_attente.html',{'liste_sondages':liste_sondages},context_instance=RequestContext(request))
 
 @permission_required('sondages.delete_sondage')
 def supprimer(request):

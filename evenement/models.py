@@ -18,8 +18,14 @@ class Evenement(models.Model):
 	is_billetterie = models.BooleanField() #Si l'évenement est associé à une billeterie
 	billetterie = models.ForeignKey('Billetterie', related_name='bloui', null = True, blank=True)
 	
+	class Meta:
+		ordering = ['-date_debut']
+	
 	def __unicode__(self):
 		return self.titre
+	
+	def get_absolute_url(self):
+		return '/associations/' + self.association.pseudo + '/evenements/'
 	
 	def date_debut_jour(self):
 		return None

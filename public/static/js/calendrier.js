@@ -8,12 +8,12 @@ $(document).ready(function() {
       displayOddEven:true,
 	  dateFormat: 'd M Y',
       timeslotsPerHour : 2,
-	  timeslotHeight: 25,
+	  timeslotHeight: 21,
 	  use24Hour: true,
       allowCalEventOverlap : true,
       overlapEventsSeparate: true,
       firstDayOfWeek : 1,
-      businessHours :{start: 8, end: 21, limitDisplay: true },
+      businessHours :{start: 9, end: 24, limitDisplay: true },
       daysToShow : 7,
       switchDisplay: {'1 jour': 1, '3 prochains jours': 3, 'une semaine': 7},
 	  timeSeparator: ' à ',
@@ -44,7 +44,7 @@ $(document).ready(function() {
                "backgroundColor" : "#999",
                "border" : "1px solid #888"
             });
-         }
+         }		 
       },
       draggable : function(calEvent, $event) {
          return calEvent.readOnly != true;

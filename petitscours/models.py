@@ -27,6 +27,9 @@ class PetitCours(models.Model):
 	def __unicode__(self):
 		return self.title
 		
+	def get_absolute_url(self):
+		return '/petitscours/'
+		
 	#Met à jour la position GPS du petit cours. Appelé depuis l'API Google Maps.
 	def update_location(self, lat, lon):
 		self.latitude = lat
