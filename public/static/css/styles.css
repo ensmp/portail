@@ -23,6 +23,12 @@ a:hover {
 	color:red;
 	text-decoration:none;
 }
+
+a img {
+	outline : none; border : 0;
+}
+
+
 #header {
 	margin:0;
 	height: 190px;
@@ -67,23 +73,24 @@ a:hover {
 	height:34px;
     background:url(recherche.png) no-repeat;
     padding:2px 5px 4px 5px;
+	width:140px;
 }
 #string_recherche {
 	position:relative;
-	top:-9px;
+	top:6px;
 	left:5px;
     background-color:transparent;
     border:none;
     font-size:13px;
-	margin-right:10px;
-	width:94px;
+	width:100px;
 	height:15px;
 }
 
 #bouton_recherche {
-	/*float:right;*/
+	float:right;
 	/*display:block;*/
-	padding-top:6px;
+	margin:6px 0 0 0;
+	padding:0;
 	font-family: Verdana,serif;
 	font-style:normal;
 	color: #000;
@@ -243,23 +250,23 @@ ul#topnav li a#menu_notifications {
 
 #menu_onglets ul {
 	position:relative;
-	margin-top: 16px;
-	margin-right:16px;
-	margin-bottom:0px;;
-	margin-left:0px;
-	padding:0px;
+	padding:0;
+	margin:0 auto;
+	margin-top:10px;
 	list-style:none;
+	display:table;
+}
+#menu_onglets ul.supplementaire {
+	margin-top:-8px;
 }
 
 #menu_onglets ul li {
-	float:left;
-	margin-left:3px;
+	display:table-cell;
+	padding:0 5px;
 }
 
 #menu_onglets ul li a {
-	float:left;
 	text-decoration:none;
-	padding-left:10px;
 }
 
 #menu_onglets ul li img {
@@ -278,22 +285,15 @@ ul#topnav li a#menu_notifications {
 	color:#666;
 }
 
-#menu_onglets ul li#actif {
-	float:left;
-	text-decoration:none;
-	padding-left:10px;
-}
-
 #menu_onglets ul li#actif span {
 	float:right;
 	padding:4px 0 3px 4px;
 	color:#333333;
-
 }
 
 #menu_onglets hr {
 	width:95%;
-	margin-left:-5px;
+	margin:4px auto;
 	color:#808080;
 	background-color: #808080;
 	height: 1px;
@@ -475,10 +475,12 @@ table#tableau_sondages {
 
 #sondage_precedent {
 	float:left;
+	cursor:pointer;
 }
 
 #sondage_suivant {
 	float:right;
+	cursor:pointer;
 }
 
 #proposer_sondage {

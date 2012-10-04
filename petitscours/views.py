@@ -8,12 +8,9 @@ from django.template import RequestContext
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.utils import simplejson
+from django.contrib.auth.models import User
 
 
-@login_required
-#Renvoie la liste des petits cours visibles
-def cours_list():
-	return PetitCours.objects.filter(visible=True).order_by('date_added')
 
 @login_required
 #Affiche les petits cours disponibles
@@ -52,8 +49,8 @@ def admin(request):
 	cours_list = PetitCours.objects.filter(visible=True).order_by('-date_added')
 	archive_list = PetitCours.objects.order_by('-date_given').filter(visible=False)[:3]
 	return render_to_response('petitscours/admin.html',{'cours_list': cours_list,'archive_list': archive_list},context_instance=RequestContext(request))
-
-@login_required
+	
+@permission_required('petitscours.change_petitcours')
 #Historique des petits cours
 def archive(request,page):
 	page = int('0'+page)
@@ -66,18 +63,21 @@ def archive(request,page):
 #Attribuer un petit cours à un élève
 def give(request,id,mineur_login):
 	pc = PetitCours.objects.get(id=id)
+	eleve = User.objects.get(username = mineur_login)
 	pc.date_given = datetime.now()
 	pc.visible = False
+	pc.attribue_a = eleve
 	pc.save()
-	#send_mail('Attribution petit cours', 'Salut ! Tu viens de remporter le petit cours '+pc.title+'.\nPour le contacter: '+pc.contact+'.\nNiveau: '+pc.niveau+'\nMatiere: '+pc.matiere+'\nLieu: '+pc.address+'\nAutre: '+pc.description, '11sibue@ensmp.fr',[mineur_login+'@ensmp.fr'])
+	send_mail('Attribution Petit Cours', 'Salut ! Tu viens de remporter le petit cours '+pc.title+'.\nPour le contacter: '+pc.contact+'.\nNiveau: '+pc.niveau+'\nMatiere: '+pc.matiere+'\nLieu: '+pc.address+'\nAutre: '+pc.description, 'annabelle.sibue@mines-paristech.fr',[eleve.email])
 	
-	return HttpResponseRedirect('/petitscours/admin')
+	return HttpResponseRedirect('/petitscours/')
 
 @login_required
 #Ajouter une nouvelle demande de petit cours.
 def add(request):
 	if request.method == 'POST':
 		pc = PetitCours()
+		pc.poste_par = request.user
 		pc.title=request.POST['title']
 		pc.address=request.POST['address']
 		pc.update_location(float(request.POST['lat']), float(request.POST['lng']))
@@ -89,6 +89,6 @@ def add(request):
 		if request.is_ajax():
 			return HttpResponse("OK")
 		else:
-			return redirect('/petitscours/admin')
+			return HttpResponseRedirect('/petitscours/')
 	else:
 		return render_to_response('petitscours/add.html',context_instance=RequestContext(request))

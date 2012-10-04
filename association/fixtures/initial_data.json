@@ -1,44 +1,11 @@
 [
     {
-        "pk": 2, 
-        "model": "association.page", 
-        "fields": {
-            "titre": "Albums", 
-            "lien": "gallery"
-        }
-    }, 
-    {
-        "pk": 3, 
-        "model": "association.page", 
-        "fields": {
-            "titre": "\u00c9tudes", 
-            "lien": "etudes"
-        }
-    }, 
-    {
-        "pk": 4, 
-        "model": "association.page", 
-        "fields": {
-            "titre": "Archives", 
-            "lien": "archives"
-        }
-    }, 
-    {
-        "pk": 5, 
-        "model": "association.page", 
-        "fields": {
-            "titre": "Catalogue", 
-            "lien": "catalogue"
-        }
-    }, 
-    {
         "pk": 1, 
         "model": "association.association", 
         "fields": {
             "nom": "BDE", 
             "ordre": 0, 
             "pseudo": "bde", 
-            "page": null, 
             "groupe_permissions": 15
         }
     }, 
@@ -49,7 +16,6 @@
             "nom": "BDA", 
             "ordre": 0, 
             "pseudo": "bda", 
-            "page": null, 
             "groupe_permissions": 16
         }
     }, 
@@ -60,7 +26,6 @@
             "nom": "BDS", 
             "ordre": 0, 
             "pseudo": "bds", 
-            "page": null, 
             "groupe_permissions": 17
         }
     }, 
@@ -71,7 +36,6 @@
             "nom": "MediaMines", 
             "ordre": 1, 
             "pseudo": "mediamines", 
-            "page": 2, 
             "groupe_permissions": 4
         }
     }, 
@@ -81,8 +45,7 @@
         "fields": {
             "nom": "JuMP", 
             "ordre": 3, 
-            "pseudo": "jump", 
-            "page": 3, 
+            "pseudo": "jump",             
             "groupe_permissions": 7
         }
     }, 
@@ -92,8 +55,7 @@
         "fields": {
             "nom": "Forum Trium", 
             "ordre": 3, 
-            "pseudo": "trium", 
-            "page": null, 
+            "pseudo": "trium",             
             "groupe_permissions": 6
         }
     }, 
@@ -103,8 +65,7 @@
         "fields": {
             "nom": "Vend\u00f4me", 
             "ordre": 1, 
-            "pseudo": "vendome", 
-            "page": 4, 
+            "pseudo": "vendome",             
             "groupe_permissions": 5
         }
     }, 
@@ -114,8 +75,7 @@
         "fields": {
             "nom": "Rezal", 
             "ordre": 5, 
-            "pseudo": "rezal", 
-            "page": null, 
+            "pseudo": "rezal",             
             "groupe_permissions": 12
         }
     }, 
@@ -125,8 +85,7 @@
         "fields": {
             "nom": "Bi\u00e9ro", 
             "ordre": 4, 
-            "pseudo": "biero", 
-            "page": null, 
+            "pseudo": "biero",             
             "groupe_permissions": 8
         }
     }, 
@@ -136,8 +95,7 @@
         "fields": {
             "nom": "Mineshake", 
             "ordre": 4, 
-            "pseudo": "mineshake", 
-            "page": null, 
+            "pseudo": "mineshake",             
             "groupe_permissions": 9
         }
     }, 
@@ -147,8 +105,7 @@
         "fields": {
             "nom": "Cahier Vert", 
             "ordre": 5, 
-            "pseudo": "cahiervert", 
-            "page": null, 
+            "pseudo": "cahiervert",             
             "groupe_permissions": 10
         }
     }, 
@@ -159,7 +116,6 @@
             "nom": "MinesMarket", 
             "ordre": 3, 
             "pseudo": "minesmarket", 
-            "page": 5, 
             "groupe_permissions": 3
         }
     }, 
@@ -170,7 +126,6 @@
             "nom": "WEI", 
             "ordre": 2, 
             "pseudo": "wei", 
-            "page": null, 
             "groupe_permissions": 18
         }
     }, 
@@ -181,7 +136,6 @@
             "nom": "ASTi", 
             "ordre": 2, 
             "pseudo": "asti", 
-            "page": null, 
             "groupe_permissions": 19
         }
     }, 

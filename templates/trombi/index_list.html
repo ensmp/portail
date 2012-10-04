@@ -1,0 +1,78 @@
+{% extends "base_header.html" %}
+
+{% block header %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}trombi.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}list.css" />
+	<title>Trombi</title>
+	
+{% endblock %}
+
+
+{% block content %}
+<!--PRECHARGEMENT DES VIGNETTES-->
+{% for mineur in mineur_list %}
+<img src = "{{ STATIC_URL }}{{mineur.user.username}}.jpg" style="display:none" alt="">
+{% endfor %}
+
+<table>
+	<tr>
+	<th>Login</th>
+	<th>Nom</th>
+	<th>Promo</th>
+	<th width = 120>Téléphone</th>
+	<th>Chambre</th>
+	</tr>
+    {% for mineur in mineur_list %}
+	<tr>
+	<td class="login"><a href="/people/{{ mineur.user.username }}/">{{ mineur.user.username }}</a></td>
+	<td>{{ mineur.first_name }} {{ mineur.last_name|upper }}</td>
+	<td>{{ mineur.promo }}</td>
+	<td>{{ mineur.phone }}</td>
+	<td>{{ mineur.chambre }}</td>
+	</tr>
+	</a>
+    {% endfor %}
+</table>
+<div id="pictures">
+<img src="" />
+</div>
+
+<script>
+$('tr').hover(function() {
+	var login = $(this).find('.login').find('a').html();
+	if (login) {
+		$('#pictures').css({'opacity': 0});
+		$('#pictures').find('img').css({'display' : 'block'});
+		$('#pictures').find('img').attr({'src' : '{{ STATIC_URL }}'+login+'.jpg'});
+		$('#pictures').animate({'opacity': 1});
+	}
+},function() {
+	$('#pictures').find('img').css({'display' : 'none'});
+})
+
+$(function () {
+  
+  var msie6 = $.browser == 'msie' && $.browser.version < 7;
+  
+  if (!msie6) {
+    var top = $('#pictures').offset().top - parseFloat($('#pictures').css('margin-top').replace(/auto/, 0));
+    $(window).scroll(function (event) {
+      // what the y position of the scroll is
+      var y = $(this).scrollTop();
+      
+      // whether that's below the form
+      if (y >= top) {
+        // if so, ad the fixed class
+        $('#pictures').addClass('fixed');
+      } else {
+        // otherwise remove it
+        $('#pictures').removeClass('fixed');
+      }
+    });
+  }  
+});
+
+
+</script>
+
+{% endblock %}

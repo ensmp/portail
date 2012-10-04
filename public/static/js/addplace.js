@@ -29,7 +29,7 @@ $(function() {
 					var data = $('#addform').serialize();
 					$.post('', data, function(res) {
 						if (res == 'OK') {
-							window.location = '/petitscours/admin';
+							window.location = '/petitscours/';
 						}
 						else {
 							alert(res);

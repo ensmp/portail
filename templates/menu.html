@@ -28,14 +28,20 @@
 				</ul>  
 			</li>  
 			<li>
-			<div id="champ_recherche">
+			<!--<div id="champ_recherche">
 				<form action="/recherche/" method="get">
 					<input id="string_recherche" type="text" size="13" name = "q"/>
 					<button id="bouton_recherche" type="submit" title="Rechercher">
 					<img src = "{{ STATIC_URL }}loupe.png" alt="Rechercher">
 					</button>
 				</form>
-			</div>
+			</div>-->
+			<form id = "champ_recherche" action="/recherche/" method="get">
+					<input id="string_recherche" type="text" size="16" name = "q"/>
+					<button id="bouton_recherche" type="submit" title="Rechercher">
+					<img src = "{{ STATIC_URL }}loupe.png" alt="Rechercher">
+					</button>
+				</form>
 			</li>  
 			{% if request.user.is_staff %}<li><a href="/admin/"><img src="{{ STATIC_URL}}Suit.png"><span>Administration</span></a></li>  {% endif %}
 			{% if user.is_authenticated %}

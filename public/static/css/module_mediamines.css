@@ -3,6 +3,6 @@
 #slider {padding:0; margin:0; float:left; position:relative; overflow:auto; width:200px; height:200px}
 #slider ul {padding:0; margin:0; position:absolute; list-style:none; top:0; left:0}
 #slider li {padding:0; margin:0; float:left; width:200px; height:200px}
-.pagination {padding:0; margin:0; position:absolute; bottom:0px; right:10px; list-style:none; height:25px}
-.pagination li {padding:0; margin:0; float:left; cursor:pointer; height:8px; width:8px; background:#ccc; margin:0 4px 0 0; border:1px solid #fff}
-.pagination li:hover, li.current {background:#fff}
+.mm-pagination {padding:0; margin:0; position:absolute; bottom:0px; right:10px; list-style:none; height:25px}
+.mm-pagination li {padding:0; margin:0; float:left; cursor:pointer; height:8px; width:8px; background:#ccc; margin:0 4px 0 0; border:1px solid #fff}
+.mm-pagination li:hover, li.current {background:#fff}

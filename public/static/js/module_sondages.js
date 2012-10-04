@@ -26,9 +26,13 @@ $(document).ready(function() {
 	$("#sondage_date").prepend(jour + '/' + mois + '/' + aujourdhui.getFullYear() + ' ');
 	$("#barre_reponse_1").progressBar({steps : 0});
 	$("#barre_reponse_2").progressBar({steps : 0});
+	$("#sondage_suivant").hide();
 });
 
 $(function() {
+
+
+
 	$("#sondage_precedent").click(function(){
 		jours_depuis++;
 		$.getJSON('/sondages/'+jours_depuis+'/json/', function(data){
@@ -44,6 +48,8 @@ $(function() {
 				$('#barre_reponse_1').progressBar(0);
 				$('#barre_reponse_2').progressBar(0);
 			}
+			$("#sondage_suivant").show();
+			if (data.is_dernier) $("#sondage_precedent").hide();
 		}).error(function() {jours_depuis--; });
 	});
 	$("#sondage_suivant").click(function(){
@@ -61,6 +67,8 @@ $(function() {
 				$('#barre_reponse_1').progressBar(0);
 				$('#barre_reponse_2').progressBar(0);
 			}
+			$("#sondage_precedent").show();
+			if (data.is_premier) $("#sondage_suivant").hide();
 		}).error(function() {jours_depuis++; });
 	});
 });

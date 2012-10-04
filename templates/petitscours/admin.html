@@ -2,15 +2,15 @@
 
 {% block content %}
 
-<p>{{ cours_list|length }} petits cours trouvés. <a href="/petitscours/admin/add">Ajouter un petit cours</a></p>
+<p>{{ cours_list|length }} petits cours trouvés. <a href="/petitscours/add">Ajouter un petit cours</a></p>
 
 <dl>
 {% for cours in cours_list %}
-<dt>{{ cours.title }} ajouté le {{ cours.date_added|date:"d/m/Y"}}{% if not cours.visible %} retiré le {{ cours.date_given|date:"d/m/Y" }}{% endif %}</dt>
+<dt>{{ cours.title }} ajouté le {{ cours.date_added|date:"d/m/Y"}} par {{ cours.poste_par }}{% if not cours.visible %} retiré le {{ cours.date_given|date:"d/m/Y" }}{% endif %}</dt>
 <dd{% if not cours.visible %} class="given"{% endif %}>matiere : {{ cours.matiere }}, niveau {{ cours.niveau }}<br />{{ cours.description }} à {{ cours.address }}<br />{{ cours.requests.count }} demandes<br />
 <ul>
-{% for request in cours.requests.all %}
-<li>{{ request }} <a href="/petitscours/admin/give/{{ cours.id }}/{{ request }}">attribuer</a></li>
+{% for requete in cours.requests.all %}
+<li>{{ requete.username }} <a href="/petitscours/admin/give/{{ cours.id }}/{{ requete.username }}">attribuer</a></li>
 {% endfor %}
 </ul>
 </dd>
@@ -21,13 +21,14 @@
 <a href="/petitscours/admin/archive">Voir tous les cours archivés</a>
 <dl>
 {% for cours in archive_list %}
-<dt>{{ cours.title }} ajouté le {{ cours.date_added|date:"d/m/Y"}}{% if not cours.visible %} retiré le {{ cours.date_given|date:"d/m/Y" }}{% endif %}</dt>
+<dt>{{ cours.title }} ajouté le {{ cours.date_added|date:"d/m/Y"}} par {{ cours.poste_par }}{% if not cours.visible %} retiré le {{ cours.date_given|date:"d/m/Y" }}{% endif %}</dt>
 <dd{% if not cours.visible %} class="given"{% endif %}>matiere : {{ cours.matiere }}, niveau {{ cours.niveau }}<br />{{ cours.description }} à {{ cours.location }}<br />{{ cours.requests.count }} demandes<br />
 <ul>
-{% for request in cours.requests.all %}
-<li>{{ request }} <a href="/petitscours/admin/give/{{ cours.id }}/{{ request }}">attribuer</a></li>
+{% for requete in cours.requests.all %}
+<li>{{ requete.username }}</li>
 {% endfor %}
 </ul>
+Attribué à {{ cours.attribue_a.username }}
 </dd>
 {% endfor %}
 </dl>

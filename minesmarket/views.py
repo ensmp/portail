@@ -20,11 +20,12 @@ def commande(request):
 	try:
 		commande = Commande.objects.get(eleve__user__username=request.user.username, fermee=False)
 		liste_achats = Achat.objects.filter(commande__id = commande.id)
+		total = 0
+		for achat in liste_achats:
+			total = total + achat.produit.prix_vente*achat.quantite	
 	except Commande.DoesNotExist:
 		liste_achats = None	
-	total = 0
-	for achat in liste_achats:
-		total = total + achat.produit.prix_vente*achat.quantite		
+		total = 0
 	return render_to_response('minesmarket/commande.html', {'liste_achats': liste_achats, 'total':total},context_instance=RequestContext(request))
 
 @login_required

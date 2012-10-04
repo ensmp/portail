@@ -48,3 +48,31 @@ td {
 table.edit {
 	width:100%;
 }
+
+ul.promo {
+	text-align: center;
+}
+
+li.portrait {
+	display: inline-block;
+	width:100px;
+	vertical-align:top;
+	/* for ie7 */
+    zoom: 1;
+    *display: inline;
+
+}
+
+li.portrait p {
+	margin:0;
+	text-align:center;
+}
+
+li.portrait img {
+	width:100px;
+}
+
+h1.promo {
+	font-size:30pt;
+	text-align:center;
+}

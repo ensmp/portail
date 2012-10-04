@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from mediamines.models import Photo, Gallery
+from association.models import Association, Adhesion
+from mediamines.models import Photo, Gallery, PhotoEffect
 from trombi.models import UserProfile
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
@@ -15,8 +16,11 @@ def albums_recents(request):
     latest = Gallery.objects.filter(is_public=True)
     if request.user.get_profile().en_premiere_annee():  
         latest = latest.exclude(is_hidden_1A = True)
-    latest = latest[:6]
-    return render_to_response('mediamines/gallery_archive.html',{'latest':latest},context_instance=RequestContext(request))
+    latest = latest[:4]
+    association = get_object_or_404(Association, pseudo="mediamines")
+    liste_videos = association.video_set.all
+    membres = Adhesion.objects.filter(association = association).order_by('-ordre', 'eleve__last_name')
+    return render_to_response('mediamines/gallery_archive.html',{'latest':latest, 'liste_videos':liste_videos, 'membres':membres},context_instance=RequestContext(request))
     
 @login_required
 def albums_liste(request, page):
@@ -25,7 +29,7 @@ def albums_liste(request, page):
         queryset = queryset.exclude(is_hidden_1A = True)
     
     
-    paginator = Paginator(queryset, 6, allow_empty_first_page=True)
+    paginator = Paginator(queryset, 8, allow_empty_first_page=True)
     if not page:
         page = request.GET.get('page', 1)
     try:
@@ -73,17 +77,17 @@ def album_mosaique(request, slug):
     return render_to_response('mediamines/gallery_detail_mosaique.html',{'album':album},context_instance=RequestContext(request))    
 
 @login_required
-def album_panorama(request, slug):
+def album_diaporama(request, slug):
     album = get_object_or_404(Gallery, title_slug = slug, is_public=True)
     liste_eleves = UserProfile.objects.order_by('-promo','last_name')
     first_slide = request.GET.get('slide', 1)
     autoplay = request.GET.get('autoplay', 1)
-	
+    
     if request.user.get_profile().en_premiere_annee():
         if album.is_hidden_1A:
             album = None
-	
-    return render_to_response('mediamines/gallery_detail_panorama.html',{'album':album, 'liste_eleves':liste_eleves, 'first_slide':first_slide, 'autoplay':autoplay},context_instance=RequestContext(request))    
+    
+    return render_to_response('mediamines/gallery_detail_diaporama.html',{'album':album, 'liste_eleves':liste_eleves, 'first_slide':first_slide, 'autoplay':autoplay},context_instance=RequestContext(request))    
 
 @login_required
 #Identifier un eleve a une photo
@@ -126,3 +130,23 @@ def albums_json(request):
     data = serializers.serialize("json", Gallery.objects.all(), indent=4, fields=('title','photos'), use_natural_keys=True)
     response.write(data.replace('\\/','/'))
     return response
+    
+def tourner_photo_droite(request, slug):
+    photo = get_object_or_404(Photo, title_slug = slug)
+    effet = get_object_or_404(PhotoEffect, name = 'Rotation droite')
+    photo.effect = effet
+    photo.save()
+    return HttpResponseRedirect(photo.get_absolute_url())
+
+def tourner_photo_gauche(request, slug):
+    photo = get_object_or_404(Photo, title_slug = slug)
+    effet = get_object_or_404(PhotoEffect, name = 'Rotation gauche')
+    photo.effect = effet
+    photo.save()
+    return HttpResponseRedirect(photo.get_absolute_url())
+
+def tourner_photo_original(request, slug):
+    photo = get_object_or_404(Photo, title_slug = slug)
+    photo.effect = None
+    photo.save()
+    return HttpResponseRedirect(photo.get_absolute_url())

@@ -34,14 +34,17 @@ urlpatterns += patterns('django.views.generic.list_detail',
 )
 urlpatterns += patterns('',
 	url(r'^gallery/page/(?P<page>[0-9]+)/$', 'mediamines.views.albums_liste', name='pl-gallery-list'),
-	url(r'^gallery/(?P<slug>[\-\d\w]+)/panorama/$', 'mediamines.views.album_panorama', name='pl-gallery'),  
+	url(r'^gallery/(?P<slug>[\-\d\w]+)/diaporama/$', 'mediamines.views.album_diaporama', name='pl-gallery'),  
     url(r'^gallery/(?P<slug>[\-\d\w]+)/$', 'mediamines.views.album_mosaique', name='pl-gallery-mosaic'),
-    url(r'^gallery/$', 'mediamines.views.albums_recents', name='pl-gallery-archive'),
+    url(r'^medias/$', 'mediamines.views.albums_recents', name='pl-gallery-archive'),
     url(r'^$', 'mediamines.views.albums_recents', name='pl-gallery-archive'),
     url(r'^json/$','mediamines.views.albums_json'),
     url(r'^photo/(?P<slug>[\-\d\w]+)/identifier/$','mediamines.views.identifier'),
     url(r'^photo/(?P<slug>[\-\d\w]+)/desidentifier/$','mediamines.views.desidentifier'),
-    url(r'^photo/(?P<slug>[\-\d\w]+)/identifications/$','mediamines.views.identifications')
+    url(r'^photo/(?P<slug>[\-\d\w]+)/identifications/$','mediamines.views.identifications'),
+    url(r'^photo/(?P<slug>[\-\d\w]+)/tourner_droite/$','mediamines.views.tourner_photo_droite'),
+    url(r'^photo/(?P<slug>[\-\d\w]+)/tourner_gauche/$','mediamines.views.tourner_photo_gauche'),
+    url(r'^photo/(?P<slug>[\-\d\w]+)/tourner_original/$','mediamines.views.tourner_photo_original')
 )
 
 

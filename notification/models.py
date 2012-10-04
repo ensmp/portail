@@ -45,6 +45,10 @@ class Notification(models.Model):
 			return self.content_object.get_absolute_url()
 		elif self.content_type.model_class().__name__ == 'Photo':
 			return self.content_object.get_absolute_url()
+		elif self.content_type.model_class().__name__ == 'Video':
+			return self.content_object.get_absolute_url()
+		elif self.content_type.model_class().__name__ == 'Affiche':
+			return self.content_object.get_absolute_url()
 		elif self.content_type.model_class().__name__ == 'Sondage':
 			return '/sondages/valider/'
 		elif self.content_type.model_class().__name__ == 'Comment':

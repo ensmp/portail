@@ -6,7 +6,7 @@
 
 {% block content %}
 <h3>Valider un sondage</h3>
-{% if request.user.is_staff %}
+{% if perms.sondages %}
 <table>
 	{% for sondage in liste_sondages %}
 	<tr><td>{{ sondage.question }}</td><td>proposé par <a href="/people/{{ sondage.auteur.user.username }}/">{{ sondage.auteur.first_name }} {{ sondage.auteur.last_name }}</td></tr>

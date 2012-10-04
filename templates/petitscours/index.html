@@ -16,7 +16,7 @@ var infowins = [];
 	var posMeuh = new google.maps.LatLng(48.842035,2.341210);
         var myOptions = {
           center: posMeuh,
-          zoom: 14,
+          zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -97,7 +97,8 @@ var infowins = [];
 
 {% block content %}
 
-<p>{{ cours_list|length }} petits cours trouvé{{ cours_list|length|pluralize }}</p>
+<p>{{ cours_list|length }} petits cours trouvé{{ cours_list|length|pluralize }} - <a href="/petitscours/add">Ajouter un petit cours</a>
+{% if perms.petitscours %} - <a href="/petitscours/admin/">Administrer</a>{% endif %}</p>
 
 
  <div id="map_canvas" style="width:800px; height:600px; margin:auto;"></div>

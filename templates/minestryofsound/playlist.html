@@ -11,12 +11,15 @@
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_minestryofsound.png">MINEStry Of Sound</h1>
 
 <ul>
-<li><a href="/associations/vendome/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
-<li><a href="/associations/vendome/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
-<li><a href="/associations/vendome/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
-<li id="actif"><img src="{{ STATIC_URL}}page_playlist.png"><span>Playlist</span></li>
+<li><a href="/associations/minestryofsound/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li><a href="/associations/minestryofsound/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
+<li><a href="/associations/minestryofsound/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li><a href="/associations/minestryofsound/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
 </ul>
-<br>
+
+<ul class="supplementaire">
+<li id="actif"><a href="/associations/minestryofsound/playlist/"><img src="{{ STATIC_URL}}page_playlist.png"><span>Playlist</span></a></li>
+</ul>
 <hr>
 </div>
 {% endblock %}
@@ -27,10 +30,10 @@
 <ul id = "liste_morceaux">
 {% for morceau in liste_morceaux %}
 	<li>
-	<p>
-	<span class="date">{{ morceau.date|date:"d F Y" }}</span> <br/>
+	<p>	
 	<strong>{{ morceau.artiste }}</strong> - {{ morceau.titre }} <br/>
 	<object type="application/x-shockwave-flash" data="{{ STATIC_URL }}dewplayer.swf?mp3={{ MEDIA_URL }}{{ morceau.fichier }}" width="200" height="20"><param name="wmode" value="transparent" /><param name="movie" value="{{ STATIC_URL }}dewplayer.swf?mp3={{ MEDIA_URL }}{{ morceau.fichier }}" /></object>
+	<br/><span class="date">{{ morceau.date|date:"d F Y" }}</span> 
 	</p>
 	</li>
 {% empty %}

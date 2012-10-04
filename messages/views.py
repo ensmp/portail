@@ -93,7 +93,7 @@ def classer_non_lu(request, message_id):
 def tous(request):
     all_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).order_by('-date')
     
-    paginator = Paginator(all_messages, 25)
+    paginator = Paginator(all_messages, 15)
     page = request.GET.get('page')
     try:
         list_messages = paginator.page(page)

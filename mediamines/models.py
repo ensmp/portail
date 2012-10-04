@@ -518,7 +518,7 @@ class Photo(ImageModel):
     date_added = models.DateTimeField(_('date d\'ajout'), default=datetime.now, editable=False)
     is_public = models.BooleanField(_('is public'), default=True, help_text=_('affichee dans les albums'))
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
-    eleves = models.ManyToManyField(UserProfile) #Identifier des eleves sur une photo
+    eleves = models.ManyToManyField(UserProfile, blank=True, null=True) #Identifier des eleves sur une photo
     
     class Meta:
         ordering = ['title_slug']
@@ -795,11 +795,3 @@ def add_methods(sender, instance, signal, *args, **kwargs):
 
 # connect the add_accessor_methods function to the post_init signal
 post_init.connect(add_methods)
-
-
-# class Video(models.Model):
-    # titre = models.CharField(max_length=50)
-    # association = models.ForeignKey(Association)
-    # url = titre = models.CharField(max_length=200)
-    # date = models.DateTimeField()
-    

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_vp.png">Voyage Promo</h1>
+
+<ul>
+<li><a href="/associations/vp/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li><a href="/associations/vp/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
+<li><a href="/associations/vp/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li><a href="/associations/vp/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
+</ul>
+
+<ul class="supplementaire">
+<li id="actif"><a href="/associations/vp/destinations/"><img src="{{ STATIC_URL}}page_destinations.png"><span>Destinations</span></a></li>
+</ul>
+
+<hr>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<h1 style="text-align:center">Cuba</h1>
+<div style="text-align:center">
+<img src="{{ STATIC_URL }}vp_cuba.jpg" style="width:494px;"/>
+</div>
+<p>Partez à la découverte de <strong>villes splendides, joyaux de l’architecture coloniale</strong>, pleines de charme. Plongez-vous dans le riche passé de <strong>Trinidad</strong>, patrimoine de l’humanité, et imprégnez-vous de l’atmosphère surannée des <strong>vieux quartiers de La Havane</strong>.</p>
+
+<p>Côté nature, les paysages de la <strong>Vallée de Vinales</strong> vous émerveilleront et les étendues de <strong>sable blanc de Cayo Santa Maria</strong> vous inviteront au farniente.</p>
+
+
+<p>Le programme ci-dessous est donné ici à titre indicatif pour une dizaine de jours. Il est susceptible d’être en partie modifié :</p>
+
+<ul>
+<li>Découverte de la Vallée de Vinales. Visite d’une maison de séchage et de fabrique de cigares à Pinar del Rio</li>
+<li>Visite de La Havane, dont le fameux musée du rhum dans la Vieille Havane et la place de la Révolution dans la Havane moderne.</li>
+<li>Départ pour Cienfuegos, la perle du Sud, et découverte de Trinidad</li>
+<li>Journée de détente à Trinidad, dans un hôtel en bord de mer</li>
+<li>Excursion d’une journée en pleine nature à Topes de Colantes (près de Trinidad)</li>
+<li>Départ pour Cayo Santa Maria, pour deux jours de balnéaires en all inclusive</li>
+</ul>
+<p>Estimation du prix du voyage : <strong>1700 – 1800 €/pers.</strong></p>
+
+{% endblock %}

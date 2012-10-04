@@ -6,19 +6,23 @@
 <div id="menu_onglets">
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_mediamines.png">MediaMines</h1>
 
+
 <ul>
 <li><a href="/associations/mediamines/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
-<li><a href="/associations/mediamines/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
 <li><a href="/associations/mediamines/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
-<li id="actif"><img src="{{ STATIC_URL}}page_gallery.png"><span>Albums</span></li>
+<li><a href="/associations/mediamines/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li id="actif"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></li>
 </ul>
-<br>
+
 <hr>
 </div>
 {% endblock %}
 
 {% block content %}
 
+<div style = "text-align:center;">
+<h3>Albums</h3>
+</div>
 {% if latest %}
 <div class="photo-gallery">
 	<ul class="gallery">
@@ -34,5 +38,28 @@
 {% endif %}
 <p><br style="page-break-before: always;" clear="all" /></p>
 <p><a href="{% url pl-gallery-list 1 %}">Voir tous les albums.</a></p>
+
+<div style = "text-align:center;">
+<h3>Vidéos</h3>
+
+{% for adhesion in membres %}
+{% if request.user = adhesion.eleve.user %}
+<p class="actions"><a href="/associations/mediamines/medias/video/ajouter/"><img src="{{ STATIC_URL }}video_add.png" title="Ajouter une vidéo"></a></p>
+{% endif %}
+{% endfor %}
+
+{% for video in liste_videos %}
+<iframe width="100%" height="315" src="{{ video.url }}" frameborder="0" allowfullscreen></iframe>
+<p class="legende">{{ video.titre }}</p>
+{% for adhesion in membres %}
+{% if request.user = adhesion.eleve.user %}
+<p><a href="video/{{ video.id }}/supprimer/">Supprimer la vidéo</a></p>
+{% endif %}
+{% endfor %}
+
+{% empty %}
+<p>Aucune vidéo publiée</p>
+{% endfor %}
+</div>
 
 {% endblock %}

@@ -25,17 +25,17 @@
 			{% else %}
 				<p id="sondage_question">{{ sondage.question }}</p>
 				
-				<form method="post" action="/sondages/voter/" class="voteform">
+				<form method="post" action="/sondages/voter/" class="voteform" >
 				{% csrf_token %}
 				<input type="hidden" name="choix" value="1">
 				<input type="hidden" name="next" value="{{ request.path }}" />
-				<input type="submit" id = "input_reponse_1" value="{{ sondage.reponse1 }}">
+				<button type="submit" id = "input_reponse_1">{{ sondage.reponse1 }}</button>
 				</form>	
 				<form method="post" action="/sondages/voter/" class="voteform">
 				{% csrf_token %}
 				<input type="hidden" name="choix" value="2">
 				<input type="hidden" name="next" value="{{ request.path }}" />
-				<input type="submit" id = "input_reponse_2" value="{{ sondage.reponse2 }}">				
+				<button type="submit" id = "input_reponse_2">{{ sondage.reponse2 }}</button>			
 				</form>
 			{% endif %}
 		{% else %}

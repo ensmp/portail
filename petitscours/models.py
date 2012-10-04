@@ -8,6 +8,7 @@ from association.models import Association
 
 #Une proposition de petit cours
 class PetitCours(models.Model):
+	poste_par = models.ForeignKey(User, related_name='petits_cours_postes') #L'eleve qui a posté le petit cours
 	title = models.CharField(max_length=256)
 	contact = models.CharField(max_length=256) #Numéro de téléphone ?
 	date_added = models.DateTimeField(auto_now_add=True)
@@ -17,6 +18,7 @@ class PetitCours(models.Model):
 	matiere = models.CharField(max_length=256)
 	description = models.CharField(max_length=512)
 	requests = models.ManyToManyField(User,related_name='+', blank=True, null=True) #Les demandes 
+	attribue_a = models.ForeignKey(User, related_name='petits_cours_attribues', blank=True, null=True) #L'eleve a qui le pc est attribué
 	
 	address = models.CharField(max_length=500, null=True) #Adresse à Paris (via l'API Google Maps)
 	latitude = models.FloatField(null=True) #récupérée dynamiquement via l'API Google Maps

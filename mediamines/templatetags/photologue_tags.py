@@ -1,5 +1,6 @@
 from django import template
 from mediamines.models import Photo, Gallery
+from datetime import datetime
 register = template.Library()
 
 @register.simple_tag
@@ -23,10 +24,10 @@ def module_photo_url(user, index):
             album = Gallery.objects.all().exclude(is_hidden_1A = True)[0]    
         else:
             album = Gallery.objects.all()[0]
-        if album.photos.all().count() > int(index)-1:
-            photo = album.photos.all()[int(index)-1]
-            return photo.get_module_url()
-        else:
-            return 'pas assez d\' images'
+        indice_depart = (137*datetime.now().day) % (album.photos.all().count()-5)
+		
+                
+        photo = album.photos.all()[indice_depart + int(index)-1]
+        return photo.get_module_url()
     else:
         return ''

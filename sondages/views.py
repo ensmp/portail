@@ -73,6 +73,8 @@ def detail_json(request, indice_sondage):
 	nombre_reponse = Vote.objects.filter(sondage = sondage).count()
 	nombre_reponse_1 = Vote.objects.filter(sondage = sondage, choix = 1).count()
 	nombre_reponse_2 = Vote.objects.filter(sondage = sondage, choix = 2).count()
+	is_dernier = (int(indice_sondage) >= Sondage.objects.filter(date_parution__isnull = False).filter(date_parution__lte = datetime.date.today()).count() - 1)
+	is_premier = (int(indice_sondage) <= 0)
 	response = HttpResponse(mimetype='application/json')
 	response.write(json.dumps({
 			'question': sondage.question,
@@ -81,6 +83,8 @@ def detail_json(request, indice_sondage):
 			'nombre_reponse': nombre_reponse,
 			'nombre_reponse_1': nombre_reponse_1,
 			'nombre_reponse_2': nombre_reponse_2,
-			'date_parution': sondage.date_str()
+			'date_parution': sondage.date_str(),
+			'is_premier':is_premier,
+			'is_dernier':is_dernier
 		}))
 	return response

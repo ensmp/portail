@@ -28,7 +28,7 @@
 						#prevslide:active, #nextslide:active{ margin-top:-19px; }
 						#prevslide:hover, #nextslide:hover{ cursor:pointer; }
 				
-				ul#slide-list{ padding:15px 0; float:left; position:absolute; left:50%; }
+				ul#slide-list{ padding:15px 0; float:left; position:absolute; left:50%; /*width:75%;*/}
 					ul#slide-list li{ list-style:none; width:12px; height:12px; float:left; margin:0 5px 0 0; }
 						ul#slide-list li.current-slide a, ul#slide-list li.current-slide a:hover{ background-position:0 0px; }
 						ul#slide-list li a{ display:block; width:12px; height:12px; background:url('nav-dot.png') no-repeat 0 -24px; }
