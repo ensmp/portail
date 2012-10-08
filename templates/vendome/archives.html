@@ -2,6 +2,7 @@
 
 {% block header %}
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}vendome.css" />
 	<title>Vendome</title>		
 {% endblock %}
 
@@ -27,9 +28,16 @@
 
 {% block content %}
 
-<ul>
+<ul class="liste_vendomes">
 {% for vendome in liste_vendomes %}
-	<li><a href="{{ MEDIA_URL }}{{vendome.fichier}}">{{vendome.titre}}</a> ({{ vendome.date|date:"d F Y" }})</li>
+	<li class="vendome">
+
+	<a href="{{ MEDIA_URL }}{{ vendome.fichier }}">
+	<img src="{{ MEDIA_URL }}{{ vendome.thumbnail }}" />
+	<p>{{vendome.titre}}</p>
+	</a>
+	<p class="date">{{ vendome.date|date:"d F Y" }}</p>
+	</li>
 {% endfor %}
 </ul>
 

@@ -1,0 +1,30 @@
+ul.liste_vendomes {
+	padding:0;
+}
+
+li.vendome {
+	display: inline-block;
+	width:168px;
+	height:290px;
+	text-align:center;
+	vertical-align:top;
+	/* for ie7 */
+    zoom: 1;
+    *display: inline;
+
+}
+
+li.vendome a img {
+	width:168px;
+}
+
+li.vendome p {
+	margin : 3px 0 0 0;
+}
+
+li.vendome p.date {
+	font-style:italic;
+	color:#ccc;
+	margin-top:0;
+	marin-bottom:5px;
+}

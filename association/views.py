@@ -104,11 +104,12 @@ def ajouter_affiche(request, association_pseudo):
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
     if request.method == 'POST':
         formset = AfficheForm(request.POST, request.FILES)
-        if formset.is_valid():
-            affiche = formset.save(commit=False)
-            affiche.association = assoce
-            affiche.save()
-            return HttpResponseRedirect(assoce.get_absolute_url() + 'medias/')
+        if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():#Si l'eleve est membre de l'assoce
+            if formset.is_valid():
+                affiche = formset.save(commit=False)
+                affiche.association = assoce
+                affiche.save()
+                return HttpResponseRedirect(assoce.get_absolute_url() + 'medias/')
     else:
         formset = AfficheForm()
     return render_to_response("association/ajouter_affiche.html", {'association':assoce, 'membres': membres,   "formset": formset},context_instance=RequestContext(request))

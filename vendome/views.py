@@ -28,11 +28,15 @@ def nouveau(request):
 @login_required
 def archives(request):
     liste_vendomes = Vendome.objects.all()
+    if request.user.get_profile().en_premiere_annee():
+        liste_vendomes = liste_vendomes.exclude(is_hidden_1A = True)
     return render_to_response('vendome/archives.html', {'liste_vendomes': liste_vendomes},context_instance=RequestContext(request))
 
 @login_required
 def archives_json(request):
     liste_vendomes = Vendome.objects.all()
+    if request.user.get_profile().en_premiere_annee():
+        liste_vendomes = liste_vendomes.exclude(is_hidden_1A = True)
     response = HttpResponse(mimetype='application/json')
     response.write(json.dumps([{
             'titre': v.titre,

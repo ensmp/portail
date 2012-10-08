@@ -1,0 +1,135 @@
+{% extends "base_topbar.html" %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block header %}
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		
+		<link rel="stylesheet" href="{{ STATIC_URL }}supersized.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{{ STATIC_URL }}supersized.shutter.css" type="text/css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.multiselect.css" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.multiselect.filter.css" />
+		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />
+
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery.easing.min.js"></script>
+		
+		<script type="text/javascript" src="{{ STATIC_URL }}supersized.3.2.7.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}supersized.shutter.min.js"></script>
+		
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.filter.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+
+		
+		<script type="text/javascript">
+			
+			jQuery(function($){
+				
+				$.supersized({
+				
+					// Functionality
+					slide_interval          :   3000,		// Length between transitions
+					transition              :   6, 			// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+					transition_speed		:	700,		// Speed of transition
+					fit_always              :   1,									   
+					// Components							
+					slide_links				:	'blank',	// Individual links for each slide (Options: false, 'num', 'name', 'blank')
+					slides 					:  	[			// Slideshow Images
+														{% for photo in object.public %}
+															{image : '{{ photo.get_display_url }}', title : '{{ photo.title }}', thumb : '{{ photo.get_thumbnail_url }}', url : '{{ photo.get_absolute_url }}'}
+															{% if forloop.last %}{% else %}, {% endif %}
+														{% endfor %}													
+												]
+					
+				});
+		    });
+		    
+		</script>
+		
+	
+	
+	<style type="text/css">
+		ul#demo-block{ margin:0 15px 15px 15px; }
+			ul#demo-block li{ margin:0 0 10px 0; padding:10px; display:inline; float:left; clear:both; color:#aaa; background:url('{{ STATIC_URL }}bg-black.png'); font:11px Helvetica, Arial, sans-serif; }
+			ul#demo-block li a{ color:#eee; font-weight:bold; }
+	</style>
+
+	{% endblock %}
+	{% block content %}
+
+	<!--Demo styles (you can delete this block)-->
+	
+	<ul id="demo-block">
+		<li>Retour aux <a href="{% url pl-gallery-list 1 %}">albums</a></li>
+		<li><strong>Identifier</strong> un élève
+			<div>
+			<form style="margin:20px 0">
+				<p>
+					<select multiple="multiple" style="width:370px">
+					<option value="red">Red</option>
+					<option value="green">Green</option>
+					<option value="blue">Blue</option>
+					<option value="orange">Orange</option>
+					<option value="purple">Purple</option>
+					<option value="yellow">Yellow</option>
+					<option value="brown">Brown</option>
+					<option value="black">Black</option>
+					</select>
+				</p>
+			</form>
+			</div>
+		</li>
+	</ul>
+	
+	<!--End of styles-->
+
+	<!--Thumbnail Navigation-->
+	<div id="prevthumb"></div>
+	<div id="nextthumb"></div>
+	
+	<!--Arrow Navigation-->
+	<a id="prevslide" class="load-item"></a>
+	<a id="nextslide" class="load-item"></a>
+	
+	<div id="thumb-tray" class="load-item">
+		<div id="thumb-back"></div>
+		<div id="thumb-forward"></div>
+	</div>
+	
+	<!--Time Bar-->
+	<div id="progress-back" class="load-item">
+		<div id="progress-bar"></div>
+	</div>
+	
+	<!--Control Bar-->
+	<div id="controls-wrapper" class="load-item">
+		<div id="controls">
+			
+			<a id="play-button"><img id="pauseplay" src="{{ STATIC_URL }}pause.png"/></a>
+		
+			<!--Slide counter-->
+			<div id="slidecounter">
+				<span class="slidenumber"></span> / <span class="totalslides"></span>
+			</div>
+			
+			<!--Slide captions displayed here-->
+			<div id="slidecaption"></div>
+			
+			<!--Thumb Tray button-->
+			<a id="tray-button"><img id="tray-arrow" src="{{ STATIC_URL }}button-tray-up.png"/></a>
+			
+			<!--Navigation-->
+			<ul id="slide-list"></ul>
+			
+		</div>
+	</div>
+
+	
+	<script type="text/javascript">
+	$(function(){
+   $("select").multiselect(); 
+});
+	</script>
+{% endblock %}

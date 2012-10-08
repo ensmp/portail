@@ -57,6 +57,16 @@ def supprimer_calendrier(request):
 	return HttpResponse('Ok (suppression)')
 
 @login_required	
+#Suppression d'un évenement
+def supprimer(request, evenement_id):
+	evenement = Evenement.objects.get(pk=evenement_id)
+	association = evenement.association
+	if evenement.peut_modifier(request.user):
+		evenement.delete()
+	return HttpResponseRedirect(association.get_absolute_url() + 'evenements/')
+
+	
+@login_required	
 #Mise à jour d'un évenement, depuis le calendrier.
 def update_calendrier(request):	
 	evenement = Evenement.objects.get(pk=request.POST['id'])
