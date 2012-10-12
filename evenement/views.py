@@ -5,7 +5,7 @@ from django.template import RequestContext
 from association.models import Association, Adhesion, AdhesionAjoutForm, AdhesionSuppressionForm
 from trombi.models import UserProfile
 from messages.models import Message
-from evenement.models import Evenement, Billetterie
+from evenement.models import Evenement
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from datetime import date, datetime, timedelta
 from django.db.models import Q

@@ -95,15 +95,14 @@ def edit(request,mineur_login):
 		# le profil a ete cree/ mis a jour, on update les questions
 		profile = request.user.get_profile()
 		for question in Question.objects.all():
-			if request.POST['question_'+str(question.id)] != "":
-				try:
-					reponse_user = profile.reponses.get(question__id=question.id)
-					reponse_user.contenu = request.POST['question_'+str(question.id)]
-					reponse_user.save()
-				except Reponse.DoesNotExist:				
-					reponse_user = Reponse.objects.create(question=question, contenu=request.POST['question_'+str(question.id)])
-					profile.reponses.add(reponse_user)
-					reponse_user.save()		
+			try:
+				reponse_user = profile.reponses.get(question__id=question.id)
+				reponse_user.contenu = request.POST['question_'+str(question.id)]
+				reponse_user.save()
+			except Reponse.DoesNotExist:				
+				reponse_user = Reponse.objects.create(question=question, contenu=request.POST['question_'+str(question.id)])
+				profile.reponses.add(reponse_user)
+				reponse_user.save()		
 		profile.save()
 		return redirect('/accounts/profile')
 	else:

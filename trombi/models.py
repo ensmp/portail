@@ -14,7 +14,7 @@ class Reponse(models.Model):
     contenu = models.CharField(max_length=512)
     
     def __unicode__(self):
-        return self.contenu
+        return str(self.question.id) + ' -> ' + self.contenu
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

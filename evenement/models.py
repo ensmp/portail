@@ -38,4 +38,4 @@ class Evenement(models.Model):
 		if self.is_personnel:			
 			return (eleve_user.id == self.createur.user.id) #le createur
 		else:
-			return Adhesion.objects.filter(association=self.association, eleve=eleve_user).exists():#Si l'eleve est membre de l'assoce
+			return Adhesion.objects.filter(association=self.association, eleve=eleve_user).exists()#Si l'eleve est membre de l'assoce
