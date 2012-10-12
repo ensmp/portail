@@ -10,6 +10,7 @@ from django.http import Http404, HttpResponse
 from django.utils import simplejson
 from urllib import urlretrieve
 import Image
+import vobject
 
 @login_required
 def index(request):
@@ -117,3 +118,20 @@ def edit(request,mineur_login):
 		
 def all(request):
 	return render_to_response('trombi/all.html', {'p12': UserProfile.objects.all()},context_instance=RequestContext(request))
+
+def get_vcf(request):
+	result = ""
+	for user_profile in UserProfile.objects.all():
+		card = vobject.vCard()
+		card.add('n') 
+		card.add('fn')
+		card.add('tel')
+		card.n.value = vobject.vcard.Name(family=user_profile.last_name,given=user_profile.first_name)
+		card.fn.value = user_profile.first_name + ' ' + user_profile.last_name
+		card.tel.value = user_profile.phone
+		card.tel.type_param = 'cell'
+		result += card.serialize()
+        response = HttpResponse(content_type="text/vcard; charset=utf-8")
+        response['charset'] = "utf-8"
+        response.write(result)
+        return response
