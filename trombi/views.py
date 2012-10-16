@@ -125,6 +125,10 @@ def get_vcf(request):
 		card.add('n') 
 		card.add('fn')
 		card.add('tel')
+		card.add('adr')
+		card.add('email')
+		card.email.value = user_profile.user.email
+		card.adr.value = vobject.vcard.Address(street=user_profile.chambre)
 		card.n.value = vobject.vcard.Name(family=user_profile.last_name,given=user_profile.first_name)
 		card.fn.value = user_profile.first_name + ' ' + user_profile.last_name
 		card.tel.value = user_profile.phone
