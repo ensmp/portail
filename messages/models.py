@@ -13,6 +13,28 @@ from django.contrib.comments.models import Comment
 
 
 
+from HTMLParser import HTMLParser
+import htmlentitydefs
+
+class HTMLTextExtractor(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.result = [ ]
+
+    def handle_data(self, d):
+        self.result.append(d)
+
+    def handle_charref(self, number):
+        codepoint = int(number[1:], 16) if number[0] in (u'x', u'X') else int(number)
+        self.result.append(unichr(codepoint))
+
+    def handle_entityref(self, name):
+        codepoint = htmlentitydefs.name2codepoint[name]
+        self.result.append(unichr(codepoint))
+
+    def get_text(self):
+        return u''.join(self.result)
+
 
 # Les messages d'association
 class Message(models.Model):
@@ -63,6 +85,11 @@ class Message(models.Model):
 		super(Message, self).save(*args, **kwargs)
 		if creation:			
 			self.envoyer_message_notification()
+			
+	def html_to_text(self):
+		s = HTMLTextExtractor()
+		s.feed(self.contenu)
+		return s.get_text()
 
 	
 class MessageForm(ModelForm):
@@ -71,3 +98,5 @@ class MessageForm(ModelForm):
 	class Meta:
 		model = Message
 		fields = ('destinataire', 'objet', 'contenu')
+		
+		

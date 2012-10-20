@@ -7,7 +7,7 @@ img.logo_assoce {
 }
 @font-face {
 	font-family: menu_font;
-	src: url('menu_font.ttf');
+	src: url('menu_font.otf');
 }
 
 #menu_onglets h1 {

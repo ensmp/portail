@@ -8,8 +8,8 @@ from notification.models import Notification
 class Sondage(models.Model):
     auteur = models.ForeignKey(UserProfile)
     question = models.CharField(max_length=512)
-    reponse1 = models.CharField(max_length=50)
-    reponse2 = models.CharField(max_length=50)
+    reponse1 = models.CharField(max_length=200)
+    reponse2 = models.CharField(max_length=200)
     deja_paru = models.BooleanField()    
     date_parution = models.DateField(null=True, blank=True)
     autorise = models.BooleanField()

@@ -5,7 +5,6 @@ ul.liste_vendomes {
 li.vendome {
 	display: inline-block;
 	width:168px;
-	height:290px;
 	text-align:center;
 	vertical-align:top;
 	/* for ie7 */
@@ -26,5 +25,5 @@ li.vendome p.date {
 	font-style:italic;
 	color:#ccc;
 	margin-top:0;
-	marin-bottom:5px;
+	margin-bottom:5px;
 }

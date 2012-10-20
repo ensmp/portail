@@ -6,7 +6,7 @@ from models import *
 
 class GalleryAdmin(admin.ModelAdmin):
     list_display = ('title', 'date_added', 'photo_count', 'is_hidden_1A')
-    list_filter = ['date_added', 'is_public']
+    list_filter = ['date_added', 'is_hidden_1A']
     date_hierarchy = 'date_added'
     prepopulated_fields = {'title_slug': ('title',)}
     filter_horizontal = ('photos',)

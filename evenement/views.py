@@ -60,7 +60,6 @@ def supprimer_calendrier(request):
 #Suppression d'un évenement
 def supprimer(request, evenement_id):
 	evenement = Evenement.objects.get(pk=evenement_id)
-	association = evenement.association
 	if evenement.peut_modifier(request.user):
 		evenement.delete()
 	return HttpResponseRedirect(association.get_absolute_url() + 'evenements/')
