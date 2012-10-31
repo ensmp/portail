@@ -31,10 +31,8 @@ class UserProfile(models.Model):
     chambre = models.CharField(max_length=128, blank=True)
     adresse_ailleurs = models.CharField(max_length=512, blank=True) 
     sports = models.CharField(max_length=512, blank=True)
-    co = models.ForeignKey(User,related_name='+', blank=True, null=True)
-    parrain = models.ForeignKey(User,related_name='+', blank=True, null=True)
-    fillot = models.ForeignKey(User,related_name='+', blank=True, null=True)
-
+    co = models.ManyToManyField('self', symmetrical = True, blank=True, null=True)
+    parrains = models.ManyToManyField('self', related_name='fillots', symmetrical = False, blank=True, null=True)
     reponses = models.ManyToManyField(Reponse, blank=True)    
     
     class Meta:
@@ -48,6 +46,43 @@ class UserProfile(models.Model):
         premiere_annee = UserProfile.objects.all().aggregate(Max('promo'))['promo__max']
         return (premiere_annee == self.promo)
     
+    @property
+    def nb_victoires_sondages(self):
+        from sondages.models import Sondage, Vote
+        from django.db.models import F, Count
+        return Vote.objects.filter(eleve = self, choix = F('sondage__resultat')).count()
+    
+    @property
+    def nb_participations_sondages(self):
+        from sondages.models import Sondage, Vote
+        return Vote.objects.filter(eleve = self).count()
+    
+    def get_absolute_url(self):
+        return '/people/'+self.user.username    
+        
+    def separation_successeurs(self):
+        successeurs = []
+        if self.parrains.all:
+            successeurs.extend(self.parrains.all())
+        if self.fillots.all:
+            successeurs.extend(self.fillots.all())
+        if self.co.all:
+            successeurs.extend(self.co.all())
+        return successeurs
+
+    @staticmethod	
+    def find_shortest_path(start, end, path=[]):
+        path = path + [start]
+        if start == end:
+            return path
+        shortest = None
+        for node in start.separation_successeurs():
+            if node not in path:
+                newpath = UserProfile.find_shortest_path(node, end, path)
+                if newpath:
+                    if not shortest or len(newpath) < len(shortest):
+                        shortest = newpath
+        return shortest
   
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

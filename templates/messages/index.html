@@ -23,6 +23,13 @@
 {% block content %}
 <div id = "div_messages">
 {% if list_messages %}
+
+<!--PRECHARGEMENT IMAGES HOVER -->
+<img src="{{STATIC_URL}}readhover.png" style="display:none;"/>
+<img src="{{STATIC_URL}}unreadhover.png" style="display:none;"/>
+<img src="{{STATIC_URL}}favouritehover.png" style="display:none;"/>
+<img src="{{STATIC_URL}}unfavouritehover.png" style="display:none;"/>
+
 <ul>
 {% for message in list_messages %}
 {% load comments %}

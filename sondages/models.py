@@ -13,6 +13,7 @@ class Sondage(models.Model):
     deja_paru = models.BooleanField()    
     date_parution = models.DateField(null=True, blank=True)
     autorise = models.BooleanField()
+    resultat = models.IntegerField(editable=False)
     
     def date_str(self):
         jour = str(self.date_parution.day)
@@ -26,6 +27,20 @@ class Sondage(models.Model):
     def __unicode__(self):
         return self.question
         
+    def calculer_resultat(self):
+        from django.db.models import Count
+        votes = Vote.objects.filter(sondage = self)
+        if votes:
+            return votes.values('choix').annotate(c=Count('choix')).order_by('-c')[0]['choix']
+        else:
+            return 0
+        # nombre_votes_1 = votes.filter(choix = 1).count()
+        # nombre_votes_2 = votes.filter(choix = 2).count()
+        # if (nombre_votes_2 > nombre_votes_1) :
+            # return 2
+        # else:
+            # return 1
+        
     def envoyer_notification(self):
         try: 
             perm = Permission.objects.get(codename='add_sondage')  #On envoie seulement à ceux qui peuvent créer des sondages
@@ -35,6 +50,11 @@ class Sondage(models.Model):
             notification.envoyer_multiple(users)
         except Permission.DoesNotExist:
             pass
+
+    def save(self, *args, **kwargs):
+        self.resultat = self.calculer_resultat()
+        super(Sondage, self).save(*args, **kwargs)
+
 
         
 class Vote(models.Model):

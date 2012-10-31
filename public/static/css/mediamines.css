@@ -69,3 +69,39 @@
 	width:170px;
 	height: 130px;
 }
+
+#navigation_photos {
+	text-align:center;
+}
+
+#legende_photo {
+	text-align:center;
+}
+
+#photo_precedente {
+	width:84px;
+}
+#photo_suivante {
+	width:84px;
+}
+
+.bloc_photo {
+	display:inline-block;
+	vertical-align:middle;	
+}
+
+
+a.mini_photo img {
+	width:84px;
+	filter:alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	-khtml-opacity: 0.5;
+}
+
+a.mini_photo:hover img {
+	filter:alpha(opacity=100);
+	-moz-opacity: 1.0;
+	opacity: 1.0;
+	-khtml-opacity: 1.0; 
+}

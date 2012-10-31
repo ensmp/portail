@@ -22,6 +22,7 @@
 <h2>Le {{ album.date_added|date:"l j F Y" }}</h2>
 {% if album.description %}<p>{{ album.description }}</p>{% endif %}
 <h3 style="text-align:center;">Voir le <a href="diaporama">diaporama</a></h3>
+{% if album.archive %}<h3><a href="{{ album.archive.url }}">Télécharger</a> les photos</h3>{% endif %}
 <div class="list-gallery-photo">
 	<ul class = "gallery-photo">
     {% for photo in album.photos.all %}

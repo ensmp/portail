@@ -491,6 +491,14 @@ table#tableau_sondages {
 	height:16px;
 }
 
+#scores_sondage {
+	float:right;
+	margin-top:2px;
+	margin-right:3px;
+	width:16px;
+	height:16px;
+}
+
 .module table{
 	text-align:center;
 	width:100%;

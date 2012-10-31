@@ -133,6 +133,8 @@ class Gallery(models.Model):
     photos = models.ManyToManyField('Photo', related_name='galleries', verbose_name=_('photos'),
                                     null=True, blank=True)
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
+    archive = models.FileField(_('fichier archive (.zip)'), upload_to=PHOTOLOGUE_DIR+"/temp",
+                                help_text=_('Fichier .zip contenant les images.'), null=True, blank=True)
 
     class Meta:
         ordering = ['-date_added']
@@ -240,7 +242,8 @@ class GalleryUpload(models.Model):
                                                  description=self.description,
                                                  is_public=self.is_public,
                                                  is_hidden_1A=self.is_hidden_1A,
-                                                 tags=self.tags)
+                                                 tags=self.tags, 
+												 archive = self.zip_file)
             from cStringIO import StringIO
             if len(zip.namelist()) < 100:
                 nombre_zeros = 2
@@ -538,13 +541,13 @@ class Photo(ImageModel):
         super(Photo, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        #return reverse('pl-photo', args=[self.title_slug])
-        gallery = self.public_galleries()[0]
-        slide = 1
-        for index, photo in enumerate(gallery.photos.all()):
-            if self.pk == photo.pk:
-                slide = index + 1
-        return reverse('pl-gallery', args=[gallery.title_slug]) + '?slide=' + str(slide) + '&autoplay=0'
+        return reverse('pl-photo', args=[self.title_slug])
+        # gallery = self.public_galleries()[0]
+        # slide = 1
+        # for index, photo in enumerate(gallery.photos.all()):
+            # if self.pk == photo.pk:
+                # slide = index + 1
+        # return reverse('pl-gallery', args=[gallery.title_slug]) + '?slide=' + str(slide) + '&autoplay=0'
 
     def public_galleries(self):
         """Return the public galleries to which this photo belongs."""

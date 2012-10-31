@@ -3,12 +3,20 @@
 {% block header %}
     <link rel="stylesheet" href="{{ STATIC_URL }}trombi.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}list.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.multiselect.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.multiselect.filter.css" />
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />
+
 	<title>Trombi</title>
 	<script src="{{ STATIC_URL }}jquery.maskedinput.js" type="text/javascript"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>		
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.filter.js"></script>
 	<script type="text/javascript">
 	jQuery(function($){
    $("#phone").mask("99 99 99 99 99");
 });
+
 </script>
 {% endblock %}
 
@@ -18,46 +26,43 @@
 {% csrf_token %}
 <table class = "edit">
 <tr>
-<td><label for="phone">Téléphone :</label></td>
+<td><label for="phone">Téléphone</label></td>
 <td><input type="text" id="phone" value="{{ mineur.get_profile.phone }}" name="phone"></td>
 </tr>
 <tr>
-<td><label for="chambre">Chambre :</label></td>
+<td><label for="chambre">Chambre</label></td>
 <td><input type="text" value="{{ mineur.get_profile.chambre }}" name="chambre"></td>
 </tr>
 <tr>
-<td><label for="option">Option :</label></td>
+<td><label for="option">Option</label></td>
 <td><input type="text" value="{{ mineur.get_profile.option }}" name="option"></td>
 </tr>
 <tr>
-<td><label for="co">Co :</label></td>
+<td><label for="co">Co</label></td>
 <td>
-<select name = "co">
-<option>--------------</option>
+<select name = "co" multiple="multiple">
 {% for eleve in autres_eleves %}
-<option {% if mineur.get_profile.co.id = eleve.id %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve }}</option>
+<option {% if eleve in mineur.get_profile.co.all %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
 {% endfor %}
 </select>
 </td>
 </tr>
 <tr>
-<td><label for="parrain">Parrain :</label></td>
+<td><label for="parrains">Parrain</label></td>
 <td>
-<select name = "parrain">
-<option>--------------</option>
+<select name = "parrains" multiple="multiple">
 {% for eleve in promo_superieure %}
-<option {% if mineur.get_profile.parrain.id = eleve.id %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve }}</option>
+<option {% if eleve in mineur.get_profile.parrains.all %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
 {% endfor %}
 </select>
 </td>
 </tr>
 <tr>
-<td><label for="fillot">Fillot :</label></td>
+<td><label for="fillots">Fillot</label></td>
 <td>
-<select name = "fillot">
-<option>--------------</option>
+<select name = "fillots" multiple="multiple">
 {% for eleve in promo_inferieure %}
-<option {% if mineur.get_profile.fillot.id = eleve.id %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve }}</option>
+<option {% if eleve in mineur.get_profile.fillots.all %} selected="selected" {% endif %} value="{{ eleve }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
 {% endfor %}
 </select>
 </td>
@@ -68,17 +73,49 @@
 {% for question in liste_questions %}
 <tr>
 
-	<td><label for="question_{{question.id}}">{{question.enonce}} : </label></td>
+	<td><label for="question_{{question.id}}">{{question.enonce}}</label></td>
 	<td><input type="text" value="{% for reponse in liste_reponses %}{% if question = reponse.question %}{{reponse.contenu}}{% endif %}{% endfor %}" name="question_{{question.id}}"></td>
 </tr>
 {% endfor %}
 </table>
 <input type="submit" />
 </form>
-<!--
-<div id="picture">
-<img src="{{ STATIC_URL }}{{ mineur.username }}.jpg" />
-</div>
--->
 
+<script type="text/javascript">
+$('select[name="co"]').multiselect({
+		minWidth: '150',
+		selectedList: 3,
+		selectedText: '# élèves sélectionnés',
+		noneSelectedText: 'Choisir son co',
+		checkAllText: 'Tous',
+		uncheckAllText: 'Aucun',
+}).multiselectfilter({
+		label: "",
+		placeholder: "Entrez un nom"
+});
+
+$('select[name="parrains"]').multiselect({
+		minWidth: '150',
+		selectedList: 3,
+		selectedText: '# élèves sélectionnés',
+		noneSelectedText: 'Choisir son parrain',
+		checkAllText: 'Tous',
+		uncheckAllText: 'Aucun',
+}).multiselectfilter({
+		label: "",
+		placeholder: "Entrez un nom"
+});
+
+$('select[name="fillots"]').multiselect({
+		minWidth: '150',
+		selectedList: 3,
+		selectedText: '# élèves sélectionnés',
+		noneSelectedText: 'Choisir son fillot',
+		checkAllText: 'Tous',
+		uncheckAllText: 'Aucun',
+}).multiselectfilter({
+		label: "",
+		placeholder: "Entrez un nom"
+});
+</script>
 {% endblock %}

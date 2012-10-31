@@ -88,3 +88,15 @@ def detail_json(request, indice_sondage):
 			'is_dernier':is_dernier
 		}))
 	return response
+	
+@login_required	
+def scores(request):
+	from django.db.models import F, Count
+	liste_votes = Vote.objects.filter(choix = F('sondage__resultat'))
+	liste_votes = liste_votes.values('eleve').annotate(victoires=Count('eleve')).order_by('-victoires')[:20]
+	liste_id = [liste_votes[i]['eleve'] for i in range(len(liste_votes))]
+	
+	eleves = UserProfile.objects.filter(id__in = liste_id)	
+	eleves = dict([(elv.id, elv) for elv in eleves])
+	liste_eleves = [eleves[id] for id in liste_id]
+	return render_to_response('sondages/scores.html',{'liste_eleves':liste_eleves},context_instance=RequestContext(request))

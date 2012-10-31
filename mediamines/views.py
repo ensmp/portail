@@ -123,14 +123,16 @@ def identifications(request, slug):
         'username': e.user.username            
     } for e in photo.eleves.all()]))
     return response
-    
+
+@login_required    
 def albums_json(request):
     response = HttpResponse()        
     from django.core import serializers
     data = serializers.serialize("json", Gallery.objects.all(), indent=4, fields=('title','photos'), use_natural_keys=True)
     response.write(data.replace('\\/','/'))
     return response
-    
+
+@login_required
 def tourner_photo_droite(request, slug):
     photo = get_object_or_404(Photo, title_slug = slug)
     effet = get_object_or_404(PhotoEffect, name = 'Rotation droite')
@@ -138,6 +140,7 @@ def tourner_photo_droite(request, slug):
     photo.save()
     return HttpResponseRedirect(photo.get_absolute_url())
 
+@login_required
 def tourner_photo_gauche(request, slug):
     photo = get_object_or_404(Photo, title_slug = slug)
     effet = get_object_or_404(PhotoEffect, name = 'Rotation gauche')
@@ -145,8 +148,18 @@ def tourner_photo_gauche(request, slug):
     photo.save()
     return HttpResponseRedirect(photo.get_absolute_url())
 
+@login_required
 def tourner_photo_original(request, slug):
     photo = get_object_or_404(Photo, title_slug = slug)
     photo.effect = None
     photo.save()
     return HttpResponseRedirect(photo.get_absolute_url())
+
+@login_required
+def photo_detail(request, slug):
+    photo = get_object_or_404(Photo, title_slug = slug)
+    if request.user.get_profile().en_premiere_annee():
+        if photo.public_galleries.is_hidden_1A:
+            photo = None
+    liste_eleves = UserProfile.objects.order_by('-promo','last_name')
+    return render_to_response('mediamines/photo_detail.html',{'photo':photo, 'liste_eleves':liste_eleves},context_instance=RequestContext(request))    

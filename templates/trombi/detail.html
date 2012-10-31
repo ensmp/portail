@@ -10,10 +10,19 @@
 
 <p><strong>Date de naissance</strong> : {{ mineur.get_profile.birthday }}</p>
 
+{% if mineur.get_profile.phone != "" %}
 <p><strong>Téléphone</strong> : {{ mineur.get_profile.phone }}</p>
+{% endif %}
 
+{% if mineur.get_profile.chambre != "" %}
 <p><strong>Chambre</strong> : {{ mineur.get_profile.chambre }}</p>
+{% endif %}
 
+{% if mineur.get_profile.option != "" %}
+<p><strong>Option</strong> : {{ mineur.get_profile.option }}</p>
+{% endif %}
+
+{% if assoces %}
 <p><strong>Associations</strong> : </p>
 <ul>
 	{% for adhesion in assoces %}
@@ -22,14 +31,37 @@
 		</li>
 	{% endfor %}
 </ul>
+{% endif %}
 
-<p><strong>Option</strong> : {{ mineur.get_profile.option }}</p>
+{% if mineur.get_profile.co.all %}
+<p><strong>Co{{ mineur.get_profile.co.count|pluralize }}</strong> : 
+	{% for co in mineur.get_profile.co.all %}
+		<a href="/people/{{ co }}">{{ co.first_name }} {{ co.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
+	{% endfor %}
+</p>
+{% else %}
+<p><strong>Pas de co</strong></p>
+{% endif %}
 
-<p><strong>Co</strong> : <a href="/people/{{ mineur.get_profile.co }}">{{ mineur.get_profile.co.get_profile.first_name }} {{ mineur.get_profile.co.get_profile.last_name|upper }}</a></p>
+{% if mineur.get_profile.parrains.all %}
+<p><strong>Parrain{{ mineur.get_profile.parrains.count|pluralize }}</strong> : 
+	{% for parrain in mineur.get_profile.parrains.all %}
+		<a href="/people/{{ parrain }}">{{ parrain.first_name }} {{ parrain.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
+	{% endfor %}
+</p>
+{% else %}
+<p><strong>Pas de parrain</strong></p>
+{% endif %}
 
-<p><strong>Parrain</strong> : <a href="/people/{{ mineur.get_profile.parrain }}">{{ mineur.get_profile.parrain.get_profile.first_name }} {{ mineur.get_profile.parrain.get_profile.last_name|upper }}</a></p>
-
-<p><strong>Fillot</strong> : <a href="/people/{{ mineur.get_profile.fillot }}">{{ mineur.get_profile.fillot.get_profile.first_name }} {{ mineur.get_profile.fillot.get_profile.last_name|upper }}</a></p>
+{% if mineur.get_profile.fillots.all %}
+<p><strong>Fillot{{ mineur.get_profile.fillots.count|pluralize }}</strong> : 
+	{% for fillot in mineur.get_profile.fillots.all %}
+		<a href="/people/{{ fillot }}">{{ fillot.first_name }} {{ fillot.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
+	{% endfor %}
+</p>
+{% else %}
+<p><strong>Pas de fillot</strong></p>
+{% endif %}
 
 <hr>
 

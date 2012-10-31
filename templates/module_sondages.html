@@ -6,7 +6,10 @@
 
 <div id = "sondages">
 	<div class="module_top">
-		<p>Sondage du jour<a href="/sondages/proposer/"><img id = "proposer_sondage" src="{{ STATIC_URL }}plus.png" title="Proposer un sondage"></a></p>
+		<p style = "margin-left:15px;">Sondage du jour
+		<a href="/sondages/proposer/"><img id = "proposer_sondage" src="{{ STATIC_URL }}plus.png" title="Proposer un sondage"></a>
+		<a href="/sondages/scores/"><img id = "scores_sondage" src="{{ STATIC_URL }}statistics.png" title="Statistiques des sondages"></a>
+		</p>
 	</div>
 	<div class="module_middle">		
 		{% load obtenir_sondage_du_jour %}

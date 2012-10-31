@@ -1,23 +1,131 @@
-{% extends "base_header.html" %}
+{% extends "base_topbar.html" %}
 
+{% block header %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}mediamines.css" />
+	
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.multiselect.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.multiselect.filter.css" />
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>		
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.filter.js"></script>
+	
+	<style type="text/css">
+	body {
+		background:url("{{STATIC_URL}}bg-mediamines.jpg");
+	}
+	#content_onglets a {
+		color:#FA0; //ET EN BO !
+	}
+	#content_onglets a:hover {
+		color:#D60;
+	}
+	</style>
+{% endblock %}
 
 {% load photologue_tags %}
 
 {% block content %}
-<div style="text-align:center">
-<p><a href="{{ object.image.url }}"><img src="{{ object.get_display_url }}" alt="{{ object.title }}"/></a></p>
-    {% if object.caption %}<p>{{ object.caption }}</p>{% endif %}
-	{% if object.eleves %}
+<div id="navigation_photos">
+<div id = "photo_precedente" class = "bloc_photo">
+{%previous_in_gallery photo photo.public_galleries.0%}
+</div>
+
+<div class = "bloc_photo">
+	{% load cache %}
+	{% cache 500 sidebar %}
+	<form>
+	{% csrf_token %}
+		<p>
+			<select id="identification" multiple="multiple" style="width:220px">
+			{% for eleve in liste_eleves %}
+				<option value="{{ eleve.user.username }}">				
+				{{ eleve.first_name }} {{ eleve.last_name }}
+				</option>
+			{% endfor %}					
+			</select>
+		</p>
+	</form>
+	{% endcache %}
+	<a href="{{ photo.image.url }}"><img src="{{ photo.get_display_url }}" alt="{{ photo.title }}"/></a>
+</div>
+
+<div id = "photo_suivante" class = "bloc_photo">
+ {%next_in_gallery photo photo.public_galleries.0%}
+</div>
+</div>
+
+<div id="legende_photo">
+    {% if photo.caption %}<p>{{ photo.caption }}</p>{% endif %}
+	<!--{% if photo.eleves %}
 		<p>Avec 
-		{% for eleve in object.eleves.all %}
+		{% for eleve in photo.eleves.all %}
 			<a href="/people/{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name }}</a>{% if not forloop.last %}, {% endif %}
 		{% empty %} personne
 		{% endfor %}</p>
-	{% endif %}
+	{% endif %}-->
 
-{% if object.public_galleries %}
-<h3>Cette photo fait partie de l'album <a href="{{ object.public_galleries.0.get_absolute_url }}">{{ object.public_galleries.0.title }}</a></h3>
+{% if photo.public_galleries %}
+<h3><a href="{{ photo.public_galleries.0.get_absolute_url }}">{{ photo.public_galleries.0.title }}</a></h3>
 </div>
 {% endif %}
 
+<script type="text/javascript">
+$("select").multiselect({
+		minWidth: '150',
+		selectedList: 4,
+		selectedText: '# élèves sélectionnés',
+		noneSelectedText: 'Identifier des élèves',
+		checkAllText: 'Tous',
+		uncheckAllText: 'Aucun',
+		click: function(event, ui){
+			var crsf = $("input[name=csrfmiddlewaretoken]").val();
+			var slideTitle = "{{ photo.title_slug }}";
+			if (ui.checked) {
+				$.post("/associations/mediamines/photo/" + slideTitle + "/identifier/", { csrfmiddlewaretoken: crsf, username:ui.value });
+			}
+			else {
+				$.post("/associations/mediamines/photo/" + slideTitle + "/desidentifier/", { csrfmiddlewaretoken: crsf, username:ui.value });
+			}			
+		},
+		uncheckAll: function(event, ui){
+			var crsf = $("input[name=csrfmiddlewaretoken]").val();
+			var slideTitle = "{{ photo.title_slug }}";
+			$.post("/associations/mediamines/photo/" + slideTitle + "/desidentifier/", { csrfmiddlewaretoken: crsf });
+		}
+}).multiselectfilter({
+		label: "",
+		placeholder: "Entrez un nom"
+});
+</script>
+
+<script type="text/javascript"> 
+$(document).ready(function(){
+	$.getJSON("/associations/mediamines/photo/{{ photo.title_slug }}/identifications/", function(data) {
+				  $.each(data, function(key, val) {
+					$('#identification option[value='+val.username+']').attr("selected", 'selected');
+				  });
+				  $('#identification').multiselect("refresh");
+	});
+	changement_page = false;
+});
+
+$("body").keydown(function(e) {
+  if(e.keyCode == 37) { // left
+	if ($("#photo_precedente a").length > 0 && !changement_page) {
+		window.location.href = $("#photo_precedente a").first().attr("href");
+		changement_page = true;
+	}
+  }
+  else if(e.keyCode == 39) { // right
+    if ($("#photo_suivante a").length > 0 && !changement_page) {
+		window.location.href = $("#photo_suivante a").first().attr("href");
+		changement_page = true;
+	}    
+  }
+});
+
+
+</script>
 {% endblock %}
