@@ -1,24 +1,40 @@
+.produits{
+	padding:5px 0;
+}
 .produit{
-	width:48%;
-	display:inline-block;
-	text-align:center;
-	padding-bottom: 5px;
-	padding-top: 5px;
-	border-color: gray;
-	border-top-color: blue;
-	border-style: dotted;
-	border-top-style: solid;
+	width:500px;
+	text-align:left;
+	border-color: blue;
+	border-style: double;
 	border-top-width: 5px;
-	border-bottom-width: 2px;
-	border-left-width: 2px;
-	border-right-width: 2px;
+	border-bottom-width: 3px;
+	border-left-width: 0px;
+	border-right-width: 0px;
 	margin:2px;
+}
+.nom{
+float: left;
+width: 60%;
+}
+.volume{
+float:left;
+width: 25%;
+}
+.prix{
+text-align:right;
+margin-left: 85%;
+width: 13%}
+.boutons{
+width:500px
+}
+.actions{
+width:89%;
+text-align:right;
+display:inline-block;
 }
 
 h3{font-family: Corbel, Arial, Helvetica;
 	front-size:10px;
 	color:black;
 	font-variant: small-caps ;
-}
-.produit img{align:center;
 }

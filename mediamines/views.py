@@ -159,7 +159,17 @@ def tourner_photo_original(request, slug):
 def photo_detail(request, slug):
     photo = get_object_or_404(Photo, title_slug = slug)
     if request.user.get_profile().en_premiere_annee():
-        if photo.public_galleries.is_hidden_1A:
+        if photo.is_hidden_1A():
             photo = None
     liste_eleves = UserProfile.objects.order_by('-promo','last_name')
-    return render_to_response('mediamines/photo_detail.html',{'photo':photo, 'liste_eleves':liste_eleves},context_instance=RequestContext(request))    
+    return render_to_response('mediamines/photo_detail.html',{'photo':photo, 'liste_eleves':liste_eleves},context_instance=RequestContext(request))   
+
+@login_required
+def album_archive(request, slug):
+    album = get_object_or_404(Gallery, title_slug = slug, is_public=True)
+    if request.user.get_profile().en_premiere_annee():
+        if album.is_hidden_1A:
+            album = None
+    response = HttpResponse(album.archive(), content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename='+album.title_slug+'.zip'
+    return response

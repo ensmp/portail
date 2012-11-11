@@ -58,6 +58,12 @@
 	<div id="barre_gauche">	
 		{% include "module_evenement.html" %}
 		{% include "module_sondages.html" %}
+		
+		<script language="JavaScript">
+			function player_mos(){
+			window.open('/associations/minestryofsound/player/', 'Player MINEStryOfSound', config='height=210, width=250, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no')}
+		</script> 
+		<p style = "text-align:center"><a href="javascript:player_mos();" style="color:#666;">Player MINEStry Of Sound</a></p>
 	</div>
 </div>
 </body>

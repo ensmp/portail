@@ -34,9 +34,24 @@ def playlist_json(request):
     liste_morceaux = Morceau.objects.all()
     response = HttpResponse(mimetype='application/json')
     response.write(json.dumps([{
-			'artiste': m.artiste,
+            'artiste': m.artiste,
             'titre': m.titre,
             'fichier': m.fichier.url,
             'date': str(m.date)
         } for m in liste_morceaux]))
     return response
+
+@login_required    
+def playlist_xml(request):
+    response = HttpResponse(mimetype="text/xml")
+    response.write('<?xml version="1.0" encoding="UTF-8"?><playlist version="1" xmlns="http://xspf.org/ns/0/"><title>MoS Playlist</title><creator>MINEStry Of Sound</creator><trackList>')
+    liste_morceaux = Morceau.objects.all()
+    for m in liste_morceaux:
+        response.write('<track><location>'+m.fichier.url+'</location><title>'+m.titre+'</title><creator>'+m.artiste+'</creator></track>')
+    response.write('</trackList></playlist>')
+    return response
+
+@login_required
+def playlist_popup(request):
+    return render_to_response('minestryofsound/popup.html',{},context_instance=RequestContext(request))
+

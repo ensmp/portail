@@ -12,7 +12,7 @@ from django.db.models import Max
 
 @login_required
 def catalogue(request):		
-	liste_produits = Produit.objects.order_by('nom')
+	liste_produits = Produit.objects.order_by('categorie', 'nom')
 	return render_to_response('minesmarket/catalogue.html', {'liste_produits': liste_produits},context_instance=RequestContext(request))
 
 @login_required

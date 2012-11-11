@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_trium.png">Forum Trium</h1>
+<ul>
+<li><a href="/associations/trium/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li><a href="/associations/trium/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
+<li><a href="/associations/trium/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li><a href="/associations/trium/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
+</ul>
+
+<ul class="supplementaire">
+<li id="actif"><img src="{{ STATIC_URL}}page_informations.png"><span>Informations</span></li>
+</ul>
+<hr>
+</div>
+{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center"><a href="{{ MEDIA_URL }}trium/atrium.pdf">Lire l'Atrium</a></h2>
+<h2 style="text-align:center"><a href="{{ MEDIA_URL }}trium/liste_entreprises.pdf">Liste des entreprises participantes</a></h2>
+<h2 style="text-align:center"><a href="https://docs.google.com/spreadsheet/viewform?formkey=dE82NG5WZFhuejhQcEVaMlgwMVZBU1E6MQ#gid=0">Inscriptions aux petits dejs et tables rondes</a></h2>
+<h2 style="text-align:center"><a href="https://docs.google.com/spreadsheet/viewform?formkey=dEdIdWxiZVNnQ1VLelF2OEJ4blNjRWc6MQ">Inscriptions aux simulations d'entretien d'embauche</a></h2>
+
+<h2 style="text-align:center">Où ? Quand ? Comment ?</h1>
+<p>Le Forum aura lieu le 14 novembre 2012, dans les Pavillons 5.2-5.3 du
+Parc des Expositions, Porte de Versailles.</p>
+<ul>
+<li>Métro : ligne 12, station Porte de Versailles</li>
+<li>Bus : Lignes 39 et 80, station Porte de Versailles</li>
+<li>Tramway : T2 et T3, station Porte de Versailles</li>
+</ul>
+<img src = "{{ MEDIA_URL }}trium/map.png" style="width:100%"/>
+{% endblock %}

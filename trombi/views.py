@@ -63,7 +63,7 @@ def token(request):
     return render_to_response('trombi/token.html', {},context_instance=RequestContext(request))
 
 @login_required
-def image(request,mineur_login):
+def photo(request,mineur_login):
     try:
         urlretrieve('https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{}.jpg'.format(mineur_login), 'img.jpg')
         img = Image.open('img.jpg')
@@ -149,3 +149,37 @@ def separation(request):
         #UserProfile.depthFirstSearch(start, end, result)
         result = UserProfile.find_shortest_path(start, end, result)
     return render_to_response('trombi/separation.html', {'eleves': eleves, 'result':result, 'recherche':recherche},context_instance=RequestContext(request))
+    
+from PIL import Image, ImageDraw
+
+def separation_graphe(request):
+    chemin = request.GET.get('chemin','')
+    liste_eleves = [UserProfile.objects.get(user__username = username) for username in chemin.split(',')]
+    
+    largeur = 500
+    hauteur = 375
+    im = Image.new('RGBA', (largeur, hauteur), (0, 0, 0, 0)) # Create a blank image
+    draw = ImageDraw.Draw(im)
+    lines = []
+    promo_min = min([eleve.promo for eleve in liste_eleves])
+    promo_max = max([eleve.promo for eleve in liste_eleves])
+    marge=30
+    deltax = (largeur-2*marge)/len(liste_eleves)
+    deltay = (hauteur-2*marge)/(promo_max-promo_min)
+    x = 0
+    rayon_cercles = 8-2*(promo_max-promo_min)
+    hauteur_traits = 8-2*(promo_max-promo_min)
+    for eleve in liste_eleves:
+        lines.append((marge + x, marge + (eleve.promo-promo_min)*deltay))
+        lines.append((marge + x + deltax, marge + (eleve.promo-promo_min)*deltay))
+        #draw.ellipse((marge + (2*x+deltax)/2 - rayon_cercles, marge + (eleve.promo-promo_min)*deltay-rayon_cercles, marge + (2*x+deltax)/2 + rayon_cercles, marge + (eleve.promo-promo_min)*deltay+rayon_cercles), fill="black")
+        draw.line([(marge + x, marge + (eleve.promo-promo_min)*deltay-hauteur_traits),(marge + x, marge + (eleve.promo-promo_min)*deltay+hauteur_traits)], fill="black")
+        draw.line([(marge + x + deltax, marge + (eleve.promo-promo_min)*deltay-hauteur_traits),(marge + x + deltax, marge + (eleve.promo-promo_min)*deltay+hauteur_traits)], fill="black")
+        x = x + deltax
+    #lines = [(50, 0), (0, 40), (20, 100), (80, 100), (100, 40)]
+    draw.line(lines, fill="black")
+    for promo in range(promo_min, promo_max+1):
+        draw.text((0, marge - 5 + (promo-promo_min)*deltay), 'P'+str(promo), fill="blue")
+    response = HttpResponse(mimetype="image/png")
+    im.save(response, "PNG")
+    return response
