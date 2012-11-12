@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}	
+	<p>Modifier votre compte bancaire</p>
+	<form method="post" action="{{ request.path }}">
+	{% csrf_token %}
+	{{ form.as_p }}
+	{{ form.submit }}
+	<input type="submit" value="Valider" />
+{% endblock %}

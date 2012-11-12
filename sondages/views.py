@@ -81,7 +81,8 @@ def detail_json(request, indice_sondage):
 				'question': sondage.question,
 				'reponse1': sondage.reponse1,
 				'reponse2': sondage.reponse2,
-				'date_parution': sondage.date_str()
+				'date_parution': sondage.date_str(),
+				'is_premier':is_premier
 			}))
 	else: #n'a pas vote
 		response.write(json.dumps({
