@@ -159,7 +159,8 @@ INSTALLED_APPS = (
     'minesmarket',
     'minestryofsound',
     'vendome', 
-    'jump',     
+    'jump',
+    'pr',
     #Avatar, pour les avatars de trombi
     'avatar',
     #Photologue pour les photos Mediamine

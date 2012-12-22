@@ -72,7 +72,7 @@ Promo : {{user.promo}}
 	</div>
 	
 	<div class="message_contenu">
-		<p>{{ message.contenu|linebreaksbr}}</p>
+		<p>{{ message.contenu|safe}}</p>
 		
 		<div style="display:none;">
 		{% load comments %}

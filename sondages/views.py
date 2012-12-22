@@ -82,7 +82,8 @@ def detail_json(request, indice_sondage):
 				'reponse1': sondage.reponse1,
 				'reponse2': sondage.reponse2,
 				'date_parution': sondage.date_str(),
-				'is_premier':is_premier
+				'is_premier':is_premier,
+				'is_dernier':is_dernier
 			}))
 	else: #n'a pas vote
 		response.write(json.dumps({
@@ -101,23 +102,24 @@ def detail_json(request, indice_sondage):
 @login_required	
 def scores(request):
 	from django.db.models import F, Count
-	liste_victoires = Vote.objects.filter(choix = F('sondage__resultat'))
-	liste_victoires = liste_victoires.values('eleve').annotate(victoires=Count('eleve')).order_by('-victoires')[:20]
-	liste_victoires_id = [liste_victoires[i]['eleve'] for i in range(len(liste_victoires))]	
-	eleves_v = UserProfile.objects.filter(id__in = liste_victoires_id)	
-	eleves_v = dict([(elv.id, elv) for elv in eleves_v])
-	liste_eleves_v = [eleves_v[id] for id in liste_victoires_id]
+	# liste_victoires = Vote.objects.filter(choix = F('sondage__resultat'))
+	# liste_victoires = liste_victoires.values('eleve').annotate(victoires=Count('eleve')).order_by('-victoires')[:20]
+	# liste_victoires_id = [liste_victoires[i]['eleve'] for i in range(len(liste_victoires))]	
+	# eleves_v = UserProfile.objects.filter(id__in = liste_victoires_id)	
+	# eleves_v = dict([(elv.id, elv) for elv in eleves_v])
+	# liste_eleves_v = [eleves_v[id] for id in liste_victoires_id]
 	
-	liste_defaites = Vote.objects.exclude(sondage__resultat = 0).exclude(choix = F('sondage__resultat'))
-	liste_defaites = liste_defaites.values('eleve').annotate(defaites=Count('eleve')).order_by('-defaites')[:20]
-	liste_defaites_id = [liste_defaites[i]['eleve'] for i in range(len(liste_defaites))]	
-	eleves_d = UserProfile.objects.filter(id__in = liste_defaites_id)	
-	eleves_d = dict([(elv.id, elv) for elv in eleves_d])
-	liste_eleves_d = [eleves_d[id] for id in liste_defaites_id]
+	# liste_defaites = Vote.objects.exclude(sondage__resultat = 0).exclude(choix = F('sondage__resultat'))
+	# liste_defaites = liste_defaites.values('eleve').annotate(defaites=Count('eleve')).order_by('-defaites')[:20]
+	# liste_defaites_id = [liste_defaites[i]['eleve'] for i in range(len(liste_defaites))]	
+	# eleves_d = UserProfile.objects.filter(id__in = liste_defaites_id)	
+	# eleves_d = dict([(elv.id, elv) for elv in eleves_d])
+	# liste_eleves_d = [eleves_d[id] for id in liste_defaites_id]
 	
-	# liste_eleves_p = Vote.objects.exclude(sondage__resultat = 0).values('eleve').annotate(participations=Count('eleve')).filter(participations__gt = 10)
-	# liste_eleves_p_id = [liste_eleves_p[i]['eleve'] for i in range(len(liste_eleves_p))]	
-	# liste_eleves_p = UserProfile.objects.filter(id__in = liste_eleves_p_id)
-	# liste_eleves_p = sorted(liste_eleves_p, key=lambda eleve:-eleve.pourcentage_sondages)[:20]
+	liste_eleves_p = Vote.objects.exclude(sondage__resultat = 0).values('eleve').annotate(participations=Count('eleve')).filter(participations__gte = 30)
+	liste_eleves_p_id = [liste_eleves_p[i]['eleve'] for i in range(len(liste_eleves_p))]	
+	liste_eleves_p = UserProfile.objects.filter(id__in = liste_eleves_p_id)
+	liste_eleves_pv = sorted(liste_eleves_p, key=lambda eleve:-eleve.pourcentage_sondages)[:20]
+	liste_eleves_pd = sorted(liste_eleves_p, key=lambda eleve:eleve.pourcentage_sondages)[:20]
 	
-	return render_to_response('sondages/scores.html',{'liste_eleves_v':liste_eleves_v,'liste_eleves_d':liste_eleves_d},context_instance=RequestContext(request))
+	return render_to_response('sondages/scores.html',{'liste_eleves_pv':liste_eleves_pv,'liste_eleves_pd':liste_eleves_pd},context_instance=RequestContext(request))

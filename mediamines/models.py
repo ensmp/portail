@@ -133,6 +133,8 @@ class Gallery(models.Model):
     photos = models.ManyToManyField('Photo', related_name='galleries', verbose_name=_('photos'),
                                     null=True, blank=True)
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
+    archive = models.FileField(_('fichier images (.zip)'), upload_to=PHOTOLOGUE_DIR+"/temp",
+                                help_text=_('Archive zip contenant les images de l\'album'))
 
     class Meta:
         ordering = ['-date_added']
@@ -195,7 +197,7 @@ class Gallery(models.Model):
         except Association.DoesNotExist:
             pass
        
-    def archive(self):
+    def generer_archive(self):
         import StringIO
         from os.path import basename
         buffer= StringIO.StringIO()
@@ -250,8 +252,8 @@ class GalleryUpload(models.Model):
                                                  description=self.description,
                                                  is_public=self.is_public,
                                                  is_hidden_1A=self.is_hidden_1A,
-                                                 tags=self.tags)
-                                                 #,archive = self.zip_file)
+                                                 tags=self.tags,
+                                                 archive = self.zip_file)
             from cStringIO import StringIO
             if len(zip.namelist()) < 100:
                 nombre_zeros = 2

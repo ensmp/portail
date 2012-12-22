@@ -24,6 +24,7 @@ def index_json(request):
 	cours_list = PetitCours.objects.filter(visible=True).order_by('date_added')
 	response = HttpResponse(mimetype='application/json')
 	response.write(simplejson.dumps([{
+			'id': c.id,
 			'titre': c.title,
 			'niveau': c.niveau,
 			'matiere': c.matiere,
@@ -92,3 +93,23 @@ def add(request):
 			return HttpResponseRedirect('/petitscours/')
 	else:
 		return render_to_response('petitscours/add.html',context_instance=RequestContext(request))
+
+#Demande extérieure de petit cours
+def demander(request):
+	if request.method == 'POST':
+		pc = PetitCours()
+		pc.poste_par = None
+		pc.title='Cours de ' + request.POST['matiere']
+		pc.address=request.POST['address']
+		pc.update_location(float(request.POST['lat']), float(request.POST['lng']))
+		pc.contact=request.POST['contact']
+		pc.matiere = request.POST['matiere']
+		pc.niveau = request.POST['niveau']
+		pc.description=request.POST['description']
+		pc.save()		
+		if request.is_ajax():
+			return HttpResponse("OK")
+		else:
+			return render_to_response('petitscours/demander.html',context_instance=RequestContext(request))
+	else:
+		return render_to_response('petitscours/demander.html',context_instance=RequestContext(request))

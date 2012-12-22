@@ -12,15 +12,15 @@
 	<thead>
     <tr>
       <th>Élève</th>
-      <th>Victoires</th>
+      <th>Pourcentage</th>
 	  <th>Participations</th>
     </tr>
   </thead>
   <tbody>
-	{% for eleve in liste_eleves_v %}
+	{% for eleve in liste_eleves_pv %}
 	<tr>
 	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
-	<td>{{ eleve.nb_victoires_sondages }}</td>
+	<td>{{ eleve.pourcentage_sondages|floatformat:1 }}</td>
 	<td>{{ eleve.nb_participations_sondages }}</td>
 	</tr>
 	{% endfor %}
@@ -32,15 +32,15 @@
 	<thead>
     <tr>
       <th>Élève</th>
-      <th>Défaites</th>
+      <th>Pourcentage</th>
 	  <th>Participations</th>
     </tr>
   </thead>
   <tbody>
-	{% for eleve in liste_eleves_d %}
+	{% for eleve in liste_eleves_pd %}
 	<tr>
 	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
-	<td>{{ eleve.nb_defaites_sondages }}</td>
+	<td>{{ eleve.pourcentage_sondages|floatformat:1 }}</td>
 	<td>{{ eleve.nb_participations_sondages }}</td>
 	</tr>
 	{% endfor %}

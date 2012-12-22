@@ -13,7 +13,7 @@
 			<hr/>
 			<ul>
 				{% for item in date.list %}
-				  <li>
+				  <li>				  
 				  <a class = "event" 
 				     titre = "Organisé par {% if item.is_personnel %}Vous{% else %}{{ item.association.nom }}{% endif %}, le {{ item.date_debut|date:'d F' }} de {{ item.date_debut|date:'H:i' }} à {{ item.date_fin|date:'H:i' }}" 
 				     contenu = "<div class='event_proprietes'><p class='event_auteur'><img src='{{ STATIC_URL }}{% if item.is_personnel %}{{ request.user.username }}.jpg{% else %}logo_{{ item.association.pseudo }}.png{% endif %}'><br/>

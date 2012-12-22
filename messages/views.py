@@ -40,8 +40,9 @@ def index_json(request):
             'association_pseudo': m.association.pseudo,
             'objet': m.objet,
             'contenu': m.html_to_text(),
-            'date': str(m.date.day)+'/'+str(m.date.month)+'/'+str(m.date.year)+ " " + str(m.date.hour) + ":" + str(m.date.minute), 
-            'expediteur': m.expediteur.user.username            
+            'date': str(m.date.day)+'/'+str(m.date.month)+'/'+str(m.date.year)+ " " + str(m.date.hour) + ":" + str(m.date.minute),
+            'expediteur': m.expediteur.user.username,
+            'important': request.user.get_profile() in m.important.all()
         } for m in list_messages]))
     return response
     
@@ -115,7 +116,9 @@ def tous_json(request):
             'objet': m.objet,
             'contenu': m.html_to_text(),
             'date': str(m.date.day)+'/'+str(m.date.month)+'/'+str(m.date.year)+ " " + str(m.date.hour) + ":" + str(m.date.minute), 
-            'expediteur': m.expediteur.user.username            
+            'expediteur': m.expediteur.user.username,
+            'lu': request.user.get_profile() in m.lu.all(),
+            'important': request.user.get_profile() in m.important.all()           
         } for m in all_messages]))
     return response
 	

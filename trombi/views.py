@@ -23,9 +23,10 @@ def index_json(request):
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps([{
             'username': m.user.username,
-            'first_name': m.first_name,
-            'last_name': m.last_name,
-            'promo': m.promo
+            'first_name': m.first_name.title(),
+            'last_name': m.last_name.title(),
+            'promo': m.promo,
+            'phone': m.phone
         } for m in mineur_list]))
     return response
 
@@ -44,8 +45,8 @@ def detail_json(request,mineur_login):
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps({
         'username': mineur.username,
-        'first_name': profile.first_name,
-        'last_name': profile.last_name,
+        'first_name': profile.first_name.title(),
+        'last_name': profile.last_name.title(),
         'email': mineur.email,
         'promo': profile.promo,
         'phone': profile.phone,
@@ -146,12 +147,20 @@ def separation(request):
         recherche = True
         start = UserProfile.objects.get(user__username = request.POST.get('start_username', ''))
         end = UserProfile.objects.get(user__username = request.POST.get('end_username', ''))        
-        #UserProfile.depthFirstSearch(start, end, result)
-        result = UserProfile.find_shortest_path(start, end, result)
-    return render_to_response('trombi/separation.html', {'eleves': eleves, 'result':result, 'recherche':recherche},context_instance=RequestContext(request))
-    
-from PIL import Image, ImageDraw
+        result = UserProfile.BFS(start, end)
+    result_string = chemin_to_html(result)
+    return render_to_response('trombi/separation.html', {'eleves': eleves, 'result':result, 'result_string':result_string, 'recherche':recherche},context_instance=RequestContext(request))
 
+def chemin_to_html(chemin):
+    if chemin:        
+        chemin_string = '<a href = "'+chemin[0].get_absolute_url()+'">'+chemin[0].first_name+' '+chemin[0].last_name+'</a>'
+        for i in range(len(chemin)-1):
+            chemin_string = chemin_string + ', ' + chemin[i].relation_avec(chemin[i+1]) + ' de ' + '<a href = "'+chemin[i+1].get_absolute_url()+'">'+chemin[i+1].first_name+' '+chemin[i+1].last_name+'</a>'
+    else:
+        chemin_string = "Aucun chemin existant"
+    return chemin_string
+
+from PIL import Image, ImageDraw
 def separation_graphe(request):
     chemin = request.GET.get('chemin','')
     liste_eleves = [UserProfile.objects.get(user__username = username) for username in chemin.split(',')]

@@ -8,7 +8,7 @@ from association.models import Association
 
 #Une proposition de petit cours
 class PetitCours(models.Model):
-	poste_par = models.ForeignKey(User, related_name='petits_cours_postes') #L'eleve qui a posté le petit cours
+	poste_par = models.ForeignKey(User, related_name='petits_cours_postes', blank=True, null=True) #L'eleve qui a posté le petit cours
 	title = models.CharField(max_length=256)
 	contact = models.CharField(max_length=256) #Numéro de téléphone ?
 	date_added = models.DateTimeField(auto_now_add=True)
