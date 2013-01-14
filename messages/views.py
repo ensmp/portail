@@ -36,6 +36,7 @@ def index_json(request):
     list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).exclude(lu__user__username=request.user.username).order_by('-date')
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps([{
+            'id': m.id,
             'association': m.association.nom,
             'association_pseudo': m.association.pseudo,
             'objet': m.objet,
@@ -111,6 +112,7 @@ def tous_json(request):
     all_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).order_by('-date')
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps([{
+            'id': m.id,
             'association': m.association.nom,
             'association_pseudo': m.association.pseudo,
             'objet': m.objet,

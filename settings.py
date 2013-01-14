@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     'vendome', 
     'jump',
     'pr',
+    'faq',
     #Avatar, pour les avatars de trombi
     'avatar',
     #Photologue pour les photos Mediamine

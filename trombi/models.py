@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from datetime import date, timedelta
+import Queue
 
 class Question(models.Model):
     enonce = models.CharField(max_length=512)
@@ -106,7 +107,7 @@ class UserProfile(models.Model):
         queue = []
         queue.append([start])
         while queue:
-            path = queue.pop()
+            path = queue.pop(0)
             node = path[-1]
             if node == end:
                 return path

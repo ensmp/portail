@@ -27,9 +27,8 @@ $(function() {
 					$('input[name="lat"]').val(results[0].geometry.location.lat());
 					$('input[name="lng"]').val(results[0].geometry.location.lng());
 					var data = $('#addform').serialize();
-					$.post('', data, function(res) {
+					$.post('/petitscours/demander/', data, function(res) {
 						if (res == 'OK') {
-							//window.location = '/petitscours/';
 							$('#effectue').show();
 							$('input[type="text"], textarea').val('');
 						}
