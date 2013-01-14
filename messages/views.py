@@ -36,12 +36,14 @@ def index_json(request):
     list_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).exclude(lu__user__username=request.user.username).order_by('-date')
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps([{
+            'id': m.id,
             'association': m.association.nom,
             'association_pseudo': m.association.pseudo,
             'objet': m.objet,
             'contenu': m.html_to_text(),
-            'date': str(m.date.day)+'/'+str(m.date.month)+'/'+str(m.date.year)+ " " + str(m.date.hour) + ":" + str(m.date.minute), 
-            'expediteur': m.expediteur.user.username            
+            'date': str(m.date.day)+'/'+str(m.date.month)+'/'+str(m.date.year)+ " " + str(m.date.hour) + ":" + str(m.date.minute),
+            'expediteur': m.expediteur.user.username,
+            'important': request.user.get_profile() in m.important.all()
         } for m in list_messages]))
     return response
     
@@ -110,12 +112,15 @@ def tous_json(request):
     all_messages = Message.objects.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all())).order_by('-date')
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps([{
+            'id': m.id,
             'association': m.association.nom,
             'association_pseudo': m.association.pseudo,
             'objet': m.objet,
             'contenu': m.html_to_text(),
             'date': str(m.date.day)+'/'+str(m.date.month)+'/'+str(m.date.year)+ " " + str(m.date.hour) + ":" + str(m.date.minute), 
-            'expediteur': m.expediteur.user.username            
+            'expediteur': m.expediteur.user.username,
+            'lu': request.user.get_profile() in m.lu.all(),
+            'important': request.user.get_profile() in m.important.all()           
         } for m in all_messages]))
     return response
 	

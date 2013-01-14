@@ -27,6 +27,7 @@ def index_json(request):
 	response.write(json.dumps([{
 			'id': e.id,
 			'auteur': e.auteur(),
+			'auteur_slug' : e.auteur_slug(),
 			'start': e.date_debut,
 			'end': e.date_fin,
 			'title': e.titre, 	
@@ -44,7 +45,7 @@ def nouveau_calendrier(request):
 	if fin < debut: #si l'heure de fin est avant l'heure de debut, c'est que ca termine le lendemain
 		fin = fin + timedelta(days=1)
 
-	Evenement.objects.create(association = None, createur = request.user.get_profile(), titre = request.POST['title'], description = request.POST['body'], date_debut = debut, date_fin=fin, is_billetterie = False, is_personnel = True)
+	Evenement.objects.create(association = None, createur = request.user.get_profile(), titre = request.POST['title'], description = request.POST['body'], date_debut = debut, date_fin=fin, is_personnel = True)
 	
 	return HttpResponse('Ok (ajout)')
 
@@ -91,7 +92,7 @@ def nouveau(request, association_pseudo):
 			fin = fin + timedelta(days=1)
 		
 		if Adhesion.objects.filter(association=association, eleve=request.user).exists():
-			Evenement.objects.create(association = association, createur = request.user.get_profile(), titre = request.POST['titre'], description = request.POST['description'], lieu =request.POST['lieu'], date_debut = debut, date_fin=fin, is_billetterie = False, is_personnel = False)
+			Evenement.objects.create(association = association, createur = request.user.get_profile(), titre = request.POST['titre'], description = request.POST['description'], lieu =request.POST['lieu'], date_debut = debut, date_fin=fin, is_personnel = False)
 		return HttpResponseRedirect('/associations/'+association_pseudo+'/evenements/')
 	else:
 		return render_to_response('evenement/nouveau.html', {'association' : association},context_instance=RequestContext(request))

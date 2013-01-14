@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.db import models
 from trombi.models import UserProfile
-from association.models import Association
+from association.models import Association, Adhesion
 from datetime import date, datetime, timedelta
 
 # Un événement organisé par une association
@@ -33,6 +33,12 @@ class Evenement(models.Model):
 			return self.createur.user.username
 		else:
 			return self.association.nom
+			
+	def auteur_slug(self):
+		if self.is_personnel:
+			return self.createur.user.username
+		else:
+			return self.association.pseudo
 
 	def peut_modifier(self, eleve_user): #si un utilisateur a le droit de modifier l'évenement
 		if self.is_personnel:			

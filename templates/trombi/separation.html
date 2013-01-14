@@ -19,12 +19,9 @@
 {% if result %} 
 {% endif %}
 <p>
-{% for eleve in result %}
-<a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</a>{% if not forloop.last %} --> {% endif %}
-{% empty %}
-Aucun chemin trouvé
-{% endfor %}
+{{result_string|safe}}
 </p>
+<img src="graphe/?chemin={% for eleve in result %}{{ eleve.user.username }}{% if not forloop.last %},{% endif %}{% endfor %}"/>
 {% endif %}
 
 <form method="post" action="{{ request.path }}">

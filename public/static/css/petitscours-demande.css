@@ -1,0 +1,129 @@
+body {
+	font-family: "Nobile";
+	background: url('petitscours-back.jpg');
+	font-size: 12px;
+	text-align: justify;
+}
+
+#header {
+	height: 99px;
+	width: 808px;
+	margin: auto;
+	background: url('petitscours-header.png');
+}
+
+#wrap {
+	width: 778px;
+	margin: auto;
+	background: #ffffff;
+	background: url('petitscours-back-wrap.png');
+	padding: 15px;
+	padding-top: 0px;
+	position: relative;
+}
+table {
+	width:355px;
+}
+
+hr {
+	height: 1px;
+	border: 0;
+	color: black;
+	background-color: black;
+	width: 100px;
+	margin-top: 25px;
+}
+
+#demande input {
+	/*width: 300px;*/
+}
+
+#demande textarea {
+	width: 316px;
+	height: 100px;
+}
+
+#demande {
+	font-size: 0.9em;
+	padding: 0px 0px 0px 15px;
+	position: relative;
+	margin-left: 5px;
+	margin-right: 275px;
+	border-left: 2px #dddddd dashed;
+}
+
+#intro {
+	padding: 0px 0px 15px 25px;
+	margin-right: 275px;
+	position: relative;
+}
+#intro p {
+	margin-top: 0px;
+}
+
+#veuillez {
+	display: none;
+	color: red;
+}
+
+#effectue {
+	display: none;
+	position: absolute;
+	margin-top: 100px;
+	margin-left: 75px;
+	height: 100px;
+	width: 350px;
+	background: #97b790;
+	padding: 8px;
+	font-size: 1.3em;
+	z-index: 21;
+
+}
+
+#adroite {
+	width: 210px;
+	margin-top: 5px;
+	margin-right: 25px;
+	float: right;
+	color: #aaaaaa;
+	font-size: 0.9em;
+}
+
+#layer {
+	background: white;
+	height: 100%;
+	width: 503px;
+	position: absolute;
+	z-index: 20;
+	display: none;
+	opacity: 0.8;
+}
+
+#footer {
+	background: url('petitscours-footer.png');
+	width: 808px;
+	height: 55px;
+	margin: auto;
+	position: relative;
+}
+
+#footer p {
+	margin: 0px;
+	padding-left: 25px;
+	position: absolute;
+	bottom: 20px;
+}
+
+#droite {
+	margin: 0px;
+	position: absolute;
+	bottom: 20px;
+	right: 25px;
+}
+
+#gauche {
+	margin: 0px;
+	padding-left: 25px;
+	position: absolute;
+	bottom: 20px;
+}

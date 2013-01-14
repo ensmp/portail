@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from datetime import date, timedelta
+import Queue
 
 class Question(models.Model):
     enonce = models.CharField(max_length=512)
@@ -40,23 +41,37 @@ class UserProfile(models.Model):
     
     def __unicode__(self):
         return self.user.username
+    
+    @staticmethod        
+    def premiere_annee():
+        from django.db.models import Max 
+        return UserProfile.objects.all().aggregate(Max('promo'))['promo__max']
         
     def en_premiere_annee(self):
-        from django.db.models import Max
-        premiere_annee = UserProfile.objects.all().aggregate(Max('promo'))['promo__max']
+        premiere_annee = UserProfile.premiere_annee()
         return (premiere_annee == self.promo)
     
     @property
     def nb_victoires_sondages(self):
         from sondages.models import Sondage, Vote
         from django.db.models import F, Count
-        return Vote.objects.filter(eleve = self, choix = F('sondage__resultat')).count()
+        return Vote.objects.filter(eleve = self).exclude(sondage__resultat = 0).filter(choix = F('sondage__resultat')).count()
+    
+    @property
+    def nb_defaites_sondages(self):
+        from sondages.models import Sondage, Vote
+        from django.db.models import F, Count
+        return Vote.objects.filter(eleve = self).exclude(sondage__resultat = 0).exclude(choix = F('sondage__resultat')).count()
     
     @property
     def nb_participations_sondages(self):
         from sondages.models import Sondage, Vote
-        return Vote.objects.filter(eleve = self).count()
+        return Vote.objects.filter(eleve = self).exclude(sondage__resultat = 0).count()
     
+    @property
+    def pourcentage_sondages(self):
+        return 100.0 * self.nb_victoires_sondages / float(self.nb_participations_sondages)
+
     def get_absolute_url(self):
         return '/people/'+self.user.username    
         
@@ -69,20 +84,53 @@ class UserProfile(models.Model):
         if self.co.all:
             successeurs.extend(self.co.all())
         return successeurs
+   
+    def relation_avec(self, eleve):
+        if self in eleve.co.all():
+            return "co"
+        if self in eleve.parrains.all():
+            if self.est_une_fille:
+                return "marraine"
+            else:
+                return "parrain"
+        if self in eleve.fillots.all():
+            if self.est_une_fille:
+                return "fillotte"
+            else:
+                return "fillot"
+        return None
+    
+   #Algorithme de Breadth-First-Search, pour trouver le plus court chemin entre deux élèves
+    @staticmethod    
+    def BFS(start, end):
+        visited = []
+        queue = []
+        queue.append([start])
+        while queue:
+            path = queue.pop(0)
+            node = path[-1]
+            if node == end:
+                return path
+            if not node.id in visited:
+                visited.append(node.id)
+                for adjacent in node.separation_successeurs():                    
+                    new_path = list(path)
+                    new_path.append(adjacent)
+                    queue.append(new_path)
+        return None
 
-    @staticmethod	
-    def find_shortest_path(start, end, path=[]):
-        path = path + [start]
-        if start == end:
-            return path
-        shortest = None
-        for node in start.separation_successeurs():
-            if node not in path:
-                newpath = UserProfile.find_shortest_path(node, end, path)
-                if newpath:
-                    if not shortest or len(newpath) < len(shortest):
-                        shortest = newpath
-        return shortest
+    #Algorithme de Depth-First-Search, pour trouver la composante connexe d'un élève
+    @staticmethod
+    def DFS(v):
+        yield v
+        visited = set ([v])
+        S = v.separation_successeurs()
+        while S:
+            w = S.pop()
+            if w not in visited:
+                yield w
+                visited.add (w)
+                S.extend (w.separation_successeurs())
   
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

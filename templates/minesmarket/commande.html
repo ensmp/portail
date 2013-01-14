@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block content %}
-<a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}market_catalogue1.jpg" style="alignt:center"></a>
+<a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}market_catalogue.jpg" style="alignt:center"></a>
 <ul>
 {% for achat in liste_achats %}
 	<li>{{ achat.produit.nom }} ({{ achat.quantite }})<br/>

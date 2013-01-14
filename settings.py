@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'notification',
     'trombi',
     'association',
+    'buypacker',
     'messages',
     'recherche',
     'streamine',
@@ -158,7 +159,9 @@ INSTALLED_APPS = (
     'minesmarket',
     'minestryofsound',
     'vendome', 
-    'jump',     
+    'jump',
+    'pr',
+    'faq',
     #Avatar, pour les avatars de trombi
     'avatar',
     #Photologue pour les photos Mediamine

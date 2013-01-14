@@ -4,19 +4,22 @@ from trombi.models import UserProfile
 from django import forms
 
 class Produit(models.Model):
- CATEGORIES = ( #A changer par une classe ?
+ CATEGORIES = (
   ('Boissons', 'Boissons'),
-  ('Sauces', 'Sauces'),
+  ('Condiments/Sauces', 'Condiments/Sauces'),
   ('Conserves', 'Conserves'),
+  (u'Petit D\xe9jeuner', 'Petit Déjeuner'),
+  ('Bouffe!', 'Bouffe!'),
+  (u'Th\xe9/Caf\xe9', 'Thé/Café'),
+  ('Confiseries','Confiseries'),
+  ('Gateaux/Biscottes','Gateaux/Biscottes')
  )
 
  nom = models.CharField(max_length=80)
- description = models.CharField(max_length=300)
+ volume = models.CharField(max_length=80)
  categorie = models.CharField(max_length=50, choices=CATEGORIES)
  image = models.ImageField(upload_to='minesmarket', blank=True)
- reference = models.CharField(max_length=20)
- pack = models.IntegerField()
- prix_achat = models.DecimalField(max_digits=4, decimal_places=2)
+ ref = models.CharField(max_length=20)
  prix_vente = models.DecimalField(max_digits=4, decimal_places=2)
    
  def __unicode__(self):

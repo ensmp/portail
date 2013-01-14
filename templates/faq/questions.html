@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	   "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Foire aux questions</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="{{ STATIC_URL }}jquery-1.7.2.min.js" type="text/javascript" ></script>
+	<script src="{{ STATIC_URL }}faq.js" type="text/javascript" ></script>
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}faq.css" media="screen" />
+</head>
+<body>
+
+<div id="header"></div>
+
+
+<div id="wrap">
+
+<div id="adroite" style = "display:none">
+<center>
+<img style="margin-bottom: 10px" src="{{ STATIC_URL}}petitscours-logo.jpg" />
+</center>
+<p>Les élèves répondent à vos questions</p>
+</div>
+
+
+<div id="intro">
+<p>Les élèves des Mines sont tous de très bons élèves ayant été reçu à un des concours les plus sélectifs de France. Ils maitrisent parfaitement les disciplines scientifiques, et connaissent des méthodes de travail efficaces.</p>
+<hr/>
+</div>
+
+
+<div id="questions">
+{% for question in questions %} 	
+    <p class = "objet">
+	{{ question.objet }} <br>
+	<span class="date">{{ question.nom }}, le {{ question.date }}</span>
+	</p>
+	<div class = "question"> 
+		{{ question.contenu|linebreaksbr }}
+	
+	{% if question.reponse %}
+		<div class = "reponse">			
+			<p class="auteur">Réponse de {{ question.reponse.eleve.get_profile.first_name }} {{ question.reponse.eleve.get_profile.last_name|upper }}<br/> 
+			<span class = "date">Le {{ question.reponse.date }}</span></p>
+			<p>{{ question.reponse.contenu|linebreaksbr }}</p>
+		</div>
+	{% endif %}
+	</div>	
+{% empty %}
+	<p>Aucune question n'a été posée</p>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if questions.has_previous %}
+            <a href="?page={{ questions.previous_page_number }}">précédent</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ questions.number }} sur {{ questions.paginator.num_pages }}.
+        </span>
+
+        {% if questions.has_next %}
+            <a href="?page={{ questions.next_page_number }}">suivant</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+</div>
+
+<div id="footer">
+	<p id="gauche"><a href="/">Retour au portail des élèves</a></p>
+	<p id="droite"><a href="/petitscours/">Partie réservée aux élèves des Mines</a></p>
+</div>
+</body>
+</html>

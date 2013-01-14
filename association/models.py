@@ -55,7 +55,7 @@ class Adhesion(models.Model):
         self.association.groupe_permissions.user_set.remove(self.eleve.user) #On retire l'eleve du groupe de permissions
         super(Adhesion, self).delete()
     
-        
+# Video sur la page medias d'une assoce
 class Video(models.Model):
     association = models.ForeignKey(Association, blank=True, null=True)
     titre = models.CharField(max_length=64)
@@ -78,11 +78,11 @@ class Video(models.Model):
         
     def save(self, *args, **kwargs):
         creation = self.pk is None #Creation de l'objet
-        if self.url[:31] == 'http://www.youtube.com/watch?v=':
+        if self.url[:31] == 'http://www.youtube.com/watch?v=': # On reconnait un lien direct vers une video youtube
             self.url = 'http://www.youtube.com/embed/' + self.url[31:].split('&')[0]
-        elif self.url[:29] == 'http://www.youtube.com/embed/':
+        elif self.url[:29] == 'http://www.youtube.com/embed/': # On reconnait un lien embed vers une video youtube
             pass
-        elif self.url[:18] == 'https://vimeo.com/':
+        elif self.url[:18] == 'https://vimeo.com/': # On reconnait un lien direct vers une video vimeo
             self.url = 'http://player.vimeo.com/video/' + self.url[18:]
         elif self.url[:30] == 'http://player.vimeo.com/video/':
             pass
@@ -92,7 +92,7 @@ class Video(models.Model):
         if creation:            
             self.envoyer_notification()
         
-    
+# Les affiches pour la page medias d'une assoce
 class Affiche(models.Model):
     association = models.ForeignKey(Association, blank=True, null=True)
     titre = models.CharField(verbose_name='Titre de l\'affiche', max_length=64)

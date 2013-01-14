@@ -133,8 +133,8 @@ class Gallery(models.Model):
     photos = models.ManyToManyField('Photo', related_name='galleries', verbose_name=_('photos'),
                                     null=True, blank=True)
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
-    archive = models.FileField(_('fichier archive (.zip)'), upload_to=PHOTOLOGUE_DIR+"/temp",
-                                help_text=_('Fichier .zip contenant les images.'), null=True, blank=True)
+    archive = models.FileField(_('fichier images (.zip)'), upload_to=PHOTOLOGUE_DIR+"/temp",
+                                help_text=_('Archive zip contenant les images de l\'album'))
 
     class Meta:
         ordering = ['-date_added']
@@ -196,7 +196,17 @@ class Gallery(models.Model):
             
         except Association.DoesNotExist:
             pass
-        
+       
+    def generer_archive(self):
+        import StringIO
+        from os.path import basename
+        buffer= StringIO.StringIO()
+        z= zipfile.ZipFile( buffer, "w" )
+        for photo in self.photos.all():
+            z.write( photo.image.path, basename(photo.image.name))
+        z.close()
+        return buffer.getvalue()
+    
     def save(self, *args, **kwargs):
         creation = self.pk is None #Creation de l'objet            
         super(Gallery, self).save(*args, **kwargs)
@@ -242,8 +252,8 @@ class GalleryUpload(models.Model):
                                                  description=self.description,
                                                  is_public=self.is_public,
                                                  is_hidden_1A=self.is_hidden_1A,
-                                                 tags=self.tags, 
-												 archive = self.zip_file)
+                                                 tags=self.tags,
+                                                 archive = self.zip_file)
             from cStringIO import StringIO
             if len(zip.namelist()) < 100:
                 nombre_zeros = 2
@@ -552,6 +562,9 @@ class Photo(ImageModel):
     def public_galleries(self):
         """Return the public galleries to which this photo belongs."""
         return self.galleries.filter(is_public=True)
+
+    def is_hidden_1A(self):
+        return self.galleries.all()[0].is_hidden_1A
 
     def get_previous_in_gallery(self, gallery):
         try:

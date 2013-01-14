@@ -4,17 +4,25 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}minesmarket.css" />
 
-
 <script>
-function add(nom) {
-var obj=document.getElementById(nom);
-obj.value++;
-}
-function substract( nom ) {
-var obj=document.getElementById(nom);
-if (obj.value > 0) obj.value--;
-}
-</script> 
+$(document).ready(function(){
+    
+    $(".lien_categorie").click(function () { 
+      $(this).parent().next().slideToggle(); 
+    });
+	
+	$(".quantite_plus").click(function () { 
+		var input = $(this).parent().find("input[name=quantite]");
+		input.val(parseInt(input.val())+1);
+	});
+	
+	$(".quantite_moins").click(function () { 
+		var input = $(this).parent().find("input[name=quantite]");
+		if (parseInt(input.val()) > 0) input.val(parseInt(input.val())-1);
+	});
+  });
+</script>
+
 {% endblock %}
 
 {% block onglets %}
@@ -35,43 +43,56 @@ if (obj.value > 0) obj.value--;
 {% endblock %}
 
 {% block content %}
-<a href="/associations/minesmarket/commande/"><img src="{{ STATIC_URL}}market_panier1.jpg" style="alignt:right"></a>
+<a href="/associations/minesmarket/commande/"><img src="{{ STATIC_URL}}market_panier.jpg" style="alignt:right"></a>
 {% if perms.minesmarket %}
 <p><strong>Administration</strong><br/>
 <a href="/associations/minesmarket/fermer_commandes/">Fermer toutes les commandes</a><br/>
 <a href="/associations/minesmarket/dernieres_commandes/">Voir les dernières commandes</a></p>
 {% endif %}
-{% for produit in liste_produits %}
-	
+
+{% regroup liste_produits by categorie as categorie_list %}
+{% for categorie in categorie_list %}
+	<h3 align="center">
+	<a class = "lien_categorie" style="cursor:pointer;">{{categorie.grouper}}</a>
+	</h3>
+<div class="produits" style="display:none">
+
+{% for produit in categorie.list %}
+		
 	<div class="produit">
+		<div class="nom"><h3>{{produit.nom}}</h3></div>
+		<div class="volume"><h3>{{produit.volume}}</h3></div>
+		<div class="prix"><h3>{{produit.prix_vente}}€</h3></div>
+	</div>
 	
-	<form method="post" action="/associations/minesmarket/acheter/">
-	{% csrf_token %}
-	<h3>{{ produit.nom }}</h1>
-	<hr style="width:100%; color:blue;" size="2" /> 
-	<img src="{{ MEDIA_URL }}{{ produit.image }}" width=128>
-	<p>Catégorie : {{ produit.categorie }}</p>
-	<p>Description : {{ produit.description }}</p>
-	<p>Quantité : {{ produit.quantite}}</p>
-	<p>Prix : {{ produit.prix_vente }}€</p>
+	<div class="boutons">
+		
+		<div style="width:10%;display:inline-block">
+		
+		<img src="{{ STATIC_URL}}market_photo.png" alt="photo"
+		onmouseover="this.src='{{ MEDIA_URL }}{{ produit.image }}'"
+		onmouseout="this.src='{{ STATIC_URL}}market_photo.png';"
+		/>
+		
+		</div>
+		
+		<form class="actions" method="post" action="/associations/minesmarket/acheter/">
+			{% csrf_token %}
+			
+			<img class = "quantite_moins" src="{{ STATIC_URL}}market_moins.png" style="cursor:pointer;" />
+			
+			<input type="text" value="0" name = "quantite" size="1" maxlength="4" style="font-size: 20px; height:45px; vertical-align:text-bottom" onkeypress="return isNumberKey(event);">
+			
+			<img class = "quantite_plus" src="{{ STATIC_URL}}market_plus.png" style="cursor:pointer;" />
+			
+			<input type="hidden" name="id" value="{{ produit.id }}"/>
+			
+			<input border=0 src="{{ STATIC_URL}}market_submit.jpg" type=image Value=submit align="right" > 
+		</form>
 	
-	{% if perms.minesmarket %}
-		<p>Prix d'achat : {{ produit.prix_achat }}€</p>
-		<p>Produits par pack: {{ produit.pack }}</p>
-	{% endif %}
-
-
-	<img src="{{ STATIC_URL}}market_moins.png" alt="exemple onclick" style="cursor:pointer;" onclick="substract('quantite_{{ produit.id }}')" />
-	<input type="text" value="0" id="quantite_{{ produit.id }}" name = "quantite" size="1" maxlength="4" style="font-size: 20px; height:75px; vertical-align:text-bottom" onkeypress="return isNumberKey(event);">
-	<img src="{{ STATIC_URL}}market_plus.png" alt="exemple onclick"  style="cursor:pointer;" onclick="add('quantite_{{ produit.id }}')" />
-	
-	<input type="hidden" name="id" value="{{ produit.id }}"/>
-	<input border=0 src="{{ STATIC_URL}}market_submit.jpg" type=image Value=submit align="right" > 
-	</form>
-                        
-                    </div>
-
+	</div>
 
 {% endfor %}
-<hr>
+</div>
+{% endfor %}
 {% endblock %}

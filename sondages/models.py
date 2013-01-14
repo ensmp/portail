@@ -26,7 +26,8 @@ class Sondage(models.Model):
     
     def __unicode__(self):
         return self.question
-        
+		
+    # renvoie le resultat du sondage (1 ou 2 selon la reponse ayant le plus de votes)
     def calculer_resultat(self):
         from django.db.models import Count
         votes = Vote.objects.filter(sondage = self)
