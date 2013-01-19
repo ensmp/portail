@@ -7,18 +7,18 @@
 		</p>
 	</div>
 	<div class="module_middle">		
-		<div id="photo_vp_octo">
+		<div>
 			{% if request.user.get_profile.solde_octo < 0 %}
-				<img id="kevin_venere" src="{{ STATIC_URL }}kevin_venere.png" width="100">
+				<img id="photo_vp_octo" src="{{ STATIC_URL }}dettes_octo.png">
 			{% elif request.user.get_profile.solde_biero < 0 %}
-				<img id="yi_venere" src="{{ STATIC_URL }}yi_venere.png" width="60">
+				<img id="photo_vp_octo" src="{{ STATIC_URL }}dettes_biero.png">
 			{% else %}
-				<img id="kevin_cool" src="{{ STATIC_URL }}kevin_cool.png" width="100">
+				<img id="photo_vp_octo" src="{{ STATIC_URL }}dettes_ok.png">
 			{% endif %}
 		</div>
 		
-			<p id="soldes">Octo : {{request.user.get_profile.solde_octo}} €</p>
-			<p>Biéro : {{request.user.get_profile.solde_biero}} €</p>
+			<p {% if request.user.get_profile.solde_octo < 0 %} class = "negatif" {% else %} class = "positif" {% endif %}>Octo : {{ request.user.get_profile.solde_octo }} €</p>
+			<p {% if request.user.get_profile.solde_biero < 0 %} class = "negatif" {% else %} class = "positif" {% endif %}>Biéro : {{ request.user.get_profile.solde_biero }} €</p>
 		
 	</div>
 	<div class="module_bottom">

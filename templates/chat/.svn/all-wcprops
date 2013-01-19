@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/10/trunk/jqchat/templates/jqchat
+END
+chat_payload.json
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/10/trunk/jqchat/templates/jqchat/chat_payload.json
+END
+chat_test.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/9/trunk/jqchat/templates/jqchat/chat_test.html
+END
+chat_test_with_desc.html
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/9/trunk/jqchat/templates/jqchat/chat_test_with_desc.html
+END

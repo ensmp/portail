@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'jump',
     'pr',
     'faq',
+    'chat',
     #Avatar, pour les avatars de trombi
     'avatar',
     #Photologue pour les photos Mediamine

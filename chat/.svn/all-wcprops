@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/17/trunk/jqchat
+END
+admin.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/17/trunk/jqchat/admin.py
+END
+views.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/16/trunk/jqchat/views.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/18/trunk/jqchat/__init__.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/16/trunk/jqchat/tests.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/16/trunk/jqchat/models.py
+END
+urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/5/trunk/jqchat/urls.py
+END

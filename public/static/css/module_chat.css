@@ -1,0 +1,18 @@
+#chatwindow {
+	 height: 140px;
+	 width: 215px;
+	 border: 1px solid;
+	 padding: 5px;
+	 margin-top: 10px;
+	 overflow: auto;
+	 background-color: white;
+}
+
+span.time_post {
+	font-size:0.8em;
+	display:none;
+}
+
+#msg {
+width:221px;
+}

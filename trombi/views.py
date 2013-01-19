@@ -92,7 +92,7 @@ def thumbnail(request,mineur_login):
 def profile(request):
     return detail(request,request.user.username)
 	
-
+@csrf_exempt
 def octo_update(request):
 
 	password = request.POST.get('password')

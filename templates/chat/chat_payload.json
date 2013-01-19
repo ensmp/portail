@@ -1,0 +1,11 @@
+{% load tz %}{
+	"status": {{ StatusCode }},
+	"time": {{ current_unix_timestamp }},
+{% if NewDescription %}	"description": {{ NewDescription }},{% endif %}
+	"messages": [
+{% for row in NewMessages %}{# The localtime filter is part of Django timezone and adjusts a datetime to the given timezone #}
+	{ "text": "<span class=\"time_post\">{{ row.created|localtime|date:TimeDisplayFormat }}</span> {{ row.text|safe }}"}{% if not forloop.last %},{% endif %}
+{% endfor %}
+	]
+{{ CustomPayload|default:""|safe }}
+}

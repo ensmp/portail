@@ -2,8 +2,13 @@
 {
 float:right;
 margin-right:10px;
+height:75px;
 }
 
-#soldes{
-margin-top:20px;
+p.positif {
+	color:#280;
+}
+
+p.negatif {
+	color:#820;
 }
