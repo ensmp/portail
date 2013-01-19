@@ -17818,7 +17818,7 @@
 {"pk": 525, "model": "trombi.userprofile", "fields": {"last_name":"ROLLAND","first_name":"Arthur","birthday":"1992-04-10","promo":12,"user":525}},
 {"pk": 526, "model": "auth.user", "fields": {"username":"12rousse","email":"robin.roussel@mines-paristech.fr","password": "pbkdf2_sha256$10000$t1ia2thecake$b3isAL1eujbWmz/IN1/NiELPrVU2t0wjBRQWrTAjR8Q=","is_active": true, "is_superuser": false, "is_staff": true}},
 {"pk": 526, "model": "trombi.userprofile", "fields": {"last_name":"ROUSSEL","first_name":"Robin","birthday":"1992-04-05","promo":12,"user":526}},
-{"pk": 527, "model": "auth.user", "fields": {"username":"12salvy","email":"pierre.salvy@mines-paristech.fr","password": "pbkdf2_sha256$10000$t1ia2thecake$b3isAL1eujbWmz/IN1/NiELPrVU2t0wjBRQWrTAjR8Q=","is_active": true, "is_superuser": false, "is_staff": true}},
+{"pk": 527, "model": "auth.user", "fields": {"username":"12salvy","email":"pierre.salvy@mines-paristech.fr","password": "pbkdf2_sha256$10000$t1ia2fNvdOKL$b3ijEF0DujbWmz/IN1/NiELJrVU2t0wjBQQWrTAjR8Q=","is_active": true, "is_superuser": false, "is_staff": true}},
 {"pk": 527, "model": "trombi.userprofile", "fields": {"last_name":"SALVY","first_name":"Pierre","birthday":"1994-03-19","promo":12,"user":527}},
 {"pk": 528, "model": "auth.user", "fields": {"username":"12schnei","email":"guillaume.schneider-maunoury@mines-paristech.fr","password": "pbkdf2_sha256$10000$t1ia2thecake$b3isAL1eujbWmz/IN1/NiELPrVU2t0wjBRQWrTAjR8Q=","is_active": true, "is_superuser": false, "is_staff": true}},
 {"pk": 528, "model": "trombi.userprofile", "fields": {"last_name":"SCHNEIDER-MAUNOURY","first_name":"Guillaume","birthday":"1991-06-11","promo":12,"user":528}},

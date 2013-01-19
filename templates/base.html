@@ -16,6 +16,7 @@
 	<!--Modules-->
 	<link rel="stylesheet" href="{{ STATIC_URL }}module_mediamines.css" />
 	<link rel="stylesheet" href="{{ STATIC_URL }}module_evenements.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}module_bar.css" />
 	<script type="text/javascript" src="{{ STATIC_URL }}module_mediamines.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}module_sondages.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery.qtip-1.0.0-rc3.min.js"></script>
@@ -72,6 +73,7 @@
 	<div id="barre_gauche">	
 		{% include "module_evenement.html" %}
 		{% include "module_sondages.html" %}
+		{% include "module_bar.html" %}
 		
 		<script language="JavaScript">
 			function player_mos(){

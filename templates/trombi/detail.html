@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2>{{ mineur.get_profile.first_name }} {{ mineur.get_profile.last_name|upper }}</h2>
+<h2>{{ mineur.get_profile.first_name }} {% if mineur.get_profile.surnom %}"{{ mineur.get_profile.surnom}}"{% endif %} {{ mineur.get_profile.last_name|upper }}</h2>
 
 <p><strong>Mail</strong> : <a href="mailto:{{ mineur.email }}">{{ mineur.email }}</a></p>
 

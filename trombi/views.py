@@ -12,6 +12,7 @@ from django.utils import simplejson
 from urllib import urlretrieve
 import Image
 import vobject
+import json
 
 @login_required
 def index(request):
@@ -90,11 +91,33 @@ def thumbnail(request,mineur_login):
 @login_required
 def profile(request):
     return detail(request,request.user.username)
+	
+
+def octo_update(request):
+
+	password = request.POST.get('password')
+	json_octo = request.POST.get('clients_bar')
+	
+	# jsoldes = json.loads('[{"login": "12courdi", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "11leuren", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "12salvy", "solde_octo": 42.0, "solde_biero": 3.0}]')
+	jsoldes = json.loads(json_octo)
+	for eleve in jsoldes:
+		login = eleve['login']
+		solde_octo = eleve['solde_octo']
+		solde_biero = eleve['solde_biero']
+		try:
+			profile = UserProfile.objects.get(user__username = login)
+			profile.solde_octo = solde_octo
+			profile.solde_biero = solde_biero	
+			profile.save()
+		except UserProfile.DoesNotExist:                
+			pass
+	
+	return HttpResponse('OK 1')
 
 @login_required
 def edit(request,mineur_login):
     if request.method == 'POST':
-        update_profile(request,mineur_login,phone=request.POST['phone'],chambre=request.POST['chambre'],option=request.POST['option'], co=request.POST.getlist('co'), parrains=request.POST.getlist('parrains'), fillots=request.POST.getlist('fillots'))
+        update_profile(request,mineur_login,surnom=request.POST['surnom'],phone=request.POST['phone'],chambre=request.POST['chambre'],option=request.POST['option'], co=request.POST.getlist('co'), parrains=request.POST.getlist('parrains'), fillots=request.POST.getlist('fillots'))
         # le profil a ete cree/ mis a jour, on update les questions
         profile = request.user.get_profile()
         for question in Question.objects.all():
