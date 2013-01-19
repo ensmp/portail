@@ -22,6 +22,8 @@ class UserProfile(models.Model):
 
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
+    surnom = models.CharField(max_length=128, blank=True, default="")    
+	
     phone = models.CharField(max_length=15, blank=True)
     birthday = models.DateField(null=True)
     promo = models.IntegerField(null=True)
@@ -34,7 +36,10 @@ class UserProfile(models.Model):
     sports = models.CharField(max_length=512, blank=True)
     co = models.ManyToManyField('self', symmetrical = True, blank=True, null=True)
     parrains = models.ManyToManyField('self', related_name='fillots', symmetrical = False, blank=True, null=True)
-    reponses = models.ManyToManyField(Reponse, blank=True)    
+    reponses = models.ManyToManyField(Reponse, blank=True)
+
+    solde_octo = models.FloatField(default=0)
+    solde_biero = models.FloatField(default = 0)
     
     class Meta:
         ordering = ['-promo','last_name']

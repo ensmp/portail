@@ -19,7 +19,9 @@
         {% for mineur in promo.list %}<li class="portrait">
 		<a href = "/people/{{mineur.user.username}}">
 		<img src="{{ STATIC_URL }}{{ mineur.user.username }}.jpg" />
-		<p>{{mineur.first_name}}<br/>{{mineur.last_name|upper}}</p>
+			<p>{{mineur.first_name}}<br/>{{mineur.last_name|upper}} {% if mineur.surnom %}<br/>({{mineur.surnom}}){% endif %}</p>
+
+		
 		</a>
 		</li>{% endfor %}
     </ul>
