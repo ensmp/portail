@@ -74,3 +74,26 @@ def dernieres_commandes_csv(request):
 	c = Context({'liste_commandes': liste_commandes, 'date_fermeture': date_fermeture})
 	response.write(t.render(c))
 	return response
+	
+@login_required
+def supprimer_achat(request, id_achat):
+	achat = get_object_or_404(Achat, id = id_achat)
+	print "achat" + str(achat)
+	commande = achat.commande
+	if achat.commande.eleve.user == request.user and achat.commande.fermee == False:
+		achat.delete()
+	print "commande" + str(commande)
+	return redirect('minesmarket.views.commande')
+	
+@login_required
+def supprimer_tous_achats(request):
+	try:
+		commande = Commande.objects.get(eleve__user__username=request.user.username, fermee=False)
+		liste_achats = Achat.objects.filter(commande__id = commande.id)
+		total = 0
+		for achat in liste_achats:
+			achat.delete()	
+	except Commande.DoesNotExist:
+		liste_achats = None	
+		total = 0
+	return redirect('minesmarket.views.commande')

@@ -23,9 +23,13 @@
 <ul>
 {% for achat in liste_achats %}
 	<li>{{ achat.produit.nom }} ({{ achat.quantite }})<br/>
-	Prix unitaire: <strong>{{ achat.produit.prix_vente }}€</strong></li>
+	Prix unitaire: <strong>{{ achat.produit.prix_vente }}€</strong><br/>
+	<a href="/associations/minesmarket/supprimer_achat/{{ achat.id }}/">Supprimer l'achat</a></li>
 {% endfor %}
 </ul>
+{% if liste_achats %}
+<a href="/associations/minesmarket/supprimer_tous_achats/">Supprimer tous les achats</a></li>
+{% endif %}
 
 <h2><span style="color:#ff8c00;"><u><strong>Total à payer :</strong></u> <strong>{{ total }}€;</strong></span></h2>
 
