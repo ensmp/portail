@@ -9,10 +9,13 @@ from trombi.tools import update_profile
 from association.models import Adhesion
 from django.http import Http404, HttpResponse
 from django.utils import simplejson
+from django.conf import settings
 from urllib import urlretrieve
 import Image
 import vobject
 import json
+import subprocess
+import os
 
 @login_required
 def index(request):
@@ -91,28 +94,28 @@ def thumbnail(request,mineur_login):
 @login_required
 def profile(request):
     return detail(request,request.user.username)
-	
+    
 @csrf_exempt
 def octo_update(request):
 
-	password = request.POST.get('password')
-	json_octo = request.POST.get('clients_bar')
-	
-	# jsoldes = json.loads('[{"login": "12courdi", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "11leuren", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "12salvy", "solde_octo": 42.0, "solde_biero": 3.0}]')
-	jsoldes = json.loads(json_octo)
-	for eleve in jsoldes:
-		login = eleve['login']
-		solde_octo = eleve['solde_octo']
-		solde_biero = eleve['solde_biero']
-		try:
-			profile = UserProfile.objects.get(user__username = login)
-			profile.solde_octo = solde_octo
-			profile.solde_biero = solde_biero	
-			profile.save()
-		except UserProfile.DoesNotExist:                
-			pass
-	
-	return HttpResponse('OK 1')
+    password = request.POST.get('password')
+    json_octo = request.POST.get('clients_bar')
+    
+    # jsoldes = json.loads('[{"login": "12courdi", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "11leuren", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "12salvy", "solde_octo": 42.0, "solde_biero": 3.0}]')
+    jsoldes = json.loads(json_octo)
+    for eleve in jsoldes:
+        login = eleve['login']
+        solde_octo = eleve['solde_octo']
+        solde_biero = eleve['solde_biero']
+        try:
+            profile = UserProfile.objects.get(user__username = login)
+            profile.solde_octo = solde_octo
+            profile.solde_biero = solde_biero    
+            profile.save()
+        except UserProfile.DoesNotExist:                
+            pass
+    
+    return HttpResponse('OK 1')
 
 @login_required
 def edit(request,mineur_login):
@@ -216,3 +219,46 @@ def separation_graphe(request):
     response = HttpResponse(mimetype="image/png")
     im.save(response, "PNG")
     return response
+
+# Import pygraph
+from pygraph.classes.graph import graph
+from pygraph.classes.digraph import digraph
+from pygraph.algorithms.searching import breadth_first_search
+from pygraph.readwrite.dot import write
+from pygraph import *
+def graphe_mine(request):
+    gr = graph()
+    liste_couleurs = ['red', 'royalblue4', 'forestgreen', 'goldenrod4', 'purple4']
+
+    # On ajoute les noeuds
+    for eleve in UserProfile.objects.all():
+        couleur = eleve.promo 
+        if not couleur:
+            couleur = 0
+        if not gr.has_node(eleve.user.username):
+            gr.add_node(eleve.user.username, attrs=[('color', liste_couleurs[couleur % len(liste_couleurs)])])
+    
+    print gr.node_neighbors
+    
+    #On ajoute les aretes
+    for eleve in UserProfile.objects.all():
+        for eleve_co in eleve.co.all():
+            if not gr.has_edge((eleve.user.username, eleve_co.user.username)):
+                gr.add_edge((str(eleve.user.username), str(eleve_co.user.username)), attrs=[('color', 'grey23')])
+        for eleve_parrain in eleve.parrains.all():
+            if not gr.has_edge((eleve.user.username, eleve_parrain.user.username)):
+                gr.add_edge((eleve.user.username, eleve_parrain.user.username))
+    
+    #Suppression des noeuds isoles
+        for i in gr:
+            if not gr.neighbors(i):
+                gr.del_node(i) 
+    
+    dot = write(gr)
+    chemin = os.path.join(settings.MEDIA_ROOT, "trombi")
+    chemin_dot = os.path.join(chemin, "mine.dot")
+    chemin_png = os.path.join(chemin, "mine.png")
+    open(chemin_dot,'w').write(dot)
+    subprocess.call(['dot.exe',"-Tpng",chemin_dot,"-o",chemin_png])
+    url  = os.path.join(settings.MEDIA_URL, "trombi", "mine.png")
+    return HttpResponseRedirect(url)

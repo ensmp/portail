@@ -122,6 +122,7 @@ MIDDLEWARE_CLASSES = (
     
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'online_status.middleware.OnlineStatusMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -143,6 +144,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.comments',
+    'online_status',
     'notification',
     'trombi',
     'association',

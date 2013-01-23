@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -94,7 +95,6 @@ class Ajax(object):
             if action == 'postmsg':
                 msg_text = self.request.POST['message']
                 msg_text.replace('\\', '')
-                print msg_text
     
                 if len(msg_text.strip()) > 0: # Ignore empty strings.
                     Message.objects.create_message(self.request.user, self.ThisRoom, escape(msg_text))

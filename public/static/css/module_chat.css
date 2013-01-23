@@ -1,18 +1,23 @@
-#chatwindow {
-	 height: 140px;
-	 width: 215px;
-	 border: 1px solid;
-	 padding: 5px;
-	 margin-top: 10px;
-	 overflow: auto;
-	 background-color: white;
+#module_chat {
+	margin-top: 10px;
+	border: 1px solid #CCC;
+	background-color: #E8E8E8;
+	border-radius:9px;
+	padding:5px;
+	border-bottom-width:3px;
 }
 
-span.time_post {
+#chatwindow {
+	 height: 140px;
+	 width: 200px;	 
+	 padding: 5px;
+	 overflow: auto;
+}
+
+span {
 	font-size:0.8em;
-	display:none;
 }
 
 #msg {
-width:221px;
+	width:205px;
 }

@@ -3,10 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-	<meta name="author" content="Edouard Leurent"/>
+	<meta name="author" content="Edouard Leurent, P11"/>
 	<meta name="description" content="Le portail des élèves de l'école des Mines de Paris"/>
 	<meta name="keywords" content="portail, élèves, eleves, ecole, mines, paris, paristech, ensmp, mines-paris"/>
 	<meta name="date" content="2012-09-11"/>
+	<meta name="viewport" width=device-width />
 	<title>Le portail des élèves</title>
     <link rel="stylesheet" href="{{ STATIC_URL }}styles.css" />	
 	<link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico"/>
@@ -44,8 +45,8 @@
 <div id = "header">
 	<div id = "banniere-fond">
 		<div id = "banniere">
-			{% load countdown %}
-			<img style="float:right;" src = '{{ STATIC_URL }}countdown{{ "13/01/2013"|countdown }}.png'/>
+			{# load countdown #}
+			{#<!--{{ "13/01/2013"|countdown }}--> #}
 		</div>
 		{% if messages %}
 	<ul id="messages">
@@ -84,5 +85,10 @@
 		<p style = "text-align:center"><a href="javascript:player_mos();" style="color:#666;">Player MINEStry Of Sound</a></p>
 	</div>
 </div>
+<p>
+{% load online_status_tags %}
+
+users online:
+{% online_users 30 %} </p>
 </body>
 </html>

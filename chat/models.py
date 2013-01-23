@@ -90,9 +90,10 @@ class messageManager(models.Manager):
     
     def create_message(self, user, room, msg):
         """Create a message for the given user."""
+        text = '<strong>%s</strong> %s<br />' % (user, msg)
         m = Message.objects.create(user=user,
                                    room=room,
-                                   text='<strong>%s</strong> %s<br />' % (user, msg))
+                                   text=text)
         return m
 
     def create_event(self, user, room, event_id):

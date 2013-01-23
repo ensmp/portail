@@ -3,8 +3,7 @@
 
 <div id="soldes_bar">
 	<div class="module_top">
-		<p style="margin-left:15px;">Soldes 
-		</p>
+		<p style="margin-left:15px;">Soldes éthyliques</p>
 	</div>
 	<div class="module_middle">		
 		<div>
@@ -17,8 +16,8 @@
 			{% endif %}
 		</div>
 		
-			<p {% if request.user.get_profile.solde_octo < 0 %} class = "negatif" {% else %} class = "positif" {% endif %}>Octo : {{ request.user.get_profile.solde_octo }} €</p>
-			<p {% if request.user.get_profile.solde_biero < 0 %} class = "negatif" {% else %} class = "positif" {% endif %}>Biéro : {{ request.user.get_profile.solde_biero }} €</p>
+			<p {% if request.user.get_profile.solde_octo < 0 %} class = "negatif" {% else %} class = "positif" {% endif %}><strong>Octo</strong> : {{ request.user.get_profile.solde_octo }} €</p>
+			<p {% if request.user.get_profile.solde_biero < 0 %} class = "negatif" {% else %} class = "positif" {% endif %}><strong>Biéro</strong> : {{ request.user.get_profile.solde_biero }} €</p>
 		
 	</div>
 	<div class="module_bottom">
