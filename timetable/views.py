@@ -37,8 +37,8 @@ def getEvents(code):
 		evt = Event()
 		descr = m.group('descr')
 		evt.add('summary', title + (' - ' + descr if descr else ''))
-		evt.add('dtstart', datetime(int(m.group('year')), months[m.group('month')], int(m.group('day')), int(m.group('starth')),int(m.group('startm')), tzinfo=tzoffset("GMT+2",7200)))
-		evt.add('dtend', datetime(int(m.group('year')), months[m.group('month')], int(m.group('day')), int(m.group('endh')),int(m.group('endm')), tzinfo=tzoffset("GMT+2",7200)))
+		evt.add('dtstart', datetime(int(m.group('year')), months[m.group('month')], int(m.group('day')), int(m.group('starth')),int(m.group('startm')), tzinfo=tzoffset("GMT+1",3600)))
+		evt.add('dtend', datetime(int(m.group('year')), months[m.group('month')], int(m.group('day')), int(m.group('endh')),int(m.group('endm')), tzinfo=tzoffset("GMT+1",3600)))
 		yield evt
 
 def getics(request):
