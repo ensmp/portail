@@ -12,15 +12,32 @@ $(document).ready(function(){
     });
 	
 	$(".quantite_plus").click(function () { 
-		var input = $(this).parent().find("input[name=quantite]");
+		var input = $(this).parent().parent().find("input[name=quantite]");
 		input.val(parseInt(input.val())+1);
 	});
 	
 	$(".quantite_moins").click(function () { 
-		var input = $(this).parent().find("input[name=quantite]");
+		var input = $(this).parent().parent().find("input[name=quantite]");
 		if (parseInt(input.val()) > 0) input.val(parseInt(input.val())-1);
 	});
+	
+	
+	$(".actions").submit(function(){
+        $.ajax({type:"POST", data: $(this).serialize(), url:"/associations/minesmarket/acheter/",
+            context: this, 
+			success: function(data){					
+				$(this).find('.callback').text('Achat validé').hide().fadeIn("slow").delay(1000).fadeOut("slow");
+            },
+            error: function(){
+                $(this).find('.callback').text('Erreur').hide().fadeIn("slow").delay(1000).fadeOut("slow");
+            }
+        });
+        return false;
+    });
+	
   });
+  
+  
 </script>
 
 {% endblock %}
@@ -28,22 +45,19 @@ $(document).ready(function(){
 {% block onglets %}
 <div id="menu_onglets">
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_minesmarket.png">MinesMarket</h1>
-<ul>
-<li><a href="/associations/minesmarket/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
-<li><a href="/associations/minesmarket/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
-<li><a href="/associations/minesmarket/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
-<li><a href="/associations/minesmarket/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
+<ul class="nav nav-pills">
+<li><a href="/associations/minesmarket/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/minesmarket/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/minesmarket/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/minesmarket/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li class="active"><a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}page_catalogue.png"/><span>Catalogue</span></a></li>
 </ul>
-
-<ul class="supplementaire">
-<li id="actif"><img src="{{ STATIC_URL}}page_catalogue.png"><span>Catalogue</span></li>
-</ul>
-<hr>
+<hr />
 </div>
 {% endblock %}
 
 {% block content %}
-<a href="/associations/minesmarket/commande/"><img src="{{ STATIC_URL}}market_panier.jpg" style="alignt:right"></a>
+<p style="text-align:center;"><a href="/associations/minesmarket/commande/"><img src="{{ STATIC_URL}}market_panier.jpg"></a></p>
 {% if perms.minesmarket %}
 <p><strong>Administration</strong><br/>
 <a href="/associations/minesmarket/fermer_commandes/">Fermer toutes les commandes</a><br/>
@@ -66,28 +80,34 @@ $(document).ready(function(){
 	</div>
 	
 	<div class="boutons">
-		
-		<div style="width:10%;display:inline-block">
-		
-		<img src="{{ STATIC_URL}}market_photo.png" alt="photo"
-		onmouseover="this.src='{{ MEDIA_URL }}{{ produit.image }}'"
-		onmouseout="this.src='{{ STATIC_URL}}market_photo.png';"
-		/>
-		
-		</div>
-		
 		<form class="actions" method="post" action="/associations/minesmarket/acheter/">
 			{% csrf_token %}
-			
-			<img class = "quantite_moins" src="{{ STATIC_URL}}market_moins.png" style="cursor:pointer;" />
-			
-			<input type="text" value="0" name = "quantite" size="1" maxlength="4" style="font-size: 20px; height:45px; vertical-align:text-bottom" onkeypress="return isNumberKey(event);">
-			
-			<img class = "quantite_plus" src="{{ STATIC_URL}}market_plus.png" style="cursor:pointer;" />
-			
 			<input type="hidden" name="id" value="{{ produit.id }}"/>
-			
-			<input border=0 src="{{ STATIC_URL}}market_submit.jpg" type=image Value=submit align="right" > 
+			<table>
+			<tr>
+			<td>
+			<img src="{{ STATIC_URL}}market_photo.png" alt="photo"
+				onmouseover="this.src='{{ MEDIA_URL }}{{ produit.image }}'"
+				onmouseout="this.src='{{ STATIC_URL}}market_photo.png';"
+				/>
+			</td>
+			<td class = "small">
+			<img class = "quantite_moins" src="{{ STATIC_URL}}market_moins.png" style="cursor:pointer;" />
+			</td>
+			<td class = "small">
+			<input class = "quantite" type="text" value="0" name = "quantite" maxlength="4" style="font-size: 20px; height:45px; " onkeypress="return isNumberKey(event);">
+			</td>
+			<td class = "small">
+			<img class = "quantite_plus" src="{{ STATIC_URL}}market_plus.png" style="cursor:pointer;" />
+			</td>
+			<td>
+			<input border=0 src="{{ STATIC_URL}}market_submit.jpg" type=image Value=submit /> 
+			</td>
+			<td>			
+			<p class = "callback"></p>
+			</td>
+			</tr>
+			</table>
 		</form>
 	
 	</div>

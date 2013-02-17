@@ -7,19 +7,19 @@
 {% block onglets %}
 <div id="menu_onglets">
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_minesmarket.png">MinesMarket</h1>
-<ul>
-<li><a href="/associations/minesmarket/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
-<li><a href="/associations/minesmarket/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
-<li><a href="/associations/minesmarket/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
-<li id="actif"><img src="{{ STATIC_URL}}page_catalogue.png"><span>Catalogue</span></li>
+<ul class="nav nav-pills">
+<li><a href="/associations/minesmarket/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/minesmarket/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/minesmarket/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/minesmarket/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li class="active"><a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}page_catalogue.png"/><span>Catalogue</span></a></li>
 </ul>
-<br>
-<hr>
+<hr />
 </div>
 {% endblock %}
 
 {% block content %}
-<a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}market_catalogue.jpg" style="alignt:center"></a>
+<p style="text-align:center;"><a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}market_catalogue.jpg"></a></p>
 <ul>
 {% for achat in liste_achats %}
 	<li>{{ achat.produit.nom }} ({{ achat.quantite }})<br/>
@@ -31,6 +31,6 @@
 <a href="/associations/minesmarket/supprimer_tous_achats/">Supprimer tous les achats</a></li>
 {% endif %}
 
-<h2><span style="color:#ff8c00;"><u><strong>Total à payer :</strong></u> <strong>{{ total }}€;</strong></span></h2>
+<h2><span style="color:#ff8c00;"><u><strong>Total à payer :</strong></u> <strong>{{ total }}€</strong></span></h2>
 
 {% endblock %}

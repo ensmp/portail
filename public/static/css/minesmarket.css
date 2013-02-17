@@ -1,8 +1,7 @@
 .produits{
 	padding:5px 0;
 }
-.produit{
-	width:500px;
+.produit{	
 	text-align:left;
 	border-color: blue;
 	border-style: double;
@@ -24,17 +23,30 @@ width: 25%;
 text-align:right;
 margin-left: 85%;
 width: 13%}
-.boutons{
-width:500px
+
+.actions table, tbody, tr {
+	width:100%;
 }
-.actions{
-width:89%;
-text-align:right;
-display:inline-block;
+
+.actions table td {
+	width:25%;
+}
+
+.actions table td.small {
+	width:8%;
 }
 
 h3{font-family: Corbel, Arial, Helvetica;
-	front-size:10px;
+	
 	color:black;
 	font-variant: small-caps ;
+}
+
+.callback {	
+	color:#080;
+	font-size:30px;
+}
+
+.quantite {
+	width:30px;
 }

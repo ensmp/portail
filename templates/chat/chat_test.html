@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<!-- Load the JS for the chat window and start retrieving messages. -->
+<!-- Charge depuis base.html (pour le module)
 <script type="text/javascript" src="{{ STATIC_URL }}jqchat.js"></script>
 {% load chat_room %}
 {% obtenir_room %}
@@ -15,7 +15,7 @@
 		InitChatWindow("{% url jqchat_ajax room.id %}", null);
 	});
 </script>
-
+-->
 <div id = "module_chat" class="well">
 <div id="chatwindow" class = "grand"><span id="loading">Chargement...</span></div>
 

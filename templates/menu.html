@@ -79,8 +79,9 @@
 				{% load obtenir_nombre_messages %}{% if request.user.is_authenticated %}{% compter_messages request.user.username %}{% endif %}
 				{% load active %}
 				<li class="{% active request "^/messages/" %}"><a href="/messages"><img src="{{ STATIC_URL}}mail.png"/><span id="compteur_messages">{{ nombre_de_messages }}</span> Message{{ nombre_de_messages|pluralize }}</a></li>  
+				<!--
 				<li class="{% active request "^/calendrier/" %}"><a href="/calendrier/"><img src="{{ STATIC_URL}}date.png"/>Calendrier</a></li>
-			  
+				-->
 			
 				<li class="dropdown {% active request "^/associations/" %}">
 				<a class="dropdown-toggle" data-hover="dropdown" data-delay="250" href="/associations/"><img src="{{ STATIC_URL}}association.png"/>Associations <b class="caret"></b></a>

@@ -1,4 +1,4 @@
-{% extends "base_topbar.html" %}
+{% extends "base.html" %}
 
 {% block header %}
 	<link rel="stylesheet" href="{{ STATIC_URL }}mediamines.css" />
@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery.multiselect.filter.js"></script>
 	
 	<style type="text/css">
-	body {
+	#fond {
 		background:url("{{STATIC_URL}}bg-mediamines.jpg");
 	}
 	#content_onglets a {

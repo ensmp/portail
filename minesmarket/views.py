@@ -39,10 +39,14 @@ def acheter(request):
 		produit = get_object_or_404(Produit, id = request.POST['id'])
 		try:
 			achat = Achat.objects.get(commande__id = commande.id, produit__id = produit.id)
-			achat.quantite = request.POST['quantite']
-			achat.save()
+			if request.POST['quantite'] == "0":
+				achat.delete()
+			else:
+				achat.quantite = request.POST['quantite']
+				achat.save()
 		except Achat.DoesNotExist:
-			achat = Achat.objects.create(commande = commande, produit = produit, quantite = request.POST['quantite'])		
+			if request.POST['quantite'] != "0":
+				achat = Achat.objects.create(commande = commande, produit = produit, quantite = request.POST['quantite'])		
 	return redirect('minesmarket.views.commande')
 
 @login_required
