@@ -3,9 +3,7 @@ body {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	background-size: cover;
-	padding-top: 60px;
-    padding-bottom: 40px;
+	background-size: cover;	
 }
 
 
@@ -69,4 +67,26 @@ margin-right:5px;
 
 .nav-tabs, .nav-pills {
     text-align:center;
+}
+
+
+/* Pour l'administration */
+#content-main .module table{
+	text-align:center;
+	width:100%;
+}
+
+#content-main .module table td{
+	width:33%;
+}
+
+#content-main .module table caption {
+	font-size:1.5em;
+	margin-top:10px;
+}
+
+a#menu_notifications {
+    background: url("notification.png") no-repeat scroll 0 center transparent;
+    color: #FFF;
+	padding-left:8px!important;
 }

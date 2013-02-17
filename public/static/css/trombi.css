@@ -17,12 +17,7 @@ td {
 	margin: 0px;
 	padding: 2px;
 }
-#picture { /* dans les pages détail */
-  position: absolute;
-  top: 0;
-  left: 50%;
-  margin-left: 75px;
-  /*margin-top: 192px;*/
+#picture img{ /* dans les pages détail */  
   border: 1px solid #ccc;
   box-shadow: 0px 0px 4px #aaa;
 }

@@ -5,13 +5,24 @@
 	 overflow-x: hidden; 
 }
 
+#chatwindow.grand{
+min-height: 400px;
+overflow-y: scroll;
+overflow-x:hidden;
+}
+
 #chatwindow span {
 	font-size:0.8em;
 	color:#666;
 }
 
 #msg {
-	width:198px;
+	width:92%;
+	margin:0;
+}
+
+#msg.grand {
+	width:100%;
 	margin:0;
 }
 

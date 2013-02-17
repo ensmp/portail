@@ -936,7 +936,32 @@
   }
 }
 
-@media (max-width: 1120px) {
+/** TAILLE 2 : ON ENLEVE LE TITRE **/
+@media (max-width: 1361px) {
+.navbar a.brand {
+	display:none;
+  }
+  
+  .span6-tablet {
+	width: 48.317948717948715% !important;
+    *width: 48.664757228587014% !important;
+  }
+  
+  .span3-tablet {
+	width: 23.076923076923077% !important;
+    *width: 23.023731587561375% !important;
+  }
+}
+
+/** TAILLE 3 : ON ENLEVE LES ICONES **/
+@media (max-width: 1140px) {
+ul.nav li a img {
+	display:none;
+  }
+}
+
+/** TAILLE 4 : BARRE TELEPHONE **/
+@media (max-width: 920px) {
   body {
     padding-top: 0;
   }
@@ -1083,18 +1108,26 @@
     padding-left: 10px;
   }
   
-  .span6-tablet {
-	width: 48.317948717948715% !important;
-    *width: 48.664757228587014% !important;
+  .navbar a.brand {
+	display:block;
   }
   
-  .span3-tablet {
-	width: 23.076923076923077% !important;
-    *width: 23.023731587561375% !important;
+  ul.nav li a img {
+	display:inline;
+  }
+  
+  body {
+	padding-top:0;
   }
 }
 
-@media (min-width: 1121px) {
+/** TAILLE 4 : FIN BARRE TELEPHONE **/
+@media (min-width: 921px) {
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
   .nav-collapse.collapse {
     height: auto !important;
     overflow: visible !important;

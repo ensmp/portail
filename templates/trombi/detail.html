@@ -2,6 +2,14 @@
 
 {% block content %}
 
+
+{% load avatar_tags %}
+
+<div id="picture" class="pull-right">
+<!--<img src="{{ STATIC_URL }}{{ mineur.username }}.jpg" />-->
+<img src = {% avatar_url mineur %}>
+</div>
+
 <h2>{{ mineur.get_profile.first_name }} {% if mineur.get_profile.surnom %}"{{ mineur.get_profile.surnom}}"{% endif %} {{ mineur.get_profile.last_name|upper }}</h2>
 
 <p><strong>Mail</strong> : <a href="mailto:{{ mineur.email }}">{{ mineur.email }}</a></p>
@@ -76,13 +84,6 @@
 {% empty %}
 	<p>Questionnaire non disponible</p>
 {% endfor %}
-
-{% load avatar_tags %}
-
-<div id="picture">
-<!--<img src="{{ STATIC_URL }}{{ mineur.username }}.jpg" />-->
-<img src = {% avatar_url mineur %}>
-</div>
 
 <hr>
 <p><strong>Photos <a href='/associations/mediamines/'>MediaMines</a></strong> :</p>

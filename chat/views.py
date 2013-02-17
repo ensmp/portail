@@ -96,7 +96,7 @@ class Ajax(object):
                 msg_text = self.request.POST['message']
     
                 if len(msg_text.strip()) > 0: # Ignore empty strings.
-                    Message.objects.create_message(self.request.user, self.ThisRoom, escape(msg_text))
+                    Message.objects.create_message(self.request.user, self.ThisRoom, msg_text)
         else:
             # If a GET, make sure that no action was specified.
             if self.request.GET.get('action', None):

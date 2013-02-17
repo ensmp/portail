@@ -1,4 +1,4 @@
-{% extends "base_header.html" %}
+{% extends "base.html" %}
 
 {% block header %}
 	<link rel="stylesheet" href="{{ STATIC_URL }}module_chat.css" />
@@ -16,7 +16,7 @@
 	});
 </script>
 
-<div id = "module_chat">
+<div id = "module_chat" class="well">
 <div id="chatwindow" class = "grand"><span id="loading">Chargement...</span></div>
 
 <form id="chatform">

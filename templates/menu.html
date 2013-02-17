@@ -96,10 +96,11 @@
 				</li>
 			
 				
-				<li class="dropdown {% active request "^/(?P<service>people|timetable|petitscours|objetstrouves)/" %}">
+				<li class="dropdown {% active request "^/(?P<service>people|timetable|petitscours|objetstrouves|chat)/" %}">
 				<a class="dropdown-toggle" data-hover="dropdown" data-delay="250" href="#"><img src="{{ STATIC_URL}}gear.png">Services <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="/people/">Trombi</a></li>  
+					<li><a href="/chat/room/">Chat</a></li>  
 					<li><a href="/petitscours/">Petits cours</a></li>
 					<li><a href="/objetstrouves/">Objets trouvés</a></li>
 					<li><a href="/timetable/">Emploi du temps</a></li>  
@@ -108,12 +109,13 @@
 				</ul>
 				</li>
 				
-				<form class="navbar-search pull-left" action="/recherche/" method="get">
-				<input type="text" name = "q" class="search-query" placeholder="Rechercher">
+				<form class="navbar-search pull-left" action="/recherche/" method="get" >
+				<input type="text" name = "q" class="search-query" placeholder="Rechercher" style="width:150px">
 				</form>
+				
+				{% if request.user.is_staff %}<li><a href="/admin/"><img src="{{ STATIC_URL}}Suit.png"><span>Administration</span></a></li>  {% endif %}
 		</ul>
-		<ul class="nav pull-right">
-				<li><a id = "menu_notifications" href="/notifications/">{{ nombre_de_notifications }}</a></li>
+		<ul class="nav pull-right">				
 				<li class = "dropdown {% active request "^/accounts/" %}">
 				<a class="navbar-link dropdown-toggle" data-hover="dropdown" data-delay="250" href="/accounts/profile/" >{% if request.user.get_profile.est_une_fille %}<img src="{{ STATIC_URL}}user_girl.png">{% else %}<img src="{{ STATIC_URL}}user_guy.png">{% endif %}{{ user.username }} <b class="caret"></b></a>
 				<ul class="dropdown-menu">
@@ -122,6 +124,7 @@
 					<li><a href="/accounts/logout/">Se déconnecter</a></li>					
 				</ul>
 				</li>
+				<li><a id = "menu_notifications" href="/notifications/">{{ nombre_de_notifications }}</a></li>
 				
           </ul>
           

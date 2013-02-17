@@ -16,15 +16,12 @@
 <li><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png">Évenements</a></li>
 <li class="active"><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png">Équipe</a></li>
 <li><a href="/associations/{{association.pseudo}}/medias/"><img src="{{ STATIC_URL}}clapperboard.png">Médias</a></li>
-</ul>
-
 {% if association.page_set.all %}
-<ul class="supplementaire">
 {% for page in association.page_set.all %}
 <li><a href="{% if not page.is_externe %}/associations/{{association.pseudo}}/{% endif %}{{ page.lien }}"><img src="{{ STATIC_URL}}page_{% if not page.is_externe %}{{page.lien}}{% else %}site{% endif %}.png"><span>{{page.titre}}</span></a></li>
 {% endfor %}
-</ul>
 {% endif %}
+</ul>
 <hr />
 </div>
 {% endblock %}

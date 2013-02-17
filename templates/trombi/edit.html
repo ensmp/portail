@@ -86,8 +86,10 @@
 </form>
 
 <script type="text/javascript">
+$("select").multiselect().multiselectfilter();
+
 $('select[name="co"]').multiselect({
-		minWidth: '150',
+		minWidth: '250',
 		selectedList: 3,
 		selectedText: '# élèves sélectionnés',
 		noneSelectedText: 'Choisir son co',
@@ -99,7 +101,7 @@ $('select[name="co"]').multiselect({
 });
 
 $('select[name="parrains"]').multiselect({
-		minWidth: '150',
+		minWidth: '250',
 		selectedList: 3,
 		selectedText: '# élèves sélectionnés',
 		noneSelectedText: 'Choisir son parrain',
@@ -111,7 +113,7 @@ $('select[name="parrains"]').multiselect({
 });
 
 $('select[name="fillots"]').multiselect({
-		minWidth: '150',
+		minWidth: '250',
 		selectedList: 3,
 		selectedText: '# élèves sélectionnés',
 		noneSelectedText: 'Choisir son fillot',

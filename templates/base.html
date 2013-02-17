@@ -10,12 +10,14 @@
 
     <!-- Le styles -->
     <link href="{{ STATIC_URL }}bootstrap.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}bootstrap-responsive.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}base.css" rel="stylesheet">
 	
 	<link href="{{ STATIC_URL }}sondages.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}module_bar.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}module_chat.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}bootstrap-responsive.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}module_evenements.css" rel="stylesheet">
+    
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -33,6 +35,7 @@
 	<script src="{{ STATIC_URL }}jquery.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}module_sondages.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}jqchat.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.qtip-1.0.0-rc3.min.js"></script>
 	{% load chat_room %} {% obtenir_room %}
 	<script type="text/javascript">$(document).ready(function(){InitChatWindow("{% url jqchat_ajax room.id %}", null);});</script>
 	
@@ -71,7 +74,9 @@
         </div><!--/span-->
 		<div class = "span2 span3-tablet">
 		{# include "module_mediamines.html" #}
+		{% if not request.get_full_path = "/chat/room/" %}
 		{% include "module_chat.html" %}
+		{% endif %}
 		{% include "module_anniv.html" %}
 		</div>
       </div><!--/row-->
