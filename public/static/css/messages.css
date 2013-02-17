@@ -1,46 +1,4 @@
 
-#div_messages ul {
-	list-style:none;
-	padding:0;
-	margin:0;
-}
-
-#div_messages img.logo_assoce {
-	width:32px;
-	height:32px; 
-}
-
-#div_messages img.action_message {
-}
-
-#div_messages table {
-	font-family:Arial;
-	width:100%;
-	/*text-align:center;*/
-}
-#div_messages table td.objet{		
-	cursor:pointer;
-	font-size:17px;
-	font-weight:bold;
-	color:#000;
-}
-#div_messages table td.objet a{	
-	color:#000;
-}
-#div_messages table td.info{	
-	font-size:12px;
-	font-style:italic;	
-	color:#000;
-}
-#div_messages table span.legende{		
-	color:#727272;
-}
-#div_messages table td.bouton{
-	width:25px;
-}
-#div_messages table td.assoce{
-	width:32px;
-}
 	
 img.miniature {
 	float:left;
@@ -54,7 +12,7 @@ div.comment {
 	background-color:#fafafa;
 	min-height: 42px;
 	border: solid 1px #eef;
-
+	clear:both;
 }
 
 .comment a {
@@ -81,54 +39,20 @@ a.comment_delete img {
 }
 
 
-div.message{
-	position:relative;
-	width:516px;
-	padding: 0;
+.message-icone {
+	margin-right:10px;
+	margin-top:10px;
 }
 
-div.message hr{
-	border:0 none;
-	height:1px;
-	color:#808080;
-	background-color:#808080;
-	margin-bottom:4px;
+.message-info{	
+	font-size:12px;
+	font-style:italic;	
+	color:#000;
+}
+.message-legende{		
+	color:#727272;
 }
 
-div.message p.pied-message {
+.pied-message {
 	line-height:90%;
-	margin:0 0 5px 0;
-	padding:0;
-}
-div.message p.signature {
-	text-align:right;
-	margin-top:-20px;
-}
-
-#div_messages div.message ul {
-	list-style-type:disc;
-	padding-left:15px;
-	margin:0;
-}
-
-div.event {
-margin-top:-15px;
-}
-
-div.top-event {
-	position:relative;
-	margin:0;
-	padding:0;
-	float:left;
-	width:100%;
-	height:30px;
-	margin-bottom:0px;
-	background: url(evenement_top.gif)  repeat-x scroll left top rgb(45, 95, 155);
-	border-bottom : 1px solid rgb(32, 86, 150);
-	font-size:14px;
-	color: #ddd;
-}
-
-div.top-event p{
-	margin:5px
 }

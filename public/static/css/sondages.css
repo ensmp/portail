@@ -1,18 +1,12 @@
-#content_onglets h3 {
-text-align:center;
-}
-
-#addform {
+#module_sondages {
 	text-align:center;
-	margin-top:30px;
 }
 
-#content_onglets table {
-	text-align:center;
-	width:100%;
+#sondage_precedent {
+	margin-top:10px;
+	cursor:pointer;
 }
-
-#content_onglets ul {
-	margin: 0;
+#sondage_suivant {
+	margin-top:10px;
+	cursor:pointer;
 }
-

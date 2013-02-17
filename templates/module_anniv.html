@@ -1,17 +1,11 @@
-<div id = "birthday">
-	<div class="module_top">
-		<p>Les prochains anniversaires</p>
-	</div>
-	<div class="module_middle">		
-		{% load obtenir_anniv %}
-		{% obtenir_liste_annivs %}
-		<ul style="list-style:none; padding:0;">
-		{% for eleve in anniv_list %}
-			{% ifchanged %}<p class="date">{{ eleve.birthday|date:"d F" }}</p>{% endifchanged %}
-			<li><a href = "/people/{{eleve.user.username}}">{{eleve.first_name}} {{eleve.last_name}} (P{{eleve.promo|stringformat:"02d"}})</a></li>  
-		{% endfor %}
-		</ul>
-	</div>
-	<div class="module_bottom">
-	</div>
+<div id = "birthday" class = "well sidebar-nav">
+	<p class = "well-header">Les prochains anniversaires</p>
+	{% load obtenir_anniv %}
+	{% obtenir_liste_annivs %}
+	<ul class="nav nav-list">
+	{% for eleve in anniv_list %}
+		{% ifchanged %}<li class="nav-header">{{ eleve.birthday|date:"d F" }}</li>{% endifchanged %}
+		<li><a href = "/people/{{eleve.user.username}}">{{eleve.first_name}} {{eleve.last_name}} (P{{eleve.promo|stringformat:"02d"}})</a></li>  
+	{% endfor %}
+	</ul>
 </div>

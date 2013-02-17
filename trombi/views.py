@@ -24,7 +24,7 @@ def index(request):
 
 @login_required
 def index_json(request):
-    mineur_list = UserProfile.objects.order_by('-promo','last_name')
+    mineur_list = UserProfile.objects.exclude(promo__isnull=True).order_by('-promo','last_name')
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps([{
             'username': m.user.username,

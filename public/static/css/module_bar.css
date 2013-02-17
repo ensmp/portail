@@ -1,14 +1,6 @@
 #photo_vp_octo
 {
-float:right;
 margin-right:10px;
 height:75px;
 }
 
-p.positif {
-	color:#280;
-}
-
-p.negatif {
-	color:#820;
-}

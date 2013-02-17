@@ -1,6 +1,5 @@
 // Chat client code.
 
-
 // Keep track of the last message received (to avoid receiving the same message several times).
 // This global variable is updated every time a new message is received.
 var timestamp = 0;
@@ -51,8 +50,7 @@ function InitChatWindow(ChatMessagesUrl, ProcessResponseCallback){
 /**   The args to provide are:
 	- the URL to call for AJAX calls.
 	- A callback function that handles any data in the JSON payload other than the basic messages.
-	  For example, it is used in the example below to handle changes to the room's description. */
-
+	  For example, it is used in the example below to handle changes to the room's description. */	
 	$("#loading").remove(); // Remove the dummy 'loading' message.
 
 	// Push the calling args into global variables so that they can be accessed from any function.
@@ -99,19 +97,22 @@ function InitChatWindow(ChatMessagesUrl, ProcessResponseCallback){
 			 } 
 		});
 
+		var msg_post = $("#msg").val().replace(/\\/g, '\\\\'); //Bug des antislash
+		$("#msg").val(""); // clean out contents of input field.
+		
 		$.post(url,
 				{
 				time: timestamp,
 				action: "postmsg",
-				message: $("#msg").val()
+				message: msg_post
            		},
-           		function(payload) {
-         						$("#msg").val(""); // clean out contents of input field.
+           		function(payload) {         						
          						// Calls to the server always return the latest messages, so display them.
          						processResponse(payload);
        							},
        			'json'
        	);
+		msg_post = "";
        	
        	// Start calling the server again at regular intervals.
        	IntervalID = setInterval(callServer, CallInterval);

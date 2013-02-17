@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}messages.css" />
 
 <script type="text/javascript" src="{{ STATIC_URL }}jquery.autosize.js"></script>  
-<script type="text/javascript" src="{{ STATIC_URL }}messages.js"></script>    
+<script type="text/javascript" src="{{ STATIC_URL }}commentaires.js"></script>    
 <script type="text/javascript" src="{{ STATIC_URL }}read.js"></script>
 
 {% endblock %}
@@ -12,27 +12,25 @@
 
 {% block onglets %}
 <div id="menu_onglets">
-
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
 
-<ul>
-<li id="actif"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></li>
-<li><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
-<li><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
-<li><a href="/associations/{{association.pseudo}}/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
-</ul>
+<ul class="nav nav-pills">
+<li class="active"><a href="/associations/{{association.pseudo}}/messages/"><img src="{{ STATIC_URL}}mail.png">Messages</a></li>
+<li><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png">Évenements</a></li>
+<li><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png">Équipe</a></li>
+<li><a href="/associations/{{association.pseudo}}/medias/"><img src="{{ STATIC_URL}}clapperboard.png">Médias</a></li>
+
 
 {% if association.page_set.all %}
-<ul class="supplementaire">
 {% for page in association.page_set.all %}
 <li><a href="{% if not page.is_externe %}/associations/{{association.pseudo}}/{% endif %}{{ page.lien }}"><img src="{{ STATIC_URL}}page_{% if not page.is_externe %}{{page.lien}}{% else %}site{% endif %}.png"><span>{{page.titre}}</span></a></li>
 {% endfor %}
-</ul>
 {% endif %}
-
-<hr>
+</ul>
+<hr/>
 </div>
 {% endblock %}
+
 {% block content %}
 {% for adhesion in membres %}
 {% if request.user = adhesion.eleve.user %}
@@ -40,80 +38,75 @@
 {% endif %}
 {% endfor %}
 
-<div id = "div_messages">
+
 {% if list_messages %}
-<ul>
+<!--PRECHARGEMENT IMAGES HOVER -->
+<img src="{{STATIC_URL}}readhover.png" style="display:none;"/>
+<img src="{{STATIC_URL}}unreadhover.png" style="display:none;"/>
+<img src="{{STATIC_URL}}favouritehover.png" style="display:none;"/>
+<img src="{{STATIC_URL}}unfavouritehover.png" style="display:none;"/>
+
+<div class="accordion" id="message_accordion">
 {% for message in list_messages %}
 {% load comments %}
 {% get_comment_count for message as comment_count %}
-<li> 
-<div class="message">
-	<div class="message_infos">
-		<table>
-			<tr>
-				<td rowspan=2 class="assoce"><a href = "/associations/{{message.association.pseudo}}"><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{message.association.pseudo}}.png"></a></td>
-				<td class="objet"><a class="objet" href="javascript:void(0);">{{ message.objet }}</a></td>
-				<!--<td class="info">	
-				</td>-->
-				<!--<td class="info"> {{ comment_count }} commentaires</td>-->
-				<td rowspan=2 class="bouton">
-				{% if request.user.get_profile in message.lu.all %}
-				<a href="/messages/{{ message.id }}/"><img class='action_message unread' src="{{ STATIC_URL }}unread.png" /></a>
-				{% else %}
-				<a href="/messages/{{ message.id }}/"><img class='action_message read' src="{{ STATIC_URL }}read.png" /></a>
-				{% endif %}
-				</td>
-				<td rowspan=2 class="bouton">
-				{% if request.user.get_profile in message.important.all %}
-				<a href="/messages/{{ message.id }}/"><img class='action_message unfavourite' src="{{ STATIC_URL }}unfavourite.png" /></a>
-				{% else %}
-				<a href="/messages/{{ message.id }}/"><img class='action_message favourite' src="{{ STATIC_URL }}favourite.png" /></a>
-				{% endif %}
-				</td>
-				</tr>
-				<tr>
-				<td class="info">
-				<span class="legende">Posté par</span> {{message.association.nom}}
-				{% if message.est_recent %}
-				<span class="legende">il y a</span> {{ message.date|timesince }}
-				{% else %}
-				<span class="legende">le</span> {{ message.date|date:"d F Y" }}  <!-- a H:i -->
-				{% endif %}
-				</td>
-			</tr>
-		</table>
-	</div>
+
+<div class="accordion-group message">
+<div class="accordion-heading">
+<span class = "pull-right message-icone">
+	{% if request.user.get_profile in message.lu.all %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message unread' src="{{ STATIC_URL }}unread.png" /></a>
+	{% else %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message read' src="{{ STATIC_URL }}read.png" /></a>
+	{% endif %}
 	
-	<div class="message_contenu">
-		<p>{{ message.contenu|removetags:"script"|safe}}</p>
-		
-		<hr>
-		<p class="pied-message">Visible par
-		{% if message.destinataire %}
-		{{message.destinataire.nom}}
-		{% else %}
-		tous
-		{% endif %}
-		</p>
-		<p class="signature">Posté par <a href="/people/{{message.expediteur.user.username}}">{{message.expediteur.first_name}} {{message.expediteur.last_name}}</a></p>
-		
-		<div class="comments">
-		{% load comments %}
-		{% render_comment_list for message %}
-		</div>
-		<div class="comment_form">
-		{% render_comment_form for message %}
-		</div>
-		
+	{% if request.user.get_profile in message.important.all %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message unfavourite' src="{{ STATIC_URL }}unfavourite.png" /></a>
+	{% else %}
+	<a href="/messages/{{ message.id }}/"><img class='action_message favourite' src="{{ STATIC_URL }}favourite.png" /></a>
+	{% endif %}
+	</span>
+				
+<a class="accordion-toggle" data-toggle="collapse" data-parent="#message_accordion" href="#message{{ forloop.counter }}">
+<img src = "{{ STATIC_URL }}logo_{{message.association.pseudo}}.png" width="40"> 
+{{ message.objet }}
+</a>
+</div>
+<div id="message{{ forloop.counter }}" class="accordion-body collapse">
+<div class="accordion-inner">
+<p class="message-info"><span class="message-legende">Posté par</span> {{message.association.nom}}
+	{% if message.est_recent %}
+	<span class="message-legende">il y a</span> {{ message.date|timesince }}
+	{% else %}
+	<span class="message-legende">le</span> {{ message.date|date:"d F Y" }}  <!-- a H:i -->
+	{% endif %}</p>
+<p>{{ message.contenu|removetags:"script"|safe}}</p>
+<hr>
+	<p class="message-pied">Visible par
+	{% if message.destinataire %}
+	{{message.destinataire.nom}}
+	{% else %}
+	tous
+	{% endif %}
+	<span class="pull-right">Posté par <a href="/people/{{message.expediteur.user.username}}">{{message.expediteur.first_name}} {{message.expediteur.last_name}}</a></span>
+	</p>
+	
+	
+	<div class="comments">
+	{% load comments %}
+	{% render_comment_list for message %}
+	</div>
+	<div class="comment_form">
+	{% render_comment_form for message %}
 	</div>
 </div>
-</li>
-{% endfor %}
-</ul>
-{% else %}
-<p>Aucun message posté.</p>
-{% endif %}
 </div>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p>Aucun message posté</p>
+{% endif %}
 
 
 {% endblock %}

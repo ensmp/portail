@@ -2,7 +2,6 @@ img.logo_assoce {
 	position: relative; 
 	width:80px;
 	height:80px;
-	top:10px;
 	margin-right:15px;
 }
 @font-face {
@@ -50,14 +49,12 @@ p.actions {
 }
 
 ul.liste_assoce {
-	width:90%;
 	list-style:none;
 	text-align:center;
 }
 
 ul.liste_assoce li {
-	float:left;	
-	display:block;
+	display:inline-block;
 	width:90px;
 	height:130px;
 }

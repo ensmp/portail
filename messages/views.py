@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.utils import simplejson
 from django.template import RequestContext
 from django.db.models import Q
@@ -123,8 +123,8 @@ def tous_json(request):
             'important': request.user.get_profile() in m.important.all()           
         } for m in all_messages]))
     return response
-	
-	
+    
+    
 @login_required
 #La liste des messages classés importants
 def importants(request):
@@ -221,3 +221,32 @@ def delete_own_comment(request):
         comment.delete()
         response.write('deleted')
     return response
+    
+
+@login_required
+def edit(request, message_id=None):
+    if message_id:
+        message = get_object_or_404(Message, pk=message_id)
+        if message.expediteur != request.user.get_profile():
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+    if request.POST:
+        form = MessageForm(request.POST, instance=message)
+        if form.is_valid():
+            message = form.save()
+            message.objet=sanitizeHtml(message.objet)
+            message.contenu=sanitizeHtml(request.POST['contenu'])
+            message.save()
+
+            # If the save was successful, redirect to another page
+            redirect_url = message.get_absolute_url()#reverse(article_save_success)
+            return HttpResponseRedirect(redirect_url)
+
+    else:
+        form = MessageForm(instance=message)
+
+    return render_to_response("messages/nouveau.html", {
+        'form': form,
+    }, context_instance=RequestContext(request))

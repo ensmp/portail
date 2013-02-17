@@ -1,17 +1,16 @@
-<div id = "evenements">
-	<div class="module_top">
-		<p>Evénements à venir</p>
-	</div>
+<div id = "evenements" class="well">
+	<p class="well-header">
+		Evénements à venir
+	</p>
+	<hr>
 	<div class="module_middle">	
 		{% load obtenir_evenements %}
 		{% obtenir_events request.user.username%}
 		{% if events_list %}
 		{% regroup events_list by date_debut.date as date_list %}
-		<ul>
+		<ul class="nav nav-list">
 		{% for date in date_list %}
-			<li><p class = "event_date">{{ date.grouper|date:"l"|title }}</p>
-			<hr/>
-			<ul>
+			<li class="nav-header">{{ date.grouper|date:"l"|title }}</li>
 				{% for item in date.list %}
 				  <li>				  
 				  <a class = "event" 
@@ -27,8 +26,6 @@
 				  </a>				  
 				  </li>
 				{% endfor %}
-			</ul>
-			</li>
 		{% endfor %}
 		</ul>
 		{% else %}

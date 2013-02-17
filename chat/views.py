@@ -15,17 +15,17 @@ try:
     DATE_FORMAT = settings.JQCHAT_DATE_FORMAT
 except:
     # Use default format.
-    DATE_FORMAT = "H:i:s"
+    DATE_FORMAT = "H:i"
 
 # How many messages to retrieve at most.
 JQCHAT_DISPLAY_COUNT = getattr(settings, 'JQCHAT_DISPLAY_COUNT', 100) 
 
 #------------------------------------------------------------------------------
 @login_required
-def window(request, id):
+def window(request):
     """A basic chat client window."""
 
-    ThisRoom = get_object_or_404(Room, id=id)
+    ThisRoom = Room.objects.order_by('-created')[0] #get_object_or_404(Room, id=id)
 
     return render_to_response('chat/chat_test.html', {'room': ThisRoom},
                               context_instance=RequestContext(request))
@@ -85,7 +85,7 @@ class Ajax(object):
             self.request_time = int(self.request.REQUEST['time'])
         except:
             return HttpResponseBadRequest("What's the time?")
-        self.ThisRoom = Room.objects.get(id=id)
+        self.ThisRoom = Room.objects.get(id = id)
         NewDescription = None
 
         if self.request.method == "POST":
@@ -94,7 +94,6 @@ class Ajax(object):
     
             if action == 'postmsg':
                 msg_text = self.request.POST['message']
-                msg_text.replace('\\', '')
     
                 if len(msg_text.strip()) > 0: # Ignore empty strings.
                     Message.objects.create_message(self.request.user, self.ThisRoom, escape(msg_text))

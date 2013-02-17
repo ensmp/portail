@@ -1,16 +1,5 @@
 $(document).ready(function(){
 	
-	/** SLIDE DU MESSAGE */
-	$("td.objet").click(function(){	
-		var contenu = $(this).closest(".message_infos").next();
-		if (contenu.is(':visible')){			
-			contenu.slideUp(500); 						
-		}		
-		else{
-			contenu.slideDown(500); 			
-		}
-	});
-	
 	/** ENVOI DU COMMENTAIRE */
 	$("textarea").keydown(function(e){
     // Enter was pressed without shift key
@@ -39,7 +28,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	/**FAVOURITE**/
+	/** HOVER **/
 	$('a.comment_delete img').hover(function() {
 		$(this).attr({'src':'/static/comment_delete_hover.png'});
 	},function() {
@@ -62,6 +51,6 @@ $(document).ready(function(){
 	});
 	
 	/** LANCEMENT DU SITE */
-	$(".message_contenu").hide();  //onload	
-	$('textarea').autosize();
+	$('textarea').css({'height':'20px', 'width':'90%'});
+	$('textarea').autosize();	
 });

@@ -81,11 +81,8 @@ def demander(request):
             pc.poste_par = request.user
         else:
             pc.poste_par = None
-        titre = request.POST.get('title')
-        if titre == '':
-            pc.title = 'Cours de ' + request.POST['matiere']
-        else:
-            pc.title = titre
+        
+        pc.title = request.POST.get('title', 'Cours de ' + request.POST['matiere'])
         pc.address=request.POST['address']
         pc.update_location(float(request.POST['lat']), float(request.POST['lng']))
         pc.contact=request.POST['contact']

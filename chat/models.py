@@ -90,7 +90,8 @@ class messageManager(models.Manager):
     
     def create_message(self, user, room, msg):
         """Create a message for the given user."""
-        text = '<strong>%s</strong> %s<br />' % (user, msg)
+        text = '<strong>%s</strong> %s' % (user, msg)
+        #text = str(text).replace('&amp;nbsp;', '&nbsp;') #On autorise les espaces insecables
         m = Message.objects.create(user=user,
                                    room=room,
                                    text=text)

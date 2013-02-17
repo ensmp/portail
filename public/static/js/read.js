@@ -40,7 +40,6 @@ $(function() {
 	$('.favourite,.unfavourite').click(function(event) {
 	    event.preventDefault();
 		var kind = $(this).parent().parent().attr('id');
-		//var favourite = $(this).hasClass('favourite') ? 'favourite' : 'unfavourite' ;
 		var csrf = $('input[name="csrfmiddlewaretoken"]').attr('value');
 		if ($(this).hasClass('favourite')) {
 		
@@ -51,7 +50,7 @@ $(function() {
 			
 			if ($(this).hasClass('disparait')) {
 			document.getElementById("compteur_messages").firstChild.nodeValue--;
-			divparent = $(event.target).parent().parent().parent().parent().parent().parent().parent();
+			divparent = $(event.target).closest(".message");
 			divparent.fadeThenSlideToggle();
 			}
 
@@ -68,7 +67,7 @@ $(function() {
 			http.send(null);
 						
 			if ($(this).hasClass('disparait')) {
-			divparent = $(event.target).parent().parent().parent().parent().parent().parent().parent();
+			divparent = $(event.target).closest(".message");
 			divparent.fadeThenSlideToggle();
 			}
 		
@@ -103,20 +102,18 @@ $(function() {
 	/***  CLICK ***/
 	$('.read,.unread').click(function(event) {
 	    event.preventDefault();
-		var kind = $(this).parent().parent().attr('id');
-		//var read = $(this).hasClass('read') ? 'read' : 'unread' ;
+		var kind = $(this).parent().parent().attr('id');		
 		var csrf = $('input[name="csrfmiddlewaretoken"]').attr('value');
 		if ($(this).hasClass('read')) {
 		
 			var lien=$(this).parent().attr("href");				
-			http.open('get', lien+'lire/');
-			//http.onreadystatechange = handleAJAXReturn1;
+			http.open('get', lien+'lire/');			
 			http.send(null);
 			
 			document.getElementById("compteur_messages").firstChild.nodeValue--;
 			if ($(this).hasClass('disparait')) {			
 			
-			divparent = $(event.target).parent().parent().parent().parent().parent().parent().parent();
+			divparent = $(event.target).closest(".message");
 			divparent.fadeThenSlideToggle();
 			}
 
@@ -130,11 +127,7 @@ $(function() {
 			var lien=$(this).parent().attr("href");				
 			http.open('get', lien+'classer_non_lu/');
 			
-			
-			
-			document.getElementById("compteur_messages").firstChild.nodeValue++;
-
-			//http.onreadystatechange = handleAJAXReturn1;
+			document.getElementById("compteur_messages").firstChild.nodeValue++;			
 			http.send(null);
 		
 			$(this).attr({'src':'/static/read.png'});

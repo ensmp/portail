@@ -1,15 +1,4 @@
-
-<!-- Load the JS for the chat window and start retrieving messages. -->
-<script type="text/javascript" src="{{ STATIC_URL }}jqchat.js"></script>
-{% load chat_room %}
-{% obtenir_room %}
-<script type="text/javascript">
-	$(document).ready(function(){
-		InitChatWindow("{% url jqchat_ajax room.id %}", null);
-	});
-</script>
-
-<div id = "module_chat">
+<div id = "module_chat" class="well well-small">
 <div id="chatwindow"><span id="loading">Chargement...</span></div>
 
 <form id="chatform">
@@ -19,4 +8,3 @@
 </div>
 
 <script type="text/javascript">document.getElementById("msg").focus();</script>
-

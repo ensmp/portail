@@ -1,6 +1,5 @@
-<div id = "menu-fond">
+<!--<div id = "menu-fond">
 		<div id="mon_menu">
-		<img src="{{ STATIC_URL }}nav_dropdown_li.png" style="display:none;"/><!-- prechargement image menu deroulant -->
 			<ul id="topnav">  				
 			{% load obtenir_nombre_messages %}{% if request.user.is_authenticated %}{% compter_messages request.user.username %}{% endif %}
 			<li><a href="/messages"><img src="{{ STATIC_URL}}mail.png"><span><span id="compteur_messages">{{ nombre_de_messages }}</span>Message{{ nombre_de_messages|pluralize }}</span></a></li>  
@@ -29,14 +28,6 @@
 				</ul>  
 			</li>  
 			<li>
-			<!--<div id="champ_recherche">
-				<form action="/recherche/" method="get">
-					<input id="string_recherche" type="text" size="13" name = "q"/>
-					<button id="bouton_recherche" type="submit" title="Rechercher">
-					<img src = "{{ STATIC_URL }}loupe.png" alt="Rechercher">
-					</button>
-				</form>
-			</div>-->
 			<form id = "champ_recherche" action="/recherche/" method="get">
 					<input id="string_recherche" type="text" size="16" name = "q"/>
 					<button id="bouton_recherche" type="submit" title="Rechercher">
@@ -53,7 +44,7 @@
 			<li class="droite">  
 				<a href="/people/{{ user.username }}/">{% if request.user.get_profile.est_une_fille %}<img src="{{ STATIC_URL}}user_girl.png">{% else %}<img src="{{ STATIC_URL}}user_guy.png">{% endif %}<span>{{ user.username }}</span></a>  
 				<ul class="subnav">  
-					<li><a href="/people/{{ user.username }}/">Ma page</a></li>  
+					<li><a href="/accounts/profile/">Ma page</a></li>  
 					<li><a href="/accounts/logout/">Se déconnecter</a></li>
 				</ul>  
 			</li>
@@ -65,3 +56,77 @@
 		</ul>  
 		</div>
 	</div>
+-->
+	
+	<div id = "menu" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/"><!--<img src="{{ STATIC_URL}}logo_portail.png" width="38">-->Le Portail des élèves</a>
+          <div class="nav-collapse collapse">
+		  
+		  
+              
+          
+
+		  <ul class="nav">
+              
+			  
+				{% load obtenir_nombre_messages %}{% if request.user.is_authenticated %}{% compter_messages request.user.username %}{% endif %}
+				{% load active %}
+				<li class="{% active request "^/messages/" %}"><a href="/messages"><img src="{{ STATIC_URL}}mail.png"/><span id="compteur_messages">{{ nombre_de_messages }}</span> Message{{ nombre_de_messages|pluralize }}</a></li>  
+				<li class="{% active request "^/calendrier/" %}"><a href="/calendrier/"><img src="{{ STATIC_URL}}date.png"/>Calendrier</a></li>
+			  
+			
+				<li class="dropdown {% active request "^/associations/" %}">
+				<a class="dropdown-toggle" data-hover="dropdown" data-delay="250" href="/associations/"><img src="{{ STATIC_URL}}association.png"/>Associations <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					{% load obtenir_liste_associations %}
+					{% obtenir_associations %}
+					{% for association in liste_des_associations|slice:":12" %}
+						<li><a href="/associations/{{association.pseudo}}/">{{association.nom}}</a></li>  
+					{% endfor %}
+					<li class="divider"></li>
+					<li><a href="/associations/">Autres</a></li>
+				</ul>
+				</li>
+			
+				
+				<li class="dropdown {% active request "^/(?P<service>people|timetable|petitscours|objetstrouves)/" %}">
+				<a class="dropdown-toggle" data-hover="dropdown" data-delay="250" href="#"><img src="{{ STATIC_URL}}gear.png">Services <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li><a href="/people/">Trombi</a></li>  
+					<li><a href="/petitscours/">Petits cours</a></li>
+					<li><a href="/objetstrouves/">Objets trouvés</a></li>
+					<li><a href="/timetable/">Emploi du temps</a></li>  
+					<li class="divider"></li>
+					<li><a href="http://sgs.mines-paristech.fr">SGS</a></li>
+				</ul>
+				</li>
+				
+				<form class="navbar-search pull-left" action="/recherche/" method="get">
+				<input type="text" name = "q" class="search-query" placeholder="Rechercher">
+				</form>
+		</ul>
+		<ul class="nav pull-right">
+				<li><a id = "menu_notifications" href="/notifications/">{{ nombre_de_notifications }}</a></li>
+				<li class = "dropdown {% active request "^/accounts/" %}">
+				<a class="navbar-link dropdown-toggle" data-hover="dropdown" data-delay="250" href="/accounts/profile/" >{% if request.user.get_profile.est_une_fille %}<img src="{{ STATIC_URL}}user_girl.png">{% else %}<img src="{{ STATIC_URL}}user_guy.png">{% endif %}{{ user.username }} <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li><a href="/accounts/profile/">Ma page</a></li>
+					<li class="divider"></li>
+					<li><a href="/accounts/logout/">Se déconnecter</a></li>					
+				</ul>
+				</li>
+				
+          </ul>
+          
+            </ul>			
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>

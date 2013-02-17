@@ -11,11 +11,11 @@
 <div id="menu_onglets">
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
 
-<ul>
-<li><a href="/associations/{{association.pseudo}}/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
-<li><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
-<li id="actif"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></li>
-<li><a href="/associations/{{association.pseudo}}/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
+<ul class="nav nav-pills">
+<li><a href="/associations/{{association.pseudo}}/messages/"><img src="{{ STATIC_URL}}mail.png">Messages</a></li>
+<li><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png">Évenements</a></li>
+<li class="active"><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png">Équipe</a></li>
+<li><a href="/associations/{{association.pseudo}}/medias/"><img src="{{ STATIC_URL}}clapperboard.png">Médias</a></li>
 </ul>
 
 {% if association.page_set.all %}
@@ -25,8 +25,7 @@
 {% endfor %}
 </ul>
 {% endif %}
-
-<hr>
+<hr />
 </div>
 {% endblock %}
 {% block content %}
