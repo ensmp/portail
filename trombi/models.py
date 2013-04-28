@@ -23,7 +23,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
     surnom = models.CharField(max_length=128, blank=True, default="")    
-	
+    
     phone = models.CharField(max_length=15, blank=True)
     birthday = models.DateField(null=True)
     promo = models.IntegerField(null=True)
@@ -41,6 +41,11 @@ class UserProfile(models.Model):
     solde_octo = models.FloatField(default=0)
     solde_biero = models.FloatField(default = 0)
     
+    victoires_sondages = models.IntegerField()
+    participations_sondages = models.IntegerField()
+    score_victoires_sondages = models.FloatField()
+    score_defaites_sondages = models.FloatField()
+    
     class Meta:
         ordering = ['-promo','last_name']
     
@@ -57,25 +62,35 @@ class UserProfile(models.Model):
         return (premiere_annee == self.promo)
     
     @property
-    def nb_victoires_sondages(self):
+    def defaites_sondages(self):
+        return self.participations_sondages - self.victoires_sondages
+    
+    def update_sondages(self):
         from sondages.models import Sondage, Vote
         from django.db.models import F, Count
-        return Vote.objects.filter(eleve = self).exclude(sondage__resultat = 0).filter(choix = F('sondage__resultat')).count()
-    
-    @property
-    def nb_defaites_sondages(self):
-        from sondages.models import Sondage, Vote
-        from django.db.models import F, Count
-        return Vote.objects.filter(eleve = self).exclude(sondage__resultat = 0).exclude(choix = F('sondage__resultat')).count()
-    
-    @property
-    def nb_participations_sondages(self):
-        from sondages.models import Sondage, Vote
-        return Vote.objects.filter(eleve = self).exclude(sondage__resultat = 0).count()
+        from math import sqrt
+        votes = Vote.objects.filter(eleve = self).exclude(sondage__resultat = 0)
+        self.victoires_sondages = votes.filter(choix = F('sondage__resultat')).count()
+        self.participations_sondages = votes.count()
+        
+        ups = self.victoires_sondages        
+        n = self.participations_sondages        
+        downs = n - ups
+        if n == 0:
+            self.score_sondages = 0
+        else:#Wilson lower bound
+            z = 1.64485 #1.0 = 85%, 1.6 = 95%
+            phi = float(ups) / n
+            self.score_victoires_sondages = 100 * (phi+z*z/(2*n)-z*sqrt((phi*(1-phi)+z*z/(4*n))/n))/(1+z*z/n)
+            phi = float(downs) / n
+            self.score_defaites_sondages = 100 * (phi+z*z/(2*n)-z*sqrt((phi*(1-phi)+z*z/(4*n))/n))/(1+z*z/n)
+        self.save()
     
     @property
     def pourcentage_sondages(self):
-        return 100.0 * self.nb_victoires_sondages / float(self.nb_participations_sondages)
+        if self.victoires_sondages + self.participations_sondages == 0:
+            return 0
+        return 100.0 * self.victoires_sondages / float(self.victoires_sondages + self.participations_sondages)
 
     def get_absolute_url(self):
         return '/people/'+self.user.username    
@@ -104,6 +119,11 @@ class UserProfile(models.Model):
             else:
                 return "fillot"
         return None
+    
+    @property    
+    def nb_petits_cours_attribues(self):
+        from petitscours.models import PetitCours
+        return PetitCours.objects.filter(attribue_a = self.user).count()
     
    #Algorithme de Breadth-First-Search, pour trouver le plus court chemin entre deux élèves
     @staticmethod    

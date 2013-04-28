@@ -7,41 +7,42 @@
 {% block content %}
 <h2>Statistiques sondages</h2>
 <h3>Votre score : {{request.user.get_profile.nb_victoires_sondages}} victoires sur {{ request.user.get_profile.nb_participations_sondages }} participations</h3>
-	<table>
+	<table style="text-align:center">
 	<caption>Les consensuels</caption>
 	<thead>
     <tr>
       <th>Élève</th>
-      <th>Pourcentage</th>
+      <th>Note consensus</th>
 	  <th>Participations</th>
+	  <th>Pourcentage</th>
     </tr>
-  </thead>
+  </thead> <!--|floatformat:1-->
   <tbody>
-	{% for eleve in liste_eleves_pv %}
+	{% for eleve in liste_eleves_c %}
 	<tr>
 	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
-	<td>{{ eleve.pourcentage_sondages|floatformat:1 }}</td>
-	<td>{{ eleve.nb_participations_sondages }}</td>
+	<td>{{ eleve.score_victoires_sondages }}</td>
+	<td>{{ eleve.participations_sondages }}</td>
 	</tr>
 	{% endfor %}
   </tbody>
   </table>
   
-  	<table>
+  	<table style="text-align:center">
 	<caption>Les libres penseurs</caption>
 	<thead>
     <tr>
       <th>Élève</th>
-      <th>Pourcentage</th>
+      <th>Note désaccord</th>
 	  <th>Participations</th>
     </tr>
   </thead>
   <tbody>
-	{% for eleve in liste_eleves_pd %}
+	{% for eleve in liste_eleves_d %}
 	<tr>
 	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
-	<td>{{ eleve.pourcentage_sondages|floatformat:1 }}</td>
-	<td>{{ eleve.nb_participations_sondages }}</td>
+	<td>{{ eleve.score_defaites_sondages }}</td>
+	<td>{{ eleve.participations_sondages }}</td>
 	</tr>
 	{% endfor %}
   </tbody>

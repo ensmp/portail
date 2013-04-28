@@ -4,10 +4,9 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}evenements.css" />
 <link type="text/css" href="{{ STATIC_URL }}jquery-ui-1.8.11.custom.css" rel="stylesheet" />
-<link type="text/css" href="{{ STATIC_URL }}jquery-ui-timepicker-addon.css" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}bootstrap-timepicker.min.css" />
 <script type="text/javascript" src="{{ STATIC_URL }}jquery-ui-1.8.21.custom.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui-timepicker-addon.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui-timepicker-fr.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}bootstrap-timepicker.min.js"></script>
 
 <script type="text/javascript">
 	$(function(){
@@ -23,16 +22,6 @@
 			prevText: "Précédent",
 			nextText: "Suivant",
 			
-		});
-		
-		$('#timedebutpicker').timepicker({
-			hourGrid: 4,
-			minuteGrid: 10
-		});
-		
-		$('#timefinpicker').timepicker({
-			hourGrid: 4,
-			minuteGrid: 10
 		});
 	});
 </script>
@@ -70,16 +59,27 @@
 <label for="date">C'est quel jour ? - </label>
 <input id="datepicker" type="text" name = "date" placeholder="Saisissez la date">
 </p>
-<p>
 <label for="debut">Ca commence quand ? - </label>
-<input id="timedebutpicker" type="text" name = "debut" placeholder="L'heure de début">
-</p>
-<p>
+<div class="input-append bootstrap-timepicker">
+<input id="timedebutpicker" class="input-small" type="text" name = "debut">
+</div>
 <label for="fin">Ca se termine quand ? - </label>
-<input id="timefinpicker" type="text" name = "fin" placeholder="L'heure de fin">
-</p>
+<div class="input-append bootstrap-timepicker">
+<input id="timefinpicker" class="input-small" type="text" name = "fin" placeholder="L'heure de fin">
+</div>
 <p>Pourquoi je dois venir ?</p>
 <p><textarea name="description" style="width:414px;height:64px;" placeholder="Ecrivez une description de l'événement"></textarea></p>
 <input type='submit' value='Terminer' />
 </form>
+
+<script type="text/javascript">
+$('#timedebutpicker').timepicker({
+showMeridian: false,
+showInputs: true
+});
+$('#timefinpicker').timepicker({
+showMeridian: false,
+showInputs: true
+});
+</script>
 {% endblock %}

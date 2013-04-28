@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}votes.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_bde.png">BDE</h1>
+
+<ul class="nav nav-pills">
+<li><a href="/associations/bde/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/bde/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/bde/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/bde/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li class="active"><a href="/associations/bde/voter/"><img src="{{ STATIC_URL}}page_voter.png"/><span>Voter</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div id="resultats">
+<div id = "liste1"><div class = "histogram_liste"><div id = "bar_liste1" style="background-color:{{ liste1.couleur }};"></div></div><h2>{{ liste1.nom }}</h2><h3 id="n_votes_1">0 votes</h3></div>
+<div id = "liste2"><div class = "histogram_liste"><div id = "bar_liste2" style="background-color:{{ liste2.couleur }};"></div></div><h2>{{ liste2.nom }}</h2><h3 id="n_votes_2">0 votes</h3></div>
+</div>
+<br style="clear:both;">
+<div style="text-align:center">
+<button id="resultats_votes">Résultats</button>
+</div>
+<script>
+$("button").click(function(){
+  var n_votes_1 = {{ n_votes_1 }};
+  var n_votes_2 = {{ n_votes_2 }};
+  var max_height = 300;
+  
+  $("#bar_liste1").animate({height:((max_height*n_votes_1)/(n_votes_1 + n_votes_2))+"px"}, {duration:(25000*n_votes_1)/(n_votes_1+n_votes_2), easing:'linear',
+	step: function(currentHeight) {
+		$('#n_votes_1').text(Math.ceil((n_votes_1*currentHeight)/((max_height*n_votes_1)/(n_votes_1 + n_votes_2))) + " votes");
+	}});
+  $("#bar_liste2").animate({height:((max_height*n_votes_2)/(n_votes_1 + n_votes_2))+"px"}, {duration:(25000*n_votes_2)/(n_votes_1+n_votes_2), easing:'linear',
+	step: function(currentHeight) {
+		$('#n_votes_2').text(Math.ceil((n_votes_2*currentHeight)/((max_height*n_votes_2)/(n_votes_1 + n_votes_2))) + " votes");
+	}});
+  $(this).hide();
+}); 
+</script>
+{% endblock %}

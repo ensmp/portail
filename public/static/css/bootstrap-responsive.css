@@ -936,8 +936,8 @@
   }
 }
 
-/** TAILLE 2 : ON ENLEVE LE TITRE **/
-@media (max-width: 1361px) {
+/** TAILLE 2 : ON ENLEVE LE TITRE ET ON CHANGE LES SPAN**/
+@media (min-width: 768px) and (max-width: 1361px) {
 .navbar a.brand {
 	display:none;
   }

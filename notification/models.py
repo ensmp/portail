@@ -83,6 +83,5 @@ class Envoi(models.Model):
 		if self.lu:
 			return True
 		else:
-			self.lu = True
-			self.save()
+			self.lire()
 			return False

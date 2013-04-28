@@ -1,0 +1,47 @@
+#liste1 {
+width:200px;
+float:left;
+}
+
+#liste2 {
+width:200px;
+float:right;
+}
+
+.histogram_liste {
+	width:200px;
+	height:310px;
+	position:relative;
+}
+
+#bar_liste1 {
+	position:absolute;
+	width:64px;	
+	bottom:0;
+	left:50%;
+	margin-left:-32px;
+}
+
+#bar_liste2 {
+	position:absolute;
+	width:64px;
+	left:50%;
+	bottom:0;
+	margin-left:-32px;
+}
+
+
+
+#resultats {
+	width:400px;
+	margin:0 auto;
+	text-align:center;
+}
+
+#resultats h2 {
+	margin-bottom:0;
+}
+
+#resultats h3 {
+	margin-top:0;
+}

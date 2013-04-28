@@ -4,15 +4,13 @@ import os
 import subprocess
 from django.core.files import File
 
-class Vendome(models.Model):
-    titre = models.CharField(max_length=50)
-    fichier = models.FileField(upload_to='vendome')
+class Abatage(models.Model):
+    fichier = models.FileField(upload_to='abatage')
     date = models.DateField()
-    thumbnail = models.ImageField(max_length=300,upload_to='vendome/thumbnail/', blank=True, null=True)
-    is_hidden_1A = models.BooleanField()
-	
+    thumbnail = models.ImageField(max_length=300,upload_to='abatage/thumbnail/', blank=True, null=True)
+    
     def save(self, *args, **kwargs):
-        super(Vendome, self).save(*args, **kwargs)
+        super(Abatage, self).save(*args, **kwargs)
         if not self.thumbnail:   
             # creation du thumbnail avec imagemagick
             path_destination = os.path.dirname(self.fichier.path) + '/thumbnail/' 
@@ -27,11 +25,4 @@ class Vendome(models.Model):
         ordering = ['-date']
     
     def __unicode__(self):
-        return self.titre    
-
-
-class UploadFileForm(forms.Form):
-    titre = forms.CharField(max_length=50)
-    fichier  = forms.FileField()
-    date  = forms.DateField()
-    is_hidden_1A = forms.BooleanField()
+        return str(self.date.year)

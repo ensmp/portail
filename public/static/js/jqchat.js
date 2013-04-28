@@ -97,7 +97,7 @@ function InitChatWindow(ChatMessagesUrl, ProcessResponseCallback){
 			 } 
 		});
 
-		var msg_post = $("#msg").val().replace(/\\/g, '\\\\'); //Bug des antislash
+		var msg_post = $("#msg").val();
 		$("#msg").val(""); // clean out contents of input field.
 		
 		$.post(url,

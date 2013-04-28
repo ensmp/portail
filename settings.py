@@ -165,6 +165,8 @@ INSTALLED_APPS = (
     'pr',
     'faq',
     'chat',
+    'bde',
+    'abatage',
     #Avatar, pour les avatars de trombi
     'avatar',
     #Photologue pour les photos Mediamine
