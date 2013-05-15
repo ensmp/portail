@@ -41,7 +41,7 @@ class UserProfile(models.Model):
     solde_octo = models.FloatField(default=0)
     solde_biero = models.FloatField(default = 0)
     
-    victoires_sondages = models.IntegerField()
+    victoires_sondages = models.IntegerField(blank = True, null=True)
     participations_sondages = models.IntegerField()
     score_victoires_sondages = models.FloatField()
     score_defaites_sondages = models.FloatField()
