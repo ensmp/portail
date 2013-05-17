@@ -7,11 +7,12 @@ from notification.models import Notification
 
 
 class SondageManager(models.Manager):
+
     def update_all_weights(self):
-        from django.db import connection
+        from django.db import connection, transaction
         cursor = connection.cursor()
         cursor.execute("UPDATE sondages_sondage SET weight_score = EXP(DATEDIFF(date_parution, CURDATE())/14) WHERE 1")
-        print cursor.rowcount
+        transaction.commit_unless_managed()       
 
 class Sondage(models.Model):
     auteur = models.ForeignKey(UserProfile)
