@@ -14,3 +14,9 @@
 #tableau_sondages {
 	width:100%;
 }
+
+.scores_sondages {
+	text-align: center;
+	width:50%;
+	float:left;
+}

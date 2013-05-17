@@ -5,6 +5,14 @@ from django.db.models import Q
 from django.contrib.auth.models import Permission, User
 from notification.models import Notification
 
+
+class SondageManager(models.Manager):
+    def update_all_weights(self):
+        from django.db import connection
+        cursor = connection.cursor()
+        cursor.execute("UPDATE sondages_sondage SET weight_score = EXP(DATEDIFF(date_parution, CURDATE())/14) WHERE 1")
+        print cursor.rowcount
+
 class Sondage(models.Model):
     auteur = models.ForeignKey(UserProfile)
     question = models.CharField(max_length=512)
@@ -14,6 +22,8 @@ class Sondage(models.Model):
     date_parution = models.DateField(null=True, blank=True)
     autorise = models.BooleanField()
     resultat = models.IntegerField(editable=False)
+    weight_score = models.FloatField(editable=False, null=True)
+    objects = SondageManager()
     
     def date_str(self):
         jour = str(self.date_parution.day)
@@ -35,13 +45,8 @@ class Sondage(models.Model):
             return votes.values('choix').annotate(c=Count('choix')).order_by('-c')[0]['choix']
         else:
             return 0
-        # nombre_votes_1 = votes.filter(choix = 1).count()
-        # nombre_votes_2 = votes.filter(choix = 2).count()
-        # if (nombre_votes_2 > nombre_votes_1) :
-            # return 2
-        # else:
-            # return 1
-        
+
+
     def envoyer_notification(self):
         try: 
             perm = Permission.objects.get(codename='add_sondage')  #On envoie seulement à ceux qui peuvent créer des sondages
@@ -53,7 +58,7 @@ class Sondage(models.Model):
             pass
 
     def save(self, *args, **kwargs):
-        self.resultat = self.calculer_resultat()
+        self.resultat = self.calculer_resultat()        
         super(Sondage, self).save(*args, **kwargs)
 
 

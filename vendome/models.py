@@ -6,10 +6,10 @@ from django.core.files import File
 
 class Vendome(models.Model):
     titre = models.CharField(max_length=50)
-    fichier = models.FileField(upload_to='vendome')
-    date = models.DateField()
-    thumbnail = models.ImageField(max_length=300,upload_to='vendome/thumbnail/', blank=True, null=True)
-    is_hidden_1A = models.BooleanField()
+    fichier = models.FileField(upload_to='vendome') #fichier PDF, ne doit pas depasser 10mo environ
+    date = models.DateField() #Date de parution
+    thumbnail = models.ImageField(max_length=300,upload_to='vendome/thumbnail/', blank=True, null=True) #image miniature, generee automatiquement a la creation par imagemagick
+    is_hidden_1A = models.BooleanField() #Si le vendome est cache aux 1A
 	
     def save(self, *args, **kwargs):
         super(Vendome, self).save(*args, **kwargs)

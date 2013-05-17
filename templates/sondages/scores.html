@@ -6,34 +6,93 @@
 
 {% block content %}
 <h2>Statistiques sondages</h2>
-<h3>Votre score : {{request.user.get_profile.nb_victoires_sondages}} victoires sur {{ request.user.get_profile.nb_participations_sondages }} participations</h3>
-	<table style="text-align:center">
+<h3>Vous avez fait {{request.user.get_profile.victoires_sondages}} victoires sur {{ request.user.get_profile.participations_sondages }} participations</h3>
+<p>Note consensus : {{request.user.get_profile.score_victoires_sondages|floatformat:1 }}<br>
+Note désaccord : {{ request.user.get_profile.score_defaites_sondages|floatformat:1  }}</p>
+
+
+
+
+<div class="row">
+  <div class="span12 pagination-centered">
+  	<h3>Scores de la semaine</h3>
+  	<a href="#methodeSemaine" role="button" class="btn" data-toggle="modal">Méthode de calcul</a>
+  	<br>
+    <table class = "scores_sondages">
+	<caption>Les consensuels</caption>
+	<thead>
+    <tr>
+      <th>Élève</th>
+      <th>Victoires pondérées</th>
+    </tr>
+  </thead> <!--|floatformat:1-->
+  <tbody>
+	{% for eleve in liste_eleves_c_semaine %}
+	<tr>
+	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
+	<td>{{ eleve.score|floatformat:2 }}</td>
+	</tr>
+	{% endfor %}
+  </tbody>
+  </table>
+
+  	<table class = "scores_sondages">
+	<caption>Les libres penseurs</caption>
+	<thead>
+    <tr>
+      <th>Élève</th>
+      <th>Défaites pondérées</th>
+    </tr>
+  </thead>
+  <tbody>
+	{% for eleve in liste_eleves_d_semaine %}
+	<tr>
+	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
+	<td>{{ eleve.score|floatformat:2 }}</td>
+	</tr>
+	{% endfor %}
+  </tbody>
+  </table>
+  </div>
+  </div>
+
+
+
+
+    <div class="row">
+    <div class="span12 pagination-centered">
+    <h3>Scores globaux</h3>
+    <a href="#methodeGlobale" role="button" class="btn" data-toggle="modal">Méthode de calcul</a>
+  	<br>
+	<table class = "scores_sondages">
 	<caption>Les consensuels</caption>
 	<thead>
     <tr>
       <th>Élève</th>
       <th>Note consensus</th>
+      <th>Pourcentage</th>
 	  <th>Participations</th>
-	  <th>Pourcentage</th>
     </tr>
   </thead> <!--|floatformat:1-->
   <tbody>
 	{% for eleve in liste_eleves_c %}
 	<tr>
 	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
-	<td>{{ eleve.score_victoires_sondages }}</td>
+	<td>{{ eleve.score_victoires_sondages|floatformat:1 }}</td>
+	<td>{{ eleve.pourcentage_sondages|floatformat:1 }}</td>
 	<td>{{ eleve.participations_sondages }}</td>
 	</tr>
 	{% endfor %}
   </tbody>
   </table>
-  
-  	<table style="text-align:center">
+
+  	<table class = "scores_sondages">
 	<caption>Les libres penseurs</caption>
 	<thead>
     <tr>
       <th>Élève</th>
       <th>Note désaccord</th>
+      <th>Pourcentage</th>
 	  <th>Participations</th>
     </tr>
   </thead>
@@ -41,33 +100,63 @@
 	{% for eleve in liste_eleves_d %}
 	<tr>
 	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
-	<td>{{ eleve.score_defaites_sondages }}</td>
+	<td>{{ eleve.score_defaites_sondages|floatformat:1 }}</td>
+	<td>{{ eleve.pourcentage_sondages|floatformat:1 }}</td>
 	<td>{{ eleve.participations_sondages }}</td>
 	</tr>
 	{% endfor %}
   </tbody>
   </table>
-  
-  <!--
-  <table>
-	<caption>Pourcentages</caption>
-	<thead>
-    <tr>
-      <th>Élève</th>
-      <th>Pourcentage</th>
-	  <th>Participations</th>
-    </tr>
-  </thead>
-  <tbody>
-	{% for eleve in liste_eleves_p %}
-	<tr>
-	<td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
-	<td>{{ eleve.pourcentage_sondages }}</td>
-	<td>{{ eleve.nb_participations_sondages }}</td>
-	</tr>
-	{% endfor %}
-  </tbody>
-  </table>
-  -->
+  </div>
+</div>
+
+
+
+
+
+
+<!-- METHODES DE CALCUL-->
+<div id="methodeSemaine" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h3 id="myModalLabel">Méthode de classement flottant</h3>
+</div>
+<div class="modal-body">
+<p>En classant les consensuels et les libres penseurs uniquement sur leurs participations globales, on désavantage les 1A par rapport aux 3A et le classement évolue peu au cours du temps</p>
+<p>On va donc pondérer chaque sondage par son age pour favoriser les votes récents. Ainsi, on utilise une loi exponentielle décroissante pour attribuer un poids à chaque vote en fonction du nombre de jours écoulés</p>
+<div class="pagination-centered">
+<img src="{{ STATIC_URL }}eqpoids.png"/>
+<img src="{{ STATIC_URL }}poidssemaine.jpg"/>
+</div>
+<p>On somme ensuite les victoires et les défaites de tous les votes, en les pondérant par leur poids.</p>
+</div>
+<div class="modal-footer">
+<button class="btn" data-dismiss="modal" aria-hidden="true">J'ai compris !</button>
+</div>
+</div>
+
+
+<div id="methodeGlobale" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h3 id="myModalLabel">Méthode de classement global</h3>
+</div>
+<div class="modal-body">
+<p>La première méthode de classement qui vient à l'esprit serait de <strong>classer par nombres de victoires</strong> et nombres de défaites. Mais cela ne serait pas logique : une personne avec 50 victoires sur 100 participations serait mieux classée qu'une persone avec 49 victoires sur 50 participations.</p>
+<p>On peut donc penser à <strong>classer selon les pourcentages</strong> de victoires et de défaites. Mais cela ne convient pas non plus : une personne avec 1 victoire sur 1 seule participation (score de 100%) est classée devant une personne avec 90% de victoires sur 100 participations. Même en mettant un seuil de partications minimales, ce système favorise ceux qui votent peu par rapport à ceux qui votent beaucoup.</p>
+
+<p>Il faut donc garder cette idée de pourcentage, mais en la corrigeant pour tenir compte de l'incertitude due au petit nombre de votes. On se demande donc <em>"A quelle valeur est-on sûr à 95% que le <em>vrai</em> pourcentage de victoires est supérieur ?"</em>. Ceux qui vont aux amphi de stat sauront que la réponse a été donnée par <strong>Edwin B. Wilson</strong> en 1927 : <strong>la borne inférieure de l'intervalle de confiance de Wilson</strong> pour une loi de Bernoulli, dont la formule est : </p>
+<div class="pagination-centered">
+<img src="{{ STATIC_URL }}eqwilson.png"/>
+</div>
+<p>Où <em>p</em> est l'<em>observation</em> du pourcentage de victoires, <em>z</em><sub>α/2</sub> est le (1-α/2)-quantile de la loi normale, et <em>n</em> le nombre total de participations.</p>
+<p>On calcule donc tous ces pourcentages corrigés en prenant α=0.95, pour les victoires comme pour les défaites, pour établir le classement.</p>
+</div>
+<div class="modal-footer">
+<button class="btn" data-dismiss="modal" aria-hidden="true">J'ai compris !</button>
+</div>
+</div>
+
+<script src="/static/bootstrap-modal.js"></script>
 {% endblock %}
  

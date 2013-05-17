@@ -30,6 +30,7 @@ class SondageNode(Node):
 				sondage = Sondage.objects.filter(deja_paru = False, autorise = True).order_by('?')[0] #Le nouveau sondage du jour
 				sondage.date_parution = datetime.date.today()
 				sondage.save()
+				Sondage.objects.update_all_weights() #On met a jour tous les poids des sondages // ARG il faut le faire aussi quand le sondage a une date prechoisie
 				
 		if sondage:
 			context['sondage'] = sondage

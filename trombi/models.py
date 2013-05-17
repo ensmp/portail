@@ -42,9 +42,9 @@ class UserProfile(models.Model):
     solde_biero = models.FloatField(default = 0)
     
     victoires_sondages = models.IntegerField(blank = True, null=True)
-    participations_sondages = models.IntegerField()
-    score_victoires_sondages = models.FloatField()
-    score_defaites_sondages = models.FloatField()
+    participations_sondages = models.IntegerField(blank = True, null=True)
+    score_victoires_sondages = models.FloatField(blank = True, null=True)
+    score_defaites_sondages = models.FloatField(blank = True, null=True)
     
     class Meta:
         ordering = ['-promo','last_name']
@@ -65,32 +65,27 @@ class UserProfile(models.Model):
     def defaites_sondages(self):
         return self.participations_sondages - self.victoires_sondages
     
-    def update_sondages(self):
-        from sondages.models import Sondage, Vote
-        from django.db.models import F, Count
-        from math import sqrt
-        votes = Vote.objects.filter(eleve = self).exclude(sondage__resultat = 0)
-        self.victoires_sondages = votes.filter(choix = F('sondage__resultat')).count()
-        self.participations_sondages = votes.count()
+    def update_sondages(self):        
+        from django.db.models import F
+        from math import sqrt        
+        self.victoires_sondages = self.vote_set.filter(choix = F('sondage__resultat')).count()
+        self.participations_sondages = self.vote_set.count()
         
-        ups = self.victoires_sondages        
-        n = self.participations_sondages        
-        downs = n - ups
-        if n == 0:
+        if self.participations_sondages == 0:
             self.score_sondages = 0
-        else:#Wilson lower bound
+        else: #Wilson lower bound
             z = 1.64485 #1.0 = 85%, 1.6 = 95%
-            phi = float(ups) / n
+            phi = float(self.victoires_sondages) / self.participations_sondages
             self.score_victoires_sondages = 100 * (phi+z*z/(2*n)-z*sqrt((phi*(1-phi)+z*z/(4*n))/n))/(1+z*z/n)
-            phi = float(downs) / n
+            phi = float(self.defaites_sondages()) / self.participations_sondages
             self.score_defaites_sondages = 100 * (phi+z*z/(2*n)-z*sqrt((phi*(1-phi)+z*z/(4*n))/n))/(1+z*z/n)
         self.save()
     
     @property
     def pourcentage_sondages(self):
-        if self.victoires_sondages + self.participations_sondages == 0:
+        if self.participations_sondages == 0:
             return 0
-        return 100.0 * self.victoires_sondages / float(self.victoires_sondages + self.participations_sondages)
+        return 100.0 * self.victoires_sondages / float(self.participations_sondages)
 
     def get_absolute_url(self):
         return '/people/'+self.user.username    
