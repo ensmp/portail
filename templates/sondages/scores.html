@@ -115,6 +115,35 @@ Note désaccord : {{ request.user.get_profile.score_defaites_sondages|floatforma
 
 
 
+    <div class="row">
+    <div class="span12 pagination-centered">
+    <h3>Par participations</h3>        
+  <table style="margin:0 auto;">
+  <caption>Les acharnés</caption>
+  <thead>
+    <tr>
+      <th>Élève</th>      
+      <th>Participations</th>
+    </tr>
+  </thead> <!--|floatformat:1-->
+  <tbody>
+  {% for eleve in liste_eleves_participations %}
+  <tr>
+  <td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
+  <td>{{ eleve.participations_sondages }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+  </div>
+</div>
+
+
+
+
+
+
+
 <!-- METHODES DE CALCUL-->
 <div id="methodeSemaine" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-header">

@@ -116,6 +116,5 @@ def scores(request):
     liste_eleves_c_semaine = UserProfile.objects.raw("SELECT trombi_userprofile.id as id, SUM(weight_score) as score FROM `sondages_vote` INNER JOIN sondages_sondage ON sondages_vote.sondage_id = sondages_sondage.id INNER JOIN trombi_userprofile ON trombi_userprofile.id = sondages_vote.eleve_id WHERE sondages_vote.choix = sondages_sondage.resultat GROUP BY sondages_vote.eleve_id ORDER BY score DESC LIMIT 10")
     liste_eleves_d_semaine = UserProfile.objects.raw("SELECT trombi_userprofile.id as id, SUM(weight_score) as score FROM `sondages_vote` INNER JOIN sondages_sondage ON sondages_vote.sondage_id = sondages_sondage.id INNER JOIN trombi_userprofile ON trombi_userprofile.id = sondages_vote.eleve_id WHERE sondages_vote.choix != sondages_sondage.resultat GROUP BY sondages_vote.eleve_id ORDER BY score DESC LIMIT 10")
 
-    for p in liste_eleves_c_semaine:
-        print p.score
-    return render_to_response('sondages/scores.html',{'liste_eleves_c':liste_eleves_c,'liste_eleves_d':liste_eleves_d, 'liste_eleves_c_semaine':liste_eleves_c_semaine, 'liste_eleves_d_semaine':liste_eleves_d_semaine},context_instance=RequestContext(request))
+    liste_eleves_participations = liste_eleves.order_by('-participations_sondages')[:10]
+    return render_to_response('sondages/scores.html',{'liste_eleves_c':liste_eleves_c,'liste_eleves_d':liste_eleves_d, 'liste_eleves_c_semaine':liste_eleves_c_semaine, 'liste_eleves_d_semaine':liste_eleves_d_semaine, 'liste_eleves_participations':liste_eleves_participations},context_instance=RequestContext(request))

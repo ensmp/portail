@@ -15,3 +15,5 @@ class Command(BaseCommand):
         for eleve in UserProfile.objects.all():
             eleve.update_sondages()
             print eleve.last_name
+
+        Sondage.objects.update_all_weights()

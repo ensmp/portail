@@ -75,9 +75,10 @@ class UserProfile(models.Model):
             self.score_sondages = 0
         else: #Wilson lower bound
             z = 1.64485 #1.0 = 85%, 1.6 = 95%
+            n = self.participations_sondages
             phi = float(self.victoires_sondages) / self.participations_sondages
             self.score_victoires_sondages = 100 * (phi+z*z/(2*n)-z*sqrt((phi*(1-phi)+z*z/(4*n))/n))/(1+z*z/n)
-            phi = float(self.defaites_sondages()) / self.participations_sondages
+            phi = float(self.defaites_sondages) / self.participations_sondages
             self.score_defaites_sondages = 100 * (phi+z*z/(2*n)-z*sqrt((phi*(1-phi)+z*z/(4*n))/n))/(1+z*z/n)
         self.save()
     
