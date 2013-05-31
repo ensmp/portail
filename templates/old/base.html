@@ -59,6 +59,19 @@
 		{% include "menu.html" %}
 </div>
 <div id="wrap">
+
+	<div id="barre_gauche">	
+		{% include "module_evenement.html" %}
+		{% include "module_sondages.html" %}
+		{% include "module_bar.html" %}
+		
+		<script language="JavaScript">
+			function player_mos(){
+			window.open('/associations/minestryofsound/player/', 'Player MINEStryOfSound', config='height=210, width=250, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no')}
+		</script> 
+		<p style = "text-align:center"><a href="javascript:player_mos();" style="color:#666;">Player MINEStry Of Sound</a></p>
+	</div>
+
 	<div id="global_onglets">
 		{% block onglets %}{% endblock %}
 		<div id="content_onglets">
@@ -72,23 +85,7 @@
 		{% include "module_chat.html" %}
 		{% include "module_anniv.html" %}
 	</div>
-	
-	<div id="barre_gauche">	
-		{% include "module_evenement.html" %}
-		{% include "module_sondages.html" %}
-		{% include "module_bar.html" %}
-		
-		<script language="JavaScript">
-			function player_mos(){
-			window.open('/associations/minestryofsound/player/', 'Player MINEStryOfSound', config='height=210, width=250, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no')}
-		</script> 
-		<p style = "text-align:center"><a href="javascript:player_mos();" style="color:#666;">Player MINEStry Of Sound</a></p>
-	</div>
 </div>
-<p>
-{% load online_status_tags %}
 
-users online:
-{% online_users 30 %} </p>
 </body>
 </html>

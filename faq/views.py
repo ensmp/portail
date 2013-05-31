@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+def accueil(request):
+	return render_to_response('accueil/accueil.html', {},context_instance=RequestContext(request))
+
 def questions(request):
 	liste_questions = Question.objects.exclude(reponse = None)
 

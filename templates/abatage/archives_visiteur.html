@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}vendome.css" />
+{% endblock %}
+
+{% block content %}
+
+<ul class="liste_vendomes">
+{% for abatage in liste_abatages %}
+	<li class="vendome">
+	<a href="{{ MEDIA_URL }}{{ abatage.fichier }}">
+	<img src="{{ MEDIA_URL }}{{ abatage.thumbnail }}" />
+	<p>{{abatage.date|date:"Y"}}</p>
+	</a>
+	</li>
+{% empty %}
+	<li class="vendome">Aucun abatage disponible</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

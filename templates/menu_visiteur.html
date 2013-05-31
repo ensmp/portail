@@ -1,0 +1,26 @@
+	<div id = "menu" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+	        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	        </a>
+	        <a class="brand" href="/"><!--<img src="{{ STATIC_URL}}logo_portail.png" width="38">-->Le Portail des élèves</a>
+	        <div class="nav-collapse collapse">
+			<ul class="nav">
+				{% load active %}
+				<li class="{% active request "^/" %}"><a href="/accueil/"><img src="{{ STATIC_URL}}accueil.png"/>Accueil</a></li>
+				<li class="{% active request "^/faq/" %}"><a href="/faq/"><img src="{{ STATIC_URL}}faq.png"/>FAQ</a></li>
+				<li class="{% active request "^/abatage/" %}"><a href="/abatage/"><img src="{{ STATIC_URL}}abatage.png"/>Abatage</a></li>
+				<li class="{% active request "^/petitscours/" %}"><a href="/petitscours/demander/"><img src="{{ STATIC_URL}}petitscours.png"/>Petits Cours</a></li>
+				<li class="{% active request "^/entreprises/" %}"><a href="/entreprises/"><img src="{{ STATIC_URL}}entreprises.png"/>Entreprises</a></li>
+				
+			</ul>
+			<ul class="nav pull-right">				
+					<li class="{% active request "^/login" %}"><a href="/"><img src="{{ STATIC_URL}}user_guy.png"/>Se connecter</a></li>  
+	        </ul>
+          </div>
+        </div>
+      </div>
+    </div>

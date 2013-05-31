@@ -23,3 +23,8 @@ def archives_json(request):
             'date': str(v.date)
         } for v in liste_abatages]))
     return response
+
+def archives_visiteur(request):
+    abatage_annuel = Abatage.objects.all().order_by('date')[0]
+    liste_abatages = Abatage.objects.exclude(id = abatage_annuel.id)
+    return render_to_response('abatage/archives_visiteur.html', {'abatage_annuel':abatage_annuel, 'liste_abatages': liste_abatages},context_instance=RequestContext(request))
