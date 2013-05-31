@@ -25,6 +25,6 @@ def archives_json(request):
     return response
 
 def archives_visiteur(request):
-    abatage_annuel = Abatage.objects.all().order_by('date')[0]
+    abatage_annuel = Abatage.objects.all()[0]
     liste_abatages = Abatage.objects.exclude(id = abatage_annuel.id)
     return render_to_response('abatage/archives_visiteur.html', {'abatage_annuel':abatage_annuel, 'liste_abatages': liste_abatages},context_instance=RequestContext(request))

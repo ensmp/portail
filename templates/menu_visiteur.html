@@ -10,11 +10,12 @@
 	        <div class="nav-collapse collapse">
 			<ul class="nav">
 				{% load active %}
-				<li class="{% active request "^/" %}"><a href="/accueil/"><img src="{{ STATIC_URL}}accueil.png"/>Accueil</a></li>
-				<li class="{% active request "^/faq/" %}"><a href="/faq/"><img src="{{ STATIC_URL}}faq.png"/>FAQ</a></li>
-				<li class="{% active request "^/abatage/" %}"><a href="/abatage/"><img src="{{ STATIC_URL}}abatage.png"/>Abatage</a></li>
-				<li class="{% active request "^/petitscours/" %}"><a href="/petitscours/demander/"><img src="{{ STATIC_URL}}petitscours.png"/>Petits Cours</a></li>
+				<li class="{% active request "^/accueil/" %}"><a href="/accueil/"><img src="{{ STATIC_URL}}accueil.png"/>Accueil</a></li>
 				<li class="{% active request "^/entreprises/" %}"><a href="/entreprises/"><img src="{{ STATIC_URL}}entreprises.png"/>Entreprises</a></li>
+				<li class="{% active request "^/petitscours/" %}"><a href="/petitscours/demander/"><img src="{{ STATIC_URL}}petitscours.png"/>Cours particuliers</a></li>
+				<li class="{% active request "^/abatage/" %}"><a href="/abatage/"><img src="{{ STATIC_URL}}abatage.png"/>Abatage</a></li>
+				<li class="{% active request "^/faq/" %}"><a href="/faq/"><img src="{{ STATIC_URL}}faq.png"/>FAQ</a></li>
+
 				
 			</ul>
 			<ul class="nav pull-right">				
