@@ -1,20 +1,70 @@
 {% if request.user.is_authenticated %}
 
 
-<div id="soldes_bar" class="well">
+<div id="soldes_bar" class="well"> 
 	<p class = "well-header">Soldes éthyliques</p>
 	<hr />
+	{% load obtenir_random %}
+	{% obtenir_nbr_random %}
+	
+	
 
-	{% if request.user.get_profile.solde_octo < 0 %}
-		<img id="photo_vp_octo" class = "pull-right" src="{{ STATIC_URL }}dettes_octo.png">
-	{% elif request.user.get_profile.solde_biero < 0 %}
-		<img id="photo_vp_octo" class = "pull-right" src="{{ STATIC_URL }}dettes_biero.png">
-	{% else %}
-		<img id="photo_vp_octo" class = "pull-right" src="{{ STATIC_URL }}dettes_ok.png">
-	{% endif %}
+	{% if request.user.get_profile.solde_octo < 0 and request.user.get_profile.solde_octo >= -5 %}
+	{%if bool %}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo.jpg">
+	{%else%}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_bayvet.jpg">
+	{% endif%}
+	{%endif%}
+	
+	{% if request.user.get_profile.solde_octo < -5 %}
+	{% if bool %}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_big.jpg">
+	{%else%}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_big_bayvet.jpg">
+	{% endif%}
+	{% endif%}
+	
+	{% if request.user.get_profile.solde_octo >= 0 %}
+	{%if bool%}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_ok.jpg">
+	{%else%}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_ok_bayvet.jpg">
+	{% endif%}
+	{% endif%}
+	
+	
+	{% if request.user.get_profile.solde_biero < 0 and request.user.get_profile.solde_biero >= -5 %}
+	{%if bool2 %}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_roche.jpg">
+	{%else%}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_rollan.jpg">
+	{% endif%}
+	{%endif%}
+	
+	{% if request.user.get_profile.solde_biero < -5 %}
+	{% if bool2 %}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_big_roche.jpg">
+	{%else%}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_big_rollan.jpg">
+	{% endif%}
+	{% endif%}
+	
+	{% if request.user.get_profile.solde_biero >= 0 %}
+	{%if bool2%}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_ok_roche.jpg">
+	{%else%}
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_ok_rollan.jpg">
+	{% endif%}
+	{% endif%}
+	
 
-	<p {% if request.user.get_profile.solde_octo < 0 %} class = "text-error" {% else %} class = "text-success" {% endif %}><strong>Octo</strong> : {{ request.user.get_profile.solde_octo }} €</p>
+	<p {% if request.user.get_profile.solde_octo < 0 %} class = "text-error" {% else %} class = "text-success" {% endif %}><strong><br></br>Octo</strong> : {{ request.user.get_profile.solde_octo }} €</p>
+
+	
+	
 	<p {% if request.user.get_profile.solde_biero < 0 %} class = "text-error" {% else %} class = "text-success" {% endif %}><strong>Biéro</strong> : {{ request.user.get_profile.solde_biero }} €</p>
+
 
 </div>
 {% endif %}
