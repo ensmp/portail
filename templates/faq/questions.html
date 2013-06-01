@@ -3,26 +3,21 @@
 {% block content %}
 
 <script>
-        $(document).ready (function (){
-            $(".navbar").affix ();
-        )};
-     </script>
+$(document).ready (function (){
+    $(".navbar").affix ();
+)};
+</script>
 
-<div id="questions">
 <div class="row">
       <div id = "faqbar" class="span3" data-spy="affix">
         <ul class="nav nav-list bs-docs-sidenav affix-top">
 		{% for question in questions %} 	
-          <li><a href="#{{ question.id }}"><i class="icon-chevron-right"></i> {{question.objet}}</a></li>
+          <li><a href="#{{ question.id }}"><i class="icon-chevron-right"></i> {{ question.objet }}</a></li>
 		  {% endfor %}
         </ul>
       </div>
 	  
-      <div class="span6 pull-right">
-	  
-	  
-	  
-
+      <div class="span9 pull-right">	  
 	  <div class="pagination pagination-centered">
 			<ul>
 				{% if questions.has_previous %}
@@ -42,25 +37,23 @@
 
 	<a class="pull-left" href="poser_question/"><img src="{{ STATIC_URL }}plus.png" title="Poser une question">Poser une question</a>
 	  
-	  <div id="scroll-pane" data-spy="scroll" data-target="#faqbar">
-  {% for question in questions %}
-	  <section id="{{ question.id }}" style="padding-top:40px">
-          <h2>{{question.objet}}</h2>
-		  <p>{{question.contenu}}</p>
-	{% if question.reponse %}
-		<div class = "reponse text-success">			
-			<p class="auteur pagination-centered">Réponse de {{ question.reponse.eleve.get_profile.first_name }} {{ question.reponse.eleve.get_profile.last_name|upper }}<br/> 
-			<span class = "date">Le {{ question.reponse.date }}</span></p>
-			<p style="margin-left:30px">{{ question.reponse.contenu|linebreaksbr }}</p>
-		</div>
-	{% endif %}
-	</section>
-	<hr/>
-	
-{% empty %}
-	<p>Aucune question n'a été posée</p>
-{% endfor %}
-</div>
+	<div id="scroll-pane" data-spy="scroll" data-target="#faqbar">
+    {% for question in questions %}
+	    <section id="{{ question.id }}" style="padding-top:40px">
+            <h2>{{ question.objet }}</h2>
+		    <p>{{ question.contenu|linebreaksbr }}</p>
+	        {% if question.reponse %}
+		        <div class = "reponse text-success">			
+			        <p class="auteur pagination-centered">Réponse de {{ question.reponse.eleve.get_profile.first_name }} {{ question.reponse.eleve.get_profile.last_name|upper }}<br/> 
+			        <span class = "date">Le {{ question.reponse.date }}</span></p>
+			        <p style="margin-left:30px">{{ question.reponse.contenu|linebreaksbr }}</p>
+		        </div>
+	        {% endif %}
+	    </section>
+	    <hr/>
+    {% empty %}
+	    <p>Aucune question n'a été posée</p>
+    {% endfor %}
 </div>
 </div>
 </div>
