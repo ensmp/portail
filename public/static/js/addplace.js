@@ -5,10 +5,7 @@ $(function() {
 		new google.maps.LatLng(48.682902,2.052917),
 		new google.maps.LatLng(49.003746,2.646179));
 	var addrInput = document.getElementById('addressinput');
-	// var options = {
-	// 	bounds: parisBounds,
-	// 	types: ['restaurant']
-	// }
+
 	var autocomplete = new google.maps.places.Autocomplete(addrInput);
 	autocomplete.setBounds(parisBounds);
 
