@@ -1,11 +1,14 @@
 {% extends "base_visiteur.html" %}
 
 {% block content %}
-
-<form id="addform" method="post" action="">
+<div class="pagination-centered">
+<p>Remplissez ce formulaire pour poser votre question au bureau des élèves</p>
+</div>
+<form class="pagination-centered" id="addform" method="post" action="">
 {% csrf_token %}
 {{ form }}
-<input type='submit' value='Proposer' />
+<br>
+<button type='submit' class="btn">Valider</button>
 </form>
 
 <p>

@@ -30,16 +30,19 @@
 {% block onglets %}
 <div id="menu_onglets">
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
-<ul>
-<li><a href="/associations/{{association.pseudo}}/messages/"><span>Messages</span></a></li>
-<li><a href="/associations/{{association.pseudo}}/equipe/"><span>Équipe</span></a></li>
-<li id="actif"><span>Évenements</span></li>
-{% if association.page %}
-<li><a href="/associations/{{association.pseudo}}/{{association.page.lien}}/"><span>{{association.page.titre}}</span></a></li>
+
+<ul class="nav nav-pills">
+<li><a href="/associations/{{association.pseudo}}/messages/"><img src="{{ STATIC_URL}}mail.png">Messages</a></li>
+<li class="active"><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png">Évenements</a></li>
+<li><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png">Équipe</a></li>
+<li><a href="/associations/{{association.pseudo}}/medias/"><img src="{{ STATIC_URL}}clapperboard.png">Médias</a></li>
+{% if association.page_set.all %}
+{% for page in association.page_set.all %}
+<li><a href="{% if not page.is_externe %}/associations/{{association.pseudo}}/{% endif %}{{ page.lien }}"><img src="{{ STATIC_URL}}page_{% if not page.is_externe %}{{page.lien}}{% else %}site{% endif %}.png"><span>{{page.titre}}</span></a></li>
+{% endfor %}
 {% endif %}
 </ul>
-<br>
-<hr>
+<hr />
 </div>
 {% endblock %}
 

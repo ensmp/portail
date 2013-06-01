@@ -69,7 +69,7 @@ def give(request,id,mineur_login):
     pc.visible = False
     pc.attribue_a = eleve
     pc.save()
-    send_mail('Attribution Petit Cours', 'Salut ! Tu viens de remporter le petit cours '+pc.title+'.\nPour le contacter: '+pc.contact+'.\nNiveau: '+pc.niveau+'\nMatiere: '+pc.matiere+'\nLieu: '+pc.address+'\nAutre: '+pc.description, 'annabelle.sibue@mines-paristech.fr',[eleve.email])
+    send_mail('Attribution Petit Cours', 'Salut ! Tu viens de remporter le petit cours '+pc.title+'.\nPour le contacter: '+pc.contact+'.\nNiveau: '+pc.niveau+'\nMatiere: '+pc.matiere+'\nLieu: '+pc.address+'\nAutre: '+pc.description, 'pierrick.rambaud@mines-paristech.fr',[eleve.email])
     
     return HttpResponseRedirect('/petitscours/')
 
