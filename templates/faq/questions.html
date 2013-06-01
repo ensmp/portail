@@ -38,15 +38,14 @@
 				{% endif %}
 			</ul>
 		</div>
-	
+		
+	<a href="poser_question/"><img class="pull-right" src="{{ STATIC_URL }}plus.png" title="Poser une question"></a>
 	  
 	  <div id="scroll-pane" data-spy="scroll" data-target="#faqbar">
   {% for question in questions %}
 	  <section id="{{ question.id }}" style="padding-top:40px">
-          <div class="page-header">
-            <h1>{{question.objet}}</h1>
-          </div>
-		  <h4>{{question.contenu}}</h4>
+          <h2>{{question.objet}}</h2>
+		  <p>{{question.contenu}}</p>
 	{% if question.reponse %}
 		<div class = "reponse text-success">			
 			<p class="auteur pagination-centered">Réponse de {{ question.reponse.eleve.get_profile.first_name }} {{ question.reponse.eleve.get_profile.last_name|upper }}<br/> 
@@ -55,6 +54,7 @@
 		</div>
 	{% endif %}
 	</section>
+	<hr/>
 	
 {% empty %}
 	<p>Aucune question n'a été posée</p>

@@ -1,5 +1,6 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from django.db import models
+from django.forms import ModelForm
 from django.contrib.auth.models import User
 
 class Question(models.Model):
@@ -7,7 +8,7 @@ class Question(models.Model):
 	email = models.EmailField()
 	objet = models.CharField(max_length=255)
 	contenu = models.TextField()
-	date = models.DateTimeField()
+	date = models.DateTimeField(auto_now_add=True, blank=True)
 	
 	class Meta:
 		ordering = ['-date']
@@ -26,4 +27,9 @@ class Reponse(models.Model):
 		ordering = ['-date']
 	
 	def __unicode__(self):
-		return str(self.eleve) + ' -> ' + str(self.question)
+		return str(self.eleve.username) + ' -> ' + str(self.question.id)
+
+class QuestionForm(ModelForm):
+	class Meta:
+		model = Question
+		exclude = ['date']

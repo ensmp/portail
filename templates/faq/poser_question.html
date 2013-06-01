@@ -1,22 +1,17 @@
 {% extends "base_visiteur.html" %}
 
-{% block header %}
-{% endblock %}
-
 {% block content %}
-<h3>Poser une question</h3>
+
 <form id="addform" method="post" action="">
 {% csrf_token %}
-<p>
-<label for="question">Question - </label>
-<input type="text" name="question" placeholder=""/>
-</p>
+{{ form }}
 <input type='submit' value='Proposer' />
 </form>
 
 <p>
-<a href = "/faq/">Retour à la FAQ</a><br/>
+<a href = "/faq/questions">Retour à la FAQ</a><br/>
 </p>
 
 {% endblock %}
+
 
