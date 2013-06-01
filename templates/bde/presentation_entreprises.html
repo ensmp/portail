@@ -1,0 +1,25 @@
+{% extends "base_visiteur.html" %}
+
+{% block onglets %}
+<div class="pagination-centered">
+<h1>Relations Entreprises</h1>
+
+<ul class="nav nav-pills">
+<li class="active"><a href="/entreprises/"><img src="{{ STATIC_URL}}entreprises.png"/><span>Présentation</span></a></li>
+<li><a href="/entreprises/contact/"><img src="{{ STATIC_URL}}mail.png"/><span>Contactez nous !</span></a></li>
+<li><a href="/entreprises/planning/"><img src="{{ STATIC_URL}}date.png"/><span>Planning</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+{% block content %}
+<p>Bienvenue sur le portail <strong>Relations Entreprises</strong> du Bureau des Elèves (BdE) de MINES ParisTech</p>
+
+<p>Ce portail a pour but de permettre à tous, élève, entreprise et visiteur extérieur de consulter le <a href = "planning/">planning des événements</a> de recrutement organisés par les différentes entreprises partenaires du BdE et de l’école des Mines de Paris tout au long de l’année.</p>
+
+<p>Vous souhaitez devenir partenaire de l’école, du BdE ou en apprendre plus sur les actions que nous pouvons mener ensemble ? Pour cela, contactez directement le <a href="mailto:bde-entreprises@mines-paristech.fr">BdE Relations Entreprises</a>, ou bien le <a href="mailto:solenne.couraye_du_parc@mines-paristech.fr). ">service Relations Entreprises de la Direction de l’Enseignement de l’école</a>. Plus de contacts sont disponibles dans la page <a href="contact/">« contacts »</a></p>
+
+<p>Nous organisons un certain nombre d’actions dans le cadre de ces partenariats, répertoriées dans le <a href="{{ STATIC_URL }}Prestations_BDE_Mines.pdf">catalogue des prestations</a>. Vous ne trouvez pas d’événement vous correspondant ? Nous pouvons créer avec vous tout type d’événement sur mesure, il vous suffit de <a href="mailto:bde-entreprises@mines-paristech.fr">nous contacter directement</a> pour voir ce qu’il est possible de faire ensemble.</p>
+{% endblock %}
