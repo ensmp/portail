@@ -33,22 +33,12 @@
                     <link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}icon57.png">
                                    <link rel="shortcut icon" href="{{STATIC_URL}}favicon.ico">
 								   
-	<script src="{{ STATIC_URL }}jquery.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}module_sondages.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}jqchat.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}jquery.qtip-1.0.0-rc3.min.js"></script>
-	{% load chat_room %} {% obtenir_room %}
-	<script type="text/javascript">$(document).ready(function(){InitChatWindow("{% url jqchat_ajax room.id %}", null);});</script>
-	
-	
-
-	
-	
+	<script src="{{ STATIC_URL }}jquery.js"></script>	
 	{% block header %}
 	{% endblock %}
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#faqbar">
 
 	<!--Google Analytics -->
 	<script type="text/javascript">

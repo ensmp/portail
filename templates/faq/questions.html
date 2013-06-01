@@ -1,45 +1,44 @@
 ﻿{% extends "base_visiteur.html" %}
 
 {% block content %}
-
-<script>
-$(document).ready (function (){
-    $(".navbar").affix ();
-)};
-</script>
-
 <div class="row">
-      <div id = "faqbar" class="span3" data-spy="affix">
+	<div class="span3">
+      <div id = "faqbar" data-spy="affix">
         <ul class="nav nav-list bs-docs-sidenav affix-top">
+        <li class="active"><a href="#poser"><i class="icon-chevron-right"></i>Poser une question</a></li>
 		{% for question in questions %} 	
-          <li><a href="#{{ question.id }}"><i class="icon-chevron-right"></i> {{ question.objet }}</a></li>
+          <li><a href="#question{{ question.id }}"><i class="icon-chevron-right"></i> {{ question.objet }}</a></li>
 		  {% endfor %}
         </ul>
       </div>
+  </div>
 	  
-      <div class="span9 pull-right">	  
-	  <div class="pagination pagination-centered">
-			<ul>
-				{% if questions.has_previous %}
-					<li><a href="?page={{ questions.previous_page_number }}">«</a></li>
-					<li><a href="?page={{ questions.previous_page_number }}">{{ questions.previous_page_number }}</a></li>
-				{% endif %}
+  <div class="span9 pull-right">
+  	<div class="pagination pull-right">
+		<ul>
+			{% if questions.has_previous %}
+				<li><a href="?page={{ questions.previous_page_number }}">«</a></li>
+				<li><a href="?page={{ questions.previous_page_number }}">{{ questions.previous_page_number }}</a></li>
+			{% else %}
+				<li class="disabled"><a href="?page={{ questions.previous_page_number }}">«</a></li>
+			{% endif %}
+			<li class="active"><a href="?page={{ questions.number }}">{{ questions.number }}</a></li>
 
-				<li class="active"><a href="?page={{ questions.number }}">{{ questions.number }}</a></li>
+			{% if questions.has_next %}
+				<li><a href="?page={{ questions.next_page_number }}">{{ questions.next_page_number }}</a></li>
+				<li><a href="?page={{ questions.next_page_number }}">»</a></li>
+			{% else %}
+				<li class="disabled"><a href="?page={{ questions.next_page_number }}">»</a></li>
+			{% endif %}
+		</ul>
+	</div>
 
-				{% if questions.has_next %}
-					<li><a href="?page={{ questions.next_page_number }}">{{ questions.next_page_number }}</a></li>
-					<li><a href="?page={{ questions.next_page_number }}">»</a></li>
-				{% endif %}
-			</ul>
-		</div>
-	
+	<section id="poser" style="padding-top:5px">
+            <h2><a href="poser_question/">Poser une question</a></h2>		    
+	</section>
 
-	<a class="pull-left" href="poser_question/"><img src="{{ STATIC_URL }}plus.png" title="Poser une question">Poser une question</a>
-	  
-	<div id="scroll-pane" data-spy="scroll" data-target="#faqbar">
     {% for question in questions %}
-	    <section id="{{ question.id }}" style="padding-top:40px">
+	    <section id="question{{ question.id }}" style="padding-top:20px">
             <h2>{{ question.objet }}</h2>
 		    <p>{{ question.contenu|linebreaksbr }}</p>
 	        {% if question.reponse %}
@@ -56,5 +55,10 @@ $(document).ready (function (){
     {% endfor %}
 </div>
 </div>
-</div>
+
+<script type="text/javascript">
+$(".pagination ul li.disabled a, .pagination ul li.active a").click(function(event) {
+	event.preventDefault();
+});
+</script>
 {% endblock %}
