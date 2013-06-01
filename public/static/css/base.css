@@ -86,7 +86,5 @@ margin-right:5px;
 }
 
 a#menu_notifications {
-    background: url("notification.png") no-repeat scroll 0 center transparent;
-    color: #FFF;
-	padding-left:8px!important;
+	color:#fff;
 }

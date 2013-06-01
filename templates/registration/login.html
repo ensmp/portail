@@ -1,14 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Identification au Portail des élèves</title>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL}}login.css" media="screen" />
+{% extends "base_visiteur.html" %}
 
-</head>
-<body>
+{% block content %}
+
+
 {% load url from future %}
-<div class="boite">
+<div class = "pagination-centered">
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
 	<h1>Identification au Portail des élèves</h1>
@@ -25,36 +21,12 @@
 	<p>Identifiant ou mot de passe incorrect, veuillez réessayer.</p>
 	{% endif %}
 	<p class="center">
-		<input type="submit" value="Se connecter" />
+		<button type="submit" class="btn">Se connecter</button>
 		<input type="hidden" name="next" value="{{ next }}" />		
 	</p>
 </form>
-</div>
 <p id="credits">Accès au <strong>Portail des élèves</strong> de l'École des  <strong>Mines de Paris</strong>.<br />
 En cas de problèmes d'identification, contacter le <a href="mailto:guillaume.caner@mines-paristech.fr">VP Geek</a></p>
-
-<div class="boite">
-	<h1>Espace visiteurs</h1>
-	<table width="100%">
-	<tr>		
-		<td valign="top">
-			<p><strong>Parents / Entreprises</strong></p>
-			<ul>
-				<li><a href = "/petitscours/demander/">Les petits cours des élèves</a></li>
-				<li><a href = "http://jump.ensmp.fr">JuMP (Junior Entreprise)</a></li>
-				<li><a href = "http://www.forum-trium.fr">Forum Trium</a></li>
-			</ul>
-		</td>
-		<td valign="top">
-			<p><strong>Elèves</strong></p>
-			<ul>				
-				<li><a href = "http://gala.mines-paris.eu">Le Gala des Mines</a></li>
-				<li><a href = "http://voile.mines-paris.eu">Club Voile</a></li>
-				<li><a href = "http://bda.mines-paris.eu"/>BDA</a></li>	
-				<li><a href = "http://evea.mines-paris.eu"/>Evea</a></li>	
-			</ul>
-		</td>
-	<tr>
-	</table>
 </div>
-</body>
+
+{% endblock %}

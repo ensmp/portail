@@ -211,7 +211,6 @@ ul#topnav li a#menu_notifications {
 	display:lock; 
 	height: 39px; 
 	line-height: 39px;
-	background: url(notification.png) no-repeat 0px center;
 	vertical-align:middle;
 	text-align:center;
 	color:#fff;
