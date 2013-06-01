@@ -60,7 +60,7 @@
 				</li>
 
 				{% if user.is_authenticated %}
--      			{% load obtenir_nombre_notifications %}{% compter_notifications request.user.username %} 
+				{% load obtenir_nombre_notifications %}{% compter_notifications request.user.username %} 
 				<li><span class="badge badge-important"><a id = "menu_notifications" href="/notifications/">{{ nombre_de_notifications }}</a></span></li>
 				{% endif %}
 				
