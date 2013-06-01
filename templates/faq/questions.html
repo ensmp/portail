@@ -1,76 +1,66 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-	   "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-	<title>Foire aux questions</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<script src="{{ STATIC_URL }}jquery-1.7.2.min.js" type="text/javascript" ></script>
-	<script src="{{ STATIC_URL }}faq.js" type="text/javascript" ></script>
-	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}faq.css" media="screen" />
-</head>
-<body>
+﻿{% extends "base_visiteur.html" %}
 
-<div id="header"></div>
+{% block content %}
 
-
-<div id="wrap">
-
-<div id="adroite" style = "display:none">
-<center>
-<img style="margin-bottom: 10px" src="{{ STATIC_URL}}petitscours-logo.jpg" />
-</center>
-<p>Les élèves répondent à vos questions</p>
-</div>
-
-
-<div id="intro">
-<p>Les élèves des Mines sont tous de très bons élèves ayant été reçu à un des concours les plus sélectifs de France. Ils maitrisent parfaitement les disciplines scientifiques, et connaissent des méthodes de travail efficaces.</p>
-<hr/>
-</div>
-
+<script>
+        $(document).ready (function (){
+            $(".navbar").affix ();
+        )};
+     </script>
 
 <div id="questions">
-{% for question in questions %} 	
-    <p class = "objet">
-	{{ question.objet }} <br>
-	<span class="date">{{ question.nom }}, le {{ question.date }}</span>
-	</p>
-	<div class = "question"> 
-		{{ question.contenu|linebreaksbr }}
+<div class="row">
+      <div id = "faqbar" class="span3" data-spy="affix">
+        <ul class="nav nav-list bs-docs-sidenav affix-top">
+		{% for question in questions %} 	
+          <li><a href="#{{ question.id }}"><i class="icon-chevron-right"></i> {{question.objet}}</a></li>
+		  {% endfor %}
+        </ul>
+      </div>
+	  
+      <div class="span6 pull-right">
+	  
+	  
+	  
+
+	  <div class="pagination pagination-centered">
+			<ul>
+				{% if questions.has_previous %}
+					<li><a href="?page={{ questions.previous_page_number }}">«</a></li>
+					<li><a href="?page={{ questions.previous_page_number }}">{{ questions.previous_page_number }}</a></li>
+				{% endif %}
+
+				<li class="active"><a href="?page={{ questions.number }}">{{ questions.number }}</a></li>
+
+				{% if questions.has_next %}
+					<li><a href="?page={{ questions.next_page_number }}">{{ questions.next_page_number }}</a></li>
+					<li><a href="?page={{ questions.next_page_number }}">»</a></li>
+				{% endif %}
+			</ul>
+		</div>
 	
+	  
+	  <div id="scroll-pane" data-spy="scroll" data-target="#faqbar">
+  {% for question in questions %}
+	  <section id="{{ question.id }}" style="padding-top:40px">
+          <div class="page-header">
+            <h1>{{question.objet}}</h1>
+          </div>
+		  <h4>{{question.contenu}}</h4>
 	{% if question.reponse %}
-		<div class = "reponse">			
-			<p class="auteur">Réponse de {{ question.reponse.eleve.get_profile.first_name }} {{ question.reponse.eleve.get_profile.last_name|upper }}<br/> 
+		<div class = "reponse text-success">			
+			<p class="auteur pagination-centered">Réponse de {{ question.reponse.eleve.get_profile.first_name }} {{ question.reponse.eleve.get_profile.last_name|upper }}<br/> 
 			<span class = "date">Le {{ question.reponse.date }}</span></p>
-			<p>{{ question.reponse.contenu|linebreaksbr }}</p>
+			<p style="margin-left:30px">{{ question.reponse.contenu|linebreaksbr }}</p>
 		</div>
 	{% endif %}
-	</div>	
+	</section>
+	
 {% empty %}
 	<p>Aucune question n'a été posée</p>
 {% endfor %}
-
-<div class="pagination">
-    <span class="step-links">
-        {% if questions.has_previous %}
-            <a href="?page={{ questions.previous_page_number }}">précédent</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ questions.number }} sur {{ questions.paginator.num_pages }}.
-        </span>
-
-        {% if questions.has_next %}
-            <a href="?page={{ questions.next_page_number }}">suivant</a>
-        {% endif %}
-    </span>
 </div>
 </div>
 </div>
-
-<div id="footer">
-	<p id="gauche"><a href="/">Retour au portail des élèves</a></p>
-	<p id="droite"><a href="/petitscours/">Partie réservée aux élèves des Mines</a></p>
 </div>
-</body>
-</html>
+{% endblock %}

@@ -11,7 +11,7 @@ def accueil(request):
 def questions(request):
 	liste_questions = Question.objects.exclude(reponse = None)
 
-	paginator = Paginator(liste_questions, 25) # 25 questions par page
+	paginator = Paginator(liste_questions, 10) # 10 questions par page
 	
 	page = request.GET.get('page')
 	try:
