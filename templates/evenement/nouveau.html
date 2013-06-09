@@ -2,29 +2,10 @@
 
 {% block header %}
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}evenements.css" />
-<link type="text/css" href="{{ STATIC_URL }}jquery-ui-1.8.11.custom.css" rel="stylesheet" />
-<link type="text/css" href="{{ STATIC_URL }}bootstrap-timepicker.min.css" />
-<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui-1.8.21.custom.min.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}bootstrap-timepicker.min.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}datepicker.css" />
 <script type="text/javascript" src="{{ STATIC_URL }}bootstrap-timepicker.min.js"></script>
-
-<script type="text/javascript">
-	$(function(){
-		$('#datepicker').datepicker({
-			inline: true, 
-			dateFormat: "dd/mm/yy", 
-			minDate: new Date(), 
-			monthNames: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"], 
-			monthNamesShort: ["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Aoû","Sep","Oct","Nov","Déc"],
-			dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-			dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-			dayNamesShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-			prevText: "Précédent",
-			nextText: "Suivant",
-			
-		});
-	});
-</script>
+<script type="text/javascript" src="{{ STATIC_URL }}bootstrap-datepicker.js"></script>
 {% endblock %}
 
 {% block onglets %}
@@ -55,34 +36,44 @@
 <input type="text" name="titre" placeholder="Saisissez le titre"/>
 </p>
 <p>
+
 <label for="lieu">C'est où ? - </label>
 <input type='text' name='lieu' placeholder="Saisissez le lieu" />
 </p>
 <p>
+
 <label for="date">C'est quel jour ? - </label>
-<input id="datepicker" type="text" name = "date" placeholder="Saisissez la date">
-</p>
+
+<div class="input-append date datepicker" data-date="{% now "d/m/Y" %}" data-date-format="dd/mm/yyyy">
+<input class="input-small" type="text" name="date" value="{% now "d/m/Y" %}">
+<span class="add-on"><i class="icon-th"></i></span>
+</div>
+
+
 <label for="debut">Ca commence quand ? - </label>
 <div class="input-append bootstrap-timepicker">
 <input id="timedebutpicker" class="input-small" type="text" name = "debut">
+<span class="add-on"><i class="icon-time"></i></span>
 </div>
+
 <label for="fin">Ca se termine quand ? - </label>
 <div class="input-append bootstrap-timepicker">
-<input id="timefinpicker" class="input-small" type="text" name = "fin" placeholder="L'heure de fin">
+<input id="timefinpicker" class="input-small" type="text" name = "fin">
+<span class="add-on"><i class="icon-time"></i></span>
 </div>
+
 <p>Pourquoi je dois venir ?</p>
-<p><textarea name="description" style="width:414px;height:64px;" placeholder="Ecrivez une description de l'événement"></textarea></p>
+<p><textarea name="description" class = "span6" placeholder="Ecrivez une description de l'événement"></textarea></p>
 <input type='submit' value='Terminer' />
 </form>
 
 <script type="text/javascript">
 $('#timedebutpicker').timepicker({
-showMeridian: false,
-showInputs: true
+showMeridian: false
 });
 $('#timefinpicker').timepicker({
-showMeridian: false,
-showInputs: true
+showMeridian: false
 });
+$('.datepicker').datepicker();
 </script>
 {% endblock %}
