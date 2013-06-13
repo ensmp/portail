@@ -52,7 +52,10 @@ class Notification(models.Model):
 		elif self.content_type.model_class().__name__ == 'Sondage':
 			return '/sondages/valider/'
 		elif self.content_type.model_class().__name__ == 'Comment':
-			return self.content_object.content_object.get_absolute_url()
+			if self.content_object.content_object:
+				return self.content_object.content_object.get_absolute_url()
+			else:
+				return '#'
 		else:
 			return '#'
 			

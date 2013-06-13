@@ -12,7 +12,7 @@ from django.http import HttpResponseRedirect
 def liste(request):
 	envoi_list = Envoi.objects.filter(user__username = request.user.username).order_by('-notification__date')
 	envoi_nonlu_list = list(envoi_list.filter(lu = False))
-	envoi_lu_list = list(envoi_list.filter(lu = True))
+	envoi_lu_list = list(envoi_list.filter(lu = True))[:50]
 	mark_all_seen(request.user)
 	return render_to_response('notification/liste.html',{'envoi_nonlu_list': envoi_nonlu_list, 'envoi_lu_list': envoi_lu_list},context_instance=RequestContext(request))
 

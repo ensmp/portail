@@ -1,20 +1,18 @@
 ﻿{% extends "base_visiteur.html" %}
 
 {% block content %}
-<div class="row">
-	<div class="span3">
-      <div id = "faqbar" data-spy="affix">
+<div class="row-fluid">
+	<div class="span3 bs-docs-sidebar" id = "faqbar" data-spy="affix">
         <ul class="nav nav-list bs-docs-sidenav affix-top">
         <li class="active"><a href="#poser"><i class="icon-chevron-right"></i>Poser une question</a></li>
 		{% for question in questions %} 	
           <li><a href="#question{{ question.id }}"><i class="icon-chevron-right"></i> {{ question.objet }}</a></li>
 		  {% endfor %}
         </ul>
-      </div>
   </div>
 	  
   <div class="span9 pull-right">
-  	<div class="pagination pull-right">
+  	<div class="pagination pull-right" style="padding-top:35px">
 		<ul>
 			{% if questions.has_previous %}
 				<li><a href="?page={{ questions.previous_page_number }}">«</a></li>
@@ -33,12 +31,12 @@
 		</ul>
 	</div>
 
-	<section id="poser" style="padding-top:5px">
+	<section id="poser" style="padding-top:35px">
             <h2><a href="poser_question/">Poser une question</a></h2>		    
 	</section>
 
     {% for question in questions %}
-	    <section id="question{{ question.id }}" style="padding-top:20px">
+	    <section id="question{{ question.id }}" style="padding-top:35px">
             <h2>{{ question.objet }}</h2>
 		    <p>{{ question.contenu|linebreaksbr }}</p>
 	        {% if question.reponse %}

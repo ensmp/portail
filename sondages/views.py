@@ -109,6 +109,7 @@ def detail_json(request, indice_sondage):
 @login_required    
 # Les statistiques des sondages
 def scores(request):    
+    Sondage.objects.update_all_weights();
     liste_eleves = UserProfile.objects.exclude(participations_sondages = 0)
     liste_eleves_c = liste_eleves.order_by('-score_victoires_sondages')[:10]
     liste_eleves_d = liste_eleves.order_by('-score_defaites_sondages')[:10]
