@@ -4,6 +4,9 @@ from faq.models import Question, Reponse, QuestionForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.mail import send_mail
+
+
 
 def accueil(request):
     return render_to_response('accueil/accueil.html', {},context_instance=RequestContext(request))
@@ -33,6 +36,7 @@ def poser_question(request):
             print "form valide"
             model = form.save()
             print "form saved " + str(model)
+            send_mail('Subject here', 'Here is the message.', 'guillaume.caner@mines-paristech.fr',['guillaume.caner@mines-paristech.fr'], fail_silently=False)
             # do something.
     else:
         form = QuestionForm()
