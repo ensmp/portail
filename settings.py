@@ -206,7 +206,6 @@ EMAIL_HOST = "cobra.ensmp.fr"
 EMAIL_PORT = 587 
 DEFAULT_FROM_EMAIL = "guillaume.caner@mines-paristech.fr"
 EMAIL_HOST_USER = "guillaume.caner"
-EMAIL_HOST_PASSWORD = "jmchgu92"
 
 AUTH_PROFILE_MODULE = 'trombi.UserProfile'
 

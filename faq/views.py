@@ -12,7 +12,7 @@ def accueil(request):
     return render_to_response('accueil/accueil.html', {},context_instance=RequestContext(request))
 
 def questions(request):
-    liste_questions = Question.objects.exclude(reponse = None)
+    liste_questions = Question.objects.exclude(reponse = None).order_by('-date')
 
     paginator = Paginator(liste_questions, 10) # 10 questions par page
     
