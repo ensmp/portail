@@ -43,7 +43,6 @@ class Message(models.Model):
 	contenu = models.TextField()
 	date = models.DateTimeField(default=datetime.now(), blank=True)
 	expediteur = models.ForeignKey(UserProfile) #L'élève qui a rédigé le message
-	destinataire = models.ForeignKey(Association,related_name='message_destinataire', help_text="Si le message est public, laissez ce champ vide", blank=True, null=True) #L'assoce destinataire du message. Si null, le message est visible par tout le monde.
  
 	lu = models.ManyToManyField(UserProfile,related_name='message_lu', blank=True) #Les élèves qui ont lu le message
 	important = models.ManyToManyField(UserProfile,related_name='message_important', blank=True) #Les élèves qui ont classé le message comme important
@@ -62,11 +61,8 @@ class Message(models.Model):
 		message = self.association.nom + ' a publie un nouveau message'
 		notification = Notification(content_object=self, message=message)
 		notification.save()
-		if self.destinataire is None:
-			notification.envoyer_multiple(self.association.suivi_par.all())
-		else:
-			recipients = self.association.suivi_par.all().filter(Q(userprofile__in = self.destinataire.membres.all) | Q(userprofile__in = self.association.membres.all))
-			notification.envoyer_multiple(recipients)
+		notification.envoyer_multiple(self.association.suivi_par.all())
+		
 	
 	def envoyer_commentaire_notification(self, comment_pk, username):
 		eleve = UserProfile.objects.get(user__username = username)
@@ -74,11 +70,7 @@ class Message(models.Model):
 		commentaire = Comment.objects.get(pk = comment_pk)
 		notification = Notification(content_object=commentaire, message=message)
 		notification.save()
-		if self.destinataire is None:
-			notification.envoyer_multiple(self.association.suivi_par.all())
-		else:
-			recipients = self.association.suivi_par.all().filter(Q(userprofile__in = self.destinataire.membres.all) | Q(userprofile__in = self.association.membres.all))
-			notification.envoyer_multiple(recipients)
+		notification.envoyer_multiple(self.association.suivi_par.all())
 				
 	def save(self, *args, **kwargs):
 		creation = self.pk is None #Creation de l'objet			
@@ -97,6 +89,6 @@ class MessageForm(ModelForm):
 
 	class Meta:
 		model = Message
-		fields = ('destinataire', 'objet', 'contenu')
+		fields = ('objet', 'contenu')
 		
 		

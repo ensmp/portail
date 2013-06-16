@@ -54,6 +54,13 @@
 <div class="accordion-group message">
 <div class="accordion-heading">
 <span class = "pull-right message-icone">
+	
+	{% for adhesion in membres %}
+	{% if request.user = adhesion.eleve.user %}
+	<a href="/messages/{{ message.id }}/supprimer/"><img class='action_message' src="{{ STATIC_URL }}supprimer.png" /></a>
+	{% endif %}
+	{% endfor %}
+	
 	{% if request.user.get_profile in message.lu.all %}
 	<a href="/messages/{{ message.id }}/"><img class='action_message unread' src="{{ STATIC_URL }}unread.png" /></a>
 	{% else %}

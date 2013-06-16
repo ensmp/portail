@@ -46,11 +46,18 @@
 	
 	{% if evenement.is_billetterie%}
 	<br/>
-	<a class = "biletterie" href = "/associations/{{evenement.association.pseudo}}/evenements/{{evenement.id}}"> Réserver </a>
+	<a class = "biletterie" href = "/associations/{{evenement.association.pseudo}}/evenements/{{evenement.id}}">Réserver</a>
 	{% endif%}	
 	</div>
 	
 	<div class="evenement_contenu">
+		<span class = "pull-right message-icone">
+			{% for adhesion in membres %}
+			{% if request.user = adhesion.eleve.user %}
+			<a href="/evenements/{{ evenement.id }}/supprimer/"><img class='action_message' src="{{ STATIC_URL }}supprimer.png" /></a>
+			{% endif %}
+			{% endfor %}
+		</span>
 		<p>{{ evenement.description|linebreaksbr}}</p>
 		<hr>
 	</div>

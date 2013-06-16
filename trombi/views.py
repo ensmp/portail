@@ -98,8 +98,8 @@ def profile(request):
 @csrf_exempt
 def octo_update(request):
 
-    password = request.POST.get('password')
-    json_octo = request.POST.get('clients_bar')
+    password = request.POST.get('password','')
+    json_octo = request.POST.get('clients_bar', '[]')
     
     # jsoldes = json.loads('[{"login": "12courdi", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "11leuren", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "12salvy", "solde_octo": 42.0, "solde_biero": 3.0}]')
     jsoldes = json.loads(json_octo)

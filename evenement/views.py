@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+Ôªø#-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -9,17 +9,19 @@ from evenement.models import Evenement
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from datetime import date, datetime, timedelta
 from django.db.models import Q
+from django.contrib import messages
+
 
 import json
 
 
 @login_required
-#Le calendrier. Les Èvenements sont chargÈs depuis la vue index_json.
+#Le calendrier. Les √©venements sont charg√©s depuis la vue index_json.
 def index(request):
 	return render_to_response('evenement/calendrier.html', {},context_instance=RequestContext(request))
 
 @login_required	
-#La serialisation des Èvenements au format JSON. Pour l'affichage dans le calendrier, et sur les applis.
+#La serialisation des √©venements au format JSON. Pour l'affichage dans le calendrier, et sur les applis.
 def index_json(request):
 	dthandler = lambda obj: obj.isoformat() if isinstance(obj, datetime) else None #pour le formatage des dates
 	evenement_list = Evenement.objects.exclude(Q(is_personnel=True) & ~Q(createur__user__username=request.user.username)) #On ne lit pas les evenements personnels d'autrui.
@@ -32,12 +34,12 @@ def index_json(request):
 			'end': e.date_fin,
 			'title': e.titre, 	
 			'body': e.description, 
-			'readOnly':not(e.peut_modifier(request.user)) #Lecture seule si on n'est pas autorisÈ ‡ le modifier
+			'readOnly':not(e.peut_modifier(request.user)) #Lecture seule si on n'est pas autoris√© √† le modifier
 		} for e in evenement_list], default=dthandler))
 	return response
 
 @login_required
-#CrÈation d'un nouvel Èvenement, depuis le calendrier.
+#Cr√©ation d'un nouvel √©venement, depuis le calendrier.
 def nouveau_calendrier(request): 
 	debut = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_debut']), int(request.POST['minutes_debut']))
 	fin = datetime(int(request.POST['annee']), int(request.POST['mois'])+1, int(request.POST['jour']), int(request.POST['heures_fin']), int(request.POST['minutes_fin']))
@@ -50,24 +52,16 @@ def nouveau_calendrier(request):
 	return HttpResponse('Ok (ajout)')
 
 @login_required	
-#Suppression d'un Èvenement, depuis le calendrier.
+#Suppression d'un √©venement, depuis le calendrier.
 def supprimer_calendrier(request):
 	evenement = Evenement.objects.get(pk=request.POST['id'])
 	if evenement.peut_modifier(request.user):
 		evenement.delete()
 	return HttpResponse('Ok (suppression)')
 
-@login_required	
-#Suppression d'un Èvenement
-def supprimer(request, evenement_id):
-	evenement = Evenement.objects.get(pk=evenement_id)
-	if evenement.peut_modifier(request.user):
-		evenement.delete()
-	return HttpResponseRedirect(association.get_absolute_url() + 'evenements/')
-
 	
 @login_required	
-#Mise ‡ jour d'un Èvenement, depuis le calendrier.
+#Mise √† jour d'un √©venement, depuis le calendrier.
 def update_calendrier(request):	
 	evenement = Evenement.objects.get(pk=request.POST['id'])
 	if evenement.peut_modifier(request.user):
@@ -81,7 +75,7 @@ def update_calendrier(request):
 	return HttpResponse('Ok (update)')	
 
 @login_required
-#CrÈation d'un nouvel Èvenement, depuis la page "Èvenements" d'une association
+#Cr√©ation d'un nouvel √©venement, depuis la page "√©venements" d'une association
 def nouveau(request, association_pseudo):
 	association = get_object_or_404(Association,pseudo=association_pseudo)
 	if request.POST:
@@ -96,6 +90,15 @@ def nouveau(request, association_pseudo):
 		return HttpResponseRedirect('/associations/'+association_pseudo+'/evenements/')
 	else:
 		return render_to_response('evenement/nouveau.html', {'association' : association},context_instance=RequestContext(request))
+
+@login_required
+def supprimer(request, evenement_id):
+    evenement = get_object_or_404(Evenement, pk = evenement_id)
+    association = evenement.association
+    if Adhesion.objects.filter(association=evenement.association, eleve=request.user).exists():
+        evenement.delete()
+        messages.add_message(request, messages.SUCCESS, "Ev√©nement supprim√© !")
+    return redirect(association.get_absolute_url() + 'evenements/')
 	
 
 @login_required

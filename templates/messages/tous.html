@@ -62,12 +62,7 @@
 	{% endif %}</p>
 <p>{{ message.contenu|removetags:"script"|safe}}</p>
 <hr>
-	<p class="message-pied">Visible par
-	{% if message.destinataire %}
-	{{message.destinataire.nom}}
-	{% else %}
-	tous
-	{% endif %}
+	<p class="message-pied">Visible par tous
 	<span class="pull-right">Posté par <a href="/people/{{message.expediteur.user.username}}">{{message.expediteur.first_name}} {{message.expediteur.last_name}}</a></span>
 	</p>
 	

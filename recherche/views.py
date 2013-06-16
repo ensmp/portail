@@ -19,8 +19,6 @@ def search(request):
 		found_messages = Message.objects.filter(message_query).order_by('-date')
 		found_users = UserProfile.objects.filter(user_query).order_by('user__username')
 		
-		found_messages = found_messages.filter(Q(destinataire__isnull=True) | Q(destinataire__in=request.user.get_profile().association_set.all()) | Q(association__in=request.user.get_profile().association_set.all()))
-		
 		if query_string.lower() == 'dieu':
 			found_users = UserProfile.objects.filter(user__username = '11leuren')
 			
