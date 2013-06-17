@@ -1,15 +1,18 @@
-#-*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from faq.models import Question, Reponse, QuestionForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
+
 
 def accueil(request):
     return render_to_response('accueil/accueil.html', {},context_instance=RequestContext(request))
 
 def questions(request):
-    liste_questions = Question.objects.exclude(reponse = None)
+    liste_questions = Question.objects.exclude(reponse = None).order_by('-date')
 
     paginator = Paginator(liste_questions, 10) # 10 questions par page
     
@@ -33,7 +36,17 @@ def poser_question(request):
             print "form valide"
             model = form.save()
             print "form saved " + str(model)
+            try :
+                 objet=form.cleaned_data['objet']
+                 message=form.cleaned_data['contenu']
+                 send_mail('Question posée sur la FAQ du portail',"Objet : " + objet + "\nMessage : "+ message, 'guillaume.caner@mines-paristech.fr',['guillaume.caner@mines-paristech.fr','paul.le_floch@mines-paristech.fr','pierre.salvy@mines-paristech.fr','pierrick.rambaud@mines-paristech.fr','alice.gabriel@mines-paristech.fr','evan.proux@mines-paristech.fr','mathilde.bibal@mines-paristech.fr','cyprien.pelissou@mines-paristech.fr'], fail_silently=False)
+            except BadHeaderError :
+                 return HttpResponse('Invalid header found.')
+            return HttpResponseRedirect('/faq/question_posee')
             # do something.
     else:
         form = QuestionForm()
     return render_to_response("faq/poser_question.html", {'form': form},context_instance=RequestContext(request))
+
+def question_posee(request):
+    return render_to_response('faq/question_posee.html', {},context_instance=RequestContext(request))

@@ -202,9 +202,10 @@ LOGGING = {
     }
 }
 
-EMAIL_HOST = "smtp.alwaysdata.com"
-EMAIL_PORT = 25 
-DEFAULT_FROM_EMAIL = "edouard.leurent@mines-paristech.fr"
+EMAIL_HOST = "cobra.ensmp.fr"
+EMAIL_PORT = 587 
+DEFAULT_FROM_EMAIL = "guillaume.caner@mines-paristech.fr"
+EMAIL_HOST_USER = "guillaume.caner"
 
 AUTH_PROFILE_MODULE = 'trombi.UserProfile'
 
