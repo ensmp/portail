@@ -140,6 +140,7 @@ def nouveau(request, association_pseudo):
         if Adhesion.objects.filter(association=get_object_or_404(Association,pseudo=association_pseudo), eleve=request.user).exists(): #Si l'utilisateur est membre de l'assoce
             #On cree le message SANS OUBLIER de passer par le SANITIZER, pour escaper le js et les tags html non autorisés
             Message.objects.create(association=Association.objects.get(pseudo=association_pseudo),objet=sanitizeHtml(request.POST['objet']),contenu=sanitizeHtml(request.POST['contenu']),date=datetime.now(),expediteur=request.user.get_profile())
+        association = get_object_or_404(Association, pseudo = association_pseudo)
         return redirect(association.get_absolute_url() + 'messages/')
     else:
         liste_assoces = Association.objects.all()

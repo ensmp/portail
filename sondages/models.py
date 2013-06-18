@@ -4,6 +4,7 @@ from trombi.models import UserProfile
 from django.db.models import Q
 from django.contrib.auth.models import Permission, User
 from notification.models import Notification
+from django.contrib.contenttypes import generic
 
 
 class SondageManager(models.Manager):
@@ -25,6 +26,8 @@ class Sondage(models.Model):
     resultat = models.IntegerField(editable=False)
     weight_score = models.FloatField(editable=False, null=True)
     objects = SondageManager()
+
+    notification = generic.GenericRelation(Notification)
     
     def date_str(self):
         jour = str(self.date_parution.day)

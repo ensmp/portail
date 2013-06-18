@@ -19,6 +19,7 @@ from django.contrib.contenttypes.models import ContentType
 from trombi.models import UserProfile
 from notification.models import Notification
 from association.models import Association
+from django.contrib.contenttypes import generic
 
 # Required PIL classes may or may not be available from the root namespace
 # depending on the installation method used.
@@ -135,6 +136,8 @@ class Gallery(models.Model):
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
     archive = models.FileField(_('fichier images (.zip)'), upload_to=PHOTOLOGUE_DIR+"/temp",
                                 help_text=_('Archive zip contenant les images de l\'album'))
+
+    notification = generic.GenericRelation(Notification)
 
     class Meta:
         ordering = ['-date_added']
@@ -532,6 +535,8 @@ class Photo(ImageModel):
     is_public = models.BooleanField(_('is public'), default=True, help_text=_('affichee dans les albums'))
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
     eleves = models.ManyToManyField(UserProfile, blank=True, null=True) #Identifier des eleves sur une photo
+
+    notification = generic.GenericRelation(Notification)
     
     class Meta:
         ordering = ['title_slug']

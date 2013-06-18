@@ -9,6 +9,7 @@ from tinymce.widgets import TinyMCE
 from notification.models import Notification
 from django.db.models import Q
 from django.contrib.comments.models import Comment
+from django.contrib.contenttypes import generic
 
 
 
@@ -46,6 +47,9 @@ class Message(models.Model):
  
 	lu = models.ManyToManyField(UserProfile,related_name='message_lu', blank=True) #Les élèves qui ont lu le message
 	important = models.ManyToManyField(UserProfile,related_name='message_important', blank=True) #Les élèves qui ont classé le message comme important
+
+	commentaires = generic.GenericRelation(Comment, object_id_field="object_pk")
+	notification = generic.GenericRelation(Notification, related_name = "messages_notifie")
 	
 	def get_absolute_url(self):
 		return '/associations/' + self.association.pseudo + '/messages/'

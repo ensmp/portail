@@ -6,6 +6,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import Group, User
 from datetime import datetime
 from notification.models import Notification, Envoi
+from django.contrib.contenttypes import generic
 
 
 
@@ -62,6 +63,9 @@ class Video(models.Model):
     url  = models.URLField(max_length=200)
     date = models.DateField(default=datetime.now)
     
+    notification = generic.GenericRelation(Notification)
+
+
     class Meta:
         ordering = ['-date', '-id']
     
@@ -98,6 +102,8 @@ class Affiche(models.Model):
     titre = models.CharField(verbose_name='Titre de l\'affiche', max_length=64)
     fichier = models.ImageField(upload_to = 'affiches')
     date = models.DateField(verbose_name='Date de publication', default=datetime.now, blank=True, null=True)
+
+    notification = generic.GenericRelation(Notification)
     
     class Meta:
         ordering = ['-date', '-id']
