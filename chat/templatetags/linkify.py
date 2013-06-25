@@ -16,7 +16,7 @@ def linkify(value, autoescape=None):
         esc = lambda x: x    
     message = esc(value)
     import re    
-    url_pattern = re.compile(r"((http|https)://[^ ]+)")
+    url_pattern = re.compile(r'(https?://[-a-zA-Z0-9+&@#/%?=~_|!:.;]*)')
     urlify = url_pattern.sub(r'<a href=\\"\1\\" target=\\"_blank\\">\1</a>', message)
     username_pattern = re.compile(r'@([A-Za-z0-9_]+)')
     usernameify = username_pattern.sub(lambda m: '<a href=\\"/people/%s/\\">%s</a>' % (m.group(1), m.group(0)), urlify)
