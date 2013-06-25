@@ -1,10 +1,10 @@
-{% load tz %}{
+{% load tz %}{% load linkify %}{
 	"status": {{ StatusCode }},
 	"time": {{ current_unix_timestamp }},
 {% if NewDescription %}	"description": {{ NewDescription }},{% endif %}
 	"messages": [
 {% for row in NewMessages %}{# The localtime filter is part of Django timezone and adjusts a datetime to the given timezone #}
-	{ "text": "<strong><a href = \"/people/{{ row.user}}\">{{ row.user}}</a></strong> {{ row.text}} <span class=\"time_post\">{{ row.created|localtime|date:TimeDisplayFormat }}</span><br />"}{% if not forloop.last %},{% endif %}
+	{ "text": "<strong><a href = \"/people/{{ row.user}}\">{{ row.user}}</a></strong> {{ row.text|linkify}} <span class=\"time_post\">{{ row.created|localtime|date:TimeDisplayFormat }}</span><br />"}{% if not forloop.last %},{% endif %}
 {% endfor %}
 	]
 {{ CustomPayload|default:""|safe }}
