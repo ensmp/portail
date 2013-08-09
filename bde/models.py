@@ -18,3 +18,17 @@ class Vote(models.Model):
     
     def __unicode__(self):
         return self.eleve.user.username
+
+class EvenementEntreprise(models.Model):
+    titre = models.CharField(max_length=300)
+    date = models.DateTimeField(default=datetime.now)
+    lieu = models.CharField(max_length=300, blank = True)
+    presence_1A = models.BooleanField()
+    presence_2A = models.BooleanField()
+    presence_3A = models.BooleanField()
+
+    class Meta:
+        ordering = ['date']
+    
+    def __unicode__(self):
+        return self.titre

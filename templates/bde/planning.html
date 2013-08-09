@@ -1,0 +1,66 @@
+{% extends "base_visiteur.html" %}
+
+{% block onglets %}
+<div class="pagination-centered">
+<h1>Relations Entreprises</h1>
+
+<ul class="nav nav-pills">
+<li><a href="/entreprises/"><img src="{{ STATIC_URL}}entreprises.png"/><span>Présentation</span></a></li>
+<li> <a href="/entreprises/contact/"><img src="{{ STATIC_URL}}mail.png"/><span>Contactez-nous !</span></a></li>
+<li class="active"><a href="/entreprises/planning/"><img src="{{ STATIC_URL}}date.png"/><span>Planning</span></a></li>
+<li><a href="{{ STATIC_URL }}Prestations_BDE_Mines.pdf"><img src="{{ STATIC_URL}}catalogue.png"/><span>Catalogue</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+{% block content %}
+<h1>Planning</h1>
+{% if evenement_entreprises %}
+<table class="table">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Heure</th>
+			<th>Titre</th>
+			<th>Lieu</th>
+			<th>1A</th>
+			<th>2A</th>
+			<th>3A</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for evenement in evenement_entreprises %}
+		<tr {% if evenement in evenement_entreprises_passes %} class = "success" {% endif %}>
+			<td>{{evenement.date|date:"d F Y"}}</td>
+			<td>{{evenement.date|date:"H : i"}}</td>
+			<td>{{evenement.titre}}</td>
+			<td>{{evenement.lieu}}</td>
+			<td>{% if evenement.presence_1A %}
+			<i class="icon-ok"></i>
+			{% else %}
+			<i class="icon-remove"></i>
+			{% endif %}
+			</td>
+			<td>{% if evenement.presence_2A %}
+			<i class="icon-ok"></i>
+			{% else %}
+			<i class="icon-remove"></i>
+			{% endif %}
+			</td>
+			<td>{% if evenement.presence_3A %}
+			<i class="icon-ok"></i>
+			{% else %}
+			<i class="icon-remove"></i>
+			{% endif %}
+			</td>
+
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+	Pas d'évènement prévu pour le moment
+{% endif %}
+{% endblock %}

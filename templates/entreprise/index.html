@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}entreprise.css" />
+{% endblock %}
+
+{% block content %}
+<h1>Liste des entreprises</h1>
+<ul class="liste_entreprise">
+    {% for entreprise in entreprises %}
+        <li>
+        <p>
+        <a href="http://{{entreprise.lien}}"><img src="{{ MEDIA_URL }}{{entreprise.logo}}" width="{{entreprise.logo_width}}" height="{{entreprise.logo_height}}"/>
+            {{ entreprise.nom }}</a>
+        </p>
+        </li>
+	{% endfor %}
+</ul>
+{% endblock %}

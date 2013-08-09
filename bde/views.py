@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
-from bde.models import Liste, Vote
+from bde.models import Liste, Vote, EvenementEntreprise
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.template import RequestContext
@@ -58,3 +58,8 @@ def presentation_entreprises(request):
 
 def contact_entreprises(request):
     return render_to_response('bde/contact_entreprises.html', {}, context_instance=RequestContext(request))
+
+def planning(request):
+    evenement_entreprises = EvenementEntreprise.objects.order_by('date');
+    evenement_entreprises_passes = evenement_entreprises.filter(date__lte = datetime.datetime.now())
+    return render_to_response('bde/planning.html', {'evenement_entreprises':evenement_entreprises, 'evenement_entreprises_passes':evenement_entreprises_passes}, context_instance=RequestContext(request))

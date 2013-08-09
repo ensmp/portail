@@ -1,0 +1,29 @@
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}association2.css" />
+{% endblock %}
+<div id="assoce" class="well">
+    <h3>Associations</h3>
+    <ul class="liste_assoce">
+    {% load obtenir_liste_associations %}
+    {% obtenir_associations %}
+    {% load obtenir_numero_abatage %}
+    {% obtenir_numero_association_abatage %}
+    {% load filtre %}
+    {% for association in liste_des_associations %}
+        <li>
+        <p>
+        {% if association.pseudo == "vendome" %}
+            <a href="{{ MEDIA_URL }}abatage/abatage13.pdf#page=27"><img src="{{ STATIC_URL }}logo_{{ association.pseudo }}.png" width="50" height="50"/>
+            {{ association.nom }}</a>
+        {% elif association.pseudo == "biero" %}
+            <a href="{{ MEDIA_URL }}abatage/abatage13.pdf#page=25"><img src="{{ STATIC_URL }}logo_{{ association.pseudo }}.png" width="50" height="50"/>
+            {{ association.nom }}</a>
+        {% else %}
+            <a href="{{ MEDIA_URL }}abatage/abatage13.pdf#page={{numeros|lookup:association.nom}}"><img src="{{ STATIC_URL }}logo_{{ association.pseudo }}.png" width="50" height="50"/>
+            {{ association.nom }}</a>
+        {% endif %}
+        </p>
+        </li>
+    {% endfor %}
+    </ul>
+</div>

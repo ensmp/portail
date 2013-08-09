@@ -1,0 +1,18 @@
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}entreprise2.css" />
+{% endblock %}
+<div id="entreprise" class="well">
+    <h3>Entreprises</h3>
+    <ul class="liste_entreprise">
+    {% load obtenir_liste_entreprises %}
+    {% obtenir_entreprises %}
+    {% for entreprise in liste_des_entreprises %}
+        <li>
+        <p>
+        <a href="http://{{entreprise.lien}}"><img src="{{ MEDIA_URL }}{{ entreprise.logo }}" />
+            {{ entreprise.nom }}</a>
+        </p>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
