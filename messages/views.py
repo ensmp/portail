@@ -24,12 +24,15 @@ import settings
 
 
 
-@login_required
+
 #La liste des nouveaux messages
 def index(request):
     #On sélectionne les messages publics, et les messages dont l'utilisateur fait partie de l'assoce expeditrice, ou de l'assoce destinataires.
-    list_messages = Message.objects.exclude(lu__user=request.user).order_by('-date')
-    return render_to_response('messages/index.html', {'list_messages': list_messages},context_instance=RequestContext(request))
+    if not request.user.is_authenticated():
+        return render_to_response('accueil/accueil.html', {},context_instance=RequestContext(request))
+    else:
+        list_messages = Message.objects.exclude(lu__user=request.user).order_by('-date')
+        return render_to_response('messages/index.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 
 @login_required
 #La liste des nouveaux messages, sérialisée aux format JSON (pour les applis)
