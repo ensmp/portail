@@ -28,6 +28,7 @@
 			<th>1A</th>
 			<th>2A</th>
 			<th>3A</th>
+			<th>Questionnaire</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -55,7 +56,9 @@
 			<i class="icon-remove"></i>
 			{% endif %}
 			</td>
-
+			<td>{% if evenement.lien and evenement in evenement_entreprises_passes %}<a href = {{evenement.lien}} target="blank">Qu'en avez vous pensé ?</a>
+				{% endif %}
+			</td>
 		</tr>
 		{% endfor %}
 	</tbody>

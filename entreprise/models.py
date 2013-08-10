@@ -7,7 +7,7 @@ from django.contrib.auth.models import Group, User
 
 class Entreprise(models.Model):
     nom = models.CharField(max_length=200)
-    lien = models.CharField(max_length=200)
+    lien = models.URLField(max_length=200)
     ordre = models.IntegerField(default=0)
     logo = models.ImageField(upload_to = 'logos')
     logo_height = models.PositiveSmallIntegerField(default=40, help_text = 'Ne pas toucher')

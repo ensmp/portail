@@ -26,6 +26,7 @@ class EvenementEntreprise(models.Model):
     presence_1A = models.BooleanField()
     presence_2A = models.BooleanField()
     presence_3A = models.BooleanField()
+    lien = models.URLField(max_length=200, blank=True,help_text= "Lien visible une fois l'evenement passé")
 
     class Meta:
         ordering = ['date']
