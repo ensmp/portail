@@ -32,31 +32,31 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for evenement in evenement_entreprises %}
-		<tr {% if evenement in evenement_entreprises_passes %} class = "success" {% endif %}>
-			<td>{{evenement.date|date:"d F Y"}}</td>
-			<td>{{evenement.date|date:"H : i"}}</td>
-			<td>{{evenement.titre}}</td>
-			<td>{{evenement.lieu}}</td>
-			<td>{% if evenement.presence_1A %}
+		{% for event in evenement_entreprises %}
+		<tr {% if event.est_passe %} class = "success" {% endif %}>
+			<td>{{event.evenement.date_debut|date:"d F Y"}}</td>
+			<td>{{event.evenement.date_debut|date:"H : i"}}</td>
+			<td>{% if event.entreprise.lien %}<a href = "http://{{event.entreprise.lien}}">{% endif %}{{event.evenement.titre}}</a></td>
+			<td>{{event.evenement.lieu}}</td>
+			<td>{% if event.presence_1A %}
 			<i class="icon-ok"></i>
 			{% else %}
 			<i class="icon-remove"></i>
 			{% endif %}
 			</td>
-			<td>{% if evenement.presence_2A %}
+			<td>{% if event.presence_2A %}
 			<i class="icon-ok"></i>
 			{% else %}
 			<i class="icon-remove"></i>
 			{% endif %}
 			</td>
-			<td>{% if evenement.presence_3A %}
+			<td>{% if event.presence_3A %}
 			<i class="icon-ok"></i>
 			{% else %}
 			<i class="icon-remove"></i>
 			{% endif %}
 			</td>
-			<td>{% if evenement.lien and evenement in evenement_entreprises_passes %}<a href = {{evenement.lien}} target="blank">Qu'en avez vous pensé ?</a>
+			<td>{% if event.lien and event.est_passe %}<a href = {{event.lien}} target="blank">Qu'en avez vous pensé ?</a>
 				{% endif %}
 			</td>
 		</tr>

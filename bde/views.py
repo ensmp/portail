@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
-from bde.models import Liste, Vote, EvenementEntreprise
+from bde.models import Liste, Vote
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.template import RequestContext
@@ -53,13 +53,4 @@ def resultats(request):
         n_votes_2 = Vote.objects.filter(liste = liste2).count()
     return render_to_response('bde/resultats.html', {'liste1':liste1, 'liste2':liste2, 'n_votes_2':n_votes_2, 'n_votes_1':n_votes_1}, context_instance=RequestContext(request))
 
-def presentation_entreprises(request):
-    return render_to_response('bde/presentation_entreprises.html', {}, context_instance=RequestContext(request))
 
-def contact_entreprises(request):
-    return render_to_response('bde/contact_entreprises.html', {}, context_instance=RequestContext(request))
-
-def planning(request):
-    evenement_entreprises = EvenementEntreprise.objects.order_by('date');
-    evenement_entreprises_passes = evenement_entreprises.filter(date__lte = datetime.datetime.now())
-    return render_to_response('bde/planning.html', {'evenement_entreprises':evenement_entreprises, 'evenement_entreprises_passes':evenement_entreprises_passes}, context_instance=RequestContext(request))
