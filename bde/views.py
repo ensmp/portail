@@ -53,8 +53,4 @@ def resultats(request):
         n_votes_2 = Vote.objects.filter(liste = liste2).count()
     return render_to_response('bde/resultats.html', {'liste1':liste1, 'liste2':liste2, 'n_votes_2':n_votes_2, 'n_votes_1':n_votes_1}, context_instance=RequestContext(request))
 
-def presentation_entreprises(request):
-    return render_to_response('bde/presentation_entreprises.html', {}, context_instance=RequestContext(request))
 
-def contact_entreprises(request):
-    return render_to_response('bde/contact_entreprises.html', {}, context_instance=RequestContext(request))

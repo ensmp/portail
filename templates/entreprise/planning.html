@@ -1,0 +1,69 @@
+{% extends "base_visiteur.html" %}
+
+{% block onglets %}
+<div class="pagination-centered">
+<h1>Relations Entreprises</h1>
+
+<ul class="nav nav-pills">
+<li><a href="/entreprises/"><img src="{{ STATIC_URL}}entreprises.png"/><span>Présentation</span></a></li>
+<li> <a href="/entreprises/contact/"><img src="{{ STATIC_URL}}mail.png"/><span>Contactez-nous !</span></a></li>
+<li class="active"><a href="/entreprises/planning/"><img src="{{ STATIC_URL}}date.png"/><span>Planning</span></a></li>
+<li><a href="{{ STATIC_URL }}Prestations_BDE_Mines.pdf"><img src="{{ STATIC_URL}}catalogue.png"/><span>Catalogue</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+{% block content %}
+<h1>Planning</h1>
+{% if evenement_entreprises %}
+<table class="table">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Heure</th>
+			<th>Titre</th>
+			<th>Lieu</th>
+			<th>1A</th>
+			<th>2A</th>
+			<th>3A</th>
+			<th>Questionnaire</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for event in evenement_entreprises %}
+		<tr {% if event.est_passe %} class = "success" {% endif %}>
+			<td>{{event.evenement.date_debut|date:"d F Y"}}</td>
+			<td>{{event.evenement.date_debut|date:"H : i"}}</td>
+			<td>{% if event.entreprise.lien %}<a href = "http://{{event.entreprise.lien}}">{% endif %}{{event.evenement.titre}}</a></td>
+			<td>{{event.evenement.lieu}}</td>
+			<td>{% if event.presence_1A %}
+			<i class="icon-ok"></i>
+			{% else %}
+			<i class="icon-remove"></i>
+			{% endif %}
+			</td>
+			<td>{% if event.presence_2A %}
+			<i class="icon-ok"></i>
+			{% else %}
+			<i class="icon-remove"></i>
+			{% endif %}
+			</td>
+			<td>{% if event.presence_3A %}
+			<i class="icon-ok"></i>
+			{% else %}
+			<i class="icon-remove"></i>
+			{% endif %}
+			</td>
+			<td>{% if event.lien and event.est_passe %}<a href = {{event.lien}} target="blank">Qu'en avez vous pensé ?</a>
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+	Pas d'évènement prévu pour le moment
+{% endif %}
+{% endblock %}

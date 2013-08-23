@@ -3,6 +3,7 @@ from django.db import models
 from trombi.models import UserProfile
 from datetime import date, datetime, timedelta
 
+
 class Liste(models.Model):    
     nom = models.CharField(max_length=32)
     couleur = models.CharField(max_length=7)
@@ -18,3 +19,4 @@ class Vote(models.Model):
     
     def __unicode__(self):
         return self.eleve.user.username
+

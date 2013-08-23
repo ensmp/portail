@@ -1,0 +1,26 @@
+{% extends "base_visiteur.html" %}
+
+{% block onglets %}
+<div class="pagination-centered">
+<h1>Relations Entreprises</h1>
+
+<ul class="nav nav-pills">
+<li class="active"><a href="/entreprises/"><img src="{{ STATIC_URL}}entreprises.png"/><span>Présentation</span></a></li>
+<li><a href="/entreprises/contact/"><img src="{{ STATIC_URL}}mail.png"/><span>Contactez-nous !</span></a></li>
+<li><a href="/entreprises/planning/"><img src="{{ STATIC_URL}}date.png"/><span>Planning</span></a></li>
+<li><a href="{{ STATIC_URL }}Prestations_BDE_Mines.pdf"><img src="{{ STATIC_URL}}catalogue.png"/><span>Catalogue</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+{% block content %}
+<p>Bienvenue sur le portail <strong>Relations Entreprises</strong> du Bureau des Elèves de MINES ParisTech</p>
+
+<p>Au sein de l'établissement, une équipe d'élèves est entièrement dédiée à l'organisation d'événements permettant de nouer des liens entre les étudiants et le monde de l'entreprise.</p>
+
+<p>Vous souhaitez devenir partenaire de notre école ou en apprendre plus sur les différentes actions que votre groupe peut mener ? Pour cela, <a href="contact/">contactez-nous.</a></p>
+
+<p>Vous pouvez aussi consulter <a href="{{ STATIC_URL }}Prestations_BDE_Mines.pdf">notre catalogue des prestations</a> qui décrit en détails plusieurs formats d'événements. Et si vous ne trouvez pas celui qui vous correspond, <a href="contact/">contactez-nous</a> directement et nous tâcherons de vous proposer un événement sur mesure.</p>
+{% endblock %}

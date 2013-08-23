@@ -1,0 +1,36 @@
+{% extends "base_visiteur.html" %}
+
+{% block onglets %}
+<div class="pagination-centered">
+<h1>Relations Entreprises</h1>
+
+<ul class="nav nav-pills">
+<li><a href="/entreprises/"><img src="{{ STATIC_URL}}entreprises.png"/><span>Présentation</span></a></li>
+<li class="active"><a href="/entreprises/contact/"><img src="{{ STATIC_URL}}mail.png"/><span>Contactez-nous !</span></a></li>
+<li><a href="/entreprises/planning/"><img src="{{ STATIC_URL}}date.png"/><span>Planning</span></a></li>
+<li><a href="{{ STATIC_URL }}Prestations_BDE_Mines.pdf"><img src="{{ STATIC_URL}}catalogue.png"/><span>Catalogue</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+{% block content %}
+<p>Vous souhaitez devenir partenaire du Bureau des Elèves (BdE) ou de l’école ? Vous désirez en  savoir plus sur le fonctionnement des Relations Entreprises au sein de l’établissement ? Vous cherchez à proposer une offre de stage, VIE ou emploi ? Vous trouverez ci-dessous le contact approprié pour répondre à toutes vos attentes.</p>
+
+<h3>Bureau des Elèves</h3>
+
+<ul><li> Vos interlocuteurs privilégiés : <strong>BDE Mines ParisTech - Pôle Relations Entreprises</strong><br>Courriel : <a href = "mailto:bde-entreprises@mines-paristech.fr">bde-entreprises@mines-paristech.fr</a> </br>Télécopie : 01 46 34 53 27</li></ul>
+
+<h3>Direction de l’Enseignement - Cycle Ingénieur Civil</h3>
+<ul>
+	<li>Relations Élèves - Entreprises : <strong>Solenne Couraye du Parc</strong><br>Courriel : <a href = "mailto:scouraye@mines-paristech.fr">scouraye@mines-paristech.fr</a> </br>Téléphone : 01 40 51 90 15</li>
+	<li>Préparation à l'emploi et suivi des anciens : <strong>Béatrice Rocher</strong><br>Courriel : <a href = "mailto:beatrice.rocher@mines-paristech.fr">beatrice.rocher@mines-paristech.fr</a> </br>Téléphone : 01 40 51 91 35</li>
+	<li>Taxe d'Apprentissage : <strong>Johanna Ducret</strong><br>Courriel : <a href = "mailto:johanna.ducret@mines-paristech.fr">johanna.ducret@mines-paristech.fr</a> </br>Téléphone : 01 40 51 94 15</li>
+</ul>
+
+<h3>Stages et premiers emplois</h3>
+
+<ul><li> Pour déposer vos offres de stages ou d'emplois : <a href="http://www.mines-paristech.fr/Entreprise/Recrutez-nos-etudiants/Proposez-un-stage-ou-un-emploi/">Cliquez-ici.</a></li><li>Responsable des stages : <strong>Gérard Viguié</strong><br>Courriel : <a href = "mailto:gerard.viguie@mines-paristech.fr">gerard.viguie@mines-paristech.fr</a> </br>Téléphone : 01 40 51 92 14</li></ul>
+
+{% endblock %}
