@@ -14,8 +14,9 @@
 
 {% regroup mineur_list by promo as mineurs %}
 {% for promo in mineurs %}
-    <h1 class="promo">La P{{ promo.grouper|stringformat:"02d" }}</h1>
-	<ul class = "promo">
+	{% if promo.grouper > promo_max %}
+    	<h1 class="promo">La P{{ promo.grouper|stringformat:"02d" }}</h1>
+		<ul class = "promo">
         {% for mineur in promo.list %}<li class="portrait">
 		<a href = "/people/{{mineur.user.username}}">
 		<img src="{{ STATIC_URL }}{{ mineur.user.username }}.jpg" />
@@ -24,7 +25,8 @@
 		
 		</a>
 		</li>{% endfor %}
-    </ul>
+    	</ul>
+    {% endif %}
 {% endfor %}
 
 {% endblock %}
