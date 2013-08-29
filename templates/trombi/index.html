@@ -14,7 +14,7 @@
 
 {% regroup mineur_list by promo as mineurs %}
 {% for promo in mineurs %}
-	{% if promo.grouper > promo_max %}
+	{% if forloop.counter < 4 %}
     	<h1 class="promo">La P{{ promo.grouper|stringformat:"02d" }}</h1>
 		<ul class = "promo">
         {% for mineur in promo.list %}<li class="portrait">
