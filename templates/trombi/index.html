@@ -11,22 +11,35 @@
 {% block content %}
 
 <p><a href="/people/trombi.vcf">Version smartphone</a> - <a href="/people/separation/">Les degrés de séparation</a></p>
-
+<div class="accordion" id="accordion2">
 {% regroup mineur_list by promo as mineurs %}
 {% for promo in mineurs %}
-	{% if forloop.counter < 4 %}
-    	<h1 class="promo">La P{{ promo.grouper|stringformat:"02d" }}</h1>
-		<ul class = "promo">
+
+
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#promo{{promo.grouper}}">
+        <h1 class="promo">Promo 20{{ promo.grouper|stringformat:"02d" }}</h1>
+      </a>
+    </div>
+    
+  </div>
+  
+    <div id="promo{{ promo.grouper}}" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul class = "promo">
         {% for mineur in promo.list %}<li class="portrait">
 		<a href = "/people/{{mineur.user.username}}">
 		<img src="{{ STATIC_URL }}{{ mineur.user.username }}.jpg" />
 			<p>{{mineur.first_name}}<br/>{{mineur.last_name|upper}} {% if mineur.surnom %}<br/>({{mineur.surnom}}){% endif %}</p>
-
-		
 		</a>
-		</li>{% endfor %}
+		</li>
+		{% endfor %}
     	</ul>
-    {% endif %}
-{% endfor %}
+      </div>
+    </div>
+ 
+   {% endfor %}
+</div>
 
 {% endblock %}

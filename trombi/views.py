@@ -20,7 +20,9 @@ import os
 @login_required
 def index(request):
     mineur_list = UserProfile.objects.order_by('-promo','last_name')
-    return render_to_response('trombi/index.html', {'mineur_list': mineur_list},context_instance=RequestContext(request))
+    promo_max = mineur_list[0].promo - 3
+    mineur_list_2=mineur_list.filter(promo__gte=promo_max)
+    return render_to_response('trombi/index.html', {'mineur_list': mineur_list_2},context_instance=RequestContext(request))
 
 @login_required
 def index_json(request):
