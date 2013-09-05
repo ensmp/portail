@@ -35,7 +35,7 @@
 <p><br style="page-break-before: always;" clear="all" /></p> 
 <p>{{ hits }} albums.</p>
 <div id="page_controls">
-    <p>{% if has_previous %}<a href="{% url pl-gallery-list previous %}">Précédent</a> | {% endif %} page {{ page }} sur {{ pages }} {% if has_next %}| <a href="{% url pl-gallery-list next %}">Suivant</a>{% endif %}</p>
+    <p>{% if has_previous %}<a href="{% url 'pl-gallery-list' previous %}">Précédent</a> | {% endif %} page {{ page }} sur {{ pages }} {% if has_next %}| <a href="{% url 'pl-gallery-list' next %}">Suivant</a>{% endif %}</p>
 </div>
 {% endif %}
 

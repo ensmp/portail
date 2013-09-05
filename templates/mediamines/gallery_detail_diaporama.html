@@ -55,8 +55,8 @@
 
 	
 	<ul id="demo-block">
-		<li>Voir en <a href="{% url pl-gallery-mosaic album.title_slug %}">mosaïque</a></li>
-		<li>Tous les <a href="{% url pl-gallery-list 1 %}">albums</a></li>
+		<li>Voir en <a href="{% url 'pl-gallery-mosaic' album.title_slug %}">mosaïque</a></li>
+		<li>Tous les <a href="{% url 'pl-gallery-list' 1 %}">albums</a></li>
 		{% if perms.mediamines %}
 		<li>Rotation <a href="#" id="tourner_droite">droite</a>/<a href="#"  id="tourner_gauche">gauche</a>/<a href="#"  id="tourner_original">original</a></li>
 		{% endif %}

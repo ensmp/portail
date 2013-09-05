@@ -22,7 +22,6 @@
 <h2>Le {{ album.date_added|date:"l j F Y" }}</h2>
 {% if album.description %}<p>{{ album.description }}</p>{% endif %}
 <h3 style="text-align:center;">Voir le <a href="diaporama">diaporama</a></h3>
-<!--<h3><a href="{{ album.get_absolute_url }}archive/">Télécharger</a> les photos</h3>-->
 <h3><a href="{{ MEDIA_URL }}{{ album.archive }}">Télécharger</a> les photos</h3>
 <div class="list-gallery-photo">
 	<ul class = "gallery-photo">
@@ -34,6 +33,6 @@
 	</ul>
 </div>
 <p><br clear="all" style="page-break-before: always;"></p>
-<p><a href="{% url pl-gallery-list 1 %}">Voir tous les albums</a></p>
+<p><a href="{% url 'pl-gallery-list' 1 %}">Voir tous les albums</a></p>
 
 {% endblock %}
