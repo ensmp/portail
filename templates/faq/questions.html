@@ -17,16 +17,12 @@
 			{% if questions.has_previous %}
 				<li><a href="?page={{ questions.previous_page_number }}">«</a></li>
 				<li><a href="?page={{ questions.previous_page_number }}">{{ questions.previous_page_number }}</a></li>
-			{% else %}
-				<li class="disabled"><a href="?page={{ questions.previous_page_number }}">«</a></li>
 			{% endif %}
 			<li class="active"><a href="?page={{ questions.number }}">{{ questions.number }}</a></li>
 
 			{% if questions.has_next %}
 				<li><a href="?page={{ questions.next_page_number }}">{{ questions.next_page_number }}</a></li>
 				<li><a href="?page={{ questions.next_page_number }}">»</a></li>
-			{% else %}
-				<li class="disabled"><a href="?page={{ questions.next_page_number }}">»</a></li>
 			{% endif %}
 		</ul>
 	</div>
