@@ -1,16 +1,13 @@
 from django.conf.urls.defaults import patterns, include, url
-import os
-# Uncomment the next two lines to enable the admin:
+from django.views.generic import TemplateView
 from django.contrib import admin
 from django.conf import settings
-from django.views.generic import TemplateView
+import os
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'sitebde.views.home', name='home'),
 
-    (r'^timetable/', include('timetable.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
@@ -40,16 +37,13 @@ urlpatterns = patterns('',
     (r'^associations/minesmarket/fermer_commandes/$','minesmarket.views.fermer_commandes'),
     (r'^associations/minesmarket/dernieres_commandes/$','minesmarket.views.dernieres_commandes_csv'),
     (r'^associations/trium/informations/$', TemplateView.as_view(template_name='trium/informations.html')),
-    # (r'^associations/jump/$', 'jump.views.etudes'),    
     (r'^associations/jump/etudes/$', 'jump.views.etudes'),
     (r'^associations/minestryofsound/nouveau/$','minestryofsound.views.nouveau'),
     (r'^associations/minestryofsound/playlist/$','minestryofsound.views.playlist'),
     (r'^associations/minestryofsound/playlist/json/$','minestryofsound.views.playlist_json'),
     (r'^associations/minestryofsound/player/playlist.xml$','minestryofsound.views.playlist_xml'),
     (r'^associations/minestryofsound/player/$','minestryofsound.views.playlist_popup'),
-    (r'^associations/vendome/$','vendome.views.archives'),    
-    (r'^associations/vendome/archives/$','vendome.views.archives'),
-    (r'^associations/vendome/archives/json/$','vendome.views.archives_json'),
+    (r'^associations/vendome/',include('vendome.urls')),    
     (r'^abatage/$','abatage.views.archives_visiteur'),
     (r'^associations/abatage/$','abatage.views.archives'),    
     (r'^associations/abatage/archives/$','abatage.views.archives'),
@@ -94,6 +88,7 @@ urlpatterns = patterns('',
     (r'^people/(?P<mineur_login>\w+)/edit/?$','trombi.views.edit'),   
     (r'^people/trombi.vcf$','trombi.views.get_vcf'), 
     (r'^evenements/', include('evenement.urls')),
+    (r'^timetable/', include('timetable.urls')),
     (r'^objetstrouves/?$','objettrouve.views.index'),
     (r'^objetstrouves/ajouter/?$','objettrouve.views.ajouter'),
     (r'^objetstrouves/supprimer/?$','objettrouve.views.supprimer'),
@@ -136,10 +131,6 @@ urlpatterns = patterns('',
     (r'^accueil/?$','faq.views.accueil'),
     (r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt')),
     (r'^/?$','messages.views.index'),
-    # (r'^accounts/login/$', 'django.contrib.auth.views.login'),
-    # (r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
-    # (r'^accounts/password/reset/?$', 'django.contrib.auth.views.password_reset'),
-
 )
 
-urlpatterns += patterns('',url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),)
+urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),)

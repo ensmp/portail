@@ -3,38 +3,32 @@
 {% block header %}
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}vendome.css" />
-	<title>Vendome</title>		
 {% endblock %}
 
 {% block onglets %}
 <div id="menu_onglets">
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_vendome.png">Vendôme</h1>
-
 <ul class="nav nav-pills">
-<li><a href="/associations/vendome/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
-<li><a href="/associations/vendome/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
-<li><a href="/associations/vendome/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
-<li><a href="/associations/vendome/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
-<li class="active"><a href="/associations/vendome/archives/"><img src="{{ STATIC_URL}}page_archives.png"/><span>Archives</span></a></li>
+    <li><a href="/associations/vendome/messages/"><img src="{{ STATIC_URL }}mail.png"/><span>Messages</span></a></li>
+    <li><a href="/associations/vendome/evenements/"><img src="{{ STATIC_URL }}date.png"/><span>Événements</span></a></li>
+    <li><a href="/associations/vendome/equipe/"><img src="{{ STATIC_URL }}user.png"/><span>Équipe</span></a></li>
+    <li><a href="/associations/vendome/medias/"><img src="{{ STATIC_URL }}clapperboard.png"/><span>Médias</span></a></li>
+    <li class="active"><a href="/associations/vendome/archives/"><img src="{{ STATIC_URL }}page_archives.png"/><span>Archives</span></a></li>
 </ul>
 <hr />
 </div>
 {% endblock %}
 
-
 {% block content %}
-
 <ul class="liste_vendomes">
 {% for vendome in liste_vendomes %}
 	<li class="vendome">
-
-	<a href="{{ MEDIA_URL }}{{ vendome.fichier }}">
-	<img src="{{ MEDIA_URL }}{{ vendome.thumbnail }}" />
-	<p>{{vendome.titre}}</p>
-	</a>
-	<p class="date">{{ vendome.date|date:"d F Y" }}</p>
+    	<a href="{{ MEDIA_URL }}{{ vendome.fichier }}">
+    	<img src="{{ MEDIA_URL }}{{ vendome.thumbnail }}" />
+    	<p>{{ vendome.titre }}</p>
+    	</a>
+    	<p class="date">{{ vendome.date|date:"d F Y" }}</p>
 	</li>
 {% endfor %}
 </ul>
-
 {% endblock %}

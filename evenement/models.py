@@ -19,6 +19,7 @@ class Evenement(models.Model):
 	
 	class Meta:
 		ordering = ['-date_debut']
+		verbose_name = "événement"
 	
 	def __unicode__(self):
 		return self.titre
