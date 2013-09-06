@@ -39,15 +39,9 @@
 <li> 
 <div class="evenement">
 	<div class="evenement_infos">
-	
-	<h3>{{ evenement.titre }}</h3>
-	<p><strong>Quand</strong> : Le {{ evenement.date_debut|date:"d F Y" }}, de {{ evenement.date_debut|date:"H:i" }} à {{ evenement.date_fin|date:"H:i" }}<br/>
-	<strong>Où</strong> : {{ evenement.lieu }}
-	
-	{% if evenement.is_billetterie%}
-	<br/>
-	<a class = "biletterie" href = "/associations/{{evenement.association.pseudo}}/evenements/{{evenement.id}}">Réserver</a>
-	{% endif%}	
+		<h3>{{ evenement.titre }}</h3>
+		<p><strong>Quand</strong> : Le {{ evenement.date_debut|date:"d F Y" }}, de {{ evenement.date_debut|date:"H:i" }} à {{ evenement.date_fin|date:"H:i" }}<br/>
+		<strong>Où</strong> : {{ evenement.lieu }}
 	</div>
 	
 	<div class="evenement_contenu">

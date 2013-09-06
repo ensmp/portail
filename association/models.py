@@ -55,6 +55,10 @@ class Adhesion(models.Model):
     def delete(self):
         self.association.groupe_permissions.user_set.remove(self.eleve.user) #On retire l'eleve du groupe de permissions
         super(Adhesion, self).delete()
+
+    @staticmethod
+    def existe(eleve, association):
+        return Adhesion.objects.filter(association=association, eleve=eleve).exists()
     
 # Video sur la page medias d'une assoce
 class Video(models.Model):

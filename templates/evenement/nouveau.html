@@ -8,47 +8,43 @@
 <script type="text/javascript" src="{{ STATIC_URL }}bootstrap-datepicker.js"></script>
 {% endblock %}
 
+
+
 {% block onglets %}
 <div id="menu_onglets">
-<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png">{{association.nom}}</h1>
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_{{association.pseudo}}.png" />{{association.nom}}</h1>
 
 <ul class="nav nav-pills">
-<li><a href="/associations/{{association.pseudo}}/messages/"><img src="{{ STATIC_URL}}mail.png">Messages</a></li>
-<li class="active"><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png">Évenements</a></li>
-<li><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png">Équipe</a></li>
-<li><a href="/associations/{{association.pseudo}}/medias/"><img src="{{ STATIC_URL}}clapperboard.png">Médias</a></li>
-{% if association.page_set.all %}
+    <li><a href="/associations/{{association.pseudo}}/messages/"><img src="{{ STATIC_URL}}mail.png">Messages</a></li>
+    <li class="active"><a href="/associations/{{association.pseudo}}/evenements/"><img src="{{ STATIC_URL}}date.png">Évenements</a></li>
+    <li><a href="/associations/{{association.pseudo}}/equipe/"><img src="{{ STATIC_URL}}user.png">Équipe</a></li>
+    <li><a href="/associations/{{association.pseudo}}/medias/"><img src="{{ STATIC_URL}}clapperboard.png">Médias</a></li>
 {% for page in association.page_set.all %}
-<li><a href="{% if not page.is_externe %}/associations/{{association.pseudo}}/{% endif %}{{ page.lien }}"><img src="{{ STATIC_URL}}page_{% if not page.is_externe %}{{page.lien}}{% else %}site{% endif %}.png"><span>{{page.titre}}</span></a></li>
+    <li><a href="{% if not page.is_externe %}/associations/{{association.pseudo}}/{% endif %}{{ page.lien }}"><img src="{{ STATIC_URL}}page_{% if not page.is_externe %}{{page.lien}}{% else %}site{% endif %}.png"><span>{{page.titre}}</span></a></li>
 {% endfor %}
-{% endif %}
 </ul>
 <hr />
 </div>
 {% endblock %}
 
+
+
+
 {% block content %}
 <h3>Nouvel événement</h3>
 <form id="addform" method="post" action="">
 {% csrf_token %}
-<p>
 <label for="titre">C'est quoi ? - </label>
 <input type="text" name="titre" placeholder="Saisissez le titre"/>
-</p>
-<p>
 
 <label for="lieu">C'est où ? - </label>
 <input type='text' name='lieu' placeholder="Saisissez le lieu" />
-</p>
-<p>
 
 <label for="date">C'est quel jour ? - </label>
-
 <div class="input-append date datepicker" data-date="{% now "d/m/Y" %}" data-date-format="dd/mm/yyyy">
 <input class="input-small" type="text" name="date" value="{% now "d/m/Y" %}">
 <span class="add-on"><i class="icon-th"></i></span>
 </div>
-
 
 <label for="debut">Ca commence quand ? - </label>
 <div class="input-append bootstrap-timepicker">
@@ -62,7 +58,7 @@
 <span class="add-on"><i class="icon-time"></i></span>
 </div>
 
-<p>Pourquoi je dois venir ?</p>
+<label for="description">Pourquoi je dois venir ?</label>
 <p><textarea name="description" class = "span6" placeholder="Ecrivez une description de l'événement"></textarea></p>
 <input type='submit' value='Terminer' />
 </form>

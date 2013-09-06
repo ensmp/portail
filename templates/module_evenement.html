@@ -5,7 +5,7 @@
 	<hr>
 	<div class="module_middle">	
 		{% load obtenir_evenements %}
-		{% obtenir_events request.user.username%}
+		{% get_next_events "7" as events_list %}
 		{% if events_list %}
 		{% regroup events_list by date_debut.date as date_list %}
 		<ul class="nav nav-list">
@@ -14,9 +14,9 @@
 				{% for item in date.list %}
 				  <li>				  
 				  <a class = "event" 
-				     titre = "Organisé par {% if item.is_personnel %}Vous{% else %}{{ item.association.nom }}{% endif %}, le {{ item.date_debut|date:'d F' }} de {{ item.date_debut|date:'H:i' }} à {{ item.date_fin|date:'H:i' }}" 
-				     contenu = "<div class='event_proprietes'><p class='event_auteur'><img src='{{ STATIC_URL }}{% if item.is_personnel %}{{ request.user.username }}.jpg{% else %}logo_{{ item.association.pseudo }}.png{% endif %}'><br/>
-								Organisé par <strong>{% if item.is_personnel %}<a href='/people/{{ request.user.username }}/'>vous</a>{% else %}<a href='/associations/{{ item.association.pseudo }}/'>{{ item.association.nom }}</a>{% endif %}</strong><br/>
+				     titre = "Organisé par {{ item.auteur }}, le {{ item.date_debut|date:'d F' }} de {{ item.date_debut|date:'H:i' }} à {{ item.date_fin|date:'H:i' }}" 
+				     contenu = "<div class='event_proprietes'><p class='event_auteur'><img src='{{ STATIC_URL }}logo_{{ item.auteur_slug }}.png'><br/>
+								Organisé par <strong><a href='/associations/{{ item.auteur_slug }}/'>{{ item.auteur }}</a></strong><br/>
 								Le <strong>{{ item.date_debut|date:'d F' }}</strong><br/>
 								De <strong>{{ item.date_debut|date:'H:i' }}</strong> à <strong>{{ item.date_fin|date:'H:i' }}</strong><br/>
 								Lieu : <strong>{{ item.lieu }}</strong></p></div>"
@@ -37,7 +37,7 @@
 </div>	
 
 
-<script class="example" type="text/javascript">
+<script type="text/javascript">
 // Create the tooltips only on document load
 $(document).ready(function() 
 {

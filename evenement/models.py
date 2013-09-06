@@ -4,17 +4,18 @@ from trombi.models import UserProfile
 from association.models import Association, Adhesion
 from datetime import date, datetime, timedelta
 
-# Un ÈvÈnement organisÈ par une association
 class Evenement(models.Model):
-	is_personnel = models.BooleanField() #Les Èvenements personnels sont propres ‡ l'ÈlËve qui les crÈe, indÈpendament des associations
-	createur = models.ForeignKey(UserProfile, blank=True, null=True) #ElËve qui a crÈÈ l'Èvenement
-	association = models.ForeignKey(Association, blank=True, null=True) #L'association qui organise l'Èvenement
+	"""
+	    Un √©v√©nement organis√© par une association
+	"""
+	createur = models.ForeignKey(UserProfile, blank=True, null=True, help_text="L'√©l√®ve qui a cr√©√© l'√©v√©nement")
+	association = models.ForeignKey(Association, blank=True, null=True, help_text="L'association qui organise l'√©v√©nement")
 	titre = models.CharField(max_length=300)
 	description =  models.TextField()
-	date_debut = models.DateTimeField(default=datetime.now(), blank=True)
-	date_fin = models.DateTimeField(default=datetime.now(), blank=True)
+	date_debut = models.DateTimeField(default=datetime.now(), blank=True, verbose_name="Date de d√©but")
+	date_fin = models.DateTimeField(default=datetime.now(), blank=True, verbose_name="Date de fin")
 	lieu = models.CharField(max_length=300, blank = True)
-	participants = models.ManyToManyField(UserProfile,related_name='evenement_participant', blank=True) #La liste des participants
+	participants = models.ManyToManyField(UserProfile, related_name='evenement_participant', blank=True, help_text="La liste des participants")
 	
 	class Meta:
 		ordering = ['-date_debut']
@@ -23,25 +24,14 @@ class Evenement(models.Model):
 		return self.titre
 	
 	def get_absolute_url(self):
-		return '/associations/' + self.association.pseudo + '/evenements/'
-	
-	def date_debut_jour(self):
-		return None
+		return self.association.get_absolute_url() + 'evenements/'
 	
 	def auteur(self):
-		if self.is_personnel:
-			return self.createur.user.username
-		else:
-			return self.association.nom
+		return self.association.nom
 			
 	def auteur_slug(self):
-		if self.is_personnel:
-			return self.createur.user.username
-		else:
-			return self.association.pseudo
+		return self.association.pseudo
 
-	def peut_modifier(self, eleve_user): #si un utilisateur a le droit de modifier l'Èvenement
-		if self.is_personnel:			
-			return (eleve_user.id == self.createur.user.id) #le createur
-		else:
-			return Adhesion.objects.filter(association=self.association, eleve=eleve_user).exists()#Si l'eleve est membre de l'assoce
+	def peut_modifier(self, eleve):
+		"""Renvoie vrai si un utilisateur a le droit de modifier l'√©v√©nement"""
+		return Adhesion.existe(eleve, self.association) # Si l'eleve est membre de l'assoce
