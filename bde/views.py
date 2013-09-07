@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
-from bde.models import Liste, Vote
+from bde.models import Liste, Vote, Palum
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.template import RequestContext
@@ -42,7 +42,6 @@ def voter(request):
 @login_required
 @permission_required('bde.add_liste')
 def resultats(request):
-	
     listes = Liste.objects.filter(debut_vote__lte = datetime.datetime.now())
     liste1 = None
     liste2 = None
@@ -53,4 +52,27 @@ def resultats(request):
         n_votes_2 = Vote.objects.filter(liste = liste2).count()
     return render_to_response('bde/resultats.html', {'liste1':liste1, 'liste2':liste2, 'n_votes_2':n_votes_2, 'n_votes_1':n_votes_1}, context_instance=RequestContext(request))
 
+@login_required
+def palums(request):
+    """
+        La page des Palums
+    """
+    liste_palums = Palum.objects.order_by('-date')
+    liste_palums_1A = liste_palums.filter(annee=1)
+    liste_palums_2A = liste_palums.filter(annee=2)
+    liste_palums_3A = liste_palums.filter(annee=3)
+    return render_to_response('palum/archives.html', {'liste_palums_1A': liste_palums_1A, 'liste_palums_2A': liste_palums_2A, 'liste_palums_3A': liste_palums_3A}, context_instance=RequestContext(request))
 
+@login_required
+def palums_json(request):
+    """
+        Sérialisation au format JSON de la liste des Palums
+    """
+    liste_palums = Palum.objects.all()
+    response = HttpResponse(mimetype='application/json')
+    response.write(json.dumps([{
+            'annee': p.annee,
+            'fichier': p.fichier.url,
+            'date': p.date
+        } for p in liste_palums]))
+    return response
