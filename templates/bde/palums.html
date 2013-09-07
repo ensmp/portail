@@ -14,7 +14,7 @@
     <li><a href="/associations/bde/equipe/"><img src="{{ STATIC_URL }}user.png"/><span>Équipe</span></a></li>
     <li><a href="/associations/bde/medias/"><img src="{{ STATIC_URL }}clapperboard.png"/><span>Médias</span></a></li>
     <li><a href="/associations/bde/voter/"><img src="{{ STATIC_URL}}page_voter.png"/><span>Voter</span></a></li>
-    <li class="active"><a href="/associations/bde/archives_palum/"><img src="{{ STATIC_URL }}page_archives_palum.png"/><span>Palums</span></a></li>
+    <li class="active"><a href="/associations/bde/palums/"><img src="{{ STATIC_URL }}page_palums.png"/><span>Palums</span></a></li>
 </ul>
 <hr />
 </div>
@@ -30,7 +30,7 @@
 	<a href="{{ MEDIA_URL }}{{ palum.fichier }}">
 	<img src="{{ MEDIA_URL }}{{ palum.thumbnail }}" />
 	</a>
-	<p class="date">{{ palum.date}}</p>
+	<p class="date">{{ palum.date }}</p>
 	</li>
 {% endfor %}
 	<h3>2A</h3>
@@ -39,7 +39,7 @@
 	<a href="{{ MEDIA_URL }}{{ palum.fichier }}">
 	<img src="{{ MEDIA_URL }}{{ palum.thumbnail }}" />
 	</a>
-	<p class="date">{{ palum.date}}</p>
+	<p class="date">{{ palum.date }}</p>
 	</li>
 {% endfor %}
 	<h3>3A</h3>
@@ -48,7 +48,7 @@
 	<a href="{{ MEDIA_URL }}{{ palum.fichier }}">
 	<img src="{{ MEDIA_URL }}{{ palum.thumbnail }}" />
 	</a>
-	<p class="date">{{ palum.date}}</p>
+	<p class="date">{{ palum.date }}</p>
 	</li>
 {% endfor %}
 </ul>

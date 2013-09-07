@@ -65,7 +65,7 @@ def palums(request):
     liste_palums_1A = liste_palums.filter(annee=1)
     liste_palums_2A = liste_palums.filter(annee=2)
     liste_palums_3A = liste_palums.filter(annee=3)
-    return render_to_response('bde/archives_palum.html', {'liste_palums_1A': liste_palums_1A, 'liste_palums_2A': liste_palums_2A, 'liste_palums_3A': liste_palums_3A}, context_instance=RequestContext(request))
+    return render_to_response('bde/palums.html', {'liste_palums_1A': liste_palums_1A, 'liste_palums_2A': liste_palums_2A, 'liste_palums_3A': liste_palums_3A}, context_instance=RequestContext(request))
 
 @login_required
 def palums_json(request):
