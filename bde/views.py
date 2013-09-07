@@ -1,11 +1,15 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
-from bde.models import Liste, Vote
+from bde.models import Liste, Vote, Palum, UploadFileForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.template import RequestContext
+from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required, permission_required
+from django.conf import settings
+import json
+from datetime import date, datetime, timedelta
 
 import datetime
 
@@ -54,3 +58,35 @@ def resultats(request):
     return render_to_response('bde/resultats.html', {'liste1':liste1, 'liste2':liste2, 'n_votes_2':n_votes_2, 'n_votes_1':n_votes_1}, context_instance=RequestContext(request))
 
 
+@login_required
+@permission_required('bde.add_palum')
+def nouveau_palum(request):
+    if request.method == 'POST':
+        a=request.POST
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            nouveaupalum = Palum.objects.create(annee = request.FILES['annee'] ,fichier = request.FILES['fichier'], date = request.POST['date'])
+            nouveaupalum.save()
+            return HttpResponseRedirect('bde/nouveau_palum.html')
+    else:
+        form = UploadFileForm()
+    return render_to_response('bde/nouveau_palum.html', {'form': form}, context_instance=RequestContext(request))
+
+@login_required
+def archives_palum(request):
+    liste_palums = Palum.objects.order_by('-date')
+    liste_palums_1A = liste_palums.filter(annee=1)
+    liste_palums_2A = liste_palums.filter(annee=2)
+    liste_palums_3A = liste_palums.filter(annee=3)
+    return render_to_response('bde/archives_palum.html', {'liste_palums_1A': liste_palums_1A,'liste_palums_2A': liste_palums_2A,'liste_palums_3A': liste_palums_3A},context_instance=RequestContext(request))
+
+@login_required
+def archives_palum_json(request):
+    liste_palums = Palum.objects.all()
+    response = HttpResponse(mimetype='application/json')
+    response.write(json.dumps([{
+            'annee': p.annee,
+            'fichier': p.fichier.url,
+            'date': p.date
+        } for p in liste_palums]))
+    return response
