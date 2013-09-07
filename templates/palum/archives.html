@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h1>Palums</h1>
+<ul class="liste_palums">
+	<h3>1A</h3>
+{% for palum in liste_palums_1A %}
+	<li class="palum">
+	<a href="{{ MEDIA_URL }}{{ palum.fichier }}">
+	<img src="{{ MEDIA_URL }}{{ palum.thumbnail }}" />
+	</a>
+	<p class="date">{{ palum.date}}</p>
+	</li>
+{% endfor %}
+	<h3>2A</h3>
+{% for palum in liste_palums_2A %}
+	<li class="palum">
+	<a href="{{ MEDIA_URL }}{{ palum.fichier }}">
+	<img src="{{ MEDIA_URL }}{{ palum.thumbnail }}" />
+	</a>
+	<p class="date">{{ palum.date}}</p>
+	</li>
+{% endfor %}
+	<h3>3A</h3>
+{% for palum in liste_palums_3A %}
+	<li class="palum">
+	<a href="{{ MEDIA_URL }}{{ palum.fichier }}">
+	<img src="{{ MEDIA_URL }}{{ palum.thumbnail }}" />
+	</a>
+	<p class="date">{{ palum.date}}</p>
+	</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+ul.liste_palums {
+	padding:0;
+}
+
+li.palum {
+	display: inline-block;
+	width:168px;
+	text-align:center;
+	vertical-align:top;
+	/* for ie7 */
+    zoom: 1;
+    *display: inline;
+
+}
+
+li.palum a img {
+	width:168px;
+}
+
+li.palum p {
+	margin : 3px 0 0 0;
+}
+
+li.palum p.date {
+	font-style:italic;
+	color:#ccc;
+	margin-top:0;
+	margin-bottom:5px;
+}

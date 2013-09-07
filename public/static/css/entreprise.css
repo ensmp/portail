@@ -1,0 +1,58 @@
+img.logo_entreprise {
+	position: relative; 
+	width:80px;
+	height:80px;
+	margin-right:20px;
+}
+@font-face {
+	font-family: menu_font;
+	src: url('menu_font.otf');
+}
+
+#menu_onglets h1 {
+	font-size:69px;
+	text-align:center;
+	font-family:menu_font, Arial;
+	margin:0;
+}
+
+
+.portrait {
+	float:left;
+	width:100px;
+	height:230px;	
+}
+
+.portrait p {
+	margin:0;
+	text-align:center;
+}
+
+.portrait img {
+	width:100%;
+}
+
+
+#equipe {
+margin: 0 auto;
+}
+
+p.actions {
+	text-align:right;
+}
+
+ul.liste_entreprise {
+	list-style:none;
+	text-align:center;
+}
+
+ul.liste_entreprise li {
+	display:inline-block;
+	width:90px;
+	height:130px;
+}
+
+ul.liste_entreprise li img {
+	width:80px;
+	height:80px;
+}
