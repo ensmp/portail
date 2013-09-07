@@ -32,7 +32,7 @@
 <td>
 <select class="chosen" name = "start_username">
 {% for eleve in eleves %}
-<option value="{{ eleve }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
+<option value="{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
 {% endfor %}
 </select>
 </td>
@@ -42,7 +42,7 @@
 <td>
 <select class="chosen" name = "end_username">
 {% for eleve in eleves %}
-<option value="{{ eleve }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
+<option value="{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
 {% endfor %}
 </select>
 </td>

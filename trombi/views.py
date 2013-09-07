@@ -11,25 +11,24 @@ from django.http import Http404, HttpResponse
 from django.utils import simplejson
 from django.conf import settings
 from urllib import urlretrieve
-import Image
-import vobject
-import json
 import subprocess
+import vobject
+import Image
+import json
 import os
 
 @login_required
-def index(request):
-    mineur_list = UserProfile.objects.order_by('-promo','last_name')
-    promo_max = mineur_list[0].promo - 3
-    mineur_list_1=mineur_list.filter(promo__gte=promo_max)
-    mineur_list_2=mineur_list_1.filter(est_cesurien = False)
-    cesurien_list = mineur_list_1.filter(est_cesurien = True)
-    return render_to_response('trombi/index.html', {'mineur_list': mineur_list_2,'cesurien_list' : cesurien_list},context_instance=RequestContext(request))
+def trombi(request):
+    """Le trombinoscope des élèves des Mines. N'affique que les 1A, 2A, 3A, et 4A"""
+    promo_max = UserProfile.premiere_annee() - 3
+    mineur_list = mineur_list.filter(promo__gte = promo_max)
+    return render_to_response('trombi/index.html', {'mineur_list': mineur_list}, context_instance = RequestContext(request))
 
 @login_required
-def index_json(request):
-    mineur_list = UserProfile.objects.exclude(promo__isnull=True).order_by('-promo','last_name')
-    response = HttpResponse(mimetype='application/json')
+def trombi_json(request):
+    """Sérialisation JSON de tous les élèves, pour les applis mobiles"""
+    mineur_list = UserProfile.objects.all()
+    response = HttpResponse(mimetyp = 'application/json')
     response.write(simplejson.dumps([{
             'username': m.user.username,
             'first_name': m.first_name.title(),
@@ -40,112 +39,91 @@ def index_json(request):
     return response
 
 @login_required
-def detail(request,mineur_login):
-    mineur = get_object_or_404(UserProfile,user__username=mineur_login)
-    assoces = Adhesion.objects.filter(eleve__user__username = mineur_login)
+def detail(request, mineur_login):
+    """Page de profil d'un élève"""
+    mineur = get_object_or_404(UserProfile, user__username = mineur_login)
+    assoces = Adhesion.objects.filter(eleve = mineur)
     liste_questions = Question.objects.all()
     liste_reponses = mineur.reponses.all()
     return render_to_response('trombi/detail.html', {'mineur': mineur.user, 'assoces': assoces, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
 
-def detail_json(request,mineur_login):
-    mineur = get_object_or_404(User,username=mineur_login)
-    profile = mineur.get_profile()    
-    assoces = Adhesion.objects.filter(eleve__user__username = mineur_login)
+def detail_json(request, mineur_login):
+    """Sérialisation au format JSON des infomations d'un élève"""
+    mineur = get_object_or_404(UserProfile, user__username = mineur_login)   
+    assoces = Adhesion.objects.filter(eleve = mineur)
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps({
-        'username': mineur.username,
-        'first_name': profile.first_name.title(),
-        'last_name': profile.last_name.title(),
-        'email': mineur.email,
-        'promo': profile.promo,
-        'phone': profile.phone,
-        'chambre': profile.chambre,
-        'birthday': str(profile.birthday),
-        'co': [eleve.user.username for eleve in profile.co.all()],
-        'parrains': [eleve.user.username for eleve in profile.parrains.all()],
-        'fillots': [eleve.user.username for eleve in profile.fillots.all()],
+        'username': mineur.user.username,
+        'first_name': mineur.first_name.title(),
+        'last_name': mineur.last_name.title(),
+        'email': mineur.user.email,
+        'promo': mineur.promo,
+        'phone': mineur.phone,
+        'chambre': mineur.chambre,
+        'birthday': str(mineur.birthday),
+        'co': [eleve.user.username for eleve in mineur.co.all()],
+        'parrains': [eleve.user.username for eleve in mineur.parrains.all()],
+        'fillots': [eleve.user.username for eleve in mineur.fillots.all()],
         'assoces': [{'pseudo': a.association.pseudo, 'nom': str(a.association), 'role': a.role} for a in assoces]
     }))
     return response
 
 @csrf_exempt    
 def token(request):
+    """Page pour récupérer la token d'identification par CRSF"""
     return render_to_response('trombi/token.html', {},context_instance=RequestContext(request))
 
 @login_required
-def photo(request,mineur_login):
-    try:
-        urlretrieve('https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{}.jpg'.format(mineur_login), 'img.jpg')
-        img = Image.open('img.jpg')
-        resp = HttpResponse(mimetype='image/jpg')
-        img.save(resp, 'JPEG')
-        return resp
-    except:
-        return HttpResponse('err')
-
-@login_required
-def thumbnail(request,mineur_login):
-    try:
-        urlretrieve('https://sgs.mines-paristech.fr/prod/file/sgs/ensmp/20112012/photo/{}.jpg'.format(mineur_login), 'img.jpg')
-        img = Image.open('img.jpg')
-        img.thumbnail((44,44), Image.ANTIALIAS)
-        resp = HttpResponse(mimetype='image/jpg')
-        img.save(resp, 'JPEG')
-        return resp
-    except:
-        return HttpResponse('err')
-
-@login_required
 def profile(request):
+    """Page de profil de l'utilisateur"""
     return detail(request,request.user.username)
     
 @csrf_exempt
 def octo_update(request):
+    """
+        Mise à jour de tous les soldes octo/biéro
 
-    password = request.POST.get('password','')
-    json_octo = request.POST.get('clients_bar', '[]')
-    
-    # jsoldes = json.loads('[{"login": "12courdi", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "11leuren", "solde_octo": 3.0, "solde_biero": 5.0}, {"login": "12salvy", "solde_octo": 42.0, "solde_biero": 3.0}]')
-    jsoldes = json.loads(json_octo)
-    for eleve in jsoldes:
-        login = eleve['login']
-        solde_octo = eleve['solde_octo']
-        solde_biero = eleve['solde_biero']
+        Cette page est appelée par le site de l'octo, hébergé par le rézal.
+        Le serveur envoie une requête POST sur cette page tous les jours à 
+        midi pour mettre à jour les données des soldes.
+
+    """
+    json_octo = json.loads(request.POST.get('clients_bar', '[]'))
+    for eleve in json_octo:
         try:
-            profile = UserProfile.objects.get(user__username = login)
-            profile.solde_octo = solde_octo
-            profile.solde_biero = solde_biero    
+            profile = UserProfile.objects.get(user__username = eleve['login'])
+            profile.solde_octo = eleve['solde_octo']
+            profile.solde_biero = eleve['solde_biero']    
             profile.save()
         except UserProfile.DoesNotExist:                
             pass
-    
-    return HttpResponse('OK 1')
+    return HttpResponse('OK')
 
 @login_required
-def edit(request,mineur_login):
+def edit(request):
+    """Mise à jour des informations d'un profil"""
+    mineur = request.user.get_profile()
     if request.method == 'POST':
-        update_profile(request,mineur_login,surnom=request.POST['surnom'],phone=request.POST['phone'],chambre=request.POST['chambre'],option=request.POST['option'], co=request.POST.getlist('co'), parrains=request.POST.getlist('parrains'), fillots=request.POST.getlist('fillots'))
-        # le profil a ete cree/ mis a jour, on update les questions
-        profile = request.user.get_profile()
+        update_profile(mineur, surnom=request.POST['surnom'], phone=request.POST['phone'], chambre=request.POST['chambre'], option=request.POST['option'], co= request.POST.getlist('co'), parrains=request.POST.getlist('parrains'), fillots=request.POST.getlist('fillots'))
+        # Le profil a été mis a jour, on update les questions
         for question in Question.objects.all():
             try:
-                reponse_user = profile.reponses.get(question__id=question.id)
+                reponse_user = mineur.reponses.get(question=question)
                 reponse_user.contenu = request.POST['question_'+str(question.id)]
                 reponse_user.save()
             except Reponse.DoesNotExist:                
                 reponse_user = Reponse.objects.create(question=question, contenu=request.POST['question_'+str(question.id)])
-                profile.reponses.add(reponse_user)
-                reponse_user.save()        
-        profile.save()
-        return redirect('/accounts/profile')
+                reponse_user.save()
+                mineur.reponses.add(reponse_user)      
+        mineur.save()
+        return redirect('profile')
     else:
-        mineur = get_object_or_404(UserProfile,user__username=mineur_login)
-        autres_eleves = UserProfile.objects.exclude(id = request.user.get_profile().id)
-        promo_superieure = UserProfile.objects.filter(promo = request.user.get_profile().promo-1)
-        promo_inferieure = UserProfile.objects.filter(promo = request.user.get_profile().promo+1)
+        autres_eleves = UserProfile.objects.exclude(id = mineur.id)
+        promo_superieure = UserProfile.objects.filter(promo = mineur.promo-1)
+        promo_inferieure = UserProfile.objects.filter(promo = mineur.promo+1)
         liste_questions = Question.objects.all()
         liste_reponses = mineur.reponses.all()
-        return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'promo_inferieure': promo_inferieure, 'promo_superieure': promo_superieure, 'autres_eleves': autres_eleves, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
+        return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'promo_inferieure': promo_inferieure, 'promo_superieure': promo_superieure, 'autres_eleves': autres_eleves, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses}, context_instance=RequestContext(request))
 
 @login_required
 def get_vcf(request):
