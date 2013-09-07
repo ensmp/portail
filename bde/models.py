@@ -7,6 +7,7 @@ import subprocess
 import os
 
 
+
 class Liste(models.Model):    
     nom = models.CharField(max_length=32)
     couleur = models.CharField(max_length=7)

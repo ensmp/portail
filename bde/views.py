@@ -5,7 +5,11 @@ from bde.models import Liste, Vote, Palum
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.template import RequestContext
+from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required, permission_required
+from django.conf import settings
+import json
+from datetime import date, datetime, timedelta
 
 import datetime
 
@@ -61,7 +65,7 @@ def palums(request):
     liste_palums_1A = liste_palums.filter(annee=1)
     liste_palums_2A = liste_palums.filter(annee=2)
     liste_palums_3A = liste_palums.filter(annee=3)
-    return render_to_response('palum/archives.html', {'liste_palums_1A': liste_palums_1A, 'liste_palums_2A': liste_palums_2A, 'liste_palums_3A': liste_palums_3A}, context_instance=RequestContext(request))
+    return render_to_response('bde/archives_palum.html', {'liste_palums_1A': liste_palums_1A, 'liste_palums_2A': liste_palums_2A, 'liste_palums_3A': liste_palums_3A}, context_instance=RequestContext(request))
 
 @login_required
 def palums_json(request):
