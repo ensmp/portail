@@ -146,7 +146,6 @@ INSTALLED_APPS = (
     'notification',
     'trombi',
     'association',
-    'buypacker',
     'messages',
     'recherche',
     'streamine',
