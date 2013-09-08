@@ -80,7 +80,7 @@ class Video(models.Model):
         return self.association.get_absolute_url() + 'medias/'
         
     def envoyer_notification(self):        
-        notification = Notification(content_object=self, message = self.association.nom + ' a publie une nouvelle video')
+        notification = Notification(content_object=self, description=self.association.nom+' a publie une nouvelle video')
         notification.save()
         notification.envoyer_multiple(self.association.suivi_par.all())
         
@@ -119,7 +119,7 @@ class Affiche(models.Model):
         return self.association.get_absolute_url() + 'medias/'
         
     def envoyer_notification(self):        
-        notification = Notification(content_object=self, message = self.association.nom + ' a publie une nouvelle affiche')
+        notification = Notification(content_object=self, description=self.association.nom+' a publie une nouvelle affiche')
         notification.save()
         notification.envoyer_multiple(self.association.suivi_par.all())
         

@@ -55,7 +55,7 @@ class Sondage(models.Model):
         try: 
             perm = Permission.objects.get(codename='add_sondage')  #On envoie seulement à ceux qui peuvent créer des sondages
             users = User.objects.filter(Q(is_superuser=True) | Q(groups__permissions=perm) | Q(user_permissions=perm) ).distinct()            
-            notification = Notification(content_object=self, message='Un nouveau sondage a été proposé')
+            notification = Notification(content_object=self, description='Un nouveau sondage a été proposé')
             notification.save()
             notification.envoyer_multiple(users)
         except Permission.DoesNotExist:

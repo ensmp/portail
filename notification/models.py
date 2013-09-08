@@ -10,7 +10,7 @@ from django.utils.encoding import smart_unicode, smart_str
 
 class Notification(models.Model):
 	destinataires = models.ManyToManyField(User, through = 'Envoi') #Les utilisateurs qui verront cette notification	
-	message = models.CharField(max_length=512) #Le message lisible par l'utilisateur
+	description = models.CharField(max_length=512) #Le message lisible par l'utilisateur
 	content_type = models.ForeignKey(ContentType) #Le type de contenu concerné
 	object_id = models.PositiveIntegerField()
 	content_object = generic.GenericForeignKey('content_type', 'object_id')	

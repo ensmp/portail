@@ -45,7 +45,7 @@ class PetitCours(models.Model):
     def envoyer_notification(self):
         try: 
             bde = Association.objects.get(pseudo='bde') #On envoie seulement à ceux qui suivent le BDE
-            notification = Notification(content_object=self, message='Un nouveau petit cours est disponible')
+            notification = Notification(content_object=self, description='Un nouveau petit cours est disponible')
             notification.save()
             notification.envoyer_multiple(bde.suivi_par.all())
         except Association.DoesNotExist:

@@ -184,7 +184,7 @@ class Gallery(models.Model):
     def envoyer_notification(self):
         try: 
             mediamines = Association.objects.get(pseudo='mediamines') #On envoie seulement à ceux qui suivent MediaMines
-            notification = Notification(content_object=self, message='MediaMines a publié un nouvel album photo')
+            notification = Notification(content_object=self, description='MediaMines a publié un nouvel album photo')
             notification.save()
             suivi = mediamines.suivi_par.all()            
             if self.is_hidden_1A: #Album cache aux 1A
@@ -594,7 +594,7 @@ class Photo(ImageModel):
                 notification = Notification.objects.get(content_type = ContentType.objects.get_for_model(self), object_id = self.id)
                 notification.envoyer(eleve.user)
             except Notification.DoesNotExist: #En fait non, cette notification n'existe pas. On la crée.
-                notification = Notification(content_object=self, message='Vous avez été identifié sur une photo de MediaMines')
+                notification = Notification(content_object=self, description='Vous avez été identifié sur une photo de MediaMines')
                 notification.save()
                 notification.envoyer(eleve.user)
             

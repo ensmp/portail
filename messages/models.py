@@ -49,7 +49,7 @@ class Message(models.Model):
 	important = models.ManyToManyField(UserProfile,related_name='message_important', blank=True) #Les élèves qui ont classé le message comme important
 
 	commentaires = generic.GenericRelation(Comment, object_id_field="object_pk")
-	notification = generic.GenericRelation(Notification, related_name = "messages_notifie")
+	notification = generic.GenericRelation(Notification)
 	
 	def get_absolute_url(self):
 		return '/associations/' + self.association.pseudo + '/messages/'
