@@ -22,7 +22,7 @@
 {% for objet in liste_objets_trouves %}
 <tr>
 	<td>{{ objet.description }}</td>
-	<td><a href = "/people/{{ objet.eleve.user.username }}/">{{ objet.eleve.first_name }} {{ objet.eleve.last_name|upper }}</a></td>
+	<td><a href = "{{ objet.eleve.get_absolute_url }}/">{{ objet.eleve.first_name }} {{ objet.eleve.last_name|upper }}</a></td>
 	<td>{{ objet.lieu }}</td>
 	<td>{{ objet.date|date:"d F Y" }}</td>
 </tr>
@@ -42,7 +42,7 @@
 {% for objet in liste_objets_perdus %}
 <tr>
 	<td>{{ objet.description }}</td>
-	<td><a href = "/people/{{ eleve.user.username }}/">{{ objet.eleve.first_name }} {{ objet.eleve.last_name|upper }}</a></td>
+	<td><a href = "{{ eleve.get_absolute_url }}/">{{ objet.eleve.first_name }} {{ objet.eleve.last_name|upper }}</a></td>
 	<td>{{ objet.lieu }}</td>
 	<td>{{ objet.date|date:"d F Y" }}</td>
 </tr>

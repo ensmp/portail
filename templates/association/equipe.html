@@ -38,7 +38,7 @@
 	{% for adhesion in membres %}
 		<div class="portrait">
 		<img src="{{ STATIC_URL }}{{ adhesion.eleve.user.username }}.jpg" />
-		<p><a href = "/people/{{adhesion.eleve.user.username}}">{{adhesion.eleve.first_name}} {{adhesion.eleve.last_name|upper}}</a> {%if adhesion.role != ""%}<br>({{adhesion.role}}){% endif %}</p>
+		<p><a href = "{{ adhesion.eleve.get_absolute_url }}">{{ adhesion.eleve.first_name }} {{ adhesion.eleve.last_name|upper }}</a> {% if adhesion.role != "" %}<br>({{adhesion.role}}){% endif %}</p>
 		</div>
 	{% endfor %}
 </div>

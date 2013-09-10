@@ -25,8 +25,15 @@ class Reponse(models.Model):
     def __unicode__(self):
         return str(self.question.id) + ' -> ' + self.contenu
 
+class UserProfileManager(models.Manager):    
+    def promos_actuelles(self):
+        """Les 1A, 2A, et 3A actuels uniquement"""
+        promo_max = UserProfile.premiere_annee() - 3
+        return self.filter(promo__gte = promo_max).exclude(promo = promo_max, est_cesurien = False)
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, help_text="Le compte utilisateur associé au profil")
+    objects = UserProfileManager()
 
     #Identité
     first_name = models.CharField(max_length=128, verbose_name="prénom")
@@ -58,7 +65,7 @@ class UserProfile(models.Model):
     participations_sondages = models.IntegerField(editable=False, help_text="Le nombre de sondages auxquels l'élève a voté")
     score_victoires_sondages = models.FloatField(editable=False, help_text="Le rang au classement Wilson des consensuels dans les statistiques des sondages")
     score_defaites_sondages = models.FloatField(editable=False, help_text="Le rang au classement Wilson des libres penseurs dans les statistiques des sondages")
-    
+
     ################
     ### Méthodes ###
     ################

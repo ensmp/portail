@@ -52,9 +52,9 @@
 				<a id = "menu_notifications" href="/notifications/">{{ nombre_de_notifications }}</a>	
 			</li>
 			<li class="droite">  
-				<a href="/people/{{ user.username }}/">{% if request.user.get_profile.est_une_fille %}<img src="{{ STATIC_URL}}user_girl.png">{% else %}<img src="{{ STATIC_URL}}user_guy.png">{% endif %}<span>{{ user.username }}</span></a>  
+				<a href="{{ user.get_profile.get_absolute_url }}/">{% if user.get_profile.est_une_fille %}<img src="{{ STATIC_URL}}user_girl.png">{% else %}<img src="{{ STATIC_URL}}user_guy.png">{% endif %}<span>{{ user.username }}</span></a>  
 				<ul class="subnav">  
-					<li><a href="/people/{{ user.username }}/">Ma page</a></li>  
+					<li><a href="{{ user.get_profile.get_absolute_url }}/">Ma page</a></li>  
 					<li><a href="/accounts/logout/">Se déconnecter</a></li>
 				</ul>  
 			</li>

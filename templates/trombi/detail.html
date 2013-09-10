@@ -1,8 +1,10 @@
-{% extends "trombi/base.html" %}
+{% extends "base.html" %}
+
+{% block header %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}trombi.css" />
+{% endblock %}
 
 {% block content %}
-
-
 {% load avatar_tags %}
 
 <div id="picture" class="pull-right">
@@ -13,9 +15,7 @@
 <h2>{{ mineur.get_profile.first_name }} {% if mineur.get_profile.surnom %}"{{ mineur.get_profile.surnom}}"{% endif %} {{ mineur.get_profile.last_name|upper }}</h2>
 
 <p><strong>Mail</strong> : <a href="mailto:{{ mineur.email }}">{{ mineur.email }}</a></p>
-
 <p><strong>Promotion</strong> : {{ mineur.get_profile.promo }}</p>
-
 <p><strong>Date de naissance</strong> : {{ mineur.get_profile.birthday }}</p>
 
 {% if mineur.get_profile.phone != "" %}
@@ -44,7 +44,7 @@
 {% if mineur.get_profile.co.all %}
 <p><strong>Co{{ mineur.get_profile.co.count|pluralize }}</strong> : 
 	{% for co in mineur.get_profile.co.all %}
-		<a href="/people/{{ co }}">{{ co.first_name }} {{ co.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
+		<a href="{{ co.get_absolute_url }}">{{ co.first_name }} {{ co.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
 	{% endfor %}
 </p>
 {% else %}
@@ -54,7 +54,7 @@
 {% if mineur.get_profile.parrains.all %}
 <p><strong>Parrain{{ mineur.get_profile.parrains.count|pluralize }}</strong> : 
 	{% for parrain in mineur.get_profile.parrains.all %}
-		<a href="/people/{{ parrain }}">{{ parrain.first_name }} {{ parrain.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
+		<a href="{{ parrain.get_absolute_url }}">{{ parrain.first_name }} {{ parrain.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
 	{% endfor %}
 </p>
 {% else %}
@@ -64,7 +64,7 @@
 {% if mineur.get_profile.fillots.all %}
 <p><strong>Fillot{{ mineur.get_profile.fillots.count|pluralize }}</strong> : 
 	{% for fillot in mineur.get_profile.fillots.all %}
-		<a href="/people/{{ fillot }}">{{ fillot.first_name }} {{ fillot.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
+		<a href="{{ fillot.get_absolute_url }}">{{ fillot.first_name }} {{ fillot.last_name|upper }}</a>{% if not forloop.last %}{% ifequal forloop.revcounter 2 %} et {% else %}, {% endifequal %}{% else %}{% endif %}
 	{% endfor %}
 </p>
 {% else %}

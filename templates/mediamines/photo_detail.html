@@ -61,7 +61,7 @@
 	<!--{% if photo.eleves %}
 		<p>Avec 
 		{% for eleve in photo.eleves.all %}
-			<a href="/people/{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name }}</a>{% if not forloop.last %}, {% endif %}
+			<a href="{{ eleve.get_absolute_url }}">{{ eleve.first_name }} {{ eleve.last_name }}</a>{% if not forloop.last %}, {% endif %}
 		{% empty %} personne
 		{% endfor %}</p>
 	{% endif %}-->

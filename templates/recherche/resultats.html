@@ -15,7 +15,7 @@
 {% for user in list_users %}
 <li>
 <img class = "trombi" src= '{{ STATIC_URL }}{{user}}.jpg'/> 
-<a href="/people/{{ user }}">{{ user.first_name }} {{ user.last_name }}</a>
+<a href="{{ user.get_absolute_url }}">{{ user.first_name }} {{ user.last_name }}</a>
 <br>
 Promo : {{user.promo}}
 </li>
@@ -72,7 +72,7 @@ Promo : {{user.promo}}
 <p>{{ message.contenu|removetags:"script"|safe}}</p>
 <hr>
 	<p class="message-pied">Visible par tous
-	<span class="pull-right">Posté par <a href="/people/{{message.expediteur.user.username}}">{{message.expediteur.first_name}} {{message.expediteur.last_name}}</a></span>
+	<span class="pull-right">Posté par <a href="{{ message.expediteur.get_absolute_url }}">{{ message.expediteur.first_name }} {{ message.expediteur.last_name }}</a></span>
 	</p>
 	
 	

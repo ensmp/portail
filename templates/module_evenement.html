@@ -5,7 +5,7 @@
 	<hr>
 	<div class="module_middle">	
 		{% load obtenir_evenements %}
-		{% get_next_events "7" as events_list %}
+		{% get_next_events 7 as events_list %}
 		{% if events_list %}
 		{% regroup events_list by date_debut.date as date_list %}
 		<ul class="nav nav-list">

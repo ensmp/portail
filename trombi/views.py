@@ -19,10 +19,9 @@ import os
 
 @login_required
 def trombi(request):
-    """Le trombinoscope des élèves des Mines. N'affique que les 1A, 2A, 3A, et 4A"""
-    promo_max = UserProfile.premiere_annee() - 3
-    mineur_list = mineur_list.filter(promo__gte = promo_max)
-    return render_to_response('trombi/index.html', {'mineur_list': mineur_list}, context_instance = RequestContext(request))
+    """Le trombinoscope des élèves des Mines. N'affique que les 1A, 2A, 3A, et 4A"""    
+    mineur_list = UserProfile.objects.promos_actuelles()
+    return render_to_response('trombi/trombi.html', {'mineur_list': mineur_list}, context_instance = RequestContext(request))
 
 @login_required
 def trombi_json(request):
@@ -70,7 +69,7 @@ def detail_json(request, mineur_login):
 
 @csrf_exempt    
 def token(request):
-    """Page pour récupérer la token d'identification par CRSF"""
+    """Page pour récupérer la token d'identification par CSRF"""
     return render_to_response('trombi/token.html', {},context_instance=RequestContext(request))
 
 @login_required
@@ -127,6 +126,7 @@ def edit(request):
 
 @login_required
 def get_vcf(request):
+    """Contacts au format VCF"""
     result = ""
     for user_profile in UserProfile.objects.all():
         card = vobject.vCard()
@@ -142,13 +142,14 @@ def get_vcf(request):
         card.tel.value = user_profile.phone
         card.tel.type_param = 'cell'
         result += card.serialize()
-        response = HttpResponse(content_type="text/vcard; charset=utf-8")
-        response['charset'] = "utf-8"
-        response.write(result)
-        return response
+    response = HttpResponse(content_type="text/vcard; charset=utf-8")
+    response['charset'] = "utf-8"
+    response.write(result)
+    return response
 
 @login_required
 def separation(request):
+    """Le plus court chemin séparant deux élèves"""
     eleves = UserProfile.objects.all()
     result = []
     recherche = False
@@ -161,6 +162,10 @@ def separation(request):
     return render_to_response('trombi/separation.html', {'eleves': eleves, 'result':result, 'result_string':result_string, 'recherche':recherche},context_instance=RequestContext(request))
 
 def chemin_to_html(chemin):
+    """
+        Effectue un rendu en code HTML d'une liste d'élèves en précisant les
+        relations entre deux élèves successifs.
+    """
     if chemin:        
         chemin_string = '<a href = "'+chemin[0].get_absolute_url()+'">'+chemin[0].first_name+' '+chemin[0].last_name+'</a>'
         for i in range(len(chemin)-1):
@@ -169,32 +174,34 @@ def chemin_to_html(chemin):
         chemin_string = "Aucun chemin existant"
     return chemin_string
 
-import Image, ImageDraw
 def separation_graphe(request):
+    """
+        Dessine le graphe de l'évolution des promos d'une liste d'élèves
+
+        La liste des usernames est récupérée en POST.
+    """
+    import Image, ImageDraw
     chemin = request.GET.get('chemin','')
     liste_eleves = [UserProfile.objects.get(user__username = username) for username in chemin.split(',')]
     
     largeur = 500
     hauteur = 375
-    im = Image.new('RGBA', (largeur, hauteur), (0, 0, 0, 0)) # Create a blank image
+    im = Image.new('RGBA', (largeur, hauteur), (0, 0, 0, 0)) # Nouvelle image
     draw = ImageDraw.Draw(im)
     lines = []
     promo_min = min([eleve.promo for eleve in liste_eleves])
     promo_max = max([eleve.promo for eleve in liste_eleves])
-    marge=30
+    marge = 30
     deltax = (largeur-2*marge)/len(liste_eleves)
     deltay = (hauteur-2*marge)/(promo_max-promo_min)
     x = 0
-    rayon_cercles = 8-2*(promo_max-promo_min)
     hauteur_traits = 8-2*(promo_max-promo_min)
     for eleve in liste_eleves:
         lines.append((marge + x, marge + (eleve.promo-promo_min)*deltay))
-        lines.append((marge + x + deltax, marge + (eleve.promo-promo_min)*deltay))
-        #draw.ellipse((marge + (2*x+deltax)/2 - rayon_cercles, marge + (eleve.promo-promo_min)*deltay-rayon_cercles, marge + (2*x+deltax)/2 + rayon_cercles, marge + (eleve.promo-promo_min)*deltay+rayon_cercles), fill="black")
+        lines.append((marge + x + deltax, marge + (eleve.promo-promo_min)*deltay))        
         draw.line([(marge + x, marge + (eleve.promo-promo_min)*deltay-hauteur_traits),(marge + x, marge + (eleve.promo-promo_min)*deltay+hauteur_traits)], fill="black")
         draw.line([(marge + x + deltax, marge + (eleve.promo-promo_min)*deltay-hauteur_traits),(marge + x + deltax, marge + (eleve.promo-promo_min)*deltay+hauteur_traits)], fill="black")
         x = x + deltax
-    #lines = [(50, 0), (0, 40), (20, 100), (80, 100), (100, 40)]
     draw.line(lines, fill="black")
     for promo in range(promo_min, promo_max+1):
         draw.text((0, marge - 5 + (promo-promo_min)*deltay), 'P'+str(promo), fill="blue")
@@ -202,13 +209,18 @@ def separation_graphe(request):
     im.save(response, "PNG")
     return response
 
-# Import pygraph
-from pygraph.classes.graph import graph
-from pygraph.classes.digraph import digraph
-from pygraph.algorithms.searching import breadth_first_search
-from pygraph.readwrite.dot import write
-from pygraph import *
 def graphe_mine(request):
+    """
+        Dessine une image du graphe des mineurs
+
+        Les élèves sont les sommets du graphe, et les arêtes
+        sont les relations parrain, fillot, co.
+    """
+    from pygraph.classes.graph import graph
+    from pygraph.classes.digraph import digraph
+    from pygraph.algorithms.searching import breadth_first_search
+    from pygraph.readwrite.dot import write
+    from pygraph import *
     gr = graph()
     liste_couleurs = ['red', 'royalblue4', 'forestgreen', 'goldenrod4', 'purple4']
 
