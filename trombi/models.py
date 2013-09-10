@@ -30,8 +30,8 @@ class UserProfile(models.Model):
     option = models.CharField(max_length=128, blank=True)
     a_la_meuh = models.BooleanField(default=True)
     est_une_fille = models.BooleanField()
-    est_ast = models.BooleanField(default=False)
-    est_cesurien = models.BooleanField(default=False)
+    est_ast = models.BooleanField()
+    est_cesurien = models.BooleanField()
 
     chambre = models.CharField(max_length=128, blank=True)
     adresse_ailleurs = models.CharField(max_length=512, blank=True) 
