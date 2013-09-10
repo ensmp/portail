@@ -22,7 +22,7 @@ def archives_json(request):
         Sérialisation au format JSON de la liste des vendômes visibles par l'utilisateur
     """
     liste_vendomes = Vendome.objects.all()
-    if request.user.get_profile().en_premiere_annee():
+    if request.user.get_profile().en_premiere_annee() or request.user.get_profile().ast_en_deuxieme_annee():
         liste_vendomes = liste_vendomes.exclude(is_hidden_1A = True)
     response = HttpResponse(mimetype='application/json')
     response.write(json.dumps([{

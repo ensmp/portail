@@ -30,6 +30,8 @@ class UserProfile(models.Model):
     option = models.CharField(max_length=128, blank=True)
     a_la_meuh = models.BooleanField(default=True)
     est_une_fille = models.BooleanField()
+    est_ast = models.BooleanField(default=False)
+    est_cesurien = models.BooleanField(default=False)
 
     chambre = models.CharField(max_length=128, blank=True)
     adresse_ailleurs = models.CharField(max_length=512, blank=True) 
@@ -60,6 +62,13 @@ class UserProfile(models.Model):
     def en_premiere_annee(self):
         premiere_annee = UserProfile.premiere_annee()
         return (premiere_annee == self.promo)
+
+    def ast_en_deuxieme_annee(self):
+        deuxieme_annee = UserProfile.premiere_annee() +1 
+        return (deuxieme_annee == self.promo and est_ast)
+
+    def est_un_cesurien(self):
+        return self.est_cesurien
     
     @property
     def defaites_sondages(self):
