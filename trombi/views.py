@@ -99,7 +99,7 @@ def octo_update(request):
     return HttpResponse('OK')
 
 @login_required
-def edit(request):
+def edit(request, mineur_login):
     """Mise à jour des informations d'un profil"""
     mineur = request.user.get_profile()
     if request.method == 'POST':
@@ -115,7 +115,7 @@ def edit(request):
                 reponse_user.save()
                 mineur.reponses.add(reponse_user)      
         mineur.save()
-        return redirect('profile')
+        return redirect(profile)
     else:
         autres_eleves = UserProfile.objects.exclude(id = mineur.id)
         promo_superieure = UserProfile.objects.filter(promo = mineur.promo-1)

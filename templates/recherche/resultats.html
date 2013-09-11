@@ -14,7 +14,7 @@
 <ul>
 {% for user in list_users %}
 <li>
-<img class = "trombi" src= '{{ STATIC_URL }}{{user}}.jpg'/> 
+<img class = "trombi" src= '{{ STATIC_URL }}{{user.user.username}}.jpg'/> 
 <a href="{{ user.get_absolute_url }}">{{ user.first_name }} {{ user.last_name }}</a>
 <br>
 Promo : {{user.promo}}
