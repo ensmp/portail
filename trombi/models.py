@@ -94,10 +94,10 @@ class UserProfile(models.Model):
         if self.est_cesurien:
             annee -= 1
         return annee
-
+    
     def en_premiere_annee(self):
         """Si l'élève fait sa première année aux mines. 1A, ou 2A AST."""
-        return (self.annee() == 1) or ((self.annee() == 2) and self.est_ast())
+        return (self.annee() == 1) or ((self.annee() == 2) and self.est_ast)
     
     ### Statistiques des sondages ###
 
