@@ -63,7 +63,7 @@ class Message(models.Model):
 	
 	def envoyer_message_notification(self):
 		message = self.association.nom + ' a publie un nouveau message'
-		notification = Notification(content_object=self, message=message)
+		notification = Notification(content_object=self, description=message)
 		notification.save()
 		notification.envoyer_multiple(self.association.suivi_par.all())
 		
@@ -72,7 +72,7 @@ class Message(models.Model):
 		eleve = UserProfile.objects.get(user__username = username)
 		message = eleve.first_name + ' ' + eleve.last_name + ' a commente un message de ' + self.association.nom
 		commentaire = Comment.objects.get(pk = comment_pk)
-		notification = Notification(content_object=commentaire, message=message)
+		notification = Notification(content_object=commentaire, description=message)
 		notification.save()
 		notification.envoyer_multiple(self.association.suivi_par.all())
 				
