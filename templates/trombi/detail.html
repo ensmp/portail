@@ -92,7 +92,7 @@
 {% endfor %}
 <hr>
 {% if mineur.username == user.username %}
-<p><a href="/people/{{ mineur.username }}/edit">Modifier</a><br/>
+<p><a href="/people/edit/">Modifier</a><br/>
 <a href="{% url 'avatar_change' %}">Ajouter une photo</a><br/>
 <a href="{% url 'avatar_delete' %}">Supprimer une photo</a></p>
 

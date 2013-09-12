@@ -99,7 +99,7 @@ def octo_update(request):
     return HttpResponse('OK')
 
 @login_required
-def edit(request, mineur_login):
+def edit(request):
     """Mise à jour des informations d'un profil"""
     mineur = request.user.get_profile()
     if request.method == 'POST':

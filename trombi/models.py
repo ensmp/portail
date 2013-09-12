@@ -27,7 +27,7 @@ class Reponse(models.Model):
 
 class UserProfileManager(models.Manager):    
     def promos_actuelles(self):
-        """Les 1A, 2A, et 3A actuels uniquement"""
+        """Les 1A, 2A, 3A et 4A actuels uniquement"""
         promo_max = UserProfile.premiere_annee() - 4
         return self.filter(promo__gte = promo_max).exclude(promo = promo_max, est_cesurien = False)
 
