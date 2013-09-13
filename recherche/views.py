@@ -16,7 +16,7 @@ def search(request):
 		query_string = request.GET['q']
 		message_query = get_query(query_string, ['objet', 'contenu'])
 		user_query = get_query(query_string, ['first_name', 'last_name', 'phone', 'chambre', 'user__username'])
-		found_messages = Message.accessibles_par(request.user).filter(message_query).order_by('-date')
+		found_messages = Message.accessibles_par(request.user.get_profile()).filter(message_query).order_by('-date')
 		found_users = UserProfile.objects.filter(user_query).order_by('user__username')
 		
 		if query_string.lower() == 'dieu':
