@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import F, Count
 from django.db.models.signals import post_save
+import datetime
 
 class Question(models.Model):
     """
@@ -98,6 +99,11 @@ class UserProfile(models.Model):
     def en_premiere_annee(self):
         """Si l'élève fait sa première année aux mines. 1A, ou 2A AST."""
         return (self.annee() == 1) or ((self.annee() == 2) and self.est_ast)
+
+    def date_entree_aux_mines(self):
+        """Renvoie la date à laquelle l'élève est arrivé aux mines"""
+        return datetime.date(2000 + self.promo, 9, 1) #Le premier septembre de l'année de sa promotion
+
     
     ### Statistiques des sondages ###
 

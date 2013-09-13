@@ -28,7 +28,7 @@ def equipe(request, association_pseudo):
 def messages(request, association_pseudo):
     association = get_object_or_404(Association,pseudo=association_pseudo)
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
-    list_messages = Message.objects.filter(association__pseudo=association_pseudo).order_by('-date')
+    list_messages = Message.accessibles_par(request.user.get_profile()).filter(association__pseudo=association_pseudo).order_by('-date')
     return render_to_response('association/messages.html', {'association' : association, 'list_messages': list_messages, 'membres': membres},context_instance=RequestContext(request))
 
 @login_required

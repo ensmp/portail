@@ -31,13 +31,15 @@ def index(request):
     if not request.user.is_authenticated():
         return render_to_response('accueil/accueil.html', {},context_instance=RequestContext(request))
     else:
-        list_messages = Message.objects.exclude(lu__user=request.user).order_by('-date')
+        eleve = request.user.get_profile()
+        list_messages = Message.accessibles_par(eleve).exclude(lu=eleve)
         return render_to_response('messages/index.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 
 @login_required
 #La liste des nouveaux messages, sérialisée aux format JSON (pour les applis)
 def index_json(request):
-    list_messages = Message.objects.exclude(lu__user=request.user).order_by('-date')
+    eleve = request.user.get_profile()
+    list_messages = Message.accessibles_par(eleve).exclude(lu=eleve)
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps([{
             'id': m.id,
@@ -97,7 +99,7 @@ def classer_non_lu(request, message_id):
 @login_required
 #La liste des messages, y compris les messages lus
 def tous(request):
-    all_messages = Message.objects.all().order_by('-date')
+    all_messages = Message.accessibles_par(request.user.get_profile())
     
     paginator = Paginator(all_messages, 15)
     page = request.GET.get('page')
@@ -113,7 +115,7 @@ def tous(request):
 
 @login_required
 def tous_json(request):
-    all_messages = Message.objects.all().order_by('-date')
+    all_messages = Message.accessibles_par(request.user.get_profile())
     response = HttpResponse(mimetype='application/json')
     response.write(simplejson.dumps([{
             'id': m.id,
@@ -132,19 +134,21 @@ def tous_json(request):
 @login_required
 #La liste des messages classés importants
 def importants(request):
-    list_messages = Message.objects.filter(important__user=request.user).order_by('-date')
+    eleve = request.user.get_profile()
+    list_messages = Message.accessibles_par(eleve).filter(important=eleve)
     return render_to_response('messages/importants.html', {'list_messages': list_messages},context_instance=RequestContext(request))
     
 
 @login_required
 #La création d'un nouveau message par une association
 def nouveau(request, association_pseudo):
-    if request.method == 'POST':        
-        if Adhesion.objects.filter(association=get_object_or_404(Association,pseudo=association_pseudo), eleve=request.user).exists(): #Si l'utilisateur est membre de l'assoce
+    if request.method == 'POST':
+        eleve = request.user.get_profile()
+        association = get_object_or_404(Association,pseudo=association_pseudo)    
+        if Adhesion.existe(eleve, association):
             #On cree le message SANS OUBLIER de passer par le SANITIZER, pour escaper le js et les tags html non autorisés
-            Message.objects.create(association=Association.objects.get(pseudo=association_pseudo),objet=sanitizeHtml(request.POST['objet']),contenu=sanitizeHtml(request.POST['contenu']),date=datetime.now(),expediteur=request.user.get_profile())
-        association = get_object_or_404(Association, pseudo = association_pseudo)
-        return redirect(association.get_absolute_url() + 'messages/')
+            message = Message.objects.create(expediteur=eleve,association=association,objet=sanitizeHtml(request.POST['objet']),contenu=sanitizeHtml(request.POST['contenu']),date=datetime.now())
+        return redirect(message)
     else:
         liste_assoces = Association.objects.all()
         form = MessageForm()
@@ -154,7 +158,7 @@ def nouveau(request, association_pseudo):
 def supprimer(request, message_id):
     message = get_object_or_404(Message, pk = message_id)
     association = message.association
-    if Adhesion.objects.filter(association=message.association, eleve=request.user).exists():
+    if Adhesion.existe(request.user.get_profile(), association):
         message.delete()
         messages.add_message(request, messages.SUCCESS, "Message supprimé !")
     return redirect(association.get_absolute_url() + 'messages/')

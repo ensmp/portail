@@ -12,7 +12,8 @@ class NombreMessagesNode(Node):
 		self.login = template.Variable(login)
 			
 	def render(self, context):
-		context['nombre_de_messages'] = Message.objects.exclude(lu__user__username=self.login.resolve(context)).count()
+		eleve = UserProfile.objects.get(user__username = self.login.resolve(context))
+		context['nombre_de_messages'] = Message.accessibles_par(eleve).exclude(lu = eleve).count()
 		return ''
     
 def compter_messages(parser, token):
