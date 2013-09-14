@@ -6,7 +6,9 @@
 	<link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}addplace.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}enterkey.js"></script>
 {% endblock %}
+
 {% block content %}
 <div id="effectue" style="display:none" class="text-sucess">Votre demande a bien été effectuée, vous recevrez une réponse dans les prochains jours. Merci.</div>
 <h1>Les petits cours</h1>
@@ -20,9 +22,9 @@
 	<form id="addform" method="post" action="">
 	{% csrf_token %}
 	<p>Un moyen de vous contacter (numéro de téléphone ou adresse email)</p>
-	<input class = "input-medium" type="text" name="contact" placeholder="Contact"/>
+	<input class = "input-medium" type="text" onkeypress="return handleEnter(this, event)" name="contact" placeholder="Contact"/>
 	<p>Lieu du petit cours (possibilité à l'école ou à la résidence dans le quartier Luxembourg)</p>
-		<input id='addressinput' type='text' name='address' placeholder="Saisissez l'adresse" class = "input-xlarge" />
+		<input id='addressinput' type='text' onkeypress="return handleEnter(this, event)" name='address' placeholder="Saisissez l'adresse" class = "input-xlarge" />
 		<input type='hidden' name='lat' />
 		<input type='hidden' name='lng' />
 	<table>
@@ -36,17 +38,18 @@
 	</tr>
 	<tr>
 	<td>
-		<input type="text" placeholder="Matière" name="matiere" class = "input-medium" />
+		<input type="text" onkeypress="return handleEnter(this, event)" placeholder="Matière" name="matiere" class = "input-medium" />
 	</td>
 	<td>
-		<input type="text" placeholder="Niveau" name="niveau" class = "input-medium"/>
+		<input type="text" onkeypress="return handleEnter(this, event)" placeholder="Niveau" name="niveau" class = "input-medium"/>
 	</td>
 	</table>
 	<p>Autre information qui vous semble pertinente</p>
-	<textarea placeholder="Description" name="description" class="field span6"></textarea>
+	<textarea placeholder="Description" onkeypress="return handleEnter(this, event)" name="description" class="field span6"></textarea>
 	<br />
 	 <button type="submit" class="btn">Valider votre demande</button>
 	</form>
 </div>
 
 {% endblock %}
+
