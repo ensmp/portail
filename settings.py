@@ -158,6 +158,7 @@ INSTALLED_APPS = (
     'minesmarket',
     'minestryofsound',
     'vendome', 
+    'revue',
     'jump',
     'pr',
     'faq',
