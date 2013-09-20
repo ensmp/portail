@@ -6,12 +6,9 @@ import os
 
 class Revue(models.Model):
     """
-        Le Vendôme, journal hebdomadaire de l'école.
+        Les revues du BDA.
 
-        Les fichiers doivent être envoyés au format pdf, et peser de
-        préférence moins de 10mo pour alléger le serveur et diminuer les temps
-        de téléchargement. Un thumbnail est généré automatiquement à l'envoi
-        d'un nouveau Vendôme (voir la méthode save())
+        Le fonctionnement est le même que pour les Vendômes
     """
     titre = models.CharField(max_length=50)
     fichier = models.FileField(upload_to='revue', help_text="Au format pdf, ne doit pas dépasser 10mo environ")
@@ -28,10 +25,7 @@ class Revue(models.Model):
 	
     def save(self, *args, **kwargs):
         """
-            Sauvegarder un vendôme.
-
-            S'il ne possède pas de thumbnail on en génère un via ImageMagick
-            en exportant au format png la première de couverture
+            Génération du thumbnail
         """
         super(Revue, self).save(*args, **kwargs)
         if not self.thumbnail:
@@ -43,9 +37,8 @@ class Revue(models.Model):
                 # On récupère le fichier généré pour mettre à jour le champ thumbnail
                 f = File(open(path_destination,'r'))
                 self.thumbnail.save(path_destination, f, True)
-                print 'Thumbnail created!'
 
     def image_tag(self):
-        """Tag html de l'image du thumbnail, utilisé dans l'administration des Vendômes."""
+        """Tag html de l'image du thumbnail, utilisé dans l'administration des Revues."""
         return u'<img src="%s" />' % self.thumbnail.url
     image_tag.allow_tags = True

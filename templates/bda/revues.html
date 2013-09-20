@@ -2,12 +2,12 @@
 
 {% block header %}
 <link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}revue.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}bda-revue.css" />
 {% endblock %}
 
 {% block onglets %}
 <div id="menu_onglets">
-<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_bda.png">Vendôme</h1>
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_bda.png">BDA</h1>
 <ul class="nav nav-pills">
     <li><a href="/associations/bda/messages/"><img src="{{ STATIC_URL }}mail.png"/><span>Messages</span></a></li>
     <li><a href="/associations/bda/evenements/"><img src="{{ STATIC_URL }}date.png"/><span>Événements</span></a></li>
@@ -22,7 +22,7 @@
 {% block content %}
 <ul class="liste_revues">
 {% for revue in liste_revues %}
-	<li class="vendome">
+	<li class="revue">
     	<a href="{{ MEDIA_URL }}{{ revue.fichier }}">
     	<img src="{{ MEDIA_URL }}{{ revue.thumbnail }}" />
     	<p>{{ revue.titre }}</p>

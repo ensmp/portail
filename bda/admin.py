@@ -1,4 +1,4 @@
-from revue.models import Revue
+from bda.models import Revue
 from django.contrib import admin
 
 class RevueAdmin(admin.ModelAdmin):

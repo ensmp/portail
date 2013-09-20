@@ -1,0 +1,29 @@
+ul.liste_revues {
+	padding:0;
+}
+
+li.revue {
+	display: inline-block;
+	width:168px;
+	text-align:center;
+	vertical-align:top;
+	/* for ie7 */
+    zoom: 1;
+    *display: inline;
+
+}
+
+li.revue a img {
+	width:168px;
+}
+
+li.revue p {
+	margin : 3px 0 0 0;
+}
+
+li.revue p.date {
+	font-style:italic;
+	color:#ccc;
+	margin-top:0;
+	margin-bottom:5px;
+}
