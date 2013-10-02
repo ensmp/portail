@@ -27,9 +27,8 @@ class Association(models.Model):
     def __unicode__(self):
         return self.nom
 
-    def cachee(self):
-        """Si l'association est cachée aux 1A."""
-        return (self.is_hidden_1A)
+    def est_cachee_a(self, eleve):
+        return self.is_hidden_1A and eleve.en_premiere_annee()
 
     def save(self, *args, **kwargs):
         if not self.groupe_permissions: #On cree un groupe de permissions, si non-existant
