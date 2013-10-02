@@ -53,7 +53,7 @@ var infowins = [];
 		
 		
 		{% for cours in cours_list %}
-			addMarker("{{cours.title}}", "{{cours.description}}",{{cours.latitude|stringformat:"f"}}, {{cours.longitude|stringformat:"f"}}, "{{cours.matiere}}", "{{cours.niveau}}", {{ cours.requests.count }}, {{cours.id}});
+			addMarker("{{ cours.title|escapejs }}", "{{ cours.description|escapejs }}",{{cours.latitude|stringformat:"f"}}, {{cours.longitude|stringformat:"f"}}, "{{ cours.matiere|escapejs }}", "{{ cours.niveau|escapejs }}", {{ cours.requests.count }}, {{cours.id}});
 		{% endfor %}
 	}
 
