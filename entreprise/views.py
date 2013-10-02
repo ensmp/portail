@@ -19,5 +19,5 @@ def contact_entreprises(request):
     return render_to_response('entreprise/contact_entreprises.html', {}, context_instance=RequestContext(request))
 
 def planning(request):
-    evenement_entreprises = EvenementEntreprise.objects.all();
+    evenement_entreprises = EvenementEntreprise.objects.order_by('-evenement');
     return render_to_response('entreprise/planning.html', {'evenement_entreprises':evenement_entreprises}, context_instance=RequestContext(request))

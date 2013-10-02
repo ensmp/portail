@@ -14,12 +14,18 @@ from django.db.models import Q
 # La liste de toutes les associations
 def index(request):
     assoces = Association.objects.order_by('ordre');
+    if request.user.get_profile().en_premiere_annee():
+        assoces = assoces.exclude(is_hidden_1A = True)
     return render_to_response('association/index.html', {'assoces' : assoces},context_instance=RequestContext(request))
 
 @login_required
 # La liste des membres d'une association
 def equipe(request, association_pseudo):
     association = get_object_or_404(Association,pseudo=association_pseudo)
+    if association.is_hidden_1A and request.user.get_profile().en_premiere_annee():
+        assoces = Association.objects.order_by('ordre');
+        assoces = assoces.exclude(is_hidden_1A = True)
+        return render_to_response('association/index.html', {'assoces' : assoces},context_instance=RequestContext(request))
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
     return render_to_response('association/equipe.html', {'association' : association, 'membres': membres},context_instance=RequestContext(request))
 
@@ -27,6 +33,10 @@ def equipe(request, association_pseudo):
 # Les messages postés par une association
 def messages(request, association_pseudo):
     association = get_object_or_404(Association,pseudo=association_pseudo)
+    if association.is_hidden_1A and request.user.get_profile().en_premiere_annee():
+        assoces = Association.objects.order_by('ordre');
+        assoces = assoces.exclude(is_hidden_1A = True)
+        return render_to_response('association/index.html', {'assoces' : assoces},context_instance=RequestContext(request))
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
     list_messages = Message.accessibles_par(request.user.get_profile()).filter(association__pseudo=association_pseudo).order_by('-date')
     return render_to_response('association/messages.html', {'association' : association, 'list_messages': list_messages, 'membres': membres},context_instance=RequestContext(request))
@@ -35,6 +45,10 @@ def messages(request, association_pseudo):
 # Les événements planifiés par une association
 def evenements(request, association_pseudo):
     association = get_object_or_404(Association,pseudo=association_pseudo)
+    if association.is_hidden_1A and request.user.get_profile().en_premiere_annee():
+        assoces = Association.objects.order_by('ordre');
+        assoces = assoces.exclude(is_hidden_1A = True)
+        return render_to_response('association/index.html', {'assoces' : assoces},context_instance=RequestContext(request))
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
     liste_evenements = Evenement.objects.filter(association__pseudo=association_pseudo).order_by('-date_debut')
 
@@ -44,6 +58,10 @@ def evenements(request, association_pseudo):
 # Les événements planifiés par une association
 def medias(request, association_pseudo):
     association = get_object_or_404(Association,pseudo=association_pseudo)
+    if association.is_hidden_1A and request.user.get_profile().en_premiere_annee():
+        assoces = Association.objects.order_by('ordre');
+        assoces = assoces.exclude(is_hidden_1A = True)
+        return render_to_response('association/index.html', {'assoces' : assoces},context_instance=RequestContext(request))
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
     liste_affiches = Affiche.objects.filter(association__pseudo=association_pseudo)
     liste_videos = Video.objects.filter(association__pseudo=association_pseudo)

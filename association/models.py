@@ -19,13 +19,18 @@ class Association(models.Model):
     membres = models.ManyToManyField(UserProfile, through='Adhesion', blank=True, null=True)
     suivi_par= models.ManyToManyField(User, related_name='associations_suivies', blank=True, null=True)    
     ordre = models.IntegerField(default=0)
+    is_hidden_1A = models.BooleanField(default=False,verbose_name="Caché aux 1A")
  
     class Meta:
         ordering = ['ordre','nom']
  
     def __unicode__(self):
         return self.nom
- 
+
+    def cachee(self):
+        """Si l'association est cachée aux 1A."""
+        return (self.is_hidden_1A)
+
     def save(self, *args, **kwargs):
         if not self.groupe_permissions: #On cree un groupe de permissions, si non-existant
             groupe = Group.objects.create(name=self.nom)

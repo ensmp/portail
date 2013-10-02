@@ -42,6 +42,8 @@ def detail(request, mineur_login):
     """Page de profil d'un élève"""
     mineur = get_object_or_404(UserProfile, user__username = mineur_login)
     assoces = Adhesion.objects.filter(eleve = mineur)
+    if request.user.get_profile().en_premiere_annee():
+        assoces = assoces.exclude(association__is_hidden_1A = True)
     liste_questions = Question.objects.all()
     liste_reponses = mineur.reponses.all()
     return render_to_response('trombi/detail.html', {'mineur': mineur.user, 'assoces': assoces, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
