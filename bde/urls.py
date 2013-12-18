@@ -5,4 +5,6 @@ urlpatterns = patterns('bde.views',
     url(r'^palums/$', 'palums', name='palums'),
     url(r'^voter/$', 'voter', name='voter'),
     url(r'^resultats/$', 'resultats', name='resultats'),
+    url(r'^offre_stage/$', 'offre_stage', name='offre_stage'),
   )
+

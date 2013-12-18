@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}votes.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_bde.png">BDE</h1>
+
+<ul class="nav nav-pills">
+<li><a href="/associations/bde/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/bde/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/bde/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/bde/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li><a href="/associations/bde/voter/"><img src="{{ STATIC_URL}}page_voter.png"/><span>Voter</span></a></li>
+<li><a href="/associations/bde/palums/"><img src="{{ STATIC_URL }}page_palums.png"/><span>Palums</span></a></li>
+<li class="active"><a href="/associations/bde/offre_stage/"><img src="{{ STATIC_URL}}page_offre_stage.png"/><span>Offres de Stage</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+
+{% block content %}
+<script type="text/javascript" src="//www.placeojeunes.com/etudiant?id=y57s78&t=1">
+</script>
+{% endblock %}
