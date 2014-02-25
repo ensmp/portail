@@ -8,23 +8,19 @@
 <div id="menu_onglets">
 <h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_pr.png">Petite Revue</h1>
 
-<ul>
-<li><a href="/associations/pr/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
-<li><a href="/associations/pr/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
-<li><a href="/associations/pr/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
-<li><a href="/associations/pr/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
+<ul class="nav nav-pills">
+<li><a href="/associations/pr/messages/"><img src="{{ STATIC_URL}}mail.png">Messages</a></li>
+<li><a href="/associations/pr/evenements/"><img src="{{ STATIC_URL}}date.png">Évenements</a></li>
+<li><a href="/associations/pr/equipe/"><img src="{{ STATIC_URL}}user.png">Équipe</a></li>
+<li><a href="/associations/pr/medias/"><img src="{{ STATIC_URL}}clapperboard.png">Médias</a></li>
+<li class="active"><a href="/associations/pr/clip/"><img src="{{ STATIC_URL}}page_clips.png"><span>Clips</span></a></li>
 </ul>
-
-<ul class="supplementaire">
-<li id="actif"><a href="/associations/pr/clips/"><img src="{{ STATIC_URL}}page_clips.png"><span>Clips</span></a></li>
-</ul>
-<hr>
+<hr/>
 </div>
 {% endblock %}
 
 {% block content %}
 {% regroup clip_list by promo as promo_list %}
-
 <ul>
 {% for promo in promo_list %}
     <li>PR P{{ promo.grouper|stringformat:"02d" }}

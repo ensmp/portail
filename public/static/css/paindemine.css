@@ -1,0 +1,63 @@
+.produits{
+	padding:5px 0;
+}
+.produit{	
+	text-align:left;
+	border-color: blue;
+	border-style: double;
+	border-top-width: 5px;
+	border-bottom-width: 3px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	margin:2px;
+}
+.nom{
+float: left;
+width: 60%;
+}
+.volume{
+float:left;
+width: 25%;
+}
+.prix{
+text-align:right;
+margin-left: 85%;
+width: 13%}
+
+.actions table, tbody, tr {
+	width:100%;
+}
+
+.actions table td {
+	width:25%;
+}
+
+.actions table td.small {
+	width:8%;
+}
+
+.actions table td label {
+	width:3%;
+	position: left;  
+	text-align:right;
+}
+.actions table td.jour {
+	width:2%;
+	position: absolute;  
+}
+
+h3{font-family: Corbel, Arial, Helvetica;
+	
+	color:black;
+	font-variant: small-caps ;
+}
+
+.callback {	
+	color:#080;
+	font-size:30px;
+}
+
+.quantite {
+	width:30px;
+}
+

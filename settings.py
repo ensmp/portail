@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     'bde',
     'abatage',
     'entreprise',
+    'paindemine',
     #Avatar, pour les avatars de trombi
     'avatar',
     #Photologue pour les photos Mediamine

@@ -124,6 +124,7 @@ urlpatterns = patterns('',
     (r'^tinymce/', include('tinymce.urls')),
     # (r'^online/', include('online_status.urls')), 
     (r'^accueil/?$','faq.views.accueil'),
+    (r'^associations/paindemine/',include('paindemine.urls')),
     (r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt')),
     (r'^/?$','messages.views.index'),
 )

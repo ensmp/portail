@@ -80,3 +80,7 @@ def palums_json(request):
             'date': p.date
         } for p in liste_palums]))
     return response
+
+@login_required
+def offre_stage(request):
+    return render_to_response('bde/offre_stage.html', {}, context_instance=RequestContext(request))
