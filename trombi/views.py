@@ -20,7 +20,7 @@ import os
 @login_required
 def trombi(request):
     """Le trombinoscope des élèves des Mines. N'affique que les 1A, 2A, 3A, et 4A"""    
-    mineur_list = UserProfile.objects.promos_actuelles()
+    mineur_list = UserProfile.objects.promos_actuelles(3)
     return render_to_response('trombi/trombi.html', {'mineur_list': mineur_list}, context_instance = RequestContext(request))
 
 @login_required
@@ -176,7 +176,7 @@ def chemin_to_html(chemin):
         chemin_string = "Aucun chemin existant"
     return chemin_string
 
-def separation_graphe(request):
+def graphe_chemin(request):
     """
         Dessine le graphe de l'évolution des promos d'une liste d'élèves
 
@@ -211,6 +211,23 @@ def separation_graphe(request):
     im.save(response, "PNG")
     return response
 
+def ajouter_relation(gr, eleve1, eleve2):
+        liste_couleurs = ['purple4', 'goldenrod4', 'royalblue4', 'forestgreen', 'red']
+        try:
+            couleur = eleve1.promo if eleve1.promo else 0
+            gr.add_node(str(eleve1.user), attrs=[('color', liste_couleurs[couleur % len(liste_couleurs)]), ('style', 'filled'), ('fontcolor', 'white')])
+        except:
+            pass
+        try:
+            couleur = eleve2.promo if eleve2.promo else 0
+            gr.add_node(str(eleve2.user), attrs=[('color', liste_couleurs[couleur % len(liste_couleurs)]), ('style', 'filled'), ('fontcolor', 'white')])
+        except:
+            pass
+        try:    
+            gr.add_edge((str(eleve1.user), str(eleve2.user)), attrs=[('color', 'grey23')])
+        except:
+            pass
+
 def graphe_mine(request):
     """
         Dessine une image du graphe des mineurs
@@ -218,43 +235,38 @@ def graphe_mine(request):
         Les élèves sont les sommets du graphe, et les arêtes
         sont les relations parrain, fillot, co.
     """
-    from pygraph.classes.graph import graph
-    from pygraph.classes.digraph import digraph
-    from pygraph.algorithms.searching import breadth_first_search
-    from pygraph.readwrite.dot import write
-    from pygraph import *
-    gr = graph()
-    liste_couleurs = ['red', 'royalblue4', 'forestgreen', 'goldenrod4', 'purple4']
 
-    # On ajoute les noeuds
-    for eleve in UserProfile.objects.all():
-        couleur = eleve.promo 
-        if not couleur:
-            couleur = 0
-        if not gr.has_node(eleve.user.username):
-            gr.add_node(eleve.user.username, attrs=[('color', liste_couleurs[couleur % len(liste_couleurs)])])
-    
-    print gr.node_neighbors
-    
-    #On ajoute les aretes
-    for eleve in UserProfile.objects.all():
-        for eleve_co in eleve.co.all():
-            if not gr.has_edge((eleve.user.username, eleve_co.user.username)):
-                gr.add_edge((str(eleve.user.username), str(eleve_co.user.username)), attrs=[('color', 'grey23')])
-        for eleve_parrain in eleve.parrains.all():
-            if not gr.has_edge((eleve.user.username, eleve_parrain.user.username)):
-                gr.add_edge((eleve.user.username, eleve_parrain.user.username))
-    
-    #Suppression des noeuds isoles
-        for i in gr:
-            if not gr.neighbors(i):
-                gr.del_node(i) 
-    
-    dot = write(gr)
+    nombre_promos = int(request.GET.get("nombre_promos", 3))
+    generate = bool(request.GET.get("generate", False))
+
     chemin = os.path.join(settings.MEDIA_ROOT, "trombi")
-    chemin_dot = os.path.join(chemin, "mine.dot")
-    chemin_png = os.path.join(chemin, "mine.png")
-    open(chemin_dot,'w').write(dot)
-    subprocess.call(['dot.exe',"-Tpng",chemin_dot,"-o",chemin_png])
-    url  = os.path.join(settings.MEDIA_URL, "trombi", "mine.png")
-    return HttpResponseRedirect(url)
+    chemin_dot = os.path.join(chemin, "graphe_mine"+str(nombre_promos)+".dot")
+    chemin_png = os.path.join(chemin, "graphe_mine"+str(nombre_promos)+".png")
+
+    if generate:
+        from pygraph.classes.graph import graph
+        from pygraph.classes.digraph import digraph
+        from pygraph.algorithms.searching import breadth_first_search
+        from pygraph.readwrite.dot import write
+        from pygraph import *
+        gr = graph()
+    
+        #On ajoute les aretes
+        for eleve1 in UserProfile.objects.promos_actuelles(nombre_promos):
+            for eleve2 in eleve1.co.all():
+                if eleve2.annee() <= nombre_promos:
+                    ajouter_relation(gr, eleve1, eleve2)
+            for eleve2 in eleve1.parrains.all():
+                if eleve2.annee() <= nombre_promos:
+                    ajouter_relation(gr, eleve1, eleve2)
+        
+        #Suppression des noeuds isoles
+            for i in gr:
+                if not gr.neighbors(i):
+                    gr.del_node(i) 
+        
+        dot = write(gr)
+        open(chemin_dot,'w').write(dot)     
+        subprocess.call(["neato","-Tpng",chemin_dot,"-Goverlap=false","-o",chemin_png])
+    url  = os.path.join(settings.MEDIA_URL, "trombi/graphe_mine"+str(nombre_promos)+".png")
+    return render_to_response('trombi/graphe-mine.html', {'url': url}, context_instance=RequestContext(request))

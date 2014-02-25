@@ -27,9 +27,12 @@ class Reponse(models.Model):
         return str(self.question.id) + ' -> ' + self.contenu
 
 class UserProfileManager(models.Manager):    
-    def promos_actuelles(self):
-        """Les 1A, 2A, 3A et 4A actuels uniquement"""
-        promo_max = UserProfile.premiere_annee() - 4
+    def promos_actuelles(self, nombre=4):
+        """
+            Les 1A, 2A, 3A et 4A actuels uniquement.
+            On peut spécifier le nombre de promos souhaitées en argument.
+        """
+        promo_max = UserProfile.premiere_annee() - nombre
         return self.filter(promo__gte = promo_max).exclude(promo = promo_max, est_cesurien = False)
 
 class UserProfile(models.Model):
@@ -89,9 +92,11 @@ class UserProfile(models.Model):
         from django.db.models import Max 
         return UserProfile.objects.all().aggregate(Max('promo'))['promo__max']
         
-    def annee(self):
+    def annee(self, premiere_annee=None):
         """L'année de l'élève: 1 pour 1A, 2 pour 2A, 3 pour 3A, etc."""
-        annee = UserProfile.premiere_annee() - self.promo + 1
+        if not premiere_annee:
+            premiere_annee = UserProfile.premiere_annee()
+        annee = premiere_annee - self.promo + 1
         if self.est_cesurien:
             annee -= 1
         return annee

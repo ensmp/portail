@@ -13,7 +13,17 @@
 
 {% block content %}
 
-<h3>Les degrés de séparation du trombi</h3>
+<ul class="nav nav-pills">
+  <li><a href="/people/">Trombi</a></li>
+  <li class="active"><a href="/people/separation/">Le graphe des Mineurs</a></li>
+  <li><a href="/people/trombi.vcf">Version smartphone</a></li>
+</ul>
+
+<p>Les relations actuellement utilisées sont : Parrain, Fillot, et Co.</p>
+
+<a href="graphe_mine/"><h3>Voir le graphe</h3></a>
+
+<h3>Plus courts chemins</h3>
 
 {% if recherche %}
 {% if result %} 
@@ -21,70 +31,39 @@
 <p>
 {{result_string|safe}}
 </p>
-<img src="graphe/?chemin={% for eleve in result %}{{ eleve.user.username }}{% if not forloop.last %},{% endif %}{% endfor %}"/>
+<img src="graphe_chemin/?chemin={% for eleve in result %}{{ eleve.user.username }}{% if not forloop.last %},{% endif %}{% endfor %}"/>
 {% endif %}
 
 <form method="post" action="{{ request.path }}">
 {% csrf_token %}
 <table style="width:100%">
 <tr height=50>
-<td>Choisir une première personne</td>
-<td>
-<select class="chosen" name = "start_username">
-{% for eleve in eleves %}
-<option value="{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
-{% endfor %}
-</select>
-</td>
+	<td>Choisir une première personne</td>
+	<td>
+	<select class="chosen" name = "start_username">
+	{% for eleve in eleves %}
+	<option value="{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
+	{% endfor %}
+	</select>
+	</td>
 </tr>
 <tr height=50>
-<td>Choisir une deuxième personne</td>
-<td>
-<select class="chosen" name = "end_username">
-{% for eleve in eleves %}
-<option value="{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
-{% endfor %}
-</select>
-</td>
+	<td>Choisir une deuxième personne</td>
+	<td>
+	<select class="chosen" name = "end_username">
+	{% for eleve in eleves %}
+	<option value="{{ eleve.user.username }}">{{ eleve.first_name }} {{ eleve.last_name|upper }}</option>
+	{% endfor %}
+	</select>
+	</td>
 </tr>
+<tr>
+	<td></td>
+	<td><input class="btn" type="submit" value="Rechercher"/></td>
+</tr>
+</form>
 </table>
 
-<input type="submit" />
-</form>
-
-<p>Trouve le plus court chemin entre deux élèves parmi Mineurs.</p>
-<p>Les relations actuellement utilisées sont : Parrain, Fillot, et Co.</p>
-
 <p>A lire : 
-<ul>
-<li><a href="mine/">Le graphe de la Mine</a></li>
-<li><a href = "http://fr.wikipedia.org/wiki/Six_degr%C3%A9s_de_s%C3%A9paration">Six degrés de séparation</a></li>
-</ul>
-<p><br/><br/><br/><br/><br/><br/></p>
-<script type="text/javascript">
-/*
-$('select[name="start_username"]').multiselect({
-		minWidth: '150',
-		selectedList: 3,
-		selectedText: '# élèves sélectionnés',
-		noneSelectedText: 'Choisir son co',
-		checkAllText: 'Tous',
-		uncheckAllText: 'Aucun',
-}).multiselectfilter({
-		label: "",
-		placeholder: "Entrez un nom"
-});
-
-$('select[name="end_username"]').multiselect({
-		minWidth: '150',
-		selectedList: 3,
-		selectedText: '# élèves sélectionnés',
-		noneSelectedText: 'Choisir son parrain',
-		checkAllText: 'Tous',
-		uncheckAllText: 'Aucun',
-}).multiselectfilter({
-		label: "",
-		placeholder: "Entrez un nom"
-});*/
-</script>
+<a href = "http://fr.wikipedia.org/wiki/Six_degr%C3%A9s_de_s%C3%A9paration">Les six degrés de séparation</a>
 {% endblock %}

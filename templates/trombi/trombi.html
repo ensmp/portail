@@ -10,7 +10,13 @@
 
 {% block content %}
 
-<p><a href="/people/trombi.vcf">Version smartphone</a> - <a href="/people/separation/">Les degrés de séparation</a></p>
+<ul class="nav nav-pills">
+  <li class="active"><a href="/people/">Trombi</a></li>
+  <li><a href="/people/separation/">Le graphe des Mineurs</a></li>
+  <li><a href="/people/trombi.vcf">Version smartphone</a></li>
+</ul>
+
+<p></p>
 <div class="accordion" id="accordion2">
 {% regroup mineur_list by promo as mineurs %}
 {% for promo in mineurs %}
