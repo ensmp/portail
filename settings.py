@@ -131,7 +131,6 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 
-    #'/Users/thomas/Dev/sitebde2/templates',
     basepath+'templates',
 )
 
@@ -165,10 +164,9 @@ INSTALLED_APPS = (
     'abatage',
     'entreprise',
     'paindemine',
+    'mediamines',
     #Avatar, pour les avatars de trombi
     'avatar',
-    #Photologue pour les photos Mediamine
-    'mediamines',
     #TinyMCE pour les messages
     'tinymce',
     # Uncomment the next line to enable the admin:
