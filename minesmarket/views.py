@@ -12,8 +12,14 @@ from django.db.models import Max
 
 @login_required
 def catalogue(request):		
-	liste_produits = Produit.objects.order_by('categorie', 'nom')
+	liste_produits = Produit.objects.order_by('categorie', 'nom').filter(metro=False)
 	return render_to_response('minesmarket/catalogue.html', {'liste_produits': liste_produits},context_instance=RequestContext(request))
+
+@login_required
+def catalogue_metro(request):		
+	liste_produits = Produit.objects.order_by('categorie', 'nom').filter(metro=True)
+	return render_to_response('minesmarket/catalogue_metro.html', {'liste_produits': liste_produits},context_instance=RequestContext(request))
+
 
 @login_required
 def commande(request):

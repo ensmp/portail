@@ -12,7 +12,8 @@ class Produit(models.Model):
   ('Bouffe!', 'Bouffe!'),
   (u'Th\xe9/Caf\xe9', 'Thé/Café'),
   ('Confiseries','Confiseries'),
-  ('Gateaux/Biscottes','Gateaux/Biscottes')
+  ('Gateaux/Biscottes','Gateaux/Biscottes'),
+  ('Non Alimentaire', 'Non Alimentaire')
  )
 
  nom = models.CharField(max_length=80)
@@ -21,6 +22,7 @@ class Produit(models.Model):
  image = models.ImageField(upload_to='minesmarket', blank=True)
  ref = models.CharField(max_length=20)
  prix_vente = models.DecimalField(max_digits=4, decimal_places=2)
+ metro = models.BooleanField(default=False)
    
  def __unicode__(self):
   return self.nom
