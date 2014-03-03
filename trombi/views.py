@@ -176,6 +176,7 @@ def chemin_to_html(chemin):
         chemin_string = "Aucun chemin existant"
     return chemin_string
 
+@login_required
 def graphe_chemin(request):
     """
         Dessine le graphe de l'évolution des promos d'une liste d'élèves
@@ -228,6 +229,7 @@ def ajouter_relation(gr, eleve1, eleve2):
         except:
             pass
 
+@login_required
 def graphe_mine(request):
     """
         Dessine une image du graphe des mineurs
@@ -238,6 +240,7 @@ def graphe_mine(request):
 
     nombre_promos = int(request.GET.get("nombre_promos", 3))
     generate = bool(request.GET.get("generate", False))
+    use_splines = bool(request.GET.get("splines", False))
 
     chemin = os.path.join(settings.MEDIA_ROOT, "trombi")
     chemin_dot = os.path.join(chemin, "graphe_mine"+str(nombre_promos)+".dot")
@@ -266,6 +269,11 @@ def graphe_mine(request):
                     gr.del_node(i) 
         
         dot = write(gr)
+        
+        # Utilisation de splines, pour éviter les overlap noeud/arêtes. Ralentit énormément les calculs.
+        if use_splines:
+            dot = dot[:17] + "splines=true; " + dot[17:]
+
         open(chemin_dot,'w').write(dot)     
         subprocess.call(["neato","-Tpng",chemin_dot,"-Goverlap=false","-o",chemin_png])
     url  = os.path.join(settings.MEDIA_URL, "trombi/graphe_mine"+str(nombre_promos)+".png")
