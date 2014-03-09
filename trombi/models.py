@@ -63,6 +63,7 @@ class UserProfile(models.Model):
     reponses = models.ManyToManyField(Reponse, editable=False, blank=True, verbose_name="réponses", help_text="Ses réponses aux questionnaire du trombi")
     solde_octo = models.FloatField(default=0)
     solde_biero = models.FloatField(default=0, verbose_name="solde biéro")
+    solde_minesmarket = models.FloatField(default=0, verbose_name="solde minesmarket")
     
     # Statistiques des sondages
     victoires_sondages = models.IntegerField(editable=False, help_text="Le nombre de sondages auxquels l'élève a voté selon la majorité")
@@ -84,6 +85,10 @@ class UserProfile(models.Model):
     def get_absolute_url(self):
         return '/people/'+self.user.username
     
+    def update_solde_minesmarket(self,prix):
+        self.solde_minesmarket = self.solde_minesmarket - float(prix)
+        self.save()
+
     ### Années ###
 
     @staticmethod        

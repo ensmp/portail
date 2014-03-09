@@ -65,6 +65,7 @@
 	
 	<p {% if request.user.get_profile.solde_biero < 0 %} class = "text-error" {% else %} class = "text-success" {% endif %}><strong>Biéro</strong> : {{ request.user.get_profile.solde_biero }} €</p>
 
+	<p class = "text-success" ><strong>MinesMarket</strong> : {{ request.user.get_profile.solde_minesmarket }} €</p>
 
 </div>
 {% endif %}

@@ -1,4 +1,4 @@
 ﻿{{ date_fermeture|date:"d F Y" }};;;
-Identifiant;Nom;Prénom;Chambre;Réf du produit;Métro;Quantité
-{% for commande in liste_commandes %}{% for achat in commande.achat_set.all %}{{ commande.eleve.user.username }};{{ commande.eleve.last_name|upper }};{{ commande.eleve.first_name }};{{ commande.eleve.chambre }};{{ achat.produit.ref|addslashes }};{{ achat.produit.metro }};{{ achat.quantite }}
+Identifiant;Nom;Prénom;Chambre;Réf du produit;Nom du produit;Métro;Quantité
+{% for commande in liste_commandes %}{% for achat in commande.achat_set.all %}{{ commande.eleve.user.username }};{{ commande.eleve.last_name|upper }};{{ commande.eleve.first_name }};{{ commande.eleve.chambre }};{{ achat.produit.ref|addslashes }};{{ achat.produit.nom }};{{ achat.produit.metro }};{{ achat.quantite }}
 {% endfor %}{% endfor %}

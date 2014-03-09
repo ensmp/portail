@@ -8,6 +8,8 @@ urlpatterns = patterns('minesmarket.views',
     url(r'^acheter/$','acheter'),
     url(r'^supprimer_achat/(?P<id_achat>\d+)/$','supprimer_achat'),
     url(r'^supprimer_tous_achats/$','supprimer_tous_achats'),
+    url(r'^valider_commande/$','valider_commande'),
+    url(r'^credit_eleve/$','credit_eleve'),
     url(r'^fermer_commandes/$','fermer_commandes'),
     url(r'^dernieres_commandes/$','dernieres_commandes_csv'),
 )

@@ -12,8 +12,9 @@
 <li><a href="/associations/minesmarket/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
 <li><a href="/associations/minesmarket/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
 <li><a href="/associations/minesmarket/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
-<li class="active"><a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}page_catalogue.png"/><span>Catalogue</span></a></li>
+<li><a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}page_catalogue.png"/><span>Catalogue</span></a></li>
 <li><a href="/associations/minesmarket/catalogue_metro/"><img src="{{ STATIC_URL}}page_catalogue_metro.png"/><span>Catalogue Métro</span></a></li>
+<li class="active"><a href="/associations/minesmarket/commande/"><img src="{{ STATIC_URL}}page_commande.png"/><span>Panier</span></a></li>
 </ul>
 <hr />
 </div>
@@ -25,13 +26,26 @@
 {% for achat in liste_achats %}
 	<li>{{ achat.produit.nom }} ({{ achat.quantite }})<br/>
 	Prix unitaire: <strong>{{ achat.produit.prix_vente }}€</strong><br/>
-	<a href="/associations/minesmarket/supprimer_achat/{{ achat.id }}/">Supprimer l'achat</a></li>
+	{% if not commande.validee %}<a href="/associations/minesmarket/supprimer_achat/{{ achat.id }}/">Supprimer l'achat</a></li>
+	{% endif %}
 {% endfor %}
 </ul>
 {% if liste_achats %}
-<a href="/associations/minesmarket/supprimer_tous_achats/">Supprimer tous les achats</a></li>
+{% if not commande.validee %}<a href="/associations/minesmarket/supprimer_tous_achats/">Supprimer tous les achats</a></li>{% endif %}
 {% endif %}
 
+<h3><span style="color:#ff8c00;">Ton solde MinesMarket : {{solde_minesmarket}} €</span></h3>
+
+{% if commande %}
+{% if not commande.validee %}
 <h2><span style="color:#ff8c00;"><u><strong>Total à payer :</strong></u> <strong>{{ total }}€</strong></span></h2>
+<h4><span style="color:#ff8c00;"><a href="/associations/minesmarket/valider_commande/">Valider la commande</a> </span></h4>
+Attention, une fois la commande validée, vous serez débité sur votre compte du montant total ci-dessus. Il ne sera plus possible d'effectuer d'autres commandes avant la fermeture des commandes.
+{% else %}
+ <h4><span style="color:#ff8c00;">Commande validée. Vous avez payé {{total}} €.<br>
+ 	MinesMarket vous remercie pour votre commande</span></h4>
+
+{% endif %}
+{% endif %}
 
 {% endblock %}

@@ -9,7 +9,7 @@ class Evenement(models.Model):
 	    Un événement organisé par une association
 	"""
 	createur = models.ForeignKey(UserProfile, blank=True, null=True, help_text="L'élève qui a créé l'événement")
-	association = models.ForeignKey(Association, blank=True, null=True, help_text="L'association qui organise l'événement")
+	association = models.ForeignKey(Association, null=False, help_text="L'association qui organise l'événement")
 	titre = models.CharField(max_length=300)
 	description =  models.TextField()
 	date_debut = models.DateTimeField(default=datetime.now(), blank=True, verbose_name="Date de début")

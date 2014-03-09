@@ -29,6 +29,7 @@ class Produit(models.Model):
    
 class Commande(models.Model):
  eleve = models.ForeignKey(UserProfile)
+ validee = models.BooleanField()
  fermee = models.BooleanField()
  livree = models.BooleanField()
  date_fermeture = models.DateField(blank=True, null=True)
@@ -38,6 +39,14 @@ class Commande(models.Model):
    return 'commande de ' + self.eleve.user.username + ' (fermee)'
   else:
    return 'commande de ' + self.eleve.user.username
+
+
+ def total(self):
+  liste_achats = Achat.objects.filter(commande__id = self.id)
+  total = 0
+  for achat in liste_achats:
+    total = total + achat.produit.prix_vente*achat.quantite 
+  return total
 
 class Achat(models.Model):
  produit = models.ForeignKey(Produit)
@@ -50,3 +59,6 @@ class Achat(models.Model):
   else:
    return self.commande.eleve.user.username + ' -> ' + str(self.quantite) + ' ' + self.produit.nom
   
+class UpdateSoldeForm(forms.Form):
+ eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())
+ credit = forms.FloatField()

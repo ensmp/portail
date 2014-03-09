@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}minesmarket.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_minesmarket.png">MinesMarket</h1>
+<ul class="nav nav-pills">
+<li><a href="/associations/minesmarket/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/minesmarket/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/minesmarket/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/minesmarket/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li><a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}page_catalogue.png"/><span>Catalogue</span></a></li>
+<li><a href="/associations/minesmarket/catalogue_metro/"><img src="{{ STATIC_URL}}page_catalogue_metro.png"/><span>Catalogue Métro</span></a></li>
+<li><a href="/associations/minesmarket/commande/"><img src="{{ STATIC_URL}}page_commande.png"/><span>Panier</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+{% if perms.minesmarket %}
+{% block content %}
+<form action="" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Valider" />
+</form>
+{% endblock %}
+{% endif %}

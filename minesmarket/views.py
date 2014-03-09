@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
-from minesmarket.models import Produit, Commande, Achat
-from django.contrib.auth.decorators import login_required
+from minesmarket.models import Produit, Commande, Achat, UpdateSoldeForm
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.utils import simplejson
 from django.http import HttpResponseRedirect, HttpResponse
 from datetime import datetime
 from django.db.models import Max
+from django.contrib import messages
 
 @login_required
 def catalogue(request):		
@@ -24,15 +25,15 @@ def catalogue_metro(request):
 @login_required
 def commande(request):
 	try:
+		solde = request.user.get_profile().solde_minesmarket
 		commande = Commande.objects.get(eleve__user__username=request.user.username, fermee=False)
 		liste_achats = Achat.objects.filter(commande__id = commande.id)
-		total = 0
-		for achat in liste_achats:
-			total = total + achat.produit.prix_vente*achat.quantite	
+		total = commande.total()
 	except Commande.DoesNotExist:
+		commande = None
 		liste_achats = None	
 		total = 0
-	return render_to_response('minesmarket/commande.html', {'liste_achats': liste_achats, 'total':total},context_instance=RequestContext(request))
+	return render_to_response('minesmarket/commande.html', {'commande':commande, 'liste_achats': liste_achats, 'total' : total, 'solde_minesmarket':solde},context_instance=RequestContext(request))
 
 @login_required
 def acheter(request):
@@ -42,17 +43,20 @@ def acheter(request):
 		except Commande.DoesNotExist:
 			commande = Commande.objects.create(eleve = request.user.get_profile())
 		
-		produit = get_object_or_404(Produit, id = request.POST['id'])
-		try:
-			achat = Achat.objects.get(commande__id = commande.id, produit__id = produit.id)
-			if request.POST['quantite'] == "0":
-				achat.delete()
-			else:
-				achat.quantite = request.POST['quantite']
-				achat.save()
-		except Achat.DoesNotExist:
-			if request.POST['quantite'] != "0":
-				achat = Achat.objects.create(commande = commande, produit = produit, quantite = request.POST['quantite'])		
+		if not commande.validee:
+			produit = get_object_or_404(Produit, id = request.POST['id'])
+			try:
+				achat = Achat.objects.get(commande__id = commande.id, produit__id = produit.id)
+				if request.POST['quantite'] == "0":
+					achat.delete()
+				else:
+					achat.quantite = request.POST['quantite']
+					achat.save()
+			except Achat.DoesNotExist:
+				if request.POST['quantite'] != "0":
+					achat = Achat.objects.create(commande = commande, produit = produit, quantite = request.POST['quantite'])
+		else:
+			messages.add_message(request.POST, messages.ERROR, "Erreur : commande déjà validée")	
 	return redirect('minesmarket.views.commande')
 
 @login_required
@@ -107,3 +111,31 @@ def supprimer_tous_achats(request):
 		liste_achats = None	
 		total = 0
 	return redirect('minesmarket.views.commande')
+
+@login_required
+def valider_commande(request):
+	commande = Commande.objects.get(eleve__user__username=request.user.username, fermee=False)
+	if float(commande.total()) > request.user.get_profile().solde_minesmarket:
+		messages.add_message(request, messages.ERROR, "Pas assez d'argent sur votre compte de MinesMarket.")
+	else:
+		request.user.get_profile().update_solde_minesmarket(commande.total())
+		commande.validee = True
+		commande.save()
+		messages.add_message(request, messages.INFO, "Commande validée.")
+	return redirect('minesmarket.views.commande')
+
+@permission_required('produit.add_produit')
+@login_required    
+# Crediter le compte d'un élève
+def credit_eleve(request):
+    if request.method == 'POST': 
+        form = UpdateSoldeForm(request.POST) # formulaire associé aux données POST
+        if form.is_valid(): # Formulaire valide
+            utilisateur = form.cleaned_data['eleve']
+            prix = form.cleaned_data['credit']
+            utilisateur.update_solde_minesmarket(-prix)
+            messages.add_message(request, messages.INFO, "Le compte a bien été crédité.")
+            return redirect('minesmarket.views.credit_eleve')
+    else:
+        form = UpdateSoldeForm() # formulaire vierge
+    return render_to_response('minesmarket/credit_eleve.html', {'form': form,},context_instance=RequestContext(request))

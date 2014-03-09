@@ -29,7 +29,7 @@ $(document).ready(function(){
 				$(this).find('.callback').text('Achat validé').hide().fadeIn("slow").delay(1000).fadeOut("slow");
             },
             error: function(){
-                $(this).find('.callback').text('Erreur').hide().fadeIn("slow").delay(1000).fadeOut("slow");
+                $(this).find('.callback').text('Erreur : commande déjà validée').hide().fadeIn("slow").delay(1000).fadeOut("slow");
             }
         });
         return false;
@@ -52,6 +52,7 @@ $(document).ready(function(){
 <li><a href="/associations/minesmarket/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
 <li class="active"><a href="/associations/minesmarket/catalogue/"><img src="{{ STATIC_URL}}page_catalogue.png"/><span>Catalogue</span></a></li>
 <li><a href="/associations/minesmarket/catalogue_metro/"><img src="{{ STATIC_URL}}page_catalogue_metro.png"/><span>Catalogue Métro</span></a></li>
+<li><a href="/associations/minesmarket/commande/"><img src="{{ STATIC_URL}}page_commande.png"/><span>Panier</span></a></li>
 </ul>
 <hr />
 </div>
@@ -62,7 +63,8 @@ $(document).ready(function(){
 {% if perms.minesmarket %}
 <p><strong>Administration</strong><br/>
 <a href="/associations/minesmarket/fermer_commandes/">Fermer toutes les commandes</a><br/>
-<a href="/associations/minesmarket/dernieres_commandes/">Voir les dernières commandes</a></p>
+<a href="/associations/minesmarket/dernieres_commandes/">Voir les dernières commandes</a><br/>
+<a href="/associations/minesmarket/credit_eleve/">Créditer le compte des élèves</a></p>
 {% endif %}
 
 {% regroup liste_produits by categorie as categorie_list %}
