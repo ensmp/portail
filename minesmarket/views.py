@@ -124,7 +124,7 @@ def valider_commande(request):
 		messages.add_message(request, messages.INFO, "Commande validée.")
 	return redirect('minesmarket.views.commande')
 
-@permission_required('produit.add_produit')
+@permission_required('minesmarket.add_produit')
 @login_required    
 # Crediter le compte d'un élève
 def credit_eleve(request):
@@ -139,3 +139,18 @@ def credit_eleve(request):
     else:
         form = UpdateSoldeForm() # formulaire vierge
     return render_to_response('minesmarket/credit_eleve.html', {'form': form,},context_instance=RequestContext(request))
+
+@login_required
+def export_soldes(request):	
+	liste_eleves = UserProfile.objects.exclude(solde_minesmarket = 0)
+	return liste_eleves
+	
+def export_soldes_csv(request):
+	from django.template import loader, Context
+	liste_eleves = export_soldes(request)
+	response = HttpResponse(mimetype='text/csv; charset=utf-8')
+	response['Content-Disposition'] = 'attachment; filename=export_soldes.csv'
+	t = loader.get_template('minesmarket/export_soldes.txt')
+	c = Context({'liste_eleves': liste_eleves})
+	response.write(t.render(c))
+	return response

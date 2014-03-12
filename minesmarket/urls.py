@@ -12,4 +12,5 @@ urlpatterns = patterns('minesmarket.views',
     url(r'^credit_eleve/$','credit_eleve'),
     url(r'^fermer_commandes/$','fermer_commandes'),
     url(r'^dernieres_commandes/$','dernieres_commandes_csv'),
+    url(r'^export_soldes/$','export_soldes_csv'),
 )
