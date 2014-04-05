@@ -151,6 +151,7 @@ INSTALLED_APPS = (
     'petitscours',
     'timetable',
     'sondages',
+    'bilanmandat',
     'evenement', 
     'minesmarket',
     'minestryofsound',

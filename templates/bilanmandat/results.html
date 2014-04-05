@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Le Portail des élèves</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{ STATIC_URL }}bootstrap.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}bootstrap-responsive.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}base.css" rel="stylesheet">
+	
+	<link href="{{ STATIC_URL }}sondages.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}module_bar.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}module_evenements.css" rel="stylesheet">
+    
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{STATIC_URL}}icon144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{STATIC_URL}}icon114.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{STATIC_URL}}icon72.png">
+                    <link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}icon57.png">
+                                   <link rel="shortcut icon" href="{{STATIC_URL}}favicon.ico">
+								   
+	<script src="{{ STATIC_URL }}jquery.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}module_sondages.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jqchat.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.qtip-1.0.0-rc3.min.js"></script>
+	{% load chat_room %} {% obtenir_room %}
+	<script type="text/javascript">$(document).ready(function(){InitChatWindow("{% url 'jqchat_ajax' room.id %}", null);});</script>
+	
+	
+
+	
+	
+	{% block header %}
+	{% endblock %}
+  </head>
+
+  <body>
+
+	<!--Google Analytics -->
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-37635054-1']);
+	  _gaq.push(['_setDomainName', 'mines-paris.eu']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+  
+
+	{% include "menu.html" %}
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2 span3-tablet">
+          {% include "module_evenement.html" %}
+		  {% include "module_sondages.html" %}
+		  {% include "module_bar.html" %}
+        </div><!--/span-->
+		
+        <div class="span8 span6-tablet">
+		<div id="content">
+		  {% for message in messages %}
+			<p{% if message.tags %} class="text-{{ message.tags }}"{% endif %}>{{ message }}</p>
+		  {% endfor %}
+		  
+
+		  {% block onglets %}
+		  	<div id="menu_onglets">
+			<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_bde.png">BDE</h1>
+			</div>
+		  {% endblock %}
+          {% block content %}
+         	<h1>Resultats</h1>
+			<p>Question : {{question}}</p>
+			{% if question.trouve %}
+			<h2>Le vainqueur est : {{vainqueur}} </h2>
+			{% else %}
+			<a href = "/bilanmandat/proche/">Voir le plus proche</a>
+			{% for vote in votes%}
+			<p>{{vote.eleve}} :  {{vote.reponse}} €</p>
+			{%endfor%}
+			{% endif %}
+		  {% endblock %}
+		</div>
+        </div><!--/span-->
+		<div class = "span2 span3-tablet">
+		{# include "module_mediamines.html" #}
+		{% if not request.get_full_path = "/chat/room/" %}
+		{% endif %}
+		{% include "module_anniv.html" %}
+		</div>
+      </div><!--/row-->
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script src="{{ STATIC_URL }}bootstrap-dropdown.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-tab.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-button.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-collapse.js"></script>
+	<script src="{{ STATIC_URL }}twitter-bootstrap-hover-dropdown.min.js"></script>
+
+</body></html>
+
+{% block head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<script src="{{ STATIC_URL }}jquery-1.6.4.min.js"></script>
+<script src="{{ STATIC_URL }}html-crc-reload.js"></script>
+{% endblock %}
+

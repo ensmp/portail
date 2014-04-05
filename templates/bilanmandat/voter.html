@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_bde.png">BDE</h1>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<h1>Voter</h1>
+{% if question %}
+<p>Question : {{question}}</p>
+{% if question.trouve %}
+<p>La question a été trouvée !</p>
+{% else %}
+<form id="addform" method="post" action="">
+{% csrf_token %}
+
+<p>
+<label for="reponse">Réponse - </label>
+<input type='text' name='reponse' placeholder="Chiffre" />
+</p>
+<input type='submit' value='voter' />
+</form>
+{% endif %}
+{% else %}
+<p>Pas de question disponible</p>
+{% endif %}
+
+{% endblock %}
