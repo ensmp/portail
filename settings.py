@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     'entreprise',
     'paindemine',
     'mediamines',
+    'freshbox',
     #Avatar, pour les avatars de trombi
     'avatar',
     #TinyMCE pour les messages

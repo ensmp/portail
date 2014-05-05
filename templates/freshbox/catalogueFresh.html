@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}freshbox.css" />
+
+<script>
+$(document).ready(function(){
+	$(".actions").submit(function(){
+        $.ajax({type:"POST", data: $(this).serialize(), url:"/associations/freshbox/acheter/",
+            context: this, 
+			success: function(data){					
+				$(this).find('.callback').text('Achat validé').hide().fadeIn("slow").delay(1000).fadeOut("slow");
+            },
+            error: function(){
+                $(this).find('.callback').text('Erreur : commande déjà validée').hide().fadeIn("slow").delay(1000).fadeOut("slow");
+            }
+        });
+        return false;
+    });
+	
+  });
+  
+  
+</script>
+
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_freshbox.png">Freshbox</h1>
+<ul class="nav nav-pills">
+<li><a href="/associations/freshbox/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/freshbox/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/freshbox/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/freshbox/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li class="active"><a href="/associations/freshbox/catalogueFresh/"><img src="{{ STATIC_URL}}page_catalogueFresh.png"/><span>Catalogue</span></a></li>
+<li><a href="/associations/freshbox/commande/"><img src="{{ STATIC_URL}}page_commande.png"/><span>Panier</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+{% block content %}
+<p style="text-align:center;"><a href="/associations/freshbox/commande/"><img src="{{ STATIC_URL}}market_panier.jpg"></a></p>
+{% if perms.freshbox %}
+<p><strong>Administration</strong><br/>
+<a href="/associations/freshbox/fermer_commandes/">Fermer toutes les commandes</a><br/>
+<a href="/associations/freshbox/dernieres_commandes/">Voir les dernières commandes</a><br/>
+<a href="/associations/freshbox/credit_eleve/">Créditer le compte des élèves</a><br/>
+<a href="/associations/freshbox/export_soldes/">Exporter le solde des élèves</a></p>
+{% endif %}
+	<h5>Une fois la commande passée, allez dans l'onglet <a href="/associations/freshbox/commande/">Panier</a> pour valider votre commande.</h5>
+	<div class="boutons">
+		<form class="actions" method="post" action="/associations/freshbox/acheter/">
+			{% csrf_token %}
+			<table>
+			<tr>
+			<td>
+			<h4>Cliquer ici pour commander une Freshbox.</h4>
+			<input border=0 src="{{ STATIC_URL}}market_submit.jpg" type=image Value=submit /> 
+			</td>
+			<td>			
+			<p class = "callback"></p>
+			</td>
+			</tr>
+			</table>
+		</form>
+	
+	</div>
+
+{% endblock %}

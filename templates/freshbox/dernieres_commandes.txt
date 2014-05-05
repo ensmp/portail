@@ -1,0 +1,4 @@
+{{ date_fermeture|date:"d F Y" }};;;
+Identifiant;Nom;Prénom;Chambre;Validee;
+{% for commande in liste_commandes %}{{ commande.eleve.user.username }};{{ commande.eleve.last_name|upper }};{{ commande.eleve.first_name }};{{ commande.eleve.chambre }};{{commande.validee}}
+{% endfor %}

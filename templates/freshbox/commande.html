@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_freshbox.png">Freshbox</h1>
+<ul class="nav nav-pills">
+<li><a href="/associations/freshbox/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/freshbox/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/freshbox/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/freshbox/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li><a href="/associations/freshbox/catalogueFresh/"><img src="{{ STATIC_URL}}page_catalogueFresh.png"/><span>Catalogue</span></a></li>
+<li class="active"><a href="/associations/freshbox/commande/"><img src="{{ STATIC_URL}}page_commande.png"/><span>Panier</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+{% block content %}
+<p style="text-align:center;"><a href="/associations/freshbox/catalogueFresh/"><img src="{{ STATIC_URL}}market_catalogue.jpg"></a></p>
+
+
+
+<h3><span style="color:#ff8c00;">Ton solde Freshbox : {{solde_freshbox}} €</span></h3>
+
+{% if commande %}
+{% if not commande.validee %}
+<h2><span style="color:#ff8c00;"><u><strong>Total à payer :</strong></u> <strong>10 €</strong></span></h2>
+<h4><span style="color:#ff8c00;"><a href="/associations/freshbox/valider_commande/">Valider la commande</a> <a href="/associations/freshbox/supprimer_commande/">Supprimer la commande</a></li>
+</span></h4>
+Attention, une fois la commande validée, vous serez débité sur votre compte du montant total ci-dessus. Il ne sera plus possible d'effectuer d'autres commandes avant la fermeture des commandes.
+{% else %}
+<h4><span style="color:#ff8c00;">Commande validée. Vous avez payé 10 €.<br>
+ 	Freshbox vous remercie pour votre commande</span></h4>
+{% endif %}
+{% endif %}
+
+{% endblock %}

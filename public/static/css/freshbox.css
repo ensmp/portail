@@ -1,0 +1,24 @@
+.actions table, tbody, tr {
+	width:100%;
+}
+
+.actions table td {
+	width:25%;
+	text-align:center;
+}
+
+.actions table td.small {
+	width:8%;
+}
+
+h3{font-family: Corbel, Arial, Helvetica;
+	
+	color:black;
+	font-variant: small-caps ;
+}
+
+.callback {	
+	color:#080;
+	font-size:30px;
+}
+

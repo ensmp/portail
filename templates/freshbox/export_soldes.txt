@@ -1,0 +1,3 @@
+Nom;Prénom;Chambre;Solde
+{% for eleve in liste_eleves %}{{ eleve.last_name|upper }};{{ eleve.first_name }};{{ eleve.chambre }};{{ eleve.solde_freshbox}}
+{% endfor %}
