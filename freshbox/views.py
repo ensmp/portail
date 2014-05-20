@@ -84,7 +84,7 @@ def supprimer_commande(request):
 	return redirect('freshbox.views.commande')
 
 
-@permission_required('freshbox.add_produit')
+@permission_required('freshbox.add_commande')
 @login_required    
 # Crediter le compte d'un élève
 def credit_eleve(request):
