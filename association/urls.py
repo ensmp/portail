@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^jump/', include('jump.urls')),
     url(r'^bde/', include('bde.urls')),
     url(r'^bda/', include('bda.urls')),
+    url(r'^psl/', include('psl.urls')),
     url(r'^pr/clips/$', 'pr.views.clips'),
 )
 

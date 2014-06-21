@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'timetable',
     'sondages',
     'bilanmandat',
+    'psl',
     'evenement', 
     'minesmarket',
     'minestryofsound',
