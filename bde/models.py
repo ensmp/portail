@@ -5,6 +5,8 @@ from datetime import date, datetime, timedelta
 from django.core.files import File
 import subprocess
 import os
+from django import forms
+from django.forms import ModelForm
 
 
 
@@ -59,3 +61,47 @@ class Palum(models.Model):
         """Tag html de l'image du thumbnail, utilisé dans l'administration des Palums."""
         return u'<img src="%s" />' % self.thumbnail.url
     image_tag.allow_tags = True
+
+class ParrainageVoeux(models.Model):
+    parrain = models.ForeignKey(UserProfile, related_name="Parrain")
+    fillot_n1 = models.ForeignKey(UserProfile, related_name="Voeu 1")
+    fillot_n2 = models.ForeignKey(UserProfile, related_name="Voeu 2")
+    fillot_n3 = models.ForeignKey(UserProfile, related_name="Voeu 3")
+    fillot_n4 = models.ForeignKey(UserProfile, related_name="Voeu 4")
+    fillot_n5 = models.ForeignKey(UserProfile, related_name="Voeu 5")
+    fillot_n6 = models.ForeignKey(UserProfile, related_name="Voeu 6")
+    fillot_n7 = models.ForeignKey(UserProfile, related_name="Voeu 7")
+    fillot_n8 = models.ForeignKey(UserProfile, related_name="Voeu 8")
+
+    def __unicode__(self):
+        return self.parrain.user.username
+
+    def save(self, *args, **kwargs):
+        creation = self.pk is None # Création de l'objet
+        super(ParrainageVoeux, self).save(*args, **kwargs)
+    
+    def different_voeux(self,liste):
+        #Renvoie true si tous les fillots (liste) sont différents, false sinon
+        different = True
+        for i in range(len(liste)):
+            for j in range(len(liste)):
+                if i!=j:
+                    if (liste[i]==liste[j]):
+                        different=False
+        return different
+
+
+class ParrainageVoeuxForm(ModelForm):
+    #formulaire pour les fillots du parrainage
+    fillot_n1 = forms.ModelChoiceField(queryset=UserProfile.objects.filter(promo=UserProfile.premiere_annee()))
+    fillot_n2 = forms.ModelChoiceField(queryset=UserProfile.objects.filter(promo=UserProfile.premiere_annee()))
+    fillot_n3 = forms.ModelChoiceField(queryset=UserProfile.objects.filter(promo=UserProfile.premiere_annee()))
+    fillot_n4 = forms.ModelChoiceField(queryset=UserProfile.objects.filter(promo=UserProfile.premiere_annee()))
+    fillot_n5 = forms.ModelChoiceField(queryset=UserProfile.objects.filter(promo=UserProfile.premiere_annee()))
+    fillot_n6 = forms.ModelChoiceField(queryset=UserProfile.objects.filter(promo=UserProfile.premiere_annee()))
+    fillot_n7 = forms.ModelChoiceField(queryset=UserProfile.objects.filter(promo=UserProfile.premiere_annee()))
+    fillot_n8 = forms.ModelChoiceField(queryset=UserProfile.objects.filter(promo=UserProfile.premiere_annee()))
+    
+    class Meta:
+        model = ParrainageVoeux
+        exclude = ('parrain',)

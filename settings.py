@@ -203,8 +203,8 @@ LOGGING = {
 
 EMAIL_HOST = "cobra.ensmp.fr"
 EMAIL_PORT = 587 
-DEFAULT_FROM_EMAIL = "guillaume.caner@mines-paristech.fr"
-EMAIL_HOST_USER = "guillaume.caner"
+DEFAULT_FROM_EMAIL = "valentin.anjou@mines-paristech.fr"
+EMAIL_HOST_USER = "valentin.anjou"
 
 AUTH_PROFILE_MODULE = 'trombi.UserProfile'
 

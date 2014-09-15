@@ -3,6 +3,8 @@ from django.core.files import File
 from django.db import models
 import subprocess
 import os
+from django import forms
+from trombi.models import UserProfile
 
 class Revue(models.Model):
     """
@@ -42,3 +44,22 @@ class Revue(models.Model):
         """Tag html de l'image du thumbnail, utilisé dans l'administration des Revues."""
         return u'<img src="%s" />' % self.thumbnail.url
     image_tag.allow_tags = True
+
+
+class Musiciens(models.Model):
+    "la liste des musiciens de l'école"
+    nom = models.CharField(max_length=50)
+    prenom = models.CharField(max_length=50)
+    instrument = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return "{0} {1} : {2]".format(self.prenom, self.nom, self.instrument)
+
+    def save(self, *args, **kwargs):
+        super(Musiciens, self).save(*args, **kwargs)
+
+class UpdateSoldeFormBda(forms.Form):
+    eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())
+    credit = forms.FloatField()
+    debit = forms.FloatField()
+

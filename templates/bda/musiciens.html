@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}bda-revue.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_bda.png">BDA</h1>
+<ul class="nav nav-pills">
+    <li><a href="/associations/bda/messages/"><img src="{{ STATIC_URL }}mail.png"/><span>Messages</span></a></li>
+    <li><a href="/associations/bda/evenements/"><img src="{{ STATIC_URL }}date.png"/><span>Événements</span></a></li>
+    <li><a href="/associations/bda/equipe/"><img src="{{ STATIC_URL }}user.png"/><span>Équipe</span></a></li>
+    <li><a href="/associations/bda/medias/"><img src="{{ STATIC_URL }}clapperboard.png"/><span>Médias</span></a></li>
+    <li><a href="/associations/bda/archives/"><img src="{{ STATIC_URL }}page_archives.png"/><span>Revues</span></a></li>
+    <li class="active"><a href="/associations/bda/musiciens/"><img src="{{ STATIC_URL }}page_musiciens.png"/><span>Musiciens</span></a></li>
+    <li><a href="/associations/bda/credit_debit_eleves/"><img src="{{ STATIC_URL }}credit_debit_eleves.png"/><span>Soldes</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+{% block content %}
+<p>Pour faire une recherche précise, n'hésitez pas à utiliser la commande ctrl + F</p> <br>
+
+<h2>P13</h2><br>
+
+<li>Samy-Adrien Akoum : Piano, Trompette | niveau : Confirmé, Amateur</li>
+<li>Pierre-Antoine Alber : Guitare | niveau : Confirmé+</li>
+<li>Eliot Ayache : Guitare | niveau : Confirmé</li>
+<li>Emma Bethouart : Guitare Classique | niveau : Confirmé</li>
+<li>Sébastien Billeau : Guitare Flamenco | niveau : Amateur</li>
+<li>Wladimir Blaise : Piano | niveau : Confirmé</li>
+<li>Julien Caillard : Piano, saxo | niveau : Débutant (3 ans sans en jouer)</li>
+<li>Benjamin Caron : Piano | niveau : Débutant</li>
+<li>Raymond Chan : Piano | niveau : Confirmé</li>
+<li>Romain Chapelier : Basse | niveau : Débutant</li>
+<li>Cécile Chazot : Violon | niveau : Confirmé</li>
+<li>Min Chen : Piano | niveau : Débutant</li>
+<li>Denis Colle : Piano | niveau : Amateur</li>
+<li>Aubin d'Hébrail : Basse, batterie | niveau : Confirmé</li>
+<li>Théophile de Salve de Bruneton : Saxophone | niveau : Amateur</li>
+<li>Thomas Debarre : Guitare | niveau : Débutant</li>
+<li>Matthieu Denoux : Cor, Soubassophone, Piano, Trompette | niveau : Confirmé, Amateur, Débutant, Débutant</li>
+<li>Maxime Deroubaix : Guitare, Percussion | niveau : Débutant, Débutant</li>
+<li>Lison Divert : Piano | niveau : Amateur</li>
+<li>Louis Duquenoy : Guitare | niveau : Amateur</li>
+<li>Aurélien Fiot : Piano | niveau : Amateur+</li>
+<li>Louis Gonda : Accordéon, Piano, Percussions | niveau : Confirmé (ça dépend un peu de l'instrument)</li>
+<li>Alexane Gondel : Violon | niveau : Amateur</li>
+<li>Quentin Hennion : Clavecin | niveau : Débutant+</li>
+<li>Marc-Antoine Huvet : Piano | niveau : Amateur</li>
+<li>Nicolas Jeanrenaud : Piano | niveau : Confirmé</li>
+<li>Corentin Jego-Delacourt : Violon | niveau : Confirmé</li>
+<li>Clément Joudet : Guitare | niveau : Confirmé+</li>
+<li>Charles Jouglard : Batterie | niveau : Amateur</li>
+<li>Nathanaël Kasriel : Guitare | niveau : Confirmé</li>
+<li>Anis Khlif : Hautbois, Saxophone, Piano | niveau : Confirmé, Amateur, Débutant</li>
+<li>Yann Le Gall : Guitare | niveau : Amateur+</li>
+<li>Guilain Lefebre de Plinval : Piano, Batterie (et percus) | niveau : Amateur, Confirmé</li>
+<li>Lucien Lewertowski : Piano | niveau : Amateur</li>
+<li>Louis Martin-Monier : Piano | niveau : Amateur</li>
+<li>Stéphane Meng : Piano | niveau : Confirmé (2 ans d'arrêt)</li>
+<li>Valentin Milles : Guitare | niveau : Confirmé</li>
+<li>Paul Mustière : Batterie | niveau : Amateur</li>
+<li>Léa Pannecoucke : Clarinette | niveau : Amateur</li>
+<li>Jules Parolin : Piano | niveau : Débutant</li>
+<li>Joy Pasquet : Voix, Violon | niveau : Confirmé, Amateur</li>
+<li>Marc Peruzzetto : Piano | niveau : Confirmé</li>
+<li>Brieuc Petit : Batterie, Basse, Trompette | niveau : Confirmé, Confirmé, Confirmé</li>
+<li>Marc Robert de Massy : Ukulele | niveau : Confirmé</li>
+<li>Clément Roig : Piano, Hautbois, Basse, Guitare, Batterie, Saxophone | niveau : Amateur, Confirmé, Débutant, Débutant, Débutant, Amateur</li>
+<li>Xavier Sattler : Guitare (classique/électrique/basse) | niveau : Amateur+</li>
+<li>Pierre Sidois : Triangle | niveau : Amateur+</li>
+<li>Ugo Tanielian : Cymbales | niveau : Débutant (mais je progresse)</li>
+<li>Simon Thomas : Piano, Accordéon | niveau : Amateur, Confirmé</li>
+<li>Valentin Thomas : Piano | niveau : Débutant+</li>
+<li>Léna Verchère : Voix | niveau : Amateur</li>
+<li>David Vitoux : Piano, Violoncelle | niveau : Amateur+, Débutant</li>
+<li>Guillaume Waldburger : Guitare classique | niveau : Confirmé</li>
+<li>Aurélie Wu : Piano | niveau : Amateur</li>
+<li>Florian Wylomanski : Piano | niveau : Confirmé</li>
+<li>Nicolas Zhang : Piano, Synthé, Guitare, Basse | niveau : Expert, Expert, Confirmé+, Confirmé+</li><br><br>
+
+<h2>P12</h2><br>
+
+<li>José miguel Arroyo : Guitare | niveau : Confirmé</li>
+<li>Jean Auriol : Piano | niveau : Confirmé</li>
+<li>Julien Barrau : Piano, Cor | niveau : Confirmé, Débutant</li>
+<li>Lia Bayon : Saxo, Trompette, Flûte à bec | niveau : Expert, Amateur, Confirmé</li>
+<li>Ricardo Carrizo : Batterie, Piano, Guitare | niveau : Expert, Confirmé, Amateur</li>
+<li>Evann Courdier : Piano | niveau : Amateur</li>
+<li>Victoire Dupont de Dinechin : Violon | niveau : Amateur</li>
+<li>Renan Goupil : Chant lyrique | niveau : Amateur</li>
+<li>Louis Guitton : Basse, Guitare Rythmique | niveau : Confirmé</li>
+<li>Clément Minvielle : Piano | niveau : Confirmé</li>
+<li>Pierrick Rambaud : Saxophone | niveau : Confirmé</li>
+<li>Maxime Thiebaud : Piano, Violon, Guitare, Voix | niveau : Confirmé, Amateur, Débutant, Débutant</li><br><br>
+
+<h2>P11</h2><br>
+
+<li>Camille Laïly : Chant (variet', français, jazz, lyrique), Accordéon, Piano | niveau : Expert, Confirmé, Amateur</li>
+<li>Gregoire Main de Boissiere : Guitare, Basse | niveau : Confirmé</li>
+<li>Florent Mélis : Basse | niveau : Confirmé</li>
+<li>Laure Anne Parpaleix : Harpe | niveau : Amateur</li>
+<li>Benoît Sarrazin : Guitare classique, basse | niveau : Confirmé, Amateur</li>
+<li>Maxime Sraïki : Guitare, Chant | niveau : Amateur, Amateur+</li>
+<li>Yi Wang : Basse, guitare | niveau : Amateur et amateur</li><br><br>
+
+
+
+{% endblock %}

@@ -1,0 +1,3 @@
+Parrain;Fillot 1;Fillot 2;Fillot 3;Fillot 4;Fillot 5;Fillot 6;Fillot 7;Fillot 8
+{% for voeu in liste_voeux %}{{ voeu.parrain.user.username }};{{ voeu.fillot_n1.user.username }};{{ voeu.fillot_n2.user.username }};{{ voeu.fillot_n3.user.username }};{{ voeu.fillot_n4.user.username }};{{ voeu.fillot_n5.user.username }};{{ voeu.fillot_n6.user.username }};{{ voeu.fillot_n7.user.username }};{{ voeu.fillot_n8.user.username }};
+{% endfor %}

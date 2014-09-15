@@ -100,6 +100,7 @@ def octo_update(request):
             pass
     return HttpResponse('OK')
 
+
 @login_required
 def edit(request):
     """Mise à jour des informations d'un profil"""

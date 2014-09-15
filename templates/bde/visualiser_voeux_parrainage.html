@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}votes.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_bde.png">BDE</h1>
+
+<ul class="nav nav-pills">
+<li><a href="/associations/bde/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/bde/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/bde/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/bde/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li><a href="/associations/bde/voter/"><img src="{{ STATIC_URL}}page_voter.png"/><span>Voter</span></a></li>
+<li><a href="/associations/bde/palums/"><img src="{{ STATIC_URL }}page_palums.png"/><span>Palums</span></a></li>
+<li><a href="/associations/bde/offre_stage/"><img src="{{ STATIC_URL}}page_offre_stage.png"/><span>Offres de Stage</span></a></li>
+<li><a href="/associations/bde/voeux_parrainage/"><img src="{{ STATIC_URL}}page_voeux_parrainage.png"/><span>Parrainage</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+
+{% block content %}
+
+{% if deuxA %}
+{% if dejaVote%}
+<p><strong>Vous avez déjà fait vos voeux mais vous pouvez encore changer en remplissant à nouveau <a href="/associations/bde/voeux_parrainage/">le formulaire</a></strong><br/>
+<p>Fillot n°1 : {{fillot1}}<p>
+<p>Fillot n°2 : {{fillot2}}<p>
+<p>Fillot n°3 : {{fillot3}}<p>
+<p>Fillot n°4 : {{fillot4}}<p>
+<p>Fillot n°5 : {{fillot5}}<p>
+<p>Fillot n°6 : {{fillot6}}<p>
+<p>Fillot n°7 : {{fillot7}}<p>
+<p>Fillot n°8 : {{fillot8}}<p>
+{% else %}
+<p><strong>Vous n'avez pas encore fait vos voeux</strong><br/>
+{% endif %}
+
+{% else %}
+<p><strong>Vous n'êtes pas en 2A, vous n'avez rien à faire sur cette page</strong><br/>
+{% endif %}
+{% endblock %}

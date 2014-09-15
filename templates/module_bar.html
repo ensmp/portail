@@ -36,25 +36,25 @@
 	
 	{% if request.user.get_profile.solde_biero < 0 and request.user.get_profile.solde_biero >= -5 %}
 	{%if bool2 %}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_roche.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_cailla.jpg">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_rollan.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_corole.jpg">
 	{% endif%}
 	{%endif%}
 	
 	{% if request.user.get_profile.solde_biero < -5 %}
 	{% if bool2 %}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_big_roche.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_big_cailla.jpg">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_big_rollan.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_big_corole.jpg">
 	{% endif%}
 	{% endif%}
 	
 	{% if request.user.get_profile.solde_biero >= 0 %}
 	{%if bool2%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_ok_roche.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_ok_cailla.jpg">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_ok_rollan.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_ok_corole.jpg">
 	{% endif%}
 	{% endif%}
 	
@@ -66,6 +66,8 @@
 	<p {% if request.user.get_profile.solde_biero < 0 %} class = "text-error" {% else %} class = "text-success" {% endif %}><strong>Biéro</strong> : {{ request.user.get_profile.solde_biero }} €</p>
 
 	<p class = "text-success" ><strong>MinesMarket</strong> : {{ request.user.get_profile.solde_minesmarket }} €</p>
+	<p class = "text-success" ><strong>MinesShake</strong> : {{ request.user.get_profile.solde_mineshake }} €</p>
+	<p class = "text-success" ><strong>BDA</strong> : {{ request.user.get_profile.solde_bda }} €</p>
 
 </div>
 {% endif %}

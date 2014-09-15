@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
-from bde.models import Liste, Vote, Palum
+from bde.models import Liste, Vote, Palum, ParrainageVoeux, ParrainageVoeuxForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.template import RequestContext
@@ -84,3 +84,121 @@ def palums_json(request):
 @login_required
 def offre_stage(request):
     return render_to_response('bde/offre_stage.html', {}, context_instance=RequestContext(request))
+
+@login_required
+def voeux_parrainage(request):
+    parrain = request.user.get_profile()
+    deuxA = parrain.annee()==2 #pour savoir si le parrain est bien en 2A et s'il a accès à la page du parrainage
+    dejaVote=ParrainageVoeux.objects.filter(parrain=request.user).exists() # true si le parrain a déjà voté
+    if request.method == 'POST': 
+        form = ParrainageVoeuxForm(request.POST,request.FILES) 
+        if form.is_valid(): 
+            if dejaVote: 
+                ParrainageVoeux.objects.filter(parrain=request.user).delete() 
+            fillot_n1 = form.cleaned_data['fillot_n1']
+            fillot_n2 = form.cleaned_data['fillot_n2']
+            fillot_n3 = form.cleaned_data['fillot_n3']
+            fillot_n4 = form.cleaned_data['fillot_n4']
+            fillot_n5 = form.cleaned_data['fillot_n5']
+            fillot_n6 = form.cleaned_data['fillot_n6']
+            fillot_n7 = form.cleaned_data['fillot_n7']
+            fillot_n8 = form.cleaned_data['fillot_n8']
+            liste = [fillot_n1,fillot_n2,fillot_n3,fillot_n4,fillot_n5,fillot_n6,fillot_n7,fillot_n8]
+            parrainage = form.save(commit=False)
+            if parrainage.different_voeux(liste):# si les fillots sont bien tous différents
+                parrainage.parrain=parrain
+                parrainage.save()
+                messages.add_message(request, messages.INFO, "Ton choix des fillots a bien été pris en compte.")
+                return redirect('messages.views.index')
+            else:
+                messages.add_message(request, messages.ERROR, "Tu as choisi plusieurs fois le même fillot, tes voeux ont été supprimés.")
+    else:
+        form = ParrainageVoeuxForm()
+    return render_to_response('bde/voeux_parrainage.html', {'form': form,'dejaVote':dejaVote,'deuxA':deuxA},context_instance=RequestContext(request))
+
+@login_required
+def visualiser_voeux_parrainage(request):
+    parrain = request.user.get_profile()
+    deuxA = parrain.annee()==2
+    dejaVote=ParrainageVoeux.objects.filter(parrain=request.user).exists()
+    if dejaVote:
+        voeu = ParrainageVoeux.objects.filter(parrain=request.user)[0]
+        fillot1= voeu.fillot_n1
+        fillot2= voeu.fillot_n2
+        fillot3= voeu.fillot_n3
+        fillot4= voeu.fillot_n4
+        fillot5= voeu.fillot_n5
+        fillot6= voeu.fillot_n6
+        fillot7= voeu.fillot_n7
+        fillot8= voeu.fillot_n8
+        return render_to_response('bde/visualiser_voeux_parrainage.html', {'dejaVote':dejaVote,'deuxA':deuxA,'fillot1':fillot1,'fillot2':fillot2,'fillot3':fillot3,'fillot4':fillot4,'fillot5':fillot5,'fillot6':fillot6,'fillot7':fillot7,'fillot8':fillot8},context_instance=RequestContext(request))
+    return render_to_response('bde/visualiser_voeux_parrainage.html', {'dejaVote':dejaVote,'deuxA':deuxA},context_instance=RequestContext(request))
+
+@permission_required('bde.add_parrainagevoeux')
+@login_required
+def voeux_parrainage_export(request):
+    from django.template import loader, Context
+    liste_voeux = ParrainageVoeux.objects.all()
+    response = HttpResponse(mimetype='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename=export_voeux.csv'
+    t = loader.get_template('bde/export_voeux.txt')
+    c = Context({'liste_voeux': liste_voeux})
+    response.write(t.render(c))
+    return response
+
+@permission_required('bde.add_parrainagevoeux')
+@login_required
+def voeux_parrainage_algo_export(request):
+    from django.template import loader, Context
+    import csv
+    liste_voeux = ParrainageVoeux.objects.all()
+    parrains=[]
+    ligneParrain=[0]
+    fillot=[]
+    for voeu in liste_voeux:
+        parrains.append(voeu.parrain)
+        ligneParrain.append(voeu.parrain.user.username)
+        if not voeu.fillot_n1 in fillot:
+            fillot.append(voeu.fillot_n1)
+        if not voeu.fillot_n2 in fillot:
+            fillot.append(voeu.fillot_n2)
+        if not voeu.fillot_n3 in fillot:
+            fillot.append(voeu.fillot_n3)
+        if not voeu.fillot_n4 in fillot:
+            fillot.append(voeu.fillot_n4)
+        if not voeu.fillot_n5 in fillot:
+            fillot.append(voeu.fillot_n5)
+        if not voeu.fillot_n6 in fillot:
+            fillot.append(voeu.fillot_n6)
+        if not voeu.fillot_n7 in fillot:
+            fillot.append(voeu.fillot_n7)
+        if not voeu.fillot_n8 in fillot:
+            fillot.append(voeu.fillot_n8)
+    response = HttpResponse(mimetype='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename=export_voeux_algo.csv'
+    writer = csv.writer(response)
+    writer.writerow(ligneParrain)
+
+    for fil in fillot:
+        ligne=[fil.user.username]
+        for parrain in parrains:
+            if ParrainageVoeux.objects.filter(parrain=parrain,fillot_n1=fil).exists():
+                ligne.append(1)
+            elif ParrainageVoeux.objects.filter(parrain=parrain,fillot_n2=fil).exists():
+                ligne.append(2)
+            elif ParrainageVoeux.objects.filter(parrain=parrain,fillot_n3=fil).exists():
+                ligne.append(3)
+            elif ParrainageVoeux.objects.filter(parrain=parrain,fillot_n4=fil).exists():
+                ligne.append(4)
+            elif ParrainageVoeux.objects.filter(parrain=parrain,fillot_n5=fil).exists():
+                ligne.append(5)
+            elif ParrainageVoeux.objects.filter(parrain=parrain,fillot_n6=fil).exists():
+                ligne.append(6)
+            elif ParrainageVoeux.objects.filter(parrain=parrain,fillot_n7=fil).exists():
+                ligne.append(7)
+            elif ParrainageVoeux.objects.filter(parrain=parrain,fillot_n8=fil).exists():
+                ligne.append(8)
+            else : #on ne souhaite pas avoir ce fillot
+                ligne.append(15) 
+        writer.writerow(ligne)
+    return response

@@ -11,6 +11,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 def accueil(request):
     return render_to_response('accueil/accueil.html', {},context_instance=RequestContext(request))
 
+def admissibles(request):
+    return render_to_response('admissibles/admissibles.html', {},context_instance=RequestContext(request))
+
+def admis(request):
+    return render_to_response('admis/admis.html', {},context_instance=RequestContext(request))
+
+def logement(request):
+    return render_to_response('admis/logement.html', {},context_instance=RequestContext(request))
+
+def rentree(request):
+    return render_to_response('admis/rentree.html', {},context_instance=RequestContext(request))
+
 def questions(request):
     liste_questions = Question.objects.exclude(reponse = None).order_by('-date')
 
@@ -39,7 +51,7 @@ def poser_question(request):
             try :
                  objet=form.cleaned_data['objet']
                  message=form.cleaned_data['contenu']
-                 send_mail('Question posée sur la FAQ du portail',"Objet : " + objet + "\nMessage : "+ message, 'guillaume.caner@mines-paristech.fr',['guillaume.caner@mines-paristech.fr','paul.le_floch@mines-paristech.fr','pierre.salvy@mines-paristech.fr','pierrick.rambaud@mines-paristech.fr','alice.gabriel@mines-paristech.fr','evan.proux@mines-paristech.fr','mathilde.bibal@mines-paristech.fr','cyprien.pelissou@mines-paristech.fr'], fail_silently=False)
+                 send_mail('Question posée sur la FAQ du portail',"Objet : " + objet + "\nMessage : "+ message, 'valentin.anjou@mines-paristech.fr',['valentin.anjou@mines-paristech.fr','baptiste.garcia-rundstadler@mines-paristech.fr','marc.peruzzetto@mines-paristech.fr@mines-paristech.fr','sandrine.bortolotti@mines-paristech.fr','lison.divert@mines-paristech.fr','chipten.valibhay@mines-paristech.fr','louis.duquenoy@mines-paristech.fr','clara.golse@mines-paristech.fr'], fail_silently=False)
             except BadHeaderError :
                  return HttpResponse('Invalid header found.')
             return HttpResponseRedirect('/faq/question_posee')
