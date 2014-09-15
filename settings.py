@@ -7,7 +7,9 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG 
 
 ADMINS = (
-     ('Edouard Leurent', '11leuren@ensmp.fr'),
+     ('Valentin Anjou', 'valentin.anjou@mines-paristech.fr'),
+     ('Maxime Ernoult', 'maxime.ernoult@mines-paristech.fr'),
+     ('Matthieu Denoux', 'matthieu.denoux@mines-paristech.fr'),
 )
 
 MANAGERS = ADMINS
