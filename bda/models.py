@@ -45,18 +45,26 @@ class Revue(models.Model):
         return u'<img src="%s" />' % self.thumbnail.url
     image_tag.allow_tags = True
 
-
-class Musiciens(models.Model):
-    "la liste des musiciens de l'école"
-    nom = models.CharField(max_length=50)
-    prenom = models.CharField(max_length=50)
-    instrument = models.CharField(max_length=50)
+class Instrument(models.Model):
+    """
+        Instrument de musique
+    """
+    nom = models.CharField(max_length=30)
+    musiciens = models.ManyToManyField(UserProfile, through='Maitrise')
 
     def __unicode__(self):
-        return "{0} {1} : {2]".format(self.prenom, self.nom, self.instrument)
+        return self.nom
 
-    def save(self, *args, **kwargs):
-        super(Musiciens, self).save(*args, **kwargs)
+class Maitrise(models.Model):
+    """
+        Un eleve joue d'un instrument de musique
+    """
+    instrument = models.ForeignKey(Instrument)
+    eleve = models.ForeignKey(UserProfile)
+    niveau = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return str(self.eleve) + ' --> ' + str(self.instrument)
 
 class UpdateSoldeFormBda(forms.Form):
     eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())

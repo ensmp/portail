@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from bda.models import Revue
 import json
-from bda.models import UpdateSoldeFormBda
+from bda.models import UpdateSoldeFormBda, Instrument
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
@@ -38,8 +38,8 @@ def musiciens(request):
     """
         La liste des musiciens du BDA visibles par l'utilisateur
     """
-    
-    return render_to_response('bda/musiciens.html', context_instance=RequestContext(request))
+    instrument_list = Instrument.objects.all()
+    return render_to_response('bda/musiciens.html', {'instrument_list': instrument_list}, context_instance=RequestContext(request))
 
 @login_required
 #@permission_required('bda.add_liste')

@@ -1,4 +1,4 @@
-from bda.models import Revue
+from bda.models import Revue, Maitrise, Instrument
 from django.contrib import admin
 
 class RevueAdmin(admin.ModelAdmin):
@@ -8,3 +8,5 @@ class RevueAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
 admin.site.register(Revue, RevueAdmin)
+admin.site.register(Maitrise)
+admin.site.register(Instrument)

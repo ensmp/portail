@@ -41,6 +41,17 @@
 </ul>
 {% endif %}
 
+{% if mineur.get_profile.maitrise_set.all %}
+<p><strong>Instruments</strong> : </p>
+<ul>
+	{% for maitrise in mineur.get_profile.maitrise_set.all %}
+		<li>
+		{{ maitrise.instrument }} - <em>{{ maitrise.niveau }}</em>
+		</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
 {% if mineur.get_profile.co.all %}
 <p><strong>Co{{ mineur.get_profile.co.count|pluralize }}</strong> : 
 	{% for co in mineur.get_profile.co.all %}
