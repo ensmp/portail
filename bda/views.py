@@ -9,6 +9,7 @@ from bda.models import UpdateSoldeFormBda
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
+from django.contrib import messages
 
 @login_required
 def archives(request):
@@ -57,7 +58,7 @@ def bda_update(request):
             pass
     return HttpResponse('OK')
 
-@permission_required('bda.add_commande')
+@permission_required('bda.change_soldesBDA')
 @login_required    
 # Crediter le compte d'un élève
 def credit_debit_eleve(request):
