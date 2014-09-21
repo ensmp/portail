@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^bda/', include('bda.urls')),
     url(r'^psl/', include('psl.urls')),
     url(r'^pr/clips/$', 'pr.views.clips'),
+    url(r'^mineshake/', include('mineshake.urls')),
 )
 
 # Views du module association

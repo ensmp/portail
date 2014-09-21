@@ -6,5 +6,5 @@ urlpatterns = patterns('bda.views',
     url(r'^archives/json/$', 'archives_json', name='revue_archives_json'),
     url(r'^$', 'musiciens', name='musiciens'),
     url(r'^musiciens/$', 'musiciens', name='musiciens'),
-    url(r'^credit_debit_eleve/$','credit_debit_eleve'),
+    url(r'^credit_debit_eleve/$','credit_debit_eleve', name='soldes_bda'),
     )

@@ -16,6 +16,7 @@ import vobject
 import Image
 import json
 import os
+from settings.py import SECRET_KEY_UPDATE
 
 @login_required
 def trombi(request):
@@ -48,6 +49,7 @@ def detail(request, mineur_login):
     liste_reponses = mineur.reponses.all()
     return render_to_response('trombi/detail.html', {'mineur': mineur.user, 'assoces': assoces, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses},context_instance=RequestContext(request))
 
+@login_required
 def detail_json(request, mineur_login):
     """Sérialisation au format JSON des infomations d'un élève"""
     mineur = get_object_or_404(UserProfile, user__username = mineur_login)   
@@ -89,16 +91,17 @@ def octo_update(request):
         midi pour mettre à jour les données des soldes.
 
     """
-    json_octo = json.loads(request.POST.get('clients_bar', '[]'))
-    for eleve in json_octo:
-        try:
-            profile = UserProfile.objects.get(user__username = eleve['login'])
-            profile.solde_octo = eleve['solde_octo']
-            profile.solde_biero = eleve['solde_biero']    
-            profile.save()
-        except UserProfile.DoesNotExist:                
-            pass
-    return HttpResponse('OK')
+    json_octo = json.loads(request.POST.get('clients_bar', '[]','clef'))
+    if json_octo.clef==SECRET_KEY_UPDATE :
+        for eleve in json_octo:
+            try:
+                profile = UserProfile.objects.get(user__username = eleve['login'])
+                profile.solde_octo = eleve['solde_octo']
+                profile.solde_biero = eleve['solde_biero']    
+                profile.save()
+            except UserProfile.DoesNotExist:                
+                pass
+        return HttpResponse('OK')
 
 
 @login_required

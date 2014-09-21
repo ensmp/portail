@@ -97,6 +97,7 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '&fpty=o)a@_!0pu$t7fei1k7!ps1ddf(lw7_ofrnk)&_2pa$m3'
+SECRET_KEY_UPDATE = 'clefgit'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -159,6 +160,7 @@ INSTALLED_APPS = (
     'vendome', 
     'bda',
     'jump',
+    'mineshake',
     'pr',
     'faq',
     'chat',
