@@ -55,6 +55,9 @@ class Instrument(models.Model):
     def __unicode__(self):
         return self.nom
 
+    class Meta:
+        ordering = ['nom']
+
 class Maitrise(models.Model):
     """
         Un eleve joue d'un instrument de musique
@@ -64,7 +67,7 @@ class Maitrise(models.Model):
     niveau = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return str(self.eleve) + ' --> ' + str(self.instrument)
+        return self.eleve.__unicode__() + ' --> ' + self.instrument.__unicode__()
 
 class UpdateSoldeFormBda(forms.Form):
     eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())

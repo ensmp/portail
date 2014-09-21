@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from bda.models import Revue
 import json
-from bda.models import UpdateSoldeFormBda, Instrument
+from bda.models import UpdateSoldeFormBda, Maitrise
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
@@ -38,8 +38,18 @@ def musiciens(request):
     """
         La liste des musiciens du BDA visibles par l'utilisateur
     """
-    instrument_list = Instrument.objects.all()
-    return render_to_response('bda/musiciens.html', {'instrument_list': instrument_list}, context_instance=RequestContext(request))
+    order_by = request.GET.get('order_by', 'instrument')
+    if order_by == 'instrument':
+        maitrise_list = Maitrise.objects.order_by('instrument')
+    elif order_by == 'eleve':
+        maitrise_list = Maitrise.objects.order_by('eleve__last_name', 'eleve__first_name')
+    elif order_by == 'niveau':
+        maitrise_list = Maitrise.objects.order_by('niveau')
+    elif order_by == 'promo':
+        maitrise_list = Maitrise.objects.order_by('eleve__promo')
+    else:
+        maitrise_list = []
+    return render_to_response('bda/musiciens.html', {'maitrise_list': maitrise_list}, context_instance=RequestContext(request))
 
 @login_required
 #@permission_required('bda.add_liste')

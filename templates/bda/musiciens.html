@@ -23,15 +23,25 @@
 
 {% block content %}
 
-<ul>
-{% for instrument in instrument_list %}
-	<li>{{ instrument.nom }}</li>
-	<ul>
-	{% for maitrise in instrument.maitrise_set.all %}
-		<li><a href = "{{ maitrise.eleve.get_absolute_url }}">{{ maitrise.eleve }}</a> (P{{ maitrise.eleve.promo }}) - <em>{{ maitrise.niveau }}</em></li>
-	{% endfor %}
-	</ul>
+<table class="table table-striped">
+<thead>
+<tr>
+	<th><a href = "?order_by=eleve">Élève</a></th>
+	<th><a href = "?order_by=promo">Promo</th>
+	<th><a href = "?order_by=instrument">Instrument</th>
+	<th><a href = "?order_by=niveau">Niveau</th>
+</tr>
+</thead>
+<tbody>
+{% for maitrise in maitrise_list.all %}
+<tr>
+	<td><a href = "{{ maitrise.eleve.get_absolute_url }}">{{ maitrise.eleve }}</a></td>
+	<td>P{{ maitrise.eleve.promo }}</td>
+	<td>{{ maitrise.instrument.nom }}</td>
+	<td><em>{{ maitrise.niveau }}</em></td>
+</tr>
 {% endfor %}
-</ul>
+</tbody>
+</table>
 
 {% endblock %}
