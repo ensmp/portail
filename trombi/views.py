@@ -16,7 +16,7 @@ import vobject
 import Image
 import json
 import os
-from settings.py import SECRET_KEY_UPDATE
+from settings import SECRET_KEY_UPDATE
 
 @login_required
 def trombi(request):

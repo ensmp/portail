@@ -90,6 +90,7 @@ def voeux_parrainage(request):
     parrain = request.user.get_profile()
     deuxA = parrain.annee()==2 #pour savoir si le parrain est bien en 2A et s'il a accès à la page du parrainage
     dejaVote=ParrainageVoeux.objects.filter(parrain=request.user).exists() # true si le parrain a déjà voté
+    votesOuverts=False #Si les votes sont fermés
     if request.method == 'POST': 
         form = ParrainageVoeuxForm(request.POST,request.FILES) 
         if form.is_valid(): 
@@ -114,7 +115,7 @@ def voeux_parrainage(request):
                 messages.add_message(request, messages.ERROR, "Tu as choisi plusieurs fois le même fillot, tes voeux ont été supprimés.")
     else:
         form = ParrainageVoeuxForm()
-    return render_to_response('bde/voeux_parrainage.html', {'form': form,'dejaVote':dejaVote,'deuxA':deuxA},context_instance=RequestContext(request))
+    return render_to_response('bde/voeux_parrainage.html', {'form': form,'dejaVote':dejaVote,'deuxA':deuxA, 'votesOuverts':votesOuverts},context_instance=RequestContext(request))
 
 @login_required
 def visualiser_voeux_parrainage(request):

@@ -32,15 +32,19 @@
 <a href="/associations/bde/voeux_parrainage_algo_export/">Exporter les voeux pour appliquer l'algo</a><br/>
 {% endif %}
 {% if deuxA %}
+{% if votesOuverts %}
 {% if dejaVote%}
 <p><strong>Vous avez déjà fait vos voeux mais vous pouvez encore changer en remplissant à nouveau le formulaire ci-dessous</strong><br/>
-<p>Si vous voulez visualiser vos voeux (déjà effectués), <a href="/associations/bde/visualiser_voeux_parrainage/">cliquez ici<a></p>
+<p>Si vous voulez visualiser vos voeux (déjà effectués), <a href="/associations/bde/visualiser_voeux_parrainage/">cliquez ici</a></p>
 {% endif %}
 <form action="" method="post">
 {% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Valider" />
 </form>
+{% else %}
+<p><strong>Le parrainage, c'est fini !</strong><br/>
+{% endif %}
 {% else %}
 <p><strong>Vous n'êtes pas en 2A, vous n'avez rien à faire sur cette page</strong><br/>
 {% endif %}
