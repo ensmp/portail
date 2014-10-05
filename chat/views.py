@@ -116,14 +116,10 @@ class Ajax(object):
         # Get new messages - do this last in case the ExtraHandling has itself generated
         # new messages. 
 
-        NewMessages = self.ThisRoom.message_set.filter(unix_timestamp__gt=self.request_time)
+        NewMessages = Message.objects.filter(unix_timestamp__gt=self.request_time).order_by('-id')[:JQCHAT_DISPLAY_COUNT]
+        NewMessages = reversed(NewMessages)
         if NewMessages:
             StatusCode = 1
-
-        # Only keep the last X messages.
-        l = len(NewMessages)
-        if l > JQCHAT_DISPLAY_COUNT:
-            NewMessages = NewMessages[l-JQCHAT_DISPLAY_COUNT:]
    
         response =  render_to_response('chat/chat_payload.json',
                                   {'current_unix_timestamp': int(time.time()),
