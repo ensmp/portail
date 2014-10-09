@@ -169,6 +169,7 @@ INSTALLED_APPS = (
     'entreprise',
     'paindemine',
     'mediamines',
+    'objettrouve',
     'freshbox',
     #Avatar, pour les avatars de trombi
     'avatar',

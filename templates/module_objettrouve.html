@@ -1,0 +1,19 @@
+{% if request.user.is_authenticated %}
+
+<div id="objettrouve" class="well"> 
+	<p class = "well-header">Objets Trouvés</p>
+	<hr />
+	{% load obtenir_liste_objets %}
+	{% obtenir_liste_objets 5 as objets_list %}
+	<ul class="nav nav-list">
+	{% for objet in objets_list %}
+		{% if objet.trouve %}
+			<li><a href = "{{ objet.eleve.get_absolute_url }}">Trouvé : {{objet.description}} ({{ eleve.first_name }} {{ eleve.last_name }})</a></li> 
+		{% else %} 
+			<li><a href = "{{ objet.eleve.get_absolute_url }}">Perdu : {{objet.description}} ({{ eleve.first_name }} {{ eleve.last_name }})</a></li> 
+		{% endif %}
+	{% endfor %}
+	</ul>
+</div>
+{% endif %}
+

@@ -1,0 +1,30 @@
+#objets_trouves {
+	width: 450px;
+	float: left;
+}
+
+#objets_perdus
+{
+	width: 450px;
+	float: right;
+}
+
+table {
+	width: 450px;
+	text-align: center;
+	border: none;
+}
+th {
+	background: #eee;
+}
+tr {
+	margin: 0px;
+	padding: 2px;
+}
+tr:hover {
+	background: #eee;
+}
+td {
+	margin: 0px;
+	padding: 2px;
+}

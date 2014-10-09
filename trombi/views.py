@@ -91,7 +91,8 @@ def octo_update(request):
         midi pour mettre à jour les données des soldes.
 
     """
-    json_octo = json.loads(request.POST.get('clients_bar', '[]','clef'))
+    json_octo = json.loads(request.POST.get('clients_bar', []))
+    clef=request.POST.get('clef','')
     if json_octo.clef==SECRET_KEY_UPDATE :
         for eleve in json_octo:
             try:
