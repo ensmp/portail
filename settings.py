@@ -165,11 +165,11 @@ INSTALLED_APPS = (
     'faq',
     'chat',
     'bde',
+    'HTC',
     'abatage',
     'entreprise',
     'paindemine',
     'mediamines',
-    'htc',
     'objettrouve',
     'freshbox',
     #Avatar, pour les avatars de trombi
