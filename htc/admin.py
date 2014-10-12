@@ -1,4 +1,4 @@
-from HTC.models import Revue
+from htc.models import Revue
 from django.contrib import admin
 
 class RevueAdmin(admin.ModelAdmin):
