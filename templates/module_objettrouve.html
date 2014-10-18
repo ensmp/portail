@@ -8,9 +8,9 @@
 	<ul class="nav nav-list">
 	{% for objet in objets_list %}
 		{% if objet.trouve %}
-			<li><a href = "{{ objet.eleve.get_absolute_url }}">Trouvé : {{objet.description}} ({{ eleve.first_name }} {{ eleve.last_name }})</a></li> 
+			<li><a href = "{{ objet.eleve.get_absolute_url }}">Trouvé : {{objet.description}}</a></li> 
 		{% else %} 
-			<li><a href = "{{ objet.eleve.get_absolute_url }}">Perdu : {{objet.description}} ({{ eleve.first_name }} {{ eleve.last_name }})</a></li> 
+			<li><a href = "{{ objet.eleve.get_absolute_url }}">Perdu : {{objet.description}}</a></li> 
 		{% endif %}
 	{% endfor %}
 	</ul>
