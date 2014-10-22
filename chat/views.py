@@ -117,9 +117,9 @@ class Ajax(object):
         # new messages. 
 
         NewMessages = Message.objects.filter(unix_timestamp__gt=self.request_time).order_by('-id')[:JQCHAT_DISPLAY_COUNT]
-        NewMessages = reversed(NewMessages)
         if NewMessages:
             StatusCode = 1
+            NewMessages = reversed(NewMessages)
    
         response =  render_to_response('chat/chat_payload.json',
                                   {'current_unix_timestamp': int(time.time()),
