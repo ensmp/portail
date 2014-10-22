@@ -10,30 +10,28 @@ from django.http import HttpResponseRedirect
 
 @login_required
 def liste(request):
-	envoi_list = Envoi.objects.filter(user__username = request.user.username).order_by('-notification__date')
-	envoi_nonlu_list = list(envoi_list.filter(lu = False))
-	envoi_lu_list = list(envoi_list.filter(lu = True))[:50]
+	envoi_list = Envoi.objects.filter(user = request.user).order_by('-notification__date')
+	envois_non_lus = envoi_list.filter(lu = False)
+	envois_lus = envoi_list.filter(lu = True)[:50]
 	mark_all_seen(request.user)
-	return render_to_response('notification/liste.html',{'envoi_nonlu_list': envoi_nonlu_list, 'envoi_lu_list': envoi_lu_list},context_instance=RequestContext(request))
+	return render_to_response('notification/liste.html',{'envois_non_lus': envois_non_lus, 'envois_lus': envois_lus},context_instance=RequestContext(request))
 
 def mark_all_seen(user):
-	notification_list = Notification.objects.filter(destinataires__username = user.username)
-	for notification in notification_list:
-		notification.lire(user)
+	Envoi.objects.filter(user = user).update(lu = True)
 
-@login_required	
+@login_required
 #Choisir les associations qu'on suit
 def preferences(request):
-	associations = Association.objects.all()	
-	if request.method == 'POST': 
+	associations = Association.objects.all()
+	if request.method == 'POST':
 		request.user.associations_suivies.clear()
 		for pseudo_assoce in request.POST:
-			try: 
+			try:
 				assoce = Association.objects.get(pseudo = pseudo_assoce)
 				assoce.suivi_par.add(request.user)
 				assoce.save()
 			except Association.DoesNotExist:
 				pass
 
-		return HttpResponseRedirect('/notifications/') 
+		return HttpResponseRedirect('/notifications/')
 	return render_to_response('notification/preferences.html', {'associations':associations},context_instance=RequestContext(request))
