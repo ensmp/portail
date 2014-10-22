@@ -1,24 +1,22 @@
-{% extends "objettrouve/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-
-<div>
 <p>
 <a href="/objetstrouves/ajouter/">Ajouter un objet perdu/trouvé</a><br>
 <a href="/objetstrouves/supprimer/">Supprimer un objet perdu/trouvé</a>
 </p>
-</div>
 
-<div id="objets_trouves">
-<table>
-<p></p>
+<table class="table table-striped">
 <caption> {{ liste_objets_trouves|length }} objet{{ liste_objets_trouves|length|pluralize }} trouvé{{ liste_objets_trouves|length|pluralize }} </caption>
+<thead>
 <tr>
 	<th>Description</th>
 	<th>Trouvé par</th>
 	<th>Lieu</th>
 	<th>Date</th>
 </tr>
+</thead>
+<tbody>
 {% for objet in liste_objets_trouves %}
 <tr>
 	<td>{{ objet.description }}</td>
@@ -27,18 +25,21 @@
 	<td>{{ objet.date|date:"d F Y" }}</td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
-</div>
-<div id="objets_perdus">
-<table>
+
+<table class="table table-striped">
 <p></p>
 <caption> {{ liste_objets_perdus|length }} objet{{ liste_objets_perdus|length|pluralize }} perdu{{ liste_objets_perdus|length|pluralize }} </caption>
+<thead>
 <tr>
 	<th>Description</th>
 	<th>Perdu par</th>
 	<th>Lieu</th>
 	<th>Date</th>
 </tr>
+</thead>
+<tbody>
 {% for objet in liste_objets_perdus %}
 <tr>
 	<td>{{ objet.description }}</td>
@@ -47,6 +48,6 @@
 	<td>{{ objet.date|date:"d F Y" }}</td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
-</div>
 {% endblock %}
