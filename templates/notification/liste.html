@@ -4,13 +4,13 @@
 
 <h3>Nouvelles notifications</h3>
 <ul>
-{% for envoi in envoi_nonlu_list %}
+{% for envoi in envois_non_lus.all %}
 	<li><a href="{{ envoi.notification.get_absolute_url }}">{{ envoi.notification.description }}</a></li> 
 {% endfor %}
 </ul>
 
 <h3>Archives</h3>
-{% regroup envoi_lu_list by notification.date|date:"l" as envoi_lu_list_bydate %}
+{% regroup envois_lus.all by notification.date|date:"l" as envoi_lu_list_bydate %}
 {% for envoi_bydate in envoi_lu_list_bydate %}
     <p>{{ envoi_bydate.grouper|title }}</p>
     <ul>

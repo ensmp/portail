@@ -165,7 +165,7 @@ INSTALLED_APPS = (
     'faq',
     'chat',
     'bde',
-    'HTC',
+    'htc',
     'abatage',
     'entreprise',
     'paindemine',
