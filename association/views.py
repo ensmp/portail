@@ -125,24 +125,17 @@ def ajouter_affiche(request, association_pseudo):
         formset = AfficheForm()
     return render_to_response("association/ajouter_affiche.html", {'association':assoce, 'membres': membres,   "formset": formset},context_instance=RequestContext(request))
 
-<<<<<<< HEAD
+
 @login_required  
-=======
-@login_required
->>>>>>> 146a3072d019520f6ff37feda7cc29b1867c8f12
 def supprimer_affiche(request,association_pseudo,affiche_id):
     affiche = get_object_or_404(Affiche,pk=affiche_id)
     association = affiche.association
     if Adhesion.objects.filter(association=association, eleve=request.user).exists():# Si l'eleve est membre de l'assoce
         affiche.delete()
     return HttpResponseRedirect(association.get_absolute_url() + 'medias/')
-<<<<<<< HEAD
+
 
 @login_required     
-=======
-    
-@login_required
->>>>>>> 146a3072d019520f6ff37feda7cc29b1867c8f12
 def ajouter_video(request, association_pseudo):
     assoce = get_object_or_404(Association,pseudo=association_pseudo)
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
@@ -157,13 +150,10 @@ def ajouter_video(request, association_pseudo):
     else:
         formset = VideoForm()
     return render_to_response("association/ajouter_video.html", {'association':assoce, 'membres': membres,   "formset": formset},context_instance=RequestContext(request))
-<<<<<<< HEAD
 
-@login_required      
-=======
+
     
 @login_required
->>>>>>> 146a3072d019520f6ff37feda7cc29b1867c8f12
 def supprimer_video(request, association_pseudo, video_id):
     video = get_object_or_404(Video,pk=video_id)
     association = video.association
