@@ -11,6 +11,7 @@ from django.http import Http404, HttpResponse
 from django.utils import simplejson
 from django.conf import settings
 from urllib import urlretrieve
+from bda.models import Instrument, Maitrise
 import subprocess
 import vobject
 import Image
@@ -93,7 +94,7 @@ def octo_update(request):
     """
     json_octo = json.loads(request.POST.get('clients_bar', []))
     clef=request.POST.get('clef','')
-    if json_octo.clef==SECRET_KEY_UPDATE :
+    if clef==SECRET_KEY_UPDATE :
         for eleve in json_octo:
             try:
                 profile = UserProfile.objects.get(user__username = eleve['login'])
@@ -102,7 +103,7 @@ def octo_update(request):
                 profile.save()
             except UserProfile.DoesNotExist:                
                 pass
-        return HttpResponse('OK')
+    return HttpResponse('OK')
 
 
 @login_required
@@ -129,7 +130,10 @@ def edit(request):
         promo_inferieure = UserProfile.objects.filter(promo = mineur.promo+1)
         liste_questions = Question.objects.all()
         liste_reponses = mineur.reponses.all()
+        #liste_instruments = Instrument.all()
+        #liste_maitrise = Maitrise.all()
         return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'promo_inferieure': promo_inferieure, 'promo_superieure': promo_superieure, 'autres_eleves': autres_eleves, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses}, context_instance=RequestContext(request))
+        #return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'promo_inferieure': promo_inferieure, 'promo_superieure': promo_superieure, 'autres_eleves': autres_eleves, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses, 'instruments'=liste_instruments, 'maitrises'=liste_maitrise}, context_instance=RequestContext(request))
 
 @login_required
 def get_vcf(request):
