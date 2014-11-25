@@ -18,7 +18,7 @@ def albums_recents(request):
         latest = latest.exclude(is_hidden_1A = True)
     latest = latest[:4]
     association = get_object_or_404(Association, pseudo="mediamines")
-    liste_videos = association.video_set.all
+    liste_videos = association.video_set.all()
     
     paginator = Paginator(liste_videos, 5, allow_empty_first_page=True)
     page = request.GET.get('page', 1)

@@ -47,7 +47,7 @@
 {% endif %}
 {% endfor %}
 
-{% for video in liste_videos %}
+{% for video in object_list %}
 <iframe width="100%" height="315" src="{{ video.url }}" frameborder="0" allowfullscreen></iframe>
 <p class="legende">{{ video.titre }}</p>
 {% for adhesion in membres %}
@@ -56,18 +56,17 @@
 {% endif %}
 {% endfor %}
 
+{% empty %}
+<p>Aucune vidéo publiée</p>
+{% endfor %}
 
 {% if is_paginated %}
 <p><br style="page-break-before: always;" clear="all" /></p> 
-<p>{{ hits }} albums.</p>
+<p>{{ hits }} vidéos.</p>
 <div id="page_controls">
     <p>{% if has_previous %}<a href="{% url 'pl-gallery-archive' %}?page={{ previous }}">Précédente</a> | {% endif %} Page {{ page }} sur {{ pages }} {% if has_next %}| <a href="{% url 'pl-gallery-archive' %}?page={{ next }}">Suivante</a>{% endif %}</p>
 </div>
 {% endif %}
-
-{% empty %}
-<p>Aucune vidéo publiée</p>
-{% endfor %}
 </div>
 
 {% endblock %}
