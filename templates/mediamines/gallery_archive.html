@@ -24,14 +24,14 @@
 </div>
 {% if latest %}
 <div class="photo-gallery">
-	<ul class="gallery">
+    <ul class="gallery">
     {% for gallery in latest %}
         {% for photo in gallery.sample|slice:":1" %}
-		<li><a href="{{ gallery.get_absolute_url }}"><em>{{ gallery.title }}</em><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}" /></a></li>
+        <li><a href="{{ gallery.get_absolute_url }}"><em>{{ gallery.title }}</em><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}" /></a></li>
         {% endfor %}   
     {% endfor %}
-	</ul>
-	</div>
+    </ul>
+    </div>
 {% else %}
     <p>Aucun album trouvé.</p>
 {% endif %}
@@ -55,6 +55,15 @@
 <p><a href="video/{{ video.id }}/supprimer/">Supprimer la vidéo</a></p>
 {% endif %}
 {% endfor %}
+
+
+{% if is_paginated %}
+<p><br style="page-break-before: always;" clear="all" /></p> 
+<p>{{ hits }} albums.</p>
+<div id="page_controls">
+    <p>{% if has_previous %}<a href="{% url 'pl-gallery-archive' %}?page={{ previous }}">Précédente</a> | {% endif %} Page {{ page }} sur {{ pages }} {% if has_next %}| <a href="{% url 'pl-gallery-archive' %}?page={{ next }}">Suivante</a>{% endif %}</p>
+</div>
+{% endif %}
 
 {% empty %}
 <p>Aucune vidéo publiée</p>
