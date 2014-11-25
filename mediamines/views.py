@@ -19,8 +19,41 @@ def albums_recents(request):
     latest = latest[:4]
     association = get_object_or_404(Association, pseudo="mediamines")
     liste_videos = association.video_set.all
+    
+    paginator = Paginator(liste_videos, 5, allow_empty_first_page=True)
+    page = request.GET.get('page', 1)
+    try:
+        page_number = int(page)
+    except ValueError:
+        raise Http404
+    try:
+        page_obj = paginator.page(page_number)
+    except InvalidPage:
+        raise Http404
+
     membres = Adhesion.objects.filter(association = association).order_by('-ordre', 'eleve__last_name')
-    return render_to_response('mediamines/gallery_archive.html',{'latest':latest, 'liste_videos':liste_videos, 'membres':membres},context_instance=RequestContext(request))
+    return render_to_response('mediamines/gallery_archive.html',
+        {
+        'object_list' : page_obj.object_list,
+        'paginator': paginator,
+        'page_obj': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
+
+        # Legacy template context stuff. New templates should use page_obj
+        # to access this instead.
+        'results_per_page': paginator.per_page,
+        'has_next': page_obj.has_next(),
+        'has_previous': page_obj.has_previous(),
+        'page': page_obj.number,
+        'next': page_obj.next_page_number() if page_obj.has_next() else page_obj.number,
+        'previous': page_obj.previous_page_number() if page_obj.has_previous() else page_obj.number,
+        'first_on_page': page_obj.start_index(),
+        'last_on_page': page_obj.end_index(),
+        'pages': paginator.num_pages,
+        'hits': paginator.count,
+        'page_range': paginator.page_range,
+        'latest':latest, 'liste_videos':liste_videos, 'membres':membres
+    },context_instance=RequestContext(request))
     
 @login_required
 def albums_liste(request, page):
