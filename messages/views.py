@@ -33,6 +33,14 @@ def index(request):
     else:
         eleve = request.user.get_profile()
         list_messages = Message.accessibles_par(eleve).exclude(lu=eleve)
+        paginator = Paginator(list_messages, 15)
+        page = request.GET.get('page')
+        try:
+            list_messages = paginator.page(page)
+        except PageNotAnInteger:
+            list_messages = paginator.page(1)
+        except EmptyPage:
+            list_messages = paginator.page(paginator.num_pages)
         return render_to_response('messages/index.html', {'list_messages': list_messages},context_instance=RequestContext(request))
 
 @login_required
