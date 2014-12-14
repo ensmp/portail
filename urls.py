@@ -46,6 +46,7 @@ urlpatterns = patterns('',
     (r'^admis/?$','faq.views.admis'),
     (r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt')),
     (r'^/?$','messages.views.index'),
+    (r'^2048/',include('2048.urls'))
 )
 
 urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),)
