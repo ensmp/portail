@@ -78,6 +78,26 @@
 </div>
 {% endfor %}
 </div>
+{% if list_messages.has_other_pages  %}
+<div class="pagination">
+  <ul>
+    {% if list_messages.has_previous %}
+    	<li><a href="?page={{ list_messages.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a></li>
+    	<li><a href="?page={{ list_messages.previous_page_number }}">{{ list_messages.previous_page_number }}</a></li>
+    {% else %}
+     	<li class="disabled"><a><span aria-hidden="true">&laquo;</span></a></li>
+   {% endif %}
+    <li class="active"><a>{{ list_messages.number }}</a></li>
+    {% if list_messages.has_next %}
+    	<li><a href="?page={{ list_messages.next_page_number }}">{{ list_messages.next_page_number }}</a></li>
+    	<li><a href="?page={{ list_messages.next_page_number }}"><span aria-hidden="true">&raquo;</span></a></li>
+    {% else %}
+     	<li class="disabled"><a><span aria-hidden="true">&raquo;</span></a></li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
+
 {% else %}
 <p>Bravo ! Tu as lu tous tes messages !</p>
 {% endif %}

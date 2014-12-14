@@ -24,14 +24,14 @@
 </div>
 {% if latest %}
 <div class="photo-gallery">
-	<ul class="gallery">
+    <ul class="gallery">
     {% for gallery in latest %}
         {% for photo in gallery.sample|slice:":1" %}
-		<li><a href="{{ gallery.get_absolute_url }}"><em>{{ gallery.title }}</em><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}" /></a></li>
+        <li><a href="{{ gallery.get_absolute_url }}"><em>{{ gallery.title }}</em><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}" /></a></li>
         {% endfor %}   
     {% endfor %}
-	</ul>
-	</div>
+    </ul>
+    </div>
 {% else %}
     <p>Aucun album trouvé.</p>
 {% endif %}
@@ -47,7 +47,7 @@
 {% endif %}
 {% endfor %}
 
-{% for video in liste_videos %}
+{% for video in object_list %}
 <iframe width="100%" height="315" src="{{ video.url }}" frameborder="0" allowfullscreen></iframe>
 <p class="legende">{{ video.titre }}</p>
 {% for adhesion in membres %}
@@ -59,6 +59,14 @@
 {% empty %}
 <p>Aucune vidéo publiée</p>
 {% endfor %}
+
+{% if is_paginated %}
+<p><br style="page-break-before: always;" clear="all" /></p> 
+<p>{{ hits }} vidéos.</p>
+<div id="page_controls">
+    <p>{% if has_previous %}<a href="{% url 'pl-gallery-archive' %}?page={{ previous }}">Précédente</a> | {% endif %} Page {{ page }} sur {{ pages }} {% if has_next %}| <a href="{% url 'pl-gallery-archive' %}?page={{ next }}">Suivante</a>{% endif %}</p>
+</div>
+{% endif %}
 </div>
 
 {% endblock %}
