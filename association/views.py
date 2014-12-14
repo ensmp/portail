@@ -69,7 +69,7 @@ def ajouter_membre(request, association_pseudo):
         if form.is_valid(): # Formulaire valide
             utilisateur = form.cleaned_data['eleve']
             fonction = form.cleaned_data['role']
-            if Adhesion.objects.filter(association=assoce, eleve=request.user).exists(): #Si l'eleve est membre de l'assoce
+            if Adhesion.objects.filter(association=assoce, eleve_id=request.user.get_profile().id).exists(): #Si l'eleve est membre de l'assoce
                 Adhesion.objects.create(eleve=utilisateur, association=assoce, role=fonction)
             return HttpResponseRedirect('/associations/'+assoce.pseudo+'/equipe/')
     else:
@@ -86,7 +86,7 @@ def supprimer_membre(request, association_pseudo):
         form = AdhesionSuppressionForm(assoce, request.POST) 
         if form.is_valid(): 
             utilisateur = form.cleaned_data['eleve']
-            if Adhesion.objects.filter(association=assoce, eleve=request.user).exists(): #Si l'eleve est membre de l'assoce
+            if Adhesion.objects.filter(association=assoce, eleve_id=request.user.get_profile().id).exists(): #Si l'eleve est membre de l'assoce
                 Adhesion.objects.filter(eleve=utilisateur, association=assoce).delete()
             return HttpResponseRedirect('/associations/'+assoce.pseudo)
     else:
@@ -101,7 +101,7 @@ def changer_ordre(request, association_pseudo):
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
     nombre_membres = Adhesion.objects.filter(association__pseudo = association_pseudo).count()
     if request.method == 'POST': 
-        if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():#Si l'eleve est membre de l'assoce
+        if Adhesion.objects.filter(association=assoce, eleve_id=request.user.get_profile().id).exists():#Si l'eleve est membre de l'assoce
             for i in range(1,nombre_membres+1):#Boucle sur les eleves
                 adhesion = get_object_or_404(Adhesion,eleve__user__username=request.POST['login-'+str(i)], association = assoce)#On recupert l'eleve par son login
                 adhesion.ordre = request.POST['position-'+str(i)]#On change sa position
@@ -115,7 +115,7 @@ def ajouter_affiche(request, association_pseudo):
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
     if request.method == 'POST':
         formset = AfficheForm(request.POST, request.FILES)
-        if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():# Si l'eleve est membre de l'assoce
+        if Adhesion.objects.filter(association=assoce, eleve_id=request.user.get_profile().id).exists():# Si l'eleve est membre de l'assoce
             if formset.is_valid():
                 affiche = formset.save(commit=False)
                 affiche.association = assoce
@@ -130,7 +130,7 @@ def ajouter_affiche(request, association_pseudo):
 def supprimer_affiche(request,association_pseudo,affiche_id):
     affiche = get_object_or_404(Affiche,pk=affiche_id)
     association = affiche.association
-    if Adhesion.objects.filter(association=association, eleve=request.user).exists():# Si l'eleve est membre de l'assoce
+    if Adhesion.objects.filter(association=association, eleve_id=request.user.get_profile().id).exists():# Si l'eleve est membre de l'assoce
         affiche.delete()
     return HttpResponseRedirect(association.get_absolute_url() + 'medias/')
 
@@ -141,7 +141,7 @@ def ajouter_video(request, association_pseudo):
     membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
     if request.method == 'POST':
         formset = VideoForm(request.POST, request.FILES)
-        if Adhesion.objects.filter(association=assoce, eleve=request.user).exists():# Si l'eleve est membre de l'assoce
+        if Adhesion.objects.filter(association=assoce, eleve_id=request.user.get_profile().id).exists():# Si l'eleve est membre de l'assoce
             if formset.is_valid():
                 video = formset.save(commit=False)
                 video.association = assoce
@@ -157,6 +157,6 @@ def ajouter_video(request, association_pseudo):
 def supprimer_video(request, association_pseudo, video_id):
     video = get_object_or_404(Video,pk=video_id)
     association = video.association
-    if Adhesion.objects.filter(association=association, eleve=request.user).exists():# Si l'eleve est membre de l'assoce
+    if Adhesion.objects.filter(association=association, eleve_id=request.user.get_profile().id).exists():# Si l'eleve est membre de l'assoce
         video.delete()
     return HttpResponseRedirect(association.get_absolute_url() + 'medias/')

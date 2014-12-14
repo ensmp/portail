@@ -31,4 +31,4 @@ class ObjetSuppressionForm(forms.Form):
 	
 	def __init__(self, user, *args, **kwargs):
 		super(ObjetSuppressionForm, self).__init__(*args, **kwargs)
-		self.fields['objettrouve'].queryset = ObjetTrouve.objects.filter(eleve=user)
+		self.fields['objettrouve'].queryset = ObjetTrouve.objects.filter(eleve__user_id=user.id)

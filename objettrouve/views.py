@@ -41,8 +41,8 @@ def supprimer(request):
 		form = ObjetSuppressionForm(request.user, request.POST)
 		if form.is_valid():
 			objet = form.cleaned_data['objettrouve']
-			if ObjetTrouve.objects.filter(id=objet.id, eleve=request.user).exists():
-				ObjetTrouve.objects.filter(id=objet.id, eleve=request.user).delete()
+			if ObjetTrouve.objects.filter(id=objet.id, eleve__user_id=request.user.id).exists():
+				ObjetTrouve.objects.filter(id=objet.id, eleve__user_id=request.user.id).delete()
 			return HttpResponseRedirect('/objetstrouves/')
 	else:
 		form = ObjetSuppressionForm(request.user)

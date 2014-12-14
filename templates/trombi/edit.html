@@ -52,6 +52,15 @@
 </td>
 </tr>
 <tr>
+<td>	
+<select name = "instrument" multiple="multiple">
+{% for instrument in instrument %}
+<option {% if maitrise in instruement.get_profile.maitrise.all %} selected="selected" {% endif %} value="{{ matrisie.instrument.nom }}">{{ maitrise.instrument.nom }} {{ maitrise.niveau|upper }}</option>
+{% endfor %}
+</select>
+</td>
+</tr><!--
+<tr>
 <td><label for="parrains">Parrain</label></td>
 <td>
 <select name = "parrains" multiple="multiple">
@@ -60,7 +69,7 @@
 {% endfor %}
 </select>
 </td>
-</tr>
+</tr>-->
 <tr>
 <td><label for="fillots">Fillot</label></td>
 <td>
@@ -87,6 +96,19 @@
 
 <script type="text/javascript">
 $("select").multiselect().multiselectfilter();
+
+/*$('select[name="instrument"]').multiselect({
+		minWidth: '250',
+		selectedList: 3,
+		selectedText: '# instruments sélectionnés',
+		noneSelectedText: 'CHoisir un intrument',
+		checkAllText: 'Tous',
+		uncheckAllText: 'Aucun',
+}).multiselectfilter({
+		label: "",
+		placeholder: "Entrez un instrument"
+});*/
+
 
 $('select[name="co"]').multiselect({
 		minWidth: '250',
