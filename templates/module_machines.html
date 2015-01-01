@@ -1,15 +1,14 @@
 <div id = "machines" class = "well sidebar-nav">
 	<p class = "well-header">Statut des machines</p>
 	{% load obtenir_status_machines %}
-	{% obtenir_status_machines as machine_list %}
+	{% obtenir_machines as liste_des_machines %}
 	<ul class="nav nav-list">
-	{% for machine in machine_list %}
+	{% for machine in liste_des_machines %}
 		{%if machine.etat %}
-		<li><img id="machineOk" class = "floatright" src="{{ STATIC_URL }}machines_ok.jpg"> 
-		<p class = "text-success" ><strong>{{ machine.nom }}</strong> : Libre</p></li>
+		<p class = "text-success" ><li><img id="machineOk" class = "floatright" src="{{ STATIC_URL }}machines_ok.png" height="20" width="20"> <strong>{{ machine.nom }} : Libre </strong></p></li>
 		{%else%}
-		<li><img id="machineKo" class = "floatright" src="{{ STATIC_URL }}machines_ko.jpg"> 
-		<p class = "text-success" ><strong>{{ machine.nom }}</strong> : Occupée</p></li>
+		<p class = "text-success" ><li><img id="machineKo" class = "floatright" src="{{ STATIC_URL }}machines_ko.png" height="20" width="20"> <strong>{{ machine.nom }} : Occupée </strong></p></li>
+		{% endif %}
 	{% endfor %}
 	</ul>
 </div>

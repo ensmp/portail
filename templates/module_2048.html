@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<div id = "2048" class = "well sidebar-nav">
+<link href="{{ STATIC_URL }}main.css" rel="stylesheet" type="text/css">
+	<p class = "well-header">2048</p>
+    <body>
+    	
+      <div class="game-container">
+      <div class="game-message">
+        <p></p>
+        <div class="lower">
+          <a class="keep-playing-button">Keep going</a>
+          <a class="retry-button">Try again</a>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+      </div>
+      </div>
+
+      <div class="tile-container">
+
+      </div>
+    </div>
+        <script type="text/javascript">
+        window.requestAnimationFrame(function () {
+  new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager);
+});
+        </script>
+    </body> 
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+  <script type="text/javascript" src="{{ STATIC_URL }}bind_polyfill.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}classlist_polyfill.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}animframe_polyfill.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}keyboard_input_manager.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}html_actuator.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}grid.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}tile.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}local_storage_manager.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}game_manager.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}application.js"></script>
+</div>

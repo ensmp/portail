@@ -1,7 +1,5 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.contrib.auth.models import User
-from trombi.models import UserProfile, Question, Reponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
@@ -16,6 +14,7 @@ import vobject
 import Image
 import json
 import os
+from machines.models import MachineProfile
 
     @csrf_exempt
 def machines_update(request):
@@ -31,7 +30,7 @@ def machines_update(request):
     for machine in json_machines:
         try:
             statutMachine = MachineProfile.objects.get(machine__nom = machine['nom'])
-            statutMachine.solde_octo = machine['etat']  
+            statutMachine.etat = machine['etat']  
             statutMachine.save()
         except MachineProfile.DoesNotExist:                
             pass

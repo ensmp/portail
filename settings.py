@@ -171,6 +171,7 @@ INSTALLED_APPS = (
     'mediamines',
     'objettrouve',
     'freshbox',
+    'machines',
     #Avatar, pour les avatars de trombi
     'avatar',
     #TinyMCE pour les messages
