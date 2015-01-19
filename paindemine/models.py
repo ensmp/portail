@@ -36,10 +36,8 @@ class Achat(models.Model):
  quantite = models.IntegerField() 
  commande = models.ForeignKey(Commande)
  lundi = models.BooleanField(default=False,blank=True)
- mardi = models.BooleanField(default=False,blank=True)
  mercredi = models.BooleanField(default=False,blank=True)
  jeudi = models.BooleanField(default=False,blank=True)
- vendredi = models.BooleanField(default=False,blank=True)
  
  def __unicode__(self):
   if self.commande.fermee:
@@ -51,27 +49,23 @@ class Achat(models.Model):
   jours= ""
   if self.lundi:
     jours = jours + " lundi"
-  if self.mardi:
-    jours = jours + " mardi"
   if self.mercredi:
     jours = jours + " mercredi"
   if self.jeudi:
     jours = jours + " jeudi"
-  if self.vendredi:
-    jours = jours + " vendredi"
   return jours
 
  def nb_jours(self):
   jours= 0
   if self.lundi:
     jours = jours + 1
-  if self.mardi:
-    jours = jours + 1
   if self.mercredi:
     jours = jours + 1
   if self.jeudi:
     jours = jours + 1
-  if self.vendredi:
-    jours = jours + 1
   return jours
   
+class UpdateSoldeForm(forms.Form):
+  eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())
+  credit = forms.FloatField()
+  debit = forms.FloatField()

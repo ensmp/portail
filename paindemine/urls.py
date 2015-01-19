@@ -9,5 +9,6 @@ urlpatterns = patterns('paindemine.views',
     url(r'^supprimer_tous_achats/$', 'supprimer_tous_achats', name='supprimer_tous_achats'),
     url(r'^fermer_commandes/$', 'fermer_commandes', name='fermer_commandes'),
 	url(r'^dernieres_commandes/$', 'dernieres_commandes_csv', name='dernieres_commandes'),
+    url(r'^soldespaindemine/$','soldespaindemine'),
 )
 

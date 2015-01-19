@@ -67,6 +67,7 @@ class UserProfile(models.Model):
     solde_freshbox = models.FloatField(default=0, verbose_name="solde freshbox")
     solde_mineshake = models.FloatField(default=0, verbose_name="solde mineshake")
     solde_bda = models.FloatField(default=0, verbose_name="solde bda")
+    solde_paindemine = models.FloatField(default=0, verbose_name = "solde pain de mine")
     
     # Statistiques des sondages
     victoires_sondages = models.IntegerField(editable=False, help_text="Le nombre de sondages auxquels l'élève a voté selon la majorité")
@@ -90,6 +91,10 @@ class UserProfile(models.Model):
     
     def update_solde_minesmarket(self,prix):
         self.solde_minesmarket = self.solde_minesmarket - float(prix)
+        self.save()    
+
+    def update_solde_paindemine(self,prix):
+        self.solde_paindemine = self.solde_paindemine - float(prix)
         self.save()
     
     def update_solde_freshbox(self,prix):

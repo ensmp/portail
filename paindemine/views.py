@@ -2,13 +2,16 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from trombi.models import UserProfile
 from paindemine.models import Produit, Commande, Achat
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.utils import simplejson
 from django.http import HttpResponseRedirect, HttpResponse
 from datetime import datetime
 from django.db.models import Max
+import json
+from paindemine.models import UpdateSoldeForm
+from django.contrib import messages
 
 @login_required
 def catalogue_pain(request):		
@@ -39,22 +42,16 @@ def acheter(request):
 		produit = get_object_or_404(Produit, id = request.POST['id'])
 		if request.POST['quantite'] != "0":
 			lundi = 0
-			mardi = 0
 			mercredi = 0
 			jeudi = 0
-			vendredi = 0
 			for jour in request.POST.getlist('jour'):
 				if 'lundi'== jour:
 					lundi=1
-				if 'mardi'== jour:
-					mardi=1
 				if 'mercredi'== jour:
 					mercredi=1
 				if 'jeudi'== jour:
 					jeudi=1
-				if 'vendredi'== jour:
-					vendredi=1	
-			achat = Achat.objects.create(commande = commande, produit = produit, quantite = request.POST['quantite'], lundi = lundi, mardi = mardi, mercredi = mercredi, jeudi = jeudi, vendredi = vendredi)		
+			achat = Achat.objects.create(commande = commande, produit = produit, quantite = request.POST['quantite'], lundi = lundi, mercredi = mercredi, jeudi = jeudi)		
 		return redirect('paindemine.views.commande')
 
 @login_required
@@ -108,3 +105,21 @@ def supprimer_tous_achats(request):
 		liste_achats = None	
 		total = 0
 	return redirect('paindemine.views.commande')
+
+@permission_required('paindemine.change_soldespaindemine')
+@login_required    
+# Crediter le compte d'un élève
+def soldespaindemine(request):
+    if request.method == 'POST': 
+        form = UpdateSoldeForm(request.POST) # formulaire associé aux données POST
+        if form.is_valid(): # Formulaire valide
+            utilisateur = form.cleaned_data['eleve']
+            credit = form.cleaned_data['credit']
+            debit = form.cleaned_data['debit']
+            utilisateur.update_solde_paindemine(-credit)
+            utilisateur.update_solde_paindemine(+debit)
+            messages.add_message(request, messages.INFO, "Le compte a bien été modifié.")
+            return redirect('paindemine.views.soldes')
+    else:
+        form = UpdateSoldeForm() # formulaire vierge
+    return render_to_response('paindemine/soldes.html', {'form': form,},context_instance=RequestContext(request))
