@@ -16,7 +16,7 @@ import json
 import os
 from machines.models import MachineProfile
 
-    @csrf_exempt
+@csrf_exempt
 def machines_update(request):
     """
         Mise à jour du statut des machines

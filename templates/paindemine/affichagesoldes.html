@@ -13,19 +13,24 @@
     <li><a href="/associations/paindemine/equipe/"><img src="{{ STATIC_URL }}user.png"/><span>Équipe</span></a></li>
     <li><a href="/associations/paindemine/medias/"><img src="{{ STATIC_URL }}clapperboard.png"/><span>Médias</span></a></li>
 	<li><a href="/associations/paindemine/catalogue_pain/"><img src="{{ STATIC_URL}}page_catalogue_pain.png"/><span>Catalogue</span></a></li>
-    <li class="active"><a href="/associations/paindemine/soldespaindemine/"><img src="{{ STATIC_URL }}page_soldespaindemine.png"/><span>Soldes</span></a></li>
-	<li><a href="/associations/paindemine/affichagesoldes/"><img src="{{ STATIC_URL }}page_comptes.png"/><span>Comptes</span></a></li>
+    <li><a href="/associations/paindemine/soldespaindemine/"><img src="{{ STATIC_URL }}page_soldespaindemine.png"/><span>Soldes</span></a></li>
+    <li class="active"><a href="/associations/paindemine/affichagesoldes/"><img src="{{ STATIC_URL }}page_comptes.png"/><span>Comptes</span></a></li>
 </ul>
 <hr />
 </div>
 {% endblock %}
 
 {% if perms.soldes_paindemine %}
+
+{{l}}
 {% block content %}
-<form action="" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Valider" />
-</form>
+<p>
+	
+{% for eleve,solde in liste_eleve %}
+
+ {{eleve}} : {{solde}} <br \>
+
+{% endfor %}
+</p>
 {% endblock %}
 {% endif %}

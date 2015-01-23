@@ -119,7 +119,20 @@ def soldespaindemine(request):
             utilisateur.update_solde_paindemine(-credit)
             utilisateur.update_solde_paindemine(+debit)
             messages.add_message(request, messages.INFO, "Le compte a bien été modifié.")
-            return redirect('paindemine.views.soldes')
+            return redirect('paindemine.views.soldespaindemine')
     else:
         form = UpdateSoldeForm() # formulaire vierge
     return render_to_response('paindemine/soldes.html', {'form': form,},context_instance=RequestContext(request))
+
+@permission_required('paindemine.change_soldespaindemine')
+@login_required    
+# Crediter le compte d'un élève
+def affichagesoldes(request):
+
+    mineur_list = UserProfile.objects.promos_actuelles(3)
+    liste_eleves = []
+    for eleve in mineur_list :
+    	if eleve.solde_paindemine != 0:
+    		liste_eleves.append((u'{0} {1}'.format(eleve.first_name, eleve.last_name),eleve.solde_paindemine))
+
+    return render_to_response('paindemine/affichagesoldes.html', {'liste_eleve' : liste_eleves},context_instance=RequestContext(request))

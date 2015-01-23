@@ -66,6 +66,6 @@ class Achat(models.Model):
   return jours
   
 class UpdateSoldeForm(forms.Form):
-  eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())
-  credit = forms.FloatField()
-  debit = forms.FloatField()
+ eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())
+ credit = forms.FloatField()
+ debit = forms.FloatField()
