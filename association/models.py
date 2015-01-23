@@ -164,6 +164,9 @@ class AdhesionAjoutForm(forms.Form):
         ### On retire les membres actuels de la liste
         self.fields['eleve'].queryset = UserProfile.objects.exclude(id__in = [m.id for m in association.membres.all()])
         
+class AdhesionModificationForm(forms.Form):
+    role = forms.CharField(max_length=100, required=False)
+
 class AdhesionSuppressionForm(forms.Form):
 
     eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())

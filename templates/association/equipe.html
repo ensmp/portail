@@ -30,7 +30,8 @@
 {% if request.user = adhesion.eleve.user %}
 <p class="actions"><a href="/associations/{{association.pseudo}}/equipe/ajouter_membre/"><img src="{{ STATIC_URL }}user_add.png" title="Ajouter un membre"></a>
 <a href="/associations/{{association.pseudo}}/equipe/supprimer_membre/"><img src="{{ STATIC_URL }}user_delete.png" title="Supprimer un membre"></a>
-<a href="/associations/{{association.pseudo}}/equipe/changer_ordre/"><img src="{{ STATIC_URL }}user_ordre.png" title="Changer l'ordre"></a></p>
+<a href="/associations/{{association.pseudo}}/equipe/changer_ordre/"><img src="{{ STATIC_URL }}user_ordre.png" title="Changer l'ordre"></a>
+<a href="/associations/{{association.pseudo}}/equipe/changer_role/"><img src="{{ STATIC_URL }}user_role.png" title="Changer le rôle"></a></p>
 {% endif %}
 {% endfor %}
 
@@ -38,7 +39,8 @@
 	{% for adhesion in membres %}
 		<div class="portrait">
 		<img src="{{ STATIC_URL }}{{ adhesion.eleve.user.username }}.jpg" />
-		<p><a href = "{{ adhesion.eleve.get_absolute_url }}">{{ adhesion.eleve.first_name }} {{ adhesion.eleve.last_name|upper }}</a> {% if adhesion.role != "" %}<br>({{adhesion.role}}){% endif %}</p>
+		<p><a href = "{{ adhesion.eleve.get_absolute_url }}">{{ adhesion.eleve.first_name }} {{ adhesion.eleve.last_name|upper }}</a> {% if adhesion.role != "" %}<br />({{adhesion.role}}){% endif %}
+            {% if changer_role %}<br /><br /><a href="/associations/{{ association.pseudo }}/equipe/changer_role/{{ adhesion.id }}">Modifier le rôle</a><br />{% endif %}</p>
 		</div>
 	{% endfor %}
 </div>
