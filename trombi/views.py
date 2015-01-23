@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 from trombi.models import UserProfile, Question, Reponse
 from django.contrib.auth.decorators import login_required
@@ -12,12 +13,15 @@ from django.utils import simplejson
 from django.conf import settings
 from urllib import urlretrieve
 from bda.models import Instrument, Maitrise
+from django.views.generic import CreateView, UpdateView, DeleteView
 import subprocess
 import vobject
 import Image
 import json
 import os
 from settings import SECRET_KEY_UPDATE
+from django.forms import ModelForm
+
 
 @login_required
 def trombi(request):
@@ -134,6 +138,64 @@ def edit(request):
         #liste_maitrise = Maitrise.all()
         return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'promo_inferieure': promo_inferieure, 'promo_superieure': promo_superieure, 'autres_eleves': autres_eleves, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses}, context_instance=RequestContext(request))
         #return render_to_response('trombi/edit.html', {'mineur': mineur.user, 'promo_inferieure': promo_inferieure, 'promo_superieure': promo_superieure, 'autres_eleves': autres_eleves, 'liste_questions': liste_questions, 'liste_reponses': liste_reponses, 'instruments'=liste_instruments, 'maitrises'=liste_maitrise}, context_instance=RequestContext(request))
+
+
+
+
+@login_required
+def edit_instruments(request):
+    """Mise à jour des instruments maitrisés d'un profil"""
+    mineur = request.user.get_profile()
+    if request.method == 'POST':
+        update_profile(mineur, surnom=request.POST['surnom'], phone=request.POST['phone'], chambre=request.POST['chambre'], option=request.POST['option'], co= request.POST.getlist('co'), parrains=request.POST.getlist('parrains'), fillots=request.POST.getlist('fillots'))
+        # Le profil a été mis a jour, on update les questions
+        for question in Question.objects.all():
+            try:
+                reponse_user = mineur.reponses.get(question=question)
+                reponse_user.contenu = request.POST['question_'+str(question.id)]
+                reponse_user.save()
+            except Reponse.DoesNotExist:                
+                reponse_user = Reponse.objects.create(question=question, contenu=request.POST['question_'+str(question.id)])
+                reponse_user.save()
+                mineur.reponses.add(reponse_user)      
+        mineur.save()
+        return redirect(profile)
+    else:
+        return render_to_response('trombi/edit_instruments.html', {'mineur': mineur.user}, context_instance=RequestContext(request))
+
+
+class ModifierMaitriseForm(ModelForm):
+    class Meta:
+        model = Maitrise
+        exclude = ('eleve',)
+
+
+class AjouterMaitrise(CreateView):
+    model = Maitrise
+    form_class = ModifierMaitriseForm
+    template_name = 'trombi/form_instruments.html'
+    success_url = reverse_lazy('trombi.views.edit_instruments')
+
+    def form_valid(self, form):
+        maitrise = Maitrise()
+        maitrise.eleve = get_object_or_404(UserProfile,user=self.request.user)
+        maitrise.instrument = form.cleaned_data['instrument']
+        maitrise.niveau = form.cleaned_data['niveau']
+        maitrise.save()
+        return render_to_response('trombi/edit_instruments.html', {'mineur': self.request.user}, context_instance=RequestContext(self.request))
+
+
+class ModifierMaitrise(UpdateView):
+    model = Maitrise
+    form_class = ModifierMaitriseForm
+    template_name = 'trombi/form_instruments.html'
+    success_url = reverse_lazy('trombi.views.edit_instruments')
+
+class SupprimerMaitrise(DeleteView):
+    model = Maitrise
+    template_name = 'trombi/form_instruments.html'
+    success_url = reverse_lazy('trombi.views.edit_instruments')
+
 
 @login_required
 def get_vcf(request):
@@ -287,3 +349,5 @@ def graphe_mine(request):
         subprocess.call(["neato","-Tpng",chemin_dot,"-Goverlap=false","-o",chemin_png])
     url  = os.path.join(settings.MEDIA_URL, "trombi/graphe_mine"+str(nombre_promos)+".png")
     return render_to_response('trombi/graphe-mine.html', {'url': url}, context_instance=RequestContext(request))
+
+

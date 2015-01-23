@@ -241,6 +241,8 @@ class UserProfile(models.Model):
         from petitscours.models import PetitCours
         return PetitCours.objects.filter(attribue_a = self.user).count()
 
+
+
 def create_user_profile(sender, instance, created, **kwargs):
     """Crée automatiquement un profil associé lorsqu'un utilisateur est créé"""
     if created:

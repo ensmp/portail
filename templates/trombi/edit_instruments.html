@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}trombi.css" />
+{% endblock %}
+
+{% block content %}
+{% load avatar_tags %}
+
+<div id="picture" class="pull-right">
+<!--<img src="{{ STATIC_URL }}{{ mineur.username }}.jpg" />-->
+<img src = {% avatar_url mineur %}>
+</div>
+
+<h2>{{ mineur.get_profile.first_name }} {% if mineur.get_profile.surnom %}"{{ mineur.get_profile.surnom}}"{% endif %} {{ mineur.get_profile.last_name|upper }}</h2>
+
+{% if mineur.get_profile.maitrise_set.all %}
+<p><strong>Instruments</strong> : </p>
+<ul>
+    {% for maitrise in mineur.get_profile.maitrise_set.all %}
+        <li>
+        {{ maitrise.instrument }} - <em>{{ maitrise.niveau }}</em> - <a href="/people/instruments/modifier/{{ maitrise.id }}">Modifier</a>/<a href="/people/instruments/supprimer/{{ maitrise.id }}">Supprimer</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<p><a href="/people/instruments/ajouter/">Ajouter un instrument</a></p>
+
+{% endblock %}
