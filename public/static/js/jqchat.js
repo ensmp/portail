@@ -8,12 +8,20 @@ var timestamp = 0;
 var url = null;
 
 // How often to call updates (in milliseconds)
-var CallInterval = 8000;
+var CallInterval = 1000;
 // ID of the function called at regular intervals.
 var IntervalID = 0;
 
 // A callback function to be called to further process each response.
 var prCallback = null;
+
+var loadedOnce = false;
+
+var unreadMessages = 0;
+
+var origTitle = document.title;
+
+var importantWords = ["philippe", "hitman", "piche"];
 
 function callServer(){
 	// At each call to the server we pass data.
@@ -28,15 +36,40 @@ function callServer(){
 	};
 
 function processResponse(payload) {
+
+	//If window active, reset unreadMessages counter and window title
+	if (!document.hidden){
+		unreadMessages = 0;
+		document.title = origTitle;
+	}
+
 	// if no new messages, return.
 	if(payload.status == 0) return;
 	// Get the timestamp, store it in global variable to be passed to the server on next call.
 	timestamp = payload.time;
-		
+
+
 	
 	for(message in payload.messages) {
-		$("#chatwindow").append(payload.messages[message].text);
+		messageText = payload.messages[message].text;
+		$("#chatwindow").append(messageText);
+		if (loadedOnce){
+			pattern = "@" + myPseudo();
+			if (messageText.search(pattern) > -1){
+				if (document.hidden){
+					unreadMessages++;
+					document.title = "[" + unreadMessages + "] " + origTitle;
+				}
+				document.getElementById("notifSoundPlayer").play();
+			}
+			for (importantWord in importantWords){
+				if (messageText.toLowerCase().search(importantWords[importantWord]) > -1){
+					document.getElementById("importantSoundPlayer").play();
+				}
+			}
+		}
 	}
+	loadedOnce = true;
 	// Scroll down if messages fill up the div.
 	var objDiv = document.getElementById("chatwindow");
 	objDiv.scrollTop = objDiv.scrollHeight;
