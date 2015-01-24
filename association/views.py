@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from association.models import Association, Adhesion, Affiche, Video, AdhesionAjoutForm, AdhesionSuppressionForm, AfficheForm, VideoForm
+from association.models import Association, Adhesion, Affiche, Video, AdhesionAjoutForm, AdhesionModificationForm, AdhesionSuppressionForm, AfficheForm, VideoForm
 from trombi.models import UserProfile
 from messages.models import Message
 from evenement.models import Evenement
@@ -76,6 +76,42 @@ def ajouter_membre(request, association_pseudo):
         form = AdhesionAjoutForm(assoce) # formulaire vierge
 
     return render_to_response('association/admin.html', {'form': form,},context_instance=RequestContext(request))
+
+@login_required    
+# Changer le rôle d'un membre à une association
+def changer_role(request, association_pseudo, eleve_id):
+    association = get_object_or_404(Association,pseudo=association_pseudo)
+    #On vérifie que l'association n'est pas cachée au membre.
+    if association.est_cachee_a(request.user.get_profile()):
+        return redirect(index)
+    membres = Adhesion.objects.filter(association__pseudo = association_pseudo).order_by('-ordre', 'eleve__last_name')
+    #On vérifie que l'utilisateur fait partie de l'association
+    if not membres.filter(eleve_id=request.user.get_profile().id).exists():
+        return render_to_response('association/equipe.html', {'association' : association, 'membres': membres},context_instance=RequestContext(request))
+    
+    #Si on a choisi un élève à modifier
+    if eleve_id:
+
+        #On récupère l'élève à modifier ou on redirige vers la page de l'équipe
+        try:
+            eleve = membres.get(id=eleve_id)
+        except Adhesion.DoesNotExist:
+            return render_to_response('association/equipe.html', {'changer_role':True, 'association' : association, 'membres': membres},context_instance=RequestContext(request))    
+
+        if request.method == 'POST':
+            form = AdhesionModificationForm(request.POST)
+            if form.is_valid():
+                #On modifie le rôle et on redirige
+                eleve.role = form.cleaned_data['role']
+                eleve.save()
+                return HttpResponseRedirect('/associations/' + association_pseudo + '/equipe/')
+        else:
+            form = AdhesionModificationForm({'role':eleve.role})
+        #On envoie sur la page du formulaire
+        return render_to_response('association/admin.html', {'changer_role':True, 'form':form, 'association' : association, 'membres': membres},context_instance=RequestContext(request))
+    else:
+        #On envoie sur la page avec la présentation de l'équipe ET des liens pour modifier.
+        return render_to_response('association/equipe.html', {'changer_role':True, 'association' : association, 'membres': membres},context_instance=RequestContext(request))
     
     
 @login_required    
