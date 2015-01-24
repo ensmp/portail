@@ -184,6 +184,9 @@ GameManager.prototype.move = function (direction) {
 
     if (!this.movesAvailable()) {
       this.over = true; // Game over!
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/2048/2048/givescore/?score=" + this.score, true);
+      xhr.send()
     }
 
     this.actuate();

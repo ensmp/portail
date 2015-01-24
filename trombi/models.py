@@ -75,6 +75,10 @@ class UserProfile(models.Model):
     score_victoires_sondages = models.FloatField(editable=False, help_text="Le rang au classement Wilson des consensuels dans les statistiques des sondages")
     score_defaites_sondages = models.FloatField(editable=False, help_text="Le rang au classement Wilson des libres penseurs dans les statistiques des sondages")
 
+    # Statistiques jeux
+
+    meilleur_score_2048 = models.IntegerField(default=0, blank=True, null=True, editable=False, help_text="Meilleur score à 2048")
+
     ################
     ### Méthodes ###
     ################

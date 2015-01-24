@@ -65,11 +65,28 @@
       </div>
     </div>
 
-    <p class="game-explanation">
-      <strong class="important">Comment jouer:</strong> Utilisez vos <strong>fleches directionnelles</strong> pour déplacer les cases. Quand deux cases contenant le même nombre se touchent, elles <strong>fusionnent en une seule !</strong>
-      <br/>
-      Created by Gabrielle Circulli. Based on 1024 by Veewo Studia and conceptually similar to Threes by Asher Vollmer
-    </p>
+<div class="row">
+    <div class="span12 pagination-centered">
+    <h3>Meilleurs scores</h3>        
+  <table style="margin:0 auto;">
+  <caption>De tous les temps</caption>
+  <thead>
+    <tr>
+      <th>Élève</th>      
+      <th>Meilleur Score</th>
+    </tr>
+  </thead> <!--|floatformat:1-->
+  <tbody>
+  {% for eleve in liste_eleves_score %}
+  <tr>
+  <td><a href = "{{eleve.get_absolute_url }}">{{ eleve.first_name }} {{eleve.last_name }}</a></td>
+  <td>{{ eleve.meilleur_score_2048 }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+  </div>
+</div>
   </div>
 
 
