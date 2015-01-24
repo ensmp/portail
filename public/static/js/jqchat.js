@@ -8,7 +8,7 @@ var timestamp = 0;
 var url = null;
 
 // How often to call updates (in milliseconds)
-var CallInterval = 1000;
+var CallInterval = 8000;
 // ID of the function called at regular intervals.
 var IntervalID = 0;
 
