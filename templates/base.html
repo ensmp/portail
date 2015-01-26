@@ -49,6 +49,14 @@
 
   <body>
 
+  	<!-- Returns pseudo of logged user -->
+
+  	<script type="text/javascript">
+	  	function myPseudo(){
+	  		return "{{ user.username }}";
+	  	}
+  	</script>
+
 	<!--Google Analytics -->
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
@@ -107,5 +115,11 @@
     <script src="{{ STATIC_URL }}bootstrap-button.js"></script>
     <script src="{{ STATIC_URL }}bootstrap-collapse.js"></script>
 	<script src="{{ STATIC_URL }}twitter-bootstrap-hover-dropdown.min.js"></script>
+
+
+	<!-- Chat Notification Sound -->
+
+	<audio id="notifSoundPlayer" src="/media/beep.wav" hidden="true"></audio>
+	<audio id="importantSoundPlayer" src="/media/piche.wav" hidden="true"></audio>
 
 </body></html>
