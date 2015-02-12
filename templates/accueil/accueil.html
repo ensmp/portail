@@ -2,7 +2,7 @@
 
 
 {% block content %}
-
+{% csrf_token %}
 <h1>Le mot du président</h1>
 
 <img class="pull-right img-polaroid" src="{{ STATIC_URL }}prez.png"/>
