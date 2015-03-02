@@ -94,7 +94,8 @@ class Ajax(object):
     
             if action == 'postmsg':
                 msg_text = self.request.POST['message'].replace("\\", "\\\\")
-    
+                msg_text = ' '.join(msg_text.split())
+                
                 if len(msg_text.strip()) > 0: # Ignore empty strings.
                     Message.objects.create_message(self.request.user, self.ThisRoom, msg_text)
         else:
