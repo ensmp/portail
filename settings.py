@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'notification',
     'trombi',
+    'radiopsl',
     'association',
     'messages',
     'recherche',

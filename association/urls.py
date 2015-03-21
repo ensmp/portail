@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^pr/clips/$', 'pr.views.clips'),
     url(r'^mineshake/', include('mineshake.urls')),
     url(r'^S3/', include('S3.urls')),
+    url(r'^radiopsl/', include('radiopsl.urls')),
 )
 
 # Views du module association

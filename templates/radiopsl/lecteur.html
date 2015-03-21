@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_radiopsl.png">Radio PSL</h1>
+<ul class="nav nav-pills">
+    <li><a href="/associations/radiopsl/messages/"><img src="{{ STATIC_URL }}mail.png"/><span>Messages</span></a></li>
+    <li><a href="/associations/radiopsl/evenements/"><img src="{{ STATIC_URL }}date.png"/><span>Événements</span></a></li>
+    <li><a href="/associations/radiopsl/equipe/"><img src="{{ STATIC_URL }}user.png"/><span>Équipe</span></a></li>
+    <li><a href="/associations/radiopsl/medias/"><img src="{{ STATIC_URL }}clapperboard.png"/><span>Médias</span></a></li>
+    <li class="active"><a href="/associations/radiopsl/lecteur/"><img src="{{ STATIC_URL }}page_lecteur.png"/><span>Lecteur</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+{% block content %}
+<iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fundefined&color=black_white&size=64" style="width: 64px; height: 64px;"></iframe>
+{% endblock %}
+
+
