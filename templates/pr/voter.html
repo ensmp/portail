@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_pr.png">PR</h1>
+
+<ul class="nav nav-pills">
+<li><a href="/associations/pr/messages/"><img src="{{ STATIC_URL}}mail.png"/><span>Messages</span></a></li>
+<li><a href="/associations/pr/evenements/"><img src="{{ STATIC_URL}}date.png"/><span>Évenements</span></a></li>
+<li><a href="/associations/pr/equipe/"><img src="{{ STATIC_URL}}user.png"/><span>Équipe</span></a></li>
+<li><a href="/associations/pr/medias/"><img src="{{ STATIC_URL}}clapperboard.png"/><span>Médias</span></a></li>
+<li><a href="/associations/pr/clips/"><img src="{{ STATIC_URL}}page_clips.png"/><span>Clips</span></a></li>
+<li class="active"><a href="/associations/pr/voter/"><img src="{{ STATIC_URL}}page_voter.png"/><span>Voter</span></a></li>
+</ul>
+<hr />
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div style="text-align:center">
+{% if not peut_voter %}
+	{% if deja_vote %}
+		<p class="text-error">Vous avez déjà voté</p>
+	{% elif debut_vote %}
+		<p class="text-info">Début des votes dans {{ debut_vote|timeuntil }}</p>
+	{% else %}
+		<p class="text-error">Fin des votes en ligne</p>
+		{% if request.user.is_superuser %}
+		<a href = "/associations/pr/resultats/">Voir les résultats</a>
+		{% endif %}
+	{% endif %}
+{% else %}
+	<p class="text-info">Fin des votes dans {{ fin_vote|timeuntil }}</p>
+	{% for liste in listes %}
+	<div class = "pull-left" style="width:48%;">		
+	<form method="post" action="">
+	{% csrf_token %}
+	<img src = "{{ STATIC_URL }}{{ liste.nom|lower }}.png" style="height:95%"/>
+	<input type = "hidden" name = "choix" value="{{ liste.nom }}"></input>
+	<input type = "submit" value = "Je vote {{ liste.nom }}"></input>
+	</form>
+	</div>
+	{% endfor %}
+	
+{% endif %}
+<br />
+</div>
+
+{% endblock %}
