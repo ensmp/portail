@@ -52,9 +52,9 @@ class VoteCesurien(models.Model):
     def __unicode__(self):
         return self.eleve.user.username"""
 
-class Candidat(models.Model):    
-    nom = models.CharField(max_length=32)
-    nbVotes = models.IntegerField(max_length=7)
+class Candidat(models.Model):    #C'est la petite zoé qui veut faire de la balançoire mais elle n'y arrive pas? 
+    nom = models.CharField(max_length=32)   #Pourquoi ?
+    nbVotes = models.IntegerField(max_length=7) #Parce qu'elle n'a pas de bras ... merci 13Jougla
     debut_vote = models.DateTimeField(default=datetime.now)
     fin_vote = models.DateTimeField(default=datetime.now)
     
@@ -66,4 +66,4 @@ class Vote(models.Model):
     eleve = models.ForeignKey(UserProfile, related_name="votes")
     
     def __unicode__(self):
-        return self.eleve.user.username
+        return 'vote de ' + self.eleve.user.username + ' pour ' + self.liste.nom

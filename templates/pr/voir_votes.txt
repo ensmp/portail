@@ -1,0 +1,2 @@
+{% for vote in liste_votes %}vote de {{ vote.eleve.user.username }} pour {{ vote.liste.nom }}
+{% endfor %}

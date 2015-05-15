@@ -93,16 +93,21 @@ def voter(request):
 @permission_required('pr.add_liste')
 def resultats(request):
     listes = Candidat.objects.filter(debut_vote__lte = datetime.datetime.now())
-    """
-    k = listes2A.count()
-    if k>=1 :
-    	for nb in range(0,k-1) :
-    		n_votes_2A = Vote.objects.filter(liste = listes2A[nb]).count()
-
-    k = listesCesurien.count()
-    if k>=1 :
-    	for nb in range(0,k-1) :
-    		n_votes_Cesurien = Vote.objects.filter(liste = listesCesurien[nb]).count()"""
-
-    #return render_to_response('pr/resultats.html', {'listes2A':listes2A, 'listesCesurien':listesCesurien, 'n_votes_2A':n_votes_2A, 'n_votes_Cesurien':n_votes_Cesurien}, context_instance=RequestContext(request))
     return render_to_response('pr/resultats.html', {'listes':listes}, context_instance=RequestContext(request))
+
+@login_required
+@permission_required('pr.add_liste')
+def voir_votes(request):   
+    liste_votes = Vote.objects.all()
+    return liste_votes
+    
+def voir_votes_csv(request):
+    from django.template import loader, Context
+    liste_votes = voir_votes(request)
+    response = HttpResponse(mimetype='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename=voir_votes.csv'
+
+    t = loader.get_template('pr/voir_votes.txt')
+    c = Context({'liste_votes': liste_votes})
+    response.write(t.render(c))
+    return response
