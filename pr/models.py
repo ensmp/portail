@@ -20,40 +20,9 @@ class Clip(models.Model):
 	def __unicode__(self):
 		return self.titre
 	
-"""class DeuxA(models.Model):    
-    nom = models.CharField(max_length=32)
-    nbVotes = models.IntegerField(max_length=7)
-    debut_vote = models.DateTimeField(default=datetime.now)
-    fin_vote = models.DateTimeField(default=datetime.now)
-    
-    def __unicode__(self):
-        return self.nom        
-        
-class Cesurien(models.Model):    
-    nom = models.CharField(max_length=32)
-    nbVotes = models.IntegerField(max_length=7)
-    debut_vote = models.DateTimeField(default=datetime.now)
-    fin_vote = models.DateTimeField(default=datetime.now)
-    
-    def __unicode__(self):
-        return self.nom 
 
-class Vote2A(models.Model):
-    liste = models.ForeignKey(DeuxA)
-    eleve = models.ForeignKey(UserProfile, related_name="votes_2A")
-    
-    def __unicode__(self):
-        return self.eleve.user.username
-
-class VoteCesurien(models.Model):
-    liste = models.ForeignKey(Cesurien)
-    eleve = models.ForeignKey(UserProfile, related_name="votes_Cesurien") 
-
-    def __unicode__(self):
-        return self.eleve.user.username"""
-
-class Candidat(models.Model):    #C'est la petite zoé qui veut faire de la balançoire mais elle n'y arrive pas? 
-    nom = models.CharField(max_length=32)   #Pourquoi ?
+class Candidat(models.Model):    #C'est la petite zoe qui veut faire de la balancoire mais elle n'y arrive pas. 
+    nom = models.CharField(max_length=32)   #Pourquoi 
     nbVotes = models.IntegerField(max_length=7) #Parce qu'elle n'a pas de bras ... merci 13Jougla
     debut_vote = models.DateTimeField(default=datetime.now)
     fin_vote = models.DateTimeField(default=datetime.now)
