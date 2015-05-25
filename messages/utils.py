@@ -1,6 +1,6 @@
 import re
 from urlparse import urljoin
-from BeautifulSoup import BeautifulSoup, Comment
+from bs4 import BeautifulSoup, Comment
  
 def sanitizeHtml(value, base_url=None):
     rjs = r'[\s]*(&#x.{1,7})?'.join(list('javascript:'))
