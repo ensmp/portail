@@ -33,7 +33,7 @@ def trombi(request):
 @login_required
 def trombi_assos(request):
     """Le trombinoscope des élèves des Mines. N'affique que les 1A, 2A, 3A, et 4A"""    
-    mineur_list = UserProfile.objects.promos_actuelles(1)
+    mineur_list = UserProfile.objects.promos_actuelles(2)
     adhesions = Adhesion.objects.all()
     assoces = Association.objects.all()
     return render_to_response('trombiassos/trombi.html', {'mineur_list': mineur_list,'assoces':assoces,'adhesions':adhesions}, context_instance = RequestContext(request))
