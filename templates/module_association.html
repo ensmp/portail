@@ -4,7 +4,8 @@
 <div id="assoce" class="well">
     <h3>Associations</h3>
     <ul class="liste_assoce">
-    {% load obtenir_pages_abatage %}
+    <!--
+	{% load obtenir_pages_abatage %}
     {% obtenir_pages_associations_abatage %}
     {% for association, page in abatage_pages_associations.items %}
         <li>
@@ -14,5 +15,17 @@
         </p>
         </li>
     {% endfor %}
+	<ul class="liste_assoce">
+	-->
+	{% for association in assoces %}
+		<li>
+		<p>
+		<a href = "/associations/{{ association.pseudo }}"><img src="{{ STATIC_URL }}logo_{{ association.pseudo }}.png"/>
+		<br/>
+		{{ association.nom }}</a>
+		</p>
+		</li>
+	{% endfor %}
+</ul>
     </ul>
 </div>
