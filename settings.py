@@ -173,6 +173,7 @@ INSTALLED_APPS = (
     'objettrouve',
     'freshbox',
     'machines',
+    '1y1b',
     #Avatar, pour les avatars de trombi
     'avatar',
     #TinyMCE pour les messages

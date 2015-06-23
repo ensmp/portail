@@ -1,0 +1,77 @@
+[
+    {
+        "pk": 1, 
+        "model": "mediamines.watermark", 
+        "fields": {
+            "opacity": 0.8, 
+            "image": "mediamines/watermarks/watermark_1.png", 
+            "style": "bd", 
+            "name": "Watermark MediaMines", 
+            "description": ""
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "mediamines.photosize", 
+        "fields": {
+            "name": "admin_thumbnail", 
+            "watermark": null, 
+            "increment_count": false, 
+            "effect": null, 
+            "crop": true, 
+            "height": 130, 
+            "width": 180, 
+            "upscale": false, 
+            "pre_cache": false, 
+            "quality": 70
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "mediamines.photosize", 
+        "fields": {
+            "name": "thumbnail", 
+            "watermark": null, 
+            "increment_count": false, 
+            "effect": null, 
+            "crop": true, 
+            "height": 130, 
+            "width": 180, 
+            "upscale": false, 
+            "pre_cache": false, 
+            "quality": 70
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "mediamines.photosize", 
+        "fields": {
+            "name": "display", 
+            "watermark": 1, 
+            "increment_count": false, 
+            "effect": null, 
+            "crop": false, 
+            "height": 600, 
+            "width": 800, 
+            "upscale": false, 
+            "pre_cache": false, 
+            "quality": 70
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "mediamines.photosize", 
+        "fields": {
+            "name": "module", 
+            "watermark": null, 
+            "increment_count": false, 
+            "effect": null, 
+            "crop": true, 
+            "height": 200, 
+            "width": 200, 
+            "upscale": true, 
+            "pre_cache": false, 
+            "quality": 70
+        }
+    }
+]

@@ -1,0 +1,21 @@
+
+<div class = "pagination-centered">
+	<h1>Identification au Portail des élèves</h1>
+	
+
+<form method="post" action="{{ request.path }}">
+{% csrf_token %}
+<table class = "edit">
+<tr>
+<td><label for="login">Login</label></td>
+<td><input type="text" id="login"  name="login"></td>
+</tr>
+<tr>
+<td><label for="mdp">Mot de passe</label></td>
+<td><input type="password" id="mdp" name="mdp"></td>
+</tr>
+</table>
+<input type="submit" />
+</form>
+    
+    </div>
