@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_vp.png">Voyage Promo</h1>
+
+<ul>
+<li><a href="/associations/vp/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li><a href="/associations/vp/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
+<li><a href="/associations/vp/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li><a href="/associations/vp/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
+</ul>
+
+<ul class="supplementaire">
+<li id="actif"><a href="/associations/vp/destinations/"><img src="{{ STATIC_URL}}page_destinations.png"><span>Destinations</span></a></li>
+</ul>
+
+<hr>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<h1 style="text-align:center">Mexique – Péninsule du Yucatan</h1>
+<div style="text-align:center">
+<img src="{{ STATIC_URL }}vp_mexique.jpg" style="width:494px;"/>
+</div>
+<p>Difficile de faire le tour des richesses du Mexique ! Si la capitale, Mexico, est déjà un monde en soir, le reste du pays brille par sa diversité : c'est donc sur la côte est que nous avons donc choisi de vous emmener découvrir la <strong>péninsule du Yucatan</strong>.</p>
+<p>Laissez-vous charmer par les <strong>villes coloniales de Valladolid et de Mérida</strong>.</p>
+<p>Partez à la découverte des <strong>vestiges de la grandeur passée des Mayas</strong> sur les sites de <strong>Chichen Itza et de Tulum</strong>.</p>
+<p><strong>Détendez-vous et amusez-vous</strong> sur les plus belles plages mexicaines, <strong>à Playa del Carmen</strong>.</p>
+
+<p>Le programme ci-dessous est donné ici à titre indicatif pour une dizaine de jours. Il est susceptible d’être en partie modifié :</p>
+
+<ul>
+<li>Découverte de Valladolid, la plus ancienne ville du Yucatan, qui a conservé son charme et sa saveur coloniale et visite d'une fabrique de tissus traditionnels mexicains.</li>
+<li>Visite de l'incontournable site archéologique de Chichen Itza, édifié par les Mayas et remanié par les Aztèques, classé au patrimoine mondial de l'UNESCO.</li>
+<li>Visite de Merida, ancienne ville coloniale.</li>
+<li>Excursion en pleine nature, à la découverte de la faune et la flore locale</li>
+<li>Trois jours de balnéaire all inclusive à Playa del Carmen, près de Cancun</li>
+</ul>
+<p>Estimation du prix du voyage : <strong>1500 – 1600 €/pers</strong>.</p>
+
+{% endblock %}

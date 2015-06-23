@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_vp.png">Voyage Promo</h1>
+
+<ul>
+<li><a href="/associations/vp/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li><a href="/associations/vp/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
+<li><a href="/associations/vp/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li><a href="/associations/vp/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
+</ul>
+
+<ul class="supplementaire">
+<li id="actif"><a href="/associations/vp/destinations/"><img src="{{ STATIC_URL}}page_destinations.png"><span>Destinations</span></a></li>
+</ul>
+
+<hr>
+</div>
+{% endblock %}
+
+{% block content %}
+<div style="text-align:center;">
+<h1 >Les Destinations</h1>
+<ul style="font-size:20px;">
+<li><a href="cuba/">Cuba</a></li>
+<li><a href="bali/">Bali</a></li>
+<li><a href="mexique/">Mexique</a></li>
+</ul>
+<p style="font-size:20px;">Pour voter, c'est par <a href="https://docs.google.com/spreadsheet/viewform?formkey=dFRKSU5qWnM2TExCRl9SUWRDVXhLQUE6MQ#gid=0">ici</a></p>
+</div>
+
+{% endblock %}
