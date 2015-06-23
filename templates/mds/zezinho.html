@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ STATIC_URL }}association.css" />
+{% endblock %}
+
+{% block onglets %}
+<div id="menu_onglets">
+<h1><img class="logo_assoce" src = "{{ STATIC_URL }}logo_mds.png">MDS</h1>
+
+<ul>
+<li><a href="/associations/mds/messages/"><img src="{{ STATIC_URL}}mail.png"><span>Messages</span></a></li>
+<li><a href="/associations/mds/evenements/"><img src="{{ STATIC_URL}}date.png"><span>Évenements</span></a></li>
+<li><a href="/associations/mds/equipe/"><img src="{{ STATIC_URL}}user.png"><span>Équipe</span></a></li>
+<li><a href="/associations/mds/medias/"><img src="{{ STATIC_URL}}clapperboard.png"><span>Médias</span></a></li>
+</ul>
+
+<ul class="supplementaire">
+<li><a href="/associations/mds/heliotopia/"><img src="{{ STATIC_URL}}page_heliotopia.png"><span>Héliotopia</span></a></li>
+<li><a href="/associations/mds/ceres/"><img src="{{ STATIC_URL}}page_ceres.png"><span>CERes</span></a></li>
+<li><a href="/associations/mds/kalimat/"><img src="{{ STATIC_URL}}page_kalimat.png"><span>Kalimat</span></a></li>
+<li id="actif"><img src="{{ STATIC_URL}}page_zezinho.png"><span>Zezinho na copa</span></li>
+</ul>
+
+<hr>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<h1>Contexte</h1>
+<p>Située dans le « triangulo da morte » de la périphérie de la zone Sud de São Paulo, l’ONG brésilienne <strong>Casa do Zézinho</strong> mène son œuvre avec des enfants et des jeunes qui vivent en dessous du seuil de pauvreté. Ceux-ci n’ont que très difficilement accès à l’information et à la culture. Ils vivent dans des logements précaires, plongés dans un environnement violent.</p>
+<div style="text-align:center"><img src = "{{ STATIC_URL }}mds_zezinho_mosaic.jpg"></div>
+
+<h1>Objectifs</h1>
+
+<p>Le projet <strong>Zézinho na Copa</strong> a pour objectif d’insérer des jeunes défavorisés, âgés de 16 à 21 ans, dans le marché du tourisme, qui sera décuplé par la Coupe du monde de football de 2014, se déroulant au Brésil. Nous travaillons en partenariat avec la <strong>Casa do Zézinho</strong>.
+
+<p>Les questions d’organisation, de gestion et de logistique sont gérées par les membres de l’ONG au Brésil. En effet, étant donné la très grande distance nous séparant du QG de la <strong>Casa do Zézinho</strong>, où se dérouleront les cours, nous ne pourrions que très difficilement nous occuper de tout cela. <br/>
+De notre coté nous sommes chargés de lever les fonds nécessaires pour rendre ce projet possible. L’équipe brésilienne le fait également de son coté, étant donné qu’ils sont plus nombreux que nous et que nous souhaitons profiter des opportunités aussi bien au Brésil qu’en France. D’autre part, nous sommes tenus au courant de tout ce qui se passe au Brésil à travers les informations que notre contact privilégié nous transmet régulièrement. Nous avons donc la possibilité de faire des propositions concernant la logistique et le déroulement des activités à la Casa do Zézinho.</p>
+
+<h1>Stratégie</h1>
+
+<div style="float:left;"><img src = "{{ STATIC_URL }}mds_zezinho_football.jpg"></div>
+
+	<p>Au fur et mesure que le projet a muri, nous nous sommes rendu compte qu’en plus de démarcher de l’argent, nous pourrions également organiser un événement payant visant accroitre la visibilité du projet en France, séduire  d’avantage d’entreprises et lever encore plus de fonds.<br/>
+En effet, la <strong>Casa do Zézinho</strong> est très connu au Brésil mais ne l’est pratiquement pas en France. D’autre part, cet évènement pourrait être comme la consécration de notre démarchage, nos partenaires devenant nos sponsors.</p>
+
+<div style="float:right;"><img src = "{{ STATIC_URL }}mds_zezinho_photo.jpg"></div>
+<p>L’idée serait donc d’organiser un tournoi de foot en salle où les joueurs seraient des étudiants et des salariés d’entreprises partenaires. La place serait payante pour les étudiants. <br/>
+Néanmoins, pour faire de ce tournoi un réel « évènement », nous avons pensé qu’il serait intéressant de faire venir des grands noms du football Franco-brésilien.  Nous avons alors pensé à une autre grande association brésilienne, Gol De Letra, fondée et présidée par Raï (ex capitaine de l’équipe du Brésil et du PSG) et Léonardo (actuel directeur sportif du PSG). L’avantage étant que ces deux ex grands joueurs professionnels sont souvent sur Paris et qu’un des membres de l’association en connaît personnellement.</p>
+
+<h1>Ce qu’il nous reste à faire</h1>
+
+<p>Définir une date, trouver des sponsors/partenaires, essayer d’obtenir une couverture médiatique, faire la promotion de l’événement auprès des étudiants.</p>
+
+<h1>Recrutement</h1>
+
+<p>Si toi aussi tu as envie de participer à un projet humanitaire de grande envergure (on a déjà 20 000 euros en cash flow, c.a.d beaucoup plus que n’importe qu’elle autre AE humanitaire, allez là !) aux composantes transverses et internationales…</p>
+<p>Si tu n’es pas tombé dans le piège de la présentation CERes qui fait du marketing avec ces T-shirts financés avec l’argent destinée au africains en nécessité…</p>
+<p>Si toi aussi tu aimes le foot et tu veux pouvoir frimer en disant que t’as travaillé avec Raï…</p>
+<p>Si toi aussi tu veux partir au Brésil en 2014 pour regarder les matches de la coupe du monde…</p>
+<p><strong>REJOINS NOUS !</strong> Nous ne sommes plus que 2 pendant ce semestre, donc un peu d’aide serait la bienvenue !</p>
+
+<div style="text-align:center"><img src = "{{ STATIC_URL }}mds_zezinho_tong.jpg"></div>
+
+
+{% endblock %}
