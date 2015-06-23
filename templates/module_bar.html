@@ -11,50 +11,50 @@
 
 	{% if request.user.get_profile.solde_octo < 0 and request.user.get_profile.solde_octo >= -5 %}
 	{%if bool %}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_beber.jpg">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_lolo.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_anto.jpg">
 	{% endif%}
 	{%endif%}
 	
 	{% if request.user.get_profile.solde_octo < -5 %}
 	{% if bool %}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_big.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_beber.jpg">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_big_lolo.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_octo_anto.jpg">
 	{% endif%}
 	{% endif%}
 	
 	{% if request.user.get_profile.solde_octo >= 0 %}
 	{%if bool%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_ok.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_ok_beber.jpg">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_ok_lolo.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_ok_anto.jpg">
 	{% endif%}
 	{% endif%}
 	
 	
 	{% if request.user.get_profile.solde_biero < 0 and request.user.get_profile.solde_biero >= -5 %}
 	{%if bool2 %}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_cailla.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}14lolom_negatif.png">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_corole.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}14colin_negatif.png">
 	{% endif%}
 	{%endif%}
 	
 	{% if request.user.get_profile.solde_biero < -5 %}
 	{% if bool2 %}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_big_cailla.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}14lolom_negatif.png">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_big_corole.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}14colin_negatif.png">
 	{% endif%}
 	{% endif%}
 	
 	{% if request.user.get_profile.solde_biero >= 0 %}
 	{%if bool2%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_ok_cailla.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}14lolom_positif.png">
 	{%else%}
-	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}dettes_biero_ok_corole.jpg">
+	<img id="photo_vp_octo" class = "floatright" src="{{ STATIC_URL }}14colin_positif.png">
 	{% endif%}
 	{% endif%}
 	
