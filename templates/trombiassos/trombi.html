@@ -9,27 +9,28 @@
 
 
 {% block content %}
-{% regroup mineur_list by promo as mineurs %}
-{% for promo in mineurs %}
 
 <ul class = "promo">
-        {% for mineur in promo.list %}<li class="portrait">
-    <a href = "/people/{{mineur.user.username}}">
-    <img src="{{ STATIC_URL }}{{ mineur.user.username }}.jpg" />
-      <p>{{mineur.first_name}}<br/>{{mineur.last_name|upper}} </p>
-    </a>{% for ad in adhesions %}
+        {% for mineur in mineur_list %}
+    {% for ad in adhesions %}
     {% if ad.eleve_id == mineur.id %}
     {% for as in assoces %}
     {% if as.id == ad.association_id %}
-    <p>{{as.nom}} </p>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-    {% endfor %}
+    {% if as.id == 1 %}
+    <li class="portrait">
+    <a href = "/people/{{mineur.user.username}}">
+    <img src="{{ STATIC_URL }}{{ mineur.user.username }}.jpg" />
+      <p>{{mineur.first_name}}<br/>{{mineur.last_name|upper}} </p>
+    </a>
+        <p>{{ad.role}}</p>
     </li>&nbsp; &nbsp; &nbsp; &nbsp; 
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
     {% endfor %}
       </ul>
-   {% endfor %}
 
 
 {% endblock %}
