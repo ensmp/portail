@@ -36,8 +36,11 @@ class Achat(models.Model):
  quantite = models.IntegerField() 
  commande = models.ForeignKey(Commande)
  lundi = models.BooleanField(default=False,blank=True)
+ mardi = models.BooleanField(default=False,blank=True)
  mercredi = models.BooleanField(default=False,blank=True)
  jeudi = models.BooleanField(default=False,blank=True)
+ vendredi = models.BooleanField(default=False,blank=True)
+ date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Date de commande")
  
  def __unicode__(self):
   if self.commande.fermee:
@@ -67,5 +70,5 @@ class Achat(models.Model):
   
 class UpdateSoldeForm(forms.Form):
  eleve = forms.ModelChoiceField(queryset=UserProfile.objects.all())
- credit = forms.FloatField()
- debit = forms.FloatField()
+ credit = forms.FloatField(initial=0.0)
+ debit = forms.FloatField(initial=0.0)

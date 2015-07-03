@@ -63,7 +63,8 @@ $(document).ready(function(){
 {% if perms.paindemine %}
 <p><strong>Administration</strong><br/>
 <a href="/associations/paindemine/fermer_commandes/">Fermer toutes les commandes</a><br/>
-<a href="/associations/paindemine/dernieres_commandes/">Voir les dernières commandes</a></p>
+<a href="/associations/paindemine/dernieres_commandes/">Voir les dernières commandes (non fermées)</a><br/>
+<a href="/associations/paindemine/toutes_commandes/">Voir toutes les commandes</a></p>
 {% endif %}
 
 {% regroup liste_produits by categorie as categorie_list %}
@@ -71,7 +72,7 @@ $(document).ready(function(){
 	<h3 align="center">
 	<a class = "lien_categorie" style="cursor:pointer;">{{categorie.grouper}}</a>
 	</h3>
-<div class="produits" style="display:none">
+<div class="produits">
 
 {% for produit in categorie.list %}
 		
@@ -97,7 +98,7 @@ $(document).ready(function(){
 			<img class = "quantite_moins" src="{{ STATIC_URL}}market_moins.png" style="cursor:pointer;" />
 			</td>
 			<td class = "small">
-			<input class = "quantite" type="text" value="0" name = "quantite" maxlength="4" style="font-size: 20px; height:45px; " onkeypress="return isNumberKey(event);">
+			<input class = "quantite" type="text" value="1" name = "quantite" maxlength="4" style="font-size: 20px; height:45px; " onkeypress="return isNumberKey(event);">
 			</td>
 			<td class = "small">
 			<img class = "quantite_plus" src="{{ STATIC_URL}}market_plus.png" style="cursor:pointer;" />
@@ -122,4 +123,41 @@ $(document).ready(function(){
 {% endfor %}
 </div>
 {% endfor %}
+<div class="actions"><h3 align="center" class = "lien_categorie">Vos commandes</h3>
+	
+	<table>
+	<tr>
+	<td><h4>Produit</h4></td>
+	<td><h4>Quantité</h4></td>
+	<td><h4>Jours</h4></td>
+	<td></td>
+	<td></td>
+	</tr>
+	{%for achat in liste_achats %}
+	
+
+		<tr>
+		<td><h4>{{ achat.produit.nom }}</h4></td>
+		<td><h4>{{ achat.quantite }}</h4></td>
+		<td>
+		{% if achat.lundi %}
+			<h4>Lundi</h4>
+		{% endif %}
+		</td>
+		<td>
+		{% if achat.mercredi %}
+			<h4>Mercredi</h4>
+		{% endif %}
+		</td>
+		<td>
+		{% if achat.jeudi %}
+			<h4>Jeudi</h4>
+		{% endif %}
+		</td>
+		</tr>
+
+		
+	{% endfor %}
+	</table>
+</div>
 {% endblock %}

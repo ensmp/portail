@@ -1,4 +1,9 @@
-﻿{{ date_fermeture|date:"d F Y" }};;;
-Identifiant;Nom;Prénom;Chambre;Produit;Quantité par jour;Jours;
-{% for commande in liste_commandes %}{% for achat in commande.achat_set.all %}{{ commande.eleve.user.username }};{{ commande.eleve.last_name|upper }};{{ commande.eleve.first_name }};{{ commande.eleve.chambre }};{{ achat.produit.nom }};{{ achat.quantite }};{{ achat.liste_jours }}
+﻿Identifiant;Nom;Prénom;Chambre;Produit;Quantité par jour;Jours;;;Date
+{% for commande in liste_commandes %}{% for achat in commande.achat_set.all %}{{ commande.eleve.user.username }};{{ commande.eleve.last_name|upper }};{{ commande.eleve.first_name }};{{ commande.eleve.chambre }};{{ achat.produit.nom }};{{ achat.quantite }};{% if achat.lundi %}Lundi{% endif %};{% if achat.mercredi %}Mercredi{% endif %};{% if achat.jeudi %}Jeudi{% endif %};{{achat.date}}
 {% endfor %}{% endfor %}
+
+;;;;;Prix;Lundi;Mercredi;Jeudi
+{% for produit in liste_produits %};;;;{{ produit.nom }};{{ produit.prix_vente }};=SOMMEPROD((E2:E{{ derniere_ligne_commandes }}="{{ produit.nom }}")*(G2:G{{ derniere_ligne_commandes }}="Lundi")*F2:F{{ derniere_ligne_commandes }});=SOMMEPROD((E2:E{{ derniere_ligne_commandes }}="{{ produit.nom }}")*(H2:H{{ derniere_ligne_commandes }}="Mercredi")*F2:F{{ derniere_ligne_commandes }});=SOMMEPROD((E2:E{{ derniere_ligne_commandes }}="{{ produit.nom }}")*(I2:I{{ derniere_ligne_commandes }}="Jeudi")*F2:F{{ derniere_ligne_commandes }});;
+{% endfor %}
+;;;;Prix;;=SOMMEPROD(F{{ debut_total}}:F{{ fin_total }}*G{{ debut_total }}:G{{ fin_total }});=SOMMEPROD(F{{ debut_total}}:F{{ fin_total }}*H{{ debut_total }}:H{{ fin_total }});=SOMMEPROD(F{{ debut_total}}:F{{ fin_total }}*I{{ debut_total }}:I{{ fin_total }})
+;;;;Total;=SOMMEPROD(F{{ debut_total}}:F{{ fin_total }}*G{{ debut_total }}:G{{ fin_total }})+SOMMEPROD(F{{ debut_total}}:F{{ fin_total }}*H{{ debut_total }}:H{{ fin_total }})+SOMMEPROD(F{{ debut_total}}:F{{ fin_total }}*I{{ debut_total }}:I{{ fin_total }})

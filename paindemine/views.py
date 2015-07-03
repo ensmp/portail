@@ -16,7 +16,12 @@ from django.contrib import messages
 @login_required
 def catalogue_pain(request):		
 	liste_produits = Produit.objects.order_by('categorie', 'nom')
-	return render_to_response('paindemine/catalogue_pain.html', {'liste_produits': liste_produits},context_instance=RequestContext(request))
+	try:
+		commande = Commande.objects.get(eleve__user__username=request.user.username, fermee=False)
+		liste_achats = Achat.objects.filter(commande__id=commande.id)
+	except Commande.DoesNotExist:
+		liste_achats = None
+	return render_to_response('paindemine/catalogue_pain.html', {'liste_produits': liste_produits, 'liste_achats': liste_achats},context_instance=RequestContext(request))
 
 @login_required
 def commande(request):
@@ -44,14 +49,21 @@ def acheter(request):
 			lundi = 0
 			mercredi = 0
 			jeudi = 0
+			nombre_jours = 0
+			utilisateur = request.user.get_profile()
 			for jour in request.POST.getlist('jour'):
 				if 'lundi'== jour:
 					lundi=1
+					nombre_jours += 1
 				if 'mercredi'== jour:
 					mercredi=1
+					nombre_jours += 1
 				if 'jeudi'== jour:
 					jeudi=1
-			achat = Achat.objects.create(commande = commande, produit = produit, quantite = request.POST['quantite'], lundi = lundi, mercredi = mercredi, jeudi = jeudi)		
+					nombre_jours += 1
+			achat = Achat.objects.create(commande = commande, produit = produit, quantite = request.POST['quantite'], lundi = lundi, mercredi = mercredi, jeudi = jeudi)
+			debit = float(produit.prix_vente) * int(request.POST['quantite']) * nombre_jours
+			utilisateur.update_solde_paindemine(+debit)		
 		return redirect('paindemine.views.commande')
 
 @login_required
@@ -69,17 +81,43 @@ def fermer_commandes(request):
 	
 @login_required
 def dernieres_commandes(request):	
-	liste_commandes = Commande.objects.filter(date_fermeture = Commande.objects.aggregate(Max('date_fermeture'))['date_fermeture__max'])
+	#liste_commandes = Commande.objects.filter(date_fermeture = Commande.objects.aggregate(Max('date_fermeture'))['date_fermeture__max'])
+	liste_commandes = Commande.objects.filter(fermee=False)
 	return liste_commandes
 	
 def dernieres_commandes_csv(request):
 	from django.template import loader, Context
 	liste_commandes = dernieres_commandes(request)
-	date_fermeture = Commande.objects.aggregate(Max('date_fermeture'))['date_fermeture__max']
+	liste_produits = Produit.objects.order_by('categorie', 'nom')
+	derniere_ligne_commandes = 1 #numéro de la dernière ligne à lire dans le .csv pour faire les totaux
+	for commande in liste_commandes:
+		derniere_ligne_commandes += len(commande.achat_set.all())
+	debut_total = derniere_ligne_commandes + 4 #début du tableau de total
+	fin_total = debut_total + len(liste_produits) - 1
+	#date_fermeture = Commande.objects.aggregate(Max('date_fermeture'))['date_fermeture__max']
 	response = HttpResponse(mimetype='text/csv')
 	response['Content-Disposition'] = 'attachment; filename=dernieres_commandes.csv'
 	t = loader.get_template('paindemine/dernieres_commandes.txt')
-	c = Context({'liste_commandes': liste_commandes,'date_fermeture':date_fermeture})
+	c = Context({'liste_commandes': liste_commandes, 'liste_produits': liste_produits, 'derniere_ligne_commandes': derniere_ligne_commandes,
+				'debut_total': debut_total, 'fin_total': fin_total})#,'date_fermeture':date_fermeture})
+	response.write(t.render(c))
+	return response
+
+def toutes_commandes_csv(request):
+	from django.template import loader, Context
+	liste_commandes = Commande.objects.all()
+	liste_produits = Produit.objects.order_by('categorie', 'nom')
+	derniere_ligne_commandes = 1 #numéro de la dernière ligne à lire dans le .csv pour faire les totaux
+	for commande in liste_commandes:
+		derniere_ligne_commandes += len(commande.achat_set.all())
+	debut_total = derniere_ligne_commandes + 4 #début du tableau de total
+	fin_total = debut_total + len(liste_produits) - 1
+	#date_fermeture = Commande.objects.aggregate(Max('date_fermeture'))['date_fermeture__max']
+	response = HttpResponse(mimetype='text/csv')
+	response['Content-Disposition'] = 'attachment; filename=toutes_commandes.csv'
+	t = loader.get_template('paindemine/dernieres_commandes.txt')
+	c = Context({'liste_commandes': liste_commandes, 'liste_produits': liste_produits, 'derniere_ligne_commandes': derniere_ligne_commandes,
+				'debut_total': debut_total, 'fin_total': fin_total})#,'date_fermeture':date_fermeture})
 	response.write(t.render(c))
 	return response
 	
