@@ -15,6 +15,9 @@ class PetitCours(models.Model):
     date_given = models.DateTimeField(auto_now_add=True)
     visible = models.BooleanField()
     niveau = models.CharField(max_length=256)
+    frequence = models.CharField(max_length=256)
+    disponibilite = models.CharField(max_length=256)
+    prenom = models.CharField(max_length=256)
     matiere = models.CharField(max_length=256)
     description = models.CharField(max_length=512)
     requests = models.ManyToManyField(User,related_name='+', blank=True, null=True) #Les demandes 
