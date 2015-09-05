@@ -32,6 +32,9 @@ def index_json(request):
             'latitude': c.latitude,
             'longitude': c.longitude,
             'adresse': c.address,
+            'prenom': c.prenom,
+            'disponibilite': c.disponibilite,
+            'frequence': c.frequence,
         } for c in cours_list]))
     return response
 
@@ -69,7 +72,7 @@ def give(request,id,mineur_login):
     pc.visible = False
     pc.attribue_a = eleve
     pc.save()
-    send_mail('Attribution Petit Cours', 'Salut ! Tu viens de remporter le petit cours '+pc.title+'.\nPour le contacter: '+pc.contact+'.\nNiveau: '+pc.niveau+'\nMatiere: '+pc.matiere+'\nLieu: '+pc.address+'\nAutre: '+pc.description, 'pierrick.rambaud@mines-paristech.fr',[eleve.email])
+    send_mail('Attribution Petit Cours', 'Salut ! Tu viens de remporter le petit cours '+pc.title+'.\nPour le contacter: '+pc.contact+'.\nNiveau: '+pc.niveau+'\nMatiere: '+pc.matiere+'\nLieu: '+pc.address+'\nAutre: '+pc.description+ '\nPenses à informer le VP petits cours si jamais il y a un quelconque souci dans l\'attribution du petit cours.',[eleve.email])
     
     return HttpResponseRedirect('/petitscours/')
 
@@ -89,6 +92,9 @@ def demander(request):
         pc.matiere = request.POST['matiere']
         pc.niveau = request.POST['niveau']
         pc.description=request.POST['description']
+        pc.prenom=request.POST['prenom']
+        pc.disponibilite=request.POST['disponibilite']
+        pc.frequence=request.POST['frequence']
         pc.save()        
         if request.is_ajax():
             return HttpResponse("OK")
