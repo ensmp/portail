@@ -51,7 +51,7 @@ def poser_question(request):
             try :
                  objet=form.cleaned_data['objet']
                  message=form.cleaned_data['contenu']
-                 send_mail('Question posée sur la FAQ du portail',"Objet : " + objet + "\nMessage : "+ message, 'valentin.anjou@mines-paristech.fr',['valentin.anjou@mines-paristech.fr','baptiste.garcia-rundstadler@mines-paristech.fr','marc.peruzzetto@mines-paristech.fr@mines-paristech.fr','sandrine.bortolotti@mines-paristech.fr','lison.divert@mines-paristech.fr','chipten.valibhay@mines-paristech.fr','louis.duquenoy@mines-paristech.fr','clara.golse@mines-paristech.fr'], fail_silently=False)
+                 send_mail('Question posée sur la FAQ du portail',"Objet : " + objet + "\nMessage : "+ message, 'maxime.brunet@mines-paristech.fr',['maxime.brunet@mines-paristech.fr'], fail_silently=False)
             except BadHeaderError :
                  return HttpResponse('Invalid header found.')
             return HttpResponseRedirect('/faq/question_posee')
