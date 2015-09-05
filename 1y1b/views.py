@@ -67,3 +67,7 @@ def logout_view(request):
     logout(request)
     url= request.GET['page']
     return render_to_response('1y1b/redirect.html',{'url': url},context_instance=RequestContext(request)) 
+
+#def yearbook(request):
+#    url='http://mines-paristech.1year1book.com/'
+#    return render_to_response('1y1b/redirect.html',{'url': url},context_instance=RequestContext(request)) 
