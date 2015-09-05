@@ -21,6 +21,8 @@
 <p>Pour recruter un élève des Mines pour des cours, veuillez remplir le formulaire suivant :</p>
 	<form id="addform" method="post" action="">
 	{% csrf_token %}
+	<p>Prénom de l'élève:</p>
+	<input class = "input-medium" type="text" onkeypress="return handleEnter(this, event)" name="prenom" placeholder="Prénom"/>
 	<p>Un moyen de vous contacter (numéro de téléphone ou adresse email)</p>
 	<input class = "input-medium" type="text" onkeypress="return handleEnter(this, event)" name="contact" placeholder="Contact"/>
 	<p>Lieu du petit cours (possibilité à l'école ou à la résidence dans le quartier Luxembourg)</p>
@@ -33,7 +35,7 @@
 			<p>Matière du cours</p>
 		</td>
 		<td>
-			<p>Niveau de l'élève</p>
+			<p>Filière / Classe</p>
 		</td>
 	</tr>
 	<tr>
@@ -41,7 +43,24 @@
 		<input type="text" onkeypress="return handleEnter(this, event)" placeholder="Matière" name="matiere" class = "input-medium" />
 	</td>
 	<td>
-		<input type="text" onkeypress="return handleEnter(this, event)" placeholder="Niveau" name="niveau" class = "input-medium"/>
+		<input type="text" onkeypress="return handleEnter(this, event)" placeholder="Filière / Classe" name="niveau" class = "input-medium"/>
+	</td>
+	</table>
+    <table>
+	<tr>
+		<td>
+			<p>Disponibilité</p>
+		</td>
+		<td>
+			<p>Fréquence souhaitée</p>
+		</td>
+	</tr>
+	<tr>
+	<td>
+		<input type="text" onkeypress="return handleEnter(this, event)" placeholder="Disponibilité" name="disponibilite" class = "input-xlarge" />
+	</td>
+	<td>
+		<input type="text" onkeypress="return handleEnter(this, event)" placeholder="Fréquence" name="frequence" class = "input-xlarge"/>
 	</td>
 	</table>
 	<p>Autre information qui vous semble pertinente</p>
